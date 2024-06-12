@@ -1,0 +1,15 @@
+[package]
+name = "node-payment-plan"
+version = "0.1.0"
+license = "ISC"
+edition = "2021"
+exclude = ["index.node"]
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+core = { path ="../core" }
+neon = "1"
+chrono = { version = "0.4.38" }

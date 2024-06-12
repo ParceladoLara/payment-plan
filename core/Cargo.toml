@@ -1,0 +1,13 @@
+[package]
+name = "core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "core"
+path = "src/lib.rs"
+
+[dependencies]
+xirr = "0.2.3"
+chrono = { version = "0.4.38", features = ["serde"] }
+serde = { version = "1.0.203", features = ["serde_derive"] }
