@@ -1,4 +1,4 @@
-use core::{Params, Response};
+use core_payment_plan::{Params, Response};
 
 use chrono::NaiveTime;
 use neon::{

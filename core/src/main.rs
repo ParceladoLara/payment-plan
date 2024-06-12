@@ -1,4 +1,4 @@
-use core::{calc::calculate_payment_plan, Params};
+use core_payment_plan::{calc::calculate_payment_plan, Params};
 
 fn main() {
     let params = Params {

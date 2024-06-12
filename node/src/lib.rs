@@ -7,7 +7,7 @@ mod parser;
 fn calculate_plan(mut cx: FunctionContext) -> JsResult<JsArray> {
     let js_obj: Handle<JsObject> = cx.argument(0)?;
     let params = cast_js_object_to_param(&mut cx, js_obj)?;
-    let result = core::calc::calculate_payment_plan(params);
+    let result = core_payment_plan::calc::calculate_payment_plan(params);
     let result = match result {
         Ok(plan) => plan,
         Err(e) => {
