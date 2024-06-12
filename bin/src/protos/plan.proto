@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package cli.types;
 
-option go_package = "cli/types";
+option go_package = "playment_plan/protos";
 
 
 message PlanParams {
