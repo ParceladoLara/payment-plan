@@ -4,6 +4,7 @@
     "powf",
     "protobuf",
     "PROTOC",
+    "synlink",
     "XIRR"
   ]
 }

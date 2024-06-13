@@ -48,7 +48,18 @@ cargo build --package payment-plan --release
 This will generate a binary called `payment-plan` in the `target/release` directory.
 
 # Usage
-To use any of the builds, you need to copy the build.
+First create a synlink to the binary in your project.
+
+```bash
+sudo ln -s ~/path/to/your/project/target/release/payment-plan /usr/local/bin/payment-plan
+```
+Now you can call the binary from your project without having to specify the full path.
+
+On docker, you can add the binary to the container by adding the following line to your Dockerfile.
+
+```Dockerfile
+COPY --from=builder /path/to/your/project/bin/payment-plan /usr/local/bin/payment-plan
+```
 
 ## NodeJs
 
@@ -87,13 +98,9 @@ and include it in your tsconfig.json
 ```
 
 ## Go
-As of now, Lara only has projects in NodeJs and Go. To use the binary in Go, you need to copy the binary to your project.
+Assuming that the synlink has already been created, and/or your Docker image has the line to copy the binary to the bin directory.
 
-```bash
-cp target/release/payment-plan /path/to/your/project
-```
-
-Now will need the protoc-gen-go plugin to generate the Go code from the protobuf file.
+You will need the protoc-gen-go plugin to generate the Go code from the protobuf file.
 
 ```bash
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
@@ -128,7 +135,7 @@ func main() {
 	}
 
 	// Prepare the command you want to execute
-	cmd := exec.Command("./payment-plan") 
+	cmd := exec.Command("payment-plan") 
 
 	// Create a bytes buffer to hold the serialized data
 	var in bytes.Buffer
