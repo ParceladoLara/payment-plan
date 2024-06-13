@@ -74,7 +74,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     let installment = JsNumber::new(cx, response.installment);
     let due_date = response
         .due_date
-        .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
+        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
         .and_utc();
     let due_date = JsDate::new(cx, due_date.timestamp_millis() as f64);
     let due_date = match due_date {
