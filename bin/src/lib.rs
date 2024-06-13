@@ -48,7 +48,7 @@ impl From<Response> for PlanResponse {
     fn from(value: Response) -> Self {
         let due_date = value
             .due_date
-            .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
+            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
             .and_utc()
             .timestamp_millis();
 
