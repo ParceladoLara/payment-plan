@@ -25,6 +25,8 @@ pub fn cast_js_object_to_param(
     let iof_overall: Handle<JsValue> = obj.get(cx, "iofOverall")?;
     let iof_percentage: Handle<JsValue> = obj.get(cx, "iofPercentage")?;
     let interest_rate: Handle<JsValue> = obj.get(cx, "interestRate")?;
+    let min_installment_amount: Option<Handle<JsValue>> =
+        obj.get_opt(cx, "minInstallmentAmount")?;
 
     let requested_amount = any_to_number(cx, requested_amount)?;
     let first_payment_date = first_payment_date.value(cx);
@@ -36,6 +38,10 @@ pub fn cast_js_object_to_param(
     let iof_overall = any_to_number(cx, iof_overall)?;
     let iof_percentage = any_to_number(cx, iof_percentage)?;
     let interest_rate = any_to_number(cx, interest_rate)?;
+    let min_installment_amount = match min_installment_amount {
+        Some(value) => any_to_number(cx, value)?,
+        None => 0.0,
+    };
 
     let first_payment_date = chrono::DateTime::from_timestamp_millis(first_payment_date as i64);
     let first_payment_date = match first_payment_date {
@@ -54,6 +60,7 @@ pub fn cast_js_object_to_param(
     };
 
     Ok(Params {
+        min_installment_amount,
         requested_amount,
         first_payment_date,
         requested_date,

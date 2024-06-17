@@ -34,7 +34,7 @@ fn calculate(
     let customer_debit_service_proportion = 1.0 - debit_service_percentage as f64 / 100.0;
     let tac_amount = requested_amount * tac_percentage;
 
-    for prepared_calculation in &prepared_calculations {
+    for (i, prepared_calculation) in prepared_calculations.iter().enumerate() {
         let aux_accumulated_days_index: Vec<i64> = prepared_calculations
             .iter()
             .take(prepared_calculation.installment as usize)
@@ -70,6 +70,12 @@ fn calculate(
         let tec_monthly = calculate_tec_monthly(params, tec_params)?;
 
         let tec_yearly = (1.0 + tec_monthly).powf(12.0) - 1.0;
+
+        let installment_amount = amounts.installment_amount;
+
+        if installment_amount < params.min_installment_amount && i != 0 {
+            break;
+        }
 
         let response = Response {
             installment: prepared_calculation.installment,
@@ -127,6 +133,8 @@ mod test {
     //Test 12 - (1752 / 10) = (2040.6358370477474 / 204.06358370477474)
     //Test 13 - (4000 / 24) = (5323.461599385834 / 221.81089997440975)
     //Test 14 - (6500 / 11) = (8146.322444824322 / 740.574767711302)
+    //Test 15 - (1000 / 24) = (1275.5756523433513 / 106.29797102861261) max installment amount 100
+    //Test 16 - (44 / 48) = (46.05063251213531 / 46.05063251213531) min installment amount 80
 
     use crate::{calc::calculate_payment_plan, Params};
 
@@ -153,6 +161,7 @@ mod test {
         let expected_total_iof = 237.3188697534247;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 8800.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 18).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 18).unwrap(),
@@ -230,6 +239,7 @@ mod test {
         let expected_total_iof = 148.38755720547942;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 6000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 18).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 17).unwrap(),
@@ -307,6 +317,7 @@ mod test {
         let expected_total_iof = 26.17549594520548;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 1300.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 21).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 21).unwrap(),
@@ -384,6 +395,7 @@ mod test {
         let expected_total_iof = 26.142427232876713;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 1600.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 29).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 29).unwrap(),
@@ -461,6 +473,7 @@ mod test {
         let expected_total_iof = 16.210796794520547;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 1000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 08).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 10).unwrap(),
@@ -538,6 +551,7 @@ mod test {
         let expected_total_iof = 123.57314284931509;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 4580.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 05).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 04).unwrap(),
@@ -615,6 +629,7 @@ mod test {
         let expected_total_iof = 30.182876712328767;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 1500.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 09).unwrap(),
@@ -692,6 +707,7 @@ mod test {
         let expected_total_iof = 36.56358345205479;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
@@ -769,6 +785,7 @@ mod test {
         let expected_total_iof = 98.47127112328764;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 3769.6,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 10).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
@@ -846,6 +863,7 @@ mod test {
         let expected_total_iof = 49.8888475890411;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 6200.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 25).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 04).unwrap(),
@@ -923,6 +941,7 @@ mod test {
         let expected_total_iof = 49.874829369863015;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 2690.1,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 15).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 04).unwrap(),
@@ -1000,6 +1019,7 @@ mod test {
         let expected_total_iof = 10.98547397260274;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 1089.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 29).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 29).unwrap(),
@@ -1077,6 +1097,7 @@ mod test {
         let expected_total_iof = 30.8928;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 1752.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 16).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 16).unwrap(),
@@ -1154,6 +1175,7 @@ mod test {
         let expected_total_iof = 107.8733903013699;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 4000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 14).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 14).unwrap(),
@@ -1231,6 +1253,7 @@ mod test {
         let expected_total_iof = 122.71015142465752;
 
         let params = Params {
+            min_installment_amount: 0.0,
             requested_amount: 6500.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 20).unwrap(),
@@ -1248,6 +1271,162 @@ mod test {
         assert_eq!(result.len(), 11);
 
         let response = result.pop().unwrap();
+
+        assert_eq!(response.contract_amount, expected_contract_amount);
+        assert_eq!(
+            response.contract_amount_without_tac,
+            expected_contract_amount_without_tac
+        );
+        assert_eq!(response.customer_amount, expected_customer_amount);
+        assert_eq!(
+            response.customer_debit_service_amount,
+            expected_customer_debit_service_amount
+        );
+        assert_eq!(response.debit_service, expected_debit_service);
+        assert_eq!(response.eir_monthly, expected_eir_monthly);
+        assert_eq!(response.eir_yearly, expected_eir_yearly);
+        assert_eq!(
+            response.effective_interest_rate,
+            expected_effective_interest_rate
+        );
+        assert_eq!(response.installment, expected_installment);
+        assert_eq!(response.installment_amount, expected_installment_amount);
+        assert_eq!(response.interest_rate, expected_interest_rate);
+        assert_eq!(response.mdr_amount, expected_mdr_amount);
+        assert_eq!(
+            response.merchant_debit_service_amount,
+            expected_merchant_debit_service_amount
+        );
+        assert_eq!(
+            response.merchant_total_amount,
+            expected_merchant_total_amount
+        );
+        assert_eq!(response.settled_to_merchant, expected_settled_to_merchant);
+        assert_eq!(response.tec_monthly, expected_tec_monthly);
+        assert_eq!(response.tec_yearly, expected_tec_yearly);
+        assert_eq!(response.total_amount, expected_total_amount);
+        assert_eq!(response.total_iof, expected_total_iof);
+    }
+
+    #[test]
+    fn test_calculate_payment_plan_test_15() {
+        let expected_contract_amount = 1020.1211129315069;
+        let expected_contract_amount_without_tac = 1020.1211129315069;
+        let expected_customer_amount = 106.29797102861261;
+        let expected_customer_debit_service_amount = 255.45453941184445;
+        let expected_debit_service = 255.45453941184445;
+        let expected_eir_monthly = 0.09030748271049616;
+        let expected_eir_yearly = 1.8222008061212094;
+        let expected_effective_interest_rate = 0.09030748271049616;
+        let expected_installment = 12;
+        let expected_installment_amount = 106.29797102861261;
+        let expected_interest_rate = 0.0355;
+        let expected_mdr_amount = 10.0;
+        let expected_merchant_debit_service_amount = 0.0;
+        let expected_merchant_total_amount = 10.0;
+        let expected_settled_to_merchant = 990.0;
+        let expected_tec_monthly = 0.09230394662851915;
+        let expected_tec_yearly = 1.8848420101937977;
+        let expected_total_amount = 1275.5756523433513;
+        let expected_total_iof = 20.12111293150685;
+
+        let params = Params {
+            min_installment_amount: 100.0,
+            requested_amount: 1000.0,
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
+            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 20).unwrap(),
+            installments: 24,
+            debit_service_percentage: 0,
+            mdr: 0.01,
+            tac_percentage: 0.0,
+            iof_overall: 0.0038,
+            iof_percentage: 0.03,
+            interest_rate: 0.0355,
+        };
+
+        let mut result = calculate_payment_plan(params).unwrap();
+
+        assert_eq!(result.len(), 12);
+
+        let response = result.pop().unwrap();
+
+        assert_eq!(response.contract_amount, expected_contract_amount);
+        assert_eq!(
+            response.contract_amount_without_tac,
+            expected_contract_amount_without_tac
+        );
+        assert_eq!(response.customer_amount, expected_customer_amount);
+        assert_eq!(
+            response.customer_debit_service_amount,
+            expected_customer_debit_service_amount
+        );
+        assert_eq!(response.debit_service, expected_debit_service);
+        assert_eq!(response.eir_monthly, expected_eir_monthly);
+        assert_eq!(response.eir_yearly, expected_eir_yearly);
+        assert_eq!(
+            response.effective_interest_rate,
+            expected_effective_interest_rate
+        );
+        assert_eq!(response.installment, expected_installment);
+        assert_eq!(response.installment_amount, expected_installment_amount);
+        assert_eq!(response.interest_rate, expected_interest_rate);
+        assert_eq!(response.mdr_amount, expected_mdr_amount);
+        assert_eq!(
+            response.merchant_debit_service_amount,
+            expected_merchant_debit_service_amount
+        );
+        assert_eq!(
+            response.merchant_total_amount,
+            expected_merchant_total_amount
+        );
+        assert_eq!(response.settled_to_merchant, expected_settled_to_merchant);
+        assert_eq!(response.tec_monthly, expected_tec_monthly);
+        assert_eq!(response.tec_yearly, expected_tec_yearly);
+        assert_eq!(response.total_amount, expected_total_amount);
+        assert_eq!(response.total_iof, expected_total_iof);
+    }
+
+    #[test]
+    fn test_calculate_payment_plan_test_16() {
+        let expected_contract_amount = 44.420198301369865;
+        let expected_contract_amount_without_tac = 44.420198301369865;
+        let expected_customer_amount = 46.05063251213531;
+        let expected_customer_debit_service_amount = 1.630434210765445;
+        let expected_debit_service = 1.630434210765445;
+        let expected_eir_monthly = 1.003714315608284;
+        let expected_eir_yearly = 4187.2212149717025;
+        let expected_effective_interest_rate = 1.003714315608284;
+        let expected_installment = 1;
+        let expected_installment_amount = 46.05063251213531;
+        let expected_interest_rate = 0.0355;
+        let expected_mdr_amount = 0.4414;
+        let expected_merchant_debit_service_amount = 0.0;
+        let expected_merchant_total_amount = 0.4414;
+        let expected_settled_to_merchant = 43.6986;
+        let expected_tec_monthly = 1.0097919478208524;
+        let expected_tec_yearly = 4342.233944021111;
+        let expected_total_amount = 46.05063251213531;
+        let expected_total_iof = 0.280198301369863;
+
+        let params = Params {
+            min_installment_amount: 80.0,
+            requested_amount: 44.14,
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
+            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 20).unwrap(),
+            installments: 48,
+            debit_service_percentage: 0,
+            mdr: 0.01,
+            tac_percentage: 0.0,
+            iof_overall: 0.0038,
+            iof_percentage: 0.03,
+            interest_rate: 0.0355,
+        };
+
+        let result = calculate_payment_plan(params).unwrap();
+
+        assert_eq!(result.len(), 1);
+
+        let response = result.get(0).unwrap();
 
         assert_eq!(response.contract_amount, expected_contract_amount);
         assert_eq!(
