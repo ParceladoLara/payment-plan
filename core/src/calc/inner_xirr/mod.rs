@@ -14,15 +14,18 @@ pub fn prepare_xirr_params(
     let mut eir_params = Vec::new();
     let mut tec_params = Vec::new();
 
+    let eir_amount = -1.0 * calculation_basis_for_eir;
+    let tec_amount = -1.0 * customer_amount;
+
     for i in 0..installments {
         let prepared_calculation = prepared_calculations[i as usize];
 
         eir_params.push(Payment {
-            amount: -1.0 * calculation_basis_for_eir,
+            amount: eir_amount,
             date: prepared_calculation.due_date,
         });
         tec_params.push(Payment {
-            amount: -1.0 * customer_amount,
+            amount: tec_amount,
             date: prepared_calculation.due_date,
         });
     }
@@ -43,7 +46,7 @@ mod test {
     fn test_prepare_xirr_params_test_7() {
         let base_month = 4;
         let params = Params {
-min_installment_amount:0.0,
+            min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),

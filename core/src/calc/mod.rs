@@ -56,7 +56,7 @@ fn calculate(
         );
 
         let (eir_params, tec_params) = prepare_xirr_params(
-            params.installments,
+            prepared_calculation.installment,
             &prepared_calculations,
             amounts.calculation_basis_for_effective_interest_rate,
             amounts.customer_amount,
@@ -1315,9 +1315,9 @@ mod test {
         let expected_customer_amount = 106.29797102861261;
         let expected_customer_debit_service_amount = 255.45453941184445;
         let expected_debit_service = 255.45453941184445;
-        let expected_eir_monthly = 0.09030748271049616;
-        let expected_eir_yearly = 1.8222008061212094;
-        let expected_effective_interest_rate = 0.09030748271049616;
+        let expected_eir_monthly = 0.03617300584122107;
+        let expected_eir_yearly = 0.531747878195636;
+        let expected_effective_interest_rate = 0.03617300584122107;
         let expected_installment = 12;
         let expected_installment_amount = 106.29797102861261;
         let expected_interest_rate = 0.0355;
@@ -1325,8 +1325,8 @@ mod test {
         let expected_merchant_debit_service_amount = 0.0;
         let expected_merchant_total_amount = 10.0;
         let expected_settled_to_merchant = 990.0;
-        let expected_tec_monthly = 0.09230394662851915;
-        let expected_tec_yearly = 1.8848420101937977;
+        let expected_tec_monthly = 0.0388466513010588;
+        let expected_tec_yearly = 0.5798553680415293;
         let expected_total_amount = 1275.5756523433513;
         let expected_total_iof = 20.12111293150685;
 
@@ -1393,9 +1393,9 @@ mod test {
         let expected_customer_amount = 46.05063251213531;
         let expected_customer_debit_service_amount = 1.630434210765445;
         let expected_debit_service = 1.630434210765445;
-        let expected_eir_monthly = 1.003714315608284;
-        let expected_eir_yearly = 4187.2212149717025;
-        let expected_effective_interest_rate = 1.003714315608284;
+        let expected_eir_monthly = 0.03572522102931042;
+        let expected_eir_yearly = 0.5238233460625974;
+        let expected_effective_interest_rate = 0.03572522102931042;
         let expected_installment = 1;
         let expected_installment_amount = 46.05063251213531;
         let expected_interest_rate = 0.0355;
@@ -1403,8 +1403,8 @@ mod test {
         let expected_merchant_debit_service_amount = 0.0;
         let expected_merchant_total_amount = 0.4414;
         let expected_settled_to_merchant = 43.6986;
-        let expected_tec_monthly = 1.0097919478208524;
-        let expected_tec_yearly = 4342.233944021111;
+        let expected_tec_monthly = 0.041860605526351735;
+        let expected_tec_yearly = 0.6357442539210962;
         let expected_total_amount = 46.05063251213531;
         let expected_total_iof = 0.280198301369863;
 
@@ -1425,6 +1425,92 @@ mod test {
         let result = calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 1);
+
+        let response = result.get(0).unwrap();
+
+        assert_eq!(response.contract_amount, expected_contract_amount);
+        assert_eq!(
+            response.contract_amount_without_tac,
+            expected_contract_amount_without_tac
+        );
+        assert_eq!(response.customer_amount, expected_customer_amount);
+        assert_eq!(
+            response.customer_debit_service_amount,
+            expected_customer_debit_service_amount
+        );
+        assert_eq!(response.debit_service, expected_debit_service);
+        assert_eq!(response.eir_monthly, expected_eir_monthly);
+        assert_eq!(response.eir_yearly, expected_eir_yearly);
+        assert_eq!(
+            response.effective_interest_rate,
+            expected_effective_interest_rate
+        );
+        assert_eq!(response.installment, expected_installment);
+        assert_eq!(response.installment_amount, expected_installment_amount);
+        assert_eq!(response.interest_rate, expected_interest_rate);
+        assert_eq!(response.mdr_amount, expected_mdr_amount);
+        assert_eq!(
+            response.merchant_debit_service_amount,
+            expected_merchant_debit_service_amount
+        );
+        assert_eq!(
+            response.merchant_total_amount,
+            expected_merchant_total_amount
+        );
+        assert_eq!(response.settled_to_merchant, expected_settled_to_merchant);
+        assert_eq!(response.tec_monthly, expected_tec_monthly);
+        assert_eq!(response.tec_yearly, expected_tec_yearly);
+        assert_eq!(response.total_amount, expected_total_amount);
+        assert_eq!(response.total_iof, expected_total_iof);
+    }
+
+    #[test]
+    fn test_go_case() {
+        let expected_contract_amount = 2781.4664277614843;
+        let expected_contract_amount_without_tac = 2781.4664277614843;
+        let expected_customer_amount = 2784.208338808703;
+        let expected_customer_debit_service_amount = 2.741911047218844;
+        let expected_debit_service = 2.741911047218844;
+        let expected_eir_monthly = 0.03011814319578998;
+        let expected_eir_yearly = 0.42772457911511363;
+        let expected_effective_interest_rate = 0.03011814319578998;
+        let expected_installment = 1;
+        let expected_installment_amount = 2784.208338808703;
+        let expected_interest_rate = 0.029999999329447746;
+        let expected_mdr_amount = 83.12129814209416;
+        let expected_merchant_debit_service_amount = 0.0;
+        let expected_merchant_total_amount = 83.12129814209416;
+        let expected_settled_to_merchant = 2687.588701857906;
+        let expected_tec_monthly = 0.15696369491739448;
+        let expected_tec_yearly = 4.752237036590522;
+        let expected_total_amount = 2784.208338808703;
+        let expected_total_iof = 10.756427761484167;
+
+        let first_payment_date = chrono::DateTime::from_timestamp_millis(1719025200000)
+            .unwrap()
+            .date_naive();
+
+        let requested_date = chrono::DateTime::from_timestamp_millis(1718983261490)
+            .unwrap()
+            .date_naive();
+
+        let params = Params {
+            min_installment_amount: 100.0,
+            requested_amount: 2770.71,
+            first_payment_date,
+            requested_date,
+            installments: 48,
+            debit_service_percentage: 0,
+            mdr: 0.029999999329447746,
+            tac_percentage: 0.0,
+            iof_overall: 0.003800000064074993,
+            iof_percentage: 0.029999999329447746,
+            interest_rate: 0.029999999329447746,
+        };
+
+        let result = calculate_payment_plan(params).unwrap();
+
+        assert_eq!(result.len(), 48);
 
         let response = result.get(0).unwrap();
 

@@ -47,6 +47,9 @@ pub fn calculate_tec_monthly(
         }
     }
 
+    if tec_monthly.is_nan() {
+        return Err(InvalidPaymentsError);
+    }
     return Ok(tec_monthly);
 }
 
@@ -59,7 +62,7 @@ mod test {
     #[test]
     fn test_calculate_tec_monthly_test_7() {
         let params = Params {
-min_installment_amount:0.0,
+            min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
