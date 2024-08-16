@@ -29,6 +29,7 @@ impl TryInto<Params> for PlanParams {
         };
 
         let params = Params {
+            max_total_amount: self.max_total_amount,
             min_installment_amount: self.min_installment_amount,
             requested_amount: self.requested_amount,
             debit_service_percentage: self.debit_service_percentage as u16,

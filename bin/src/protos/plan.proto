@@ -17,6 +17,7 @@ message PlanParams {
     double iof_percentage = 9;
     double interest_rate = 10;
     double min_installment_amount = 11;
+    double max_total_amount = 12;
 }
 
 message PlanResponse {

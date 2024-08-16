@@ -64,6 +64,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_0() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 8800.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 18).unwrap(),
@@ -115,6 +116,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_1() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 6000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 18).unwrap(),
@@ -166,6 +168,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_2() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1300.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 21).unwrap(),
@@ -217,6 +220,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_3() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1600.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 29).unwrap(),
@@ -268,6 +272,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_4() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 08).unwrap(),
@@ -319,6 +324,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_5() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 4580.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 05).unwrap(),
@@ -370,6 +376,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_6() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap(),
@@ -422,6 +429,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_7() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),

@@ -46,6 +46,7 @@ mod test {
     fn test_prepare_xirr_params_test_7() {
         let base_month = 4;
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),

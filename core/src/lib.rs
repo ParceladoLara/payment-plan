@@ -16,6 +16,7 @@ pub struct Params {
     pub iof_percentage: f64,           // 0.0-1.0
     pub interest_rate: f64,            // 0.0-1.0
     pub min_installment_amount: f64,
+    pub max_total_amount: f64,
 }
 
 #[derive(Debug, Serialize)]

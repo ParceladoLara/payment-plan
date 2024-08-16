@@ -69,6 +69,7 @@ mod test {
     #[test]
     fn test_calculate_eir_monthly_test_7() {
         let params = Params {
+            max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
