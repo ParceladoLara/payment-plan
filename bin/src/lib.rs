@@ -1,7 +1,10 @@
 use chrono::NaiveTime;
 use core_payment_plan::{Params, Response};
 use prost::Message;
-use types::{PlanParams, PlanResponse, PlanResponses};
+use types::{
+    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, PlanParams, PlanResponse,
+    PlanResponses,
+};
 
 pub mod types {
     include!(concat!(env!("OUT_DIR"), "/cli.types.rs"));
@@ -109,6 +112,82 @@ pub fn serialize_response(response: PlanResponse) -> Vec<u8> {
 }
 
 pub fn serialize_responses(responses: PlanResponses) -> Vec<u8> {
+    let mut buf = Vec::new();
+    buf.reserve(responses.encoded_len());
+    // Unwrap is safe, since we have reserved sufficient capacity in the vector.
+    responses.encode(&mut buf).unwrap();
+    buf
+}
+
+impl TryInto<core_payment_plan::DownPaymentParams> for DownPaymentParams {
+    type Error = String;
+
+    fn try_into(self) -> Result<core_payment_plan::DownPaymentParams, Self::Error> {
+        let first_payment_date =
+            chrono::DateTime::from_timestamp_millis(self.first_payment_date_millis);
+        let first_payment_date = match first_payment_date {
+            Some(date) => date.date_naive(),
+            None => {
+                return Err("invalid first payment date".to_string());
+            }
+        };
+
+        let params = self.params.ok_or("missing params")?;
+        let params: Params = params.try_into()?;
+        let down_payment_params = core_payment_plan::DownPaymentParams {
+            params,
+            first_payment_date,
+            installments: self.installments,
+            min_installment_amount: self.min_installment_amount,
+            request_amount: self.request_amount,
+        };
+
+        Ok(down_payment_params)
+    }
+}
+
+impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
+    fn from(value: core_payment_plan::DownPaymentResponse) -> Self {
+        let plan: PlanResponses = value.plans.into();
+
+        let first_payment_date = value
+            .first_payment_date
+            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+            .and_utc()
+            .timestamp_millis();
+
+        DownPaymentResponse {
+            first_payment_date_millis: first_payment_date,
+            plans: Some(plan),
+            installment_amount: value.installment_amount,
+            total_amount: value.total_amount,
+            installment_quantity: value.installment_quantity,
+        }
+    }
+}
+
+impl From<Vec<core_payment_plan::DownPaymentResponse>> for DownPaymentResponses {
+    fn from(value: Vec<core_payment_plan::DownPaymentResponse>) -> Self {
+        let responses = value.into_iter().map(|r| r.into()).collect();
+        DownPaymentResponses { responses }
+    }
+}
+
+pub fn deserialize_down_payment_params(
+    buf: &[u8],
+) -> Result<DownPaymentParams, prost::DecodeError> {
+    DownPaymentParams::decode(buf)
+}
+
+pub fn serialize_down_payment_response(response: DownPaymentResponse) -> Vec<u8> {
+    let mut buf = Vec::new();
+    buf.reserve(response.encoded_len());
+    // Unwrap is safe, since we have reserved sufficient capacity in the vector.
+    response.encode(&mut buf).unwrap();
+    buf
+}
+
+pub fn serialize_down_payment_responses(responses: DownPaymentResponses) -> Vec<u8> {
     let mut buf = Vec::new();
     buf.reserve(responses.encoded_len());
     // Unwrap is safe, since we have reserved sufficient capacity in the vector.

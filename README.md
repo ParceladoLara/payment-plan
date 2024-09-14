@@ -7,6 +7,17 @@ The package is structured as follows:
 - `node`: Contains the [Neon](https://neon-rs.dev) for the NodeJs wrapper of the binary.
 - `bin`: Contains the binary and the protobuf specification for any communication between the binary and the language that uses it.
 
+If you want to see more about each package, you can see there individual MD files.
+
+[core](docs/core.md)
+
+[node](docs/node.md)
+
+[bin](docs/bin.md)
+
+And if you have no knowledge of Rust, you can see how rust project are structured [here](docs/rust.md)
+
+
 # How to build
 
 To build any of the binaries, you need to have [Rust](https://www.rust-lang.org/tools/install) installed.

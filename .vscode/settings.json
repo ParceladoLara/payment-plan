@@ -4,6 +4,8 @@
     "powf",
     "protobuf",
     "PROTOC",
+    "struct",
+    "structs",
     "synlink",
     "XIRR"
   ]

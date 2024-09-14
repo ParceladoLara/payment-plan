@@ -55,3 +55,24 @@ message PlanResponse {
 message PlanResponses {
     repeated PlanResponse responses = 1;
 }
+
+
+message DownPaymentParams {
+    PlanParams params = 1;
+    double request_amount = 2;
+    double min_installment_amount = 3;
+    int64 first_payment_date_millis = 4;
+    uint32 installments = 5;
+}
+
+message DownPaymentResponse {
+    double installment_amount = 1;
+    double total_amount = 2;
+    uint32 installment_quantity = 3;
+    int64 first_payment_date_millis = 4;
+    PlanResponses plans = 5;
+}
+
+message DownPaymentResponses {
+    repeated DownPaymentResponse responses = 1;
+}

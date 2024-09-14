@@ -1,6 +1,6 @@
-use xirr::{compute, InvalidPaymentsError, Payment};
+use xirr::{compute, Payment};
 
-use crate::Params;
+use crate::{err::PaymentPlanError, Params};
 
 use super::MONTH_AS_YEAR_FRACTION;
 
@@ -8,7 +8,7 @@ pub fn calculate_eir_monthly(
     params: Params,
     eir_params: Vec<Payment>,
     customer_debit_service_proportion: f64,
-) -> Result<f64, InvalidPaymentsError> {
+) -> Result<f64, PaymentPlanError> {
     /*
         Para calcular a taxa efetiva de juros, calcula-se o valor de parcela considerando-se apenas o valor requisitado
         e o fator de multiplicação.
@@ -55,7 +55,7 @@ pub fn calculate_eir_monthly(
         }
     }
     if eir_monthly.is_nan() {
-        return Err(InvalidPaymentsError);
+        return Err(PaymentPlanError::InvalidRequestedAmount);
     }
     return Ok(eir_monthly);
 }

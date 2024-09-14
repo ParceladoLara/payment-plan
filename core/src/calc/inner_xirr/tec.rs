@@ -1,13 +1,13 @@
-use xirr::{compute, InvalidPaymentsError, Payment};
+use xirr::{compute, Payment};
 
-use crate::Params;
+use crate::{err::PaymentPlanError, Params};
 
 use super::MONTH_AS_YEAR_FRACTION;
 
 pub fn calculate_tec_monthly(
     params: Params,
     tec_params: Vec<Payment>,
-) -> Result<f64, InvalidPaymentsError> {
+) -> Result<f64, PaymentPlanError> {
     let mut total_effective_cost_xirr = vec![Payment {
         amount: params.requested_amount,
         date: params.requested_date,
@@ -48,7 +48,7 @@ pub fn calculate_tec_monthly(
     }
 
     if tec_monthly.is_nan() {
-        return Err(InvalidPaymentsError);
+        return Err(PaymentPlanError::InvalidRequestedAmount);
     }
     return Ok(tec_monthly);
 }

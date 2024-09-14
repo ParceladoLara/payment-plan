@@ -1,6 +1,11 @@
 use serde::{Deserialize, Serialize};
 
+// export of the calc module so it can be used by other projects
+//ctrl + click on the calc module to see the code
 pub mod calc;
+
+// Does are private modules, declared here so they can be used by the rest of the project
+mod err;
 mod util;
 
 #[derive(Debug, Clone, Copy, Deserialize)]
@@ -19,7 +24,7 @@ pub struct Params {
     pub max_total_amount: f64,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone, Copy)]
 pub struct Response {
     pub installment: u32,
     pub due_date: chrono::NaiveDate,
@@ -50,4 +55,23 @@ pub struct Response {
     pub tac_amount: f64,
     pub iof_percentage: f64,
     pub overall_iof: f64,
+}
+
+#[derive(Debug, Deserialize, Clone, Copy)]
+pub struct DownPaymentParams {
+    pub params: Params,              // The params for the actual payment plan
+    pub request_amount: f64,         // The requested amount for the down payment(ex: 1000.0)
+    pub min_installment_amount: f64, // The minium installment value for the down payment (ex: 100.0)
+    pub first_payment_date: chrono::NaiveDate, // The first payment date for the down payment
+    pub installments: u32,           // The max number of installments for the down payment (ex: 12)
+}
+
+//This struct can't derive Copy because it contains a Vec that is not known at compile time
+#[derive(Debug, Serialize, Clone)]
+pub struct DownPaymentResponse {
+    pub installment_amount: f64, // The installment amount for the down payment
+    pub total_amount: f64,       // The total amount for the down payment
+    pub installment_quantity: u32, // The number of installments for the down payment
+    pub first_payment_date: chrono::NaiveDate, // The first payment date for the down payment
+    pub plans: Vec<Response>,    // The payment plans available for the down payment
 }
