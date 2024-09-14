@@ -28,7 +28,7 @@ With NodeJs installed, you can build the NodeJs wrapper by running the following
 
 ```bash
 cd node
-npm run build -- --release
+npm run build:release
 ```
 
 This will generate a `index.node` file in the `node` directory.
