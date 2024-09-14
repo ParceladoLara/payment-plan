@@ -189,26 +189,16 @@ pub fn cast_js_object_to_down_payment_param(
     obj: Handle<JsObject>,
 ) -> NeonResult<DownPaymentParams> {
     let params: Handle<JsObject> = obj.get(cx, "params")?;
-    println!("js params {:?}", params);
     let request_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
-    println!("js requested amount{:?}", request_amount);
     let min_installment_amount: Handle<JsValue> = obj.get(cx, "minInstallmentAmount")?;
-    println!("js min installment{:?}", min_installment_amount);
     let first_payment_date_millis: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
-    println!("js payment date{:?}", first_payment_date_millis);
     let installments: Handle<JsValue> = obj.get(cx, "installments")?;
-    println!("js installments{:?}", installments);
 
     let params = cast_js_object_to_param(cx, params)?;
-    println!("params {:?}", params);
     let request_amount = any_to_number(cx, request_amount)?;
-    println!("requested amount {:?}", request_amount);
     let min_installment_amount = any_to_number(cx, min_installment_amount)?;
-    println!("min installment amount {:?}", min_installment_amount);
     let first_payment_date_millis = first_payment_date_millis.value(cx);
-    println!("first payment date {:?}", first_payment_date_millis);
     let installments = any_to_number(cx, installments)? as u32;
-    println!("installments {:?}", installments);
 
     let first_payment_date =
         chrono::DateTime::from_timestamp_millis(first_payment_date_millis as i64);
