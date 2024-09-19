@@ -1,5 +1,5 @@
 # PAYMENT PLAN
-This is the Lara Payment Plan the heart of Lara Credit Proposal System. It is a binary that calculates the payment plan for a given credit proposal.
+This is the Lara Payment Plan, the heart of Lara Credit Proposal System. It is a binary that calculates the payment plan for a given credit proposal.
 
 # Package Structure
 The package is structured as follows:
@@ -7,15 +7,12 @@ The package is structured as follows:
 - `node`: Contains the [Neon](https://neon-rs.dev) for the NodeJs wrapper of the binary.
 - `bin`: Contains the binary and the protobuf specification for any communication between the binary and the language that uses it.
 
-If you want to see more about each package, you can see there individual MD files.
+If you want to see more about each package, you can see their individual MD files.
 
-[core](docs/core.md)
-
-[node](docs/node.md)
-
-[bin](docs/bin.md)
-
-[wasm](docs/wasm.md)
+- [core](docs/core.md)
+- [node](docs/node.md)
+- [bin](docs/bin.md)
+- [wasm](docs/wasm.md)
 
 And if you have no knowledge of Rust, you can see how rust project are structured [here](docs/rust.md)
 
