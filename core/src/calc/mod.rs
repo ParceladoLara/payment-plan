@@ -34,7 +34,7 @@ mod prepare;
 pub fn calculate_down_payment_plan(
     params: DownPaymentParams,
 ) -> Result<Vec<DownPaymentResponse>, PaymentPlanError> {
-    if params.request_amount <= 0.0 {
+    if params.requested_amount <= 0.0 {
         return Err(PaymentPlanError::InvalidRequestedAmount);
     }
     if params.installments == 0 {
@@ -44,7 +44,7 @@ pub fn calculate_down_payment_plan(
 
     let mut base_params = params.params;
     let min_installment_amount = params.min_installment_amount;
-    let down_payment_amount = params.request_amount;
+    let down_payment_amount = params.requested_amount;
     let down_payment_first_payment_date = params.first_payment_date;
 
     // The start of the actual payment plan for 1 installment (we will update this in every iteration)
@@ -1754,7 +1754,7 @@ mod down_payment_test {
 
         let params = DownPaymentParams {
             params: PLAN_PARAM,
-            request_amount: down_payment,
+            requested_amount: down_payment,
             min_installment_amount,
             installments,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
@@ -1777,7 +1777,7 @@ mod down_payment_test {
 
         let params = DownPaymentParams {
             params: PLAN_PARAM,
-            request_amount: down_payment,
+            requested_amount: down_payment,
             min_installment_amount,
             installments,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
@@ -1820,7 +1820,7 @@ mod down_payment_test {
 
         let params = DownPaymentParams {
             params: PLAN_PARAM,
-            request_amount: down_payment,
+            requested_amount: down_payment,
             min_installment_amount,
             installments,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
@@ -1851,7 +1851,7 @@ mod down_payment_test {
 
         let params = DownPaymentParams {
             params: PLAN_PARAM,
-            request_amount: down_payment,
+            requested_amount: down_payment,
             min_installment_amount,
             installments,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
@@ -1886,7 +1886,7 @@ mod down_payment_test {
 
         let params = DownPaymentParams {
             params: PLAN_PARAM,
-            request_amount: down_payment,
+            requested_amount: down_payment,
             min_installment_amount,
             installments,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),

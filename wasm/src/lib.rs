@@ -4,7 +4,7 @@ use types::{
 };
 use wasm_bindgen::prelude::*;
 
-mod custom_serde;
+mod debug;
 mod types;
 
 #[allow(non_snake_case)]
@@ -14,6 +14,7 @@ pub fn calculate_payment_plan(p: Params) -> Result<Vec<Response>, JsError> {
         Ok(params) => params,
         Err(e) => return Err(e),
     };
+
     let result = match core_payment_plan::calc::calculate_payment_plan(core_params) {
         Ok(r) => r,
         Err(e) => return Err(JsError::new(&e.to_string())),

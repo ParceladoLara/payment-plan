@@ -139,7 +139,7 @@ impl TryInto<core_payment_plan::DownPaymentParams> for DownPaymentParams {
             first_payment_date,
             installments: self.installments,
             min_installment_amount: self.min_installment_amount,
-            request_amount: self.request_amount,
+            requested_amount: self.requested_amount,
         };
 
         Ok(down_payment_params)

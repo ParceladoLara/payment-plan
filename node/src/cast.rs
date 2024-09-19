@@ -189,13 +189,13 @@ pub fn cast_js_object_to_down_payment_param(
     obj: Handle<JsObject>,
 ) -> NeonResult<DownPaymentParams> {
     let params: Handle<JsObject> = obj.get(cx, "params")?;
-    let request_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
+    let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
     let min_installment_amount: Handle<JsValue> = obj.get(cx, "minInstallmentAmount")?;
     let first_payment_date_millis: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
     let installments: Handle<JsValue> = obj.get(cx, "installments")?;
 
     let params = cast_js_object_to_param(cx, params)?;
-    let request_amount = any_to_number(cx, request_amount)?;
+    let requested_amount = any_to_number(cx, requested_amount)?;
     let min_installment_amount = any_to_number(cx, min_installment_amount)?;
     let first_payment_date_millis = first_payment_date_millis.value(cx);
     let installments = any_to_number(cx, installments)? as u32;
@@ -211,7 +211,7 @@ pub fn cast_js_object_to_down_payment_param(
 
     Ok(DownPaymentParams {
         params,
-        request_amount,
+        requested_amount,
         min_installment_amount,
         first_payment_date,
         installments,

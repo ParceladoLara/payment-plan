@@ -1,7 +1,7 @@
-use crate::custom_serde::Date;
 use serde::Serialize;
 use tsify_next::Tsify;
-use wasm_bindgen::JsValue;
+
+use super::date::Date;
 
 #[allow(non_snake_case)]
 #[derive(Tsify, Debug, Serialize, Clone)]
@@ -31,8 +31,10 @@ pub struct Response {
     pub tec_yearly: f64,
     pub eir_monthly: f64,
     pub tec_monthly: f64,
+    #[serde(rename = "totalIOF")]
     pub total_iof: f64,
     pub contract_amount: f64,
+    #[serde(rename = "contractAmountWithoutTAC")]
     pub contract_amount_without_tac: f64,
     pub tac_amount: f64,
     pub iof_percentage: f64,
@@ -41,10 +43,9 @@ pub struct Response {
 
 impl From<core_payment_plan::Response> for Response {
     fn from(value: core_payment_plan::Response) -> Self {
-        let due_date = js_sys::Date::new(&JsValue::from_str(&value.due_date.to_string()));
         Self {
             installment: value.installment,
-            due_date: Date(due_date),
+            due_date: value.due_date.into(),
             accumulated_days: value.accumulated_days,
             days_index: value.days_index,
             accumulated_days_index: value.accumulated_days_index,
@@ -91,13 +92,11 @@ pub struct DownPaymentResponse {
 
 impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
     fn from(value: core_payment_plan::DownPaymentResponse) -> Self {
-        let first_payment_date =
-            js_sys::Date::new(&JsValue::from_str(&value.first_payment_date.to_string()));
         Self {
             installment_amount: value.installment_amount,
             total_amount: value.total_amount,
             installment_quantity: value.installment_quantity,
-            first_payment_date: Date(first_payment_date),
+            first_payment_date: value.first_payment_date.into(),
             plans: value.plans.into_iter().map(|r| r.into()).collect(),
         }
     }

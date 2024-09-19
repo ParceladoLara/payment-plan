@@ -60,7 +60,7 @@ pub struct Response {
 #[derive(Debug, Deserialize, Clone, Copy)]
 pub struct DownPaymentParams {
     pub params: Params,              // The params for the actual payment plan
-    pub request_amount: f64,         // The requested amount for the down payment(ex: 1000.0)
+    pub requested_amount: f64,       // The requested amount for the down payment(ex: 1000.0)
     pub min_installment_amount: f64, // The minium installment value for the down payment (ex: 100.0)
     pub first_payment_date: chrono::NaiveDate, // The first payment date for the down payment
     pub installments: u32,           // The max number of installments for the down payment (ex: 12)

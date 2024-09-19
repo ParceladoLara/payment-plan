@@ -59,7 +59,7 @@ message PlanResponses {
 
 message DownPaymentParams {
     PlanParams params = 1;
-    double request_amount = 2;
+    double requested_amount = 2;
     double min_installment_amount = 3;
     int64 first_payment_date_millis = 4;
     uint32 installments = 5;
