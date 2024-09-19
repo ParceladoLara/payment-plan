@@ -21,6 +21,6 @@ This package is the core of the Lara Payment Plan, it contains the business logi
 
 So the maintenance of this package should be done with care, only if necessary, and with a lot of tests.
 
-This is the least complicated package in terms of dependencies,rust knowledge its basically just math.
+This is the least complicated package in terms of dependencies, your Rust knowledge doesn't need to be huge cause it's basically just math.
 
 Start by looking at the [lib.rs](../core/src/lib.rs) and go from there.
