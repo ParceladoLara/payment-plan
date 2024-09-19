@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  run-cargo-tests:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,3 +27,6 @@ jobs:
 
       - name: Run node tests
         run: cd node && npm ci && npm test
+
+      - name: Run wasm tests
+        run: cd wasm && npm ci && npm test
