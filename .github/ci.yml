@@ -1,0 +1,17 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [master]
+    paths-ignore:
+      - "**/*.md"
+permissions:
+  contents: read
+
+jobs:
+  run-cargo-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run cargo tests
+        run: cargo test --verbose

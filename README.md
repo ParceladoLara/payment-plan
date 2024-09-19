@@ -190,4 +190,11 @@ func main() {
 		log.Fatalf("Failed to deserialize PlanResponses: %v", err)
 	}
 }
+```
 
+# Testing
+Assuming that you already have the setup for every package, you can run the tests by running the following command on the root of the project:
+
+```bash
+make test
+```

@@ -9,15 +9,13 @@
     "test": "npm run build && glob -c \"tsx --test --test-reporter spec \" \"./test/**/*.spec.ts\""
   },
   "devDependencies": {
-    "@types/node": "^22.5.4",
-    "cargo-cp-artifact": "0.1",
-    "glob": "^11.0.0",
-    "i": "^0.3.7",
+    "@types/node": "22.5.4",
+    "glob": "11.0.0",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
-    "tsc-alias": "^1.8.8",
+    "tsc-alias": "1.8.8",
     "tsconfig-paths": "4.2.0",
-    "tsx": "^4.19.1",
+    "tsx": "4.19.1",
     "typescript": "5.4.5"
   }
 }
