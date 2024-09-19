@@ -15,6 +15,8 @@ If you want to see more about each package, you can see there individual MD file
 
 [bin](docs/bin.md)
 
+[wasm](docs/wasm.md)
+
 And if you have no knowledge of Rust, you can see how rust project are structured [here](docs/rust.md)
 
 
@@ -57,6 +59,29 @@ cargo build --package payment-plan --release
 ```
 
 This will generate a binary called `payment-plan` in the `target/release` directory.
+
+## WASM
+
+First install [wasm-pack](https://github.com/rustwasm/wasm-pack?tab=readme-ov-file)
+
+```bash
+curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+```
+
+Then you can build the wasm by running the following commands:
+
+```bash
+cd wasm
+wasm-pack build --target web  
+```
+
+And then to run the example um can run with a simple server like so:
+
+```bash
+python3 -m http.server --directory example
+```
+
+Then you can open your browser and go to `http://localhost:8000` to see the example.
 
 # Usage
 First create a synlink to the binary in your project.

@@ -5,10 +5,10 @@ edition = "2021"
 
 
 [dependencies]
-prost = "0.12.6"
+prost = "0.13.2"
 core_payment_plan = { path ="../core" }
 chrono = { version = "0.4.38" }
 clap = { version = "4.5.17", features = ["derive"] }
 
 [build-dependencies]
-prost-build = "0.12.6"
+prost-build = "0.13.2"
