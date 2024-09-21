@@ -7,8 +7,12 @@
   "scripts": {
     "start": "tsx ./ts/index.ts",
     "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "npm run build -- --release",
-    "test": "npm run build:release && glob -c \"tsx --test --test-reporter spec \" \"./ts/test/**/*.spec.ts\""
+    "build:release": "npm run build -- --release --features $FEATURE",
+    "build:bmp": "FEATURE=bmp npm run build:release",
+    "build:qitech": "FEATURE=qitech npm run build:release",
+    "test:bmp": "npm run build:bmp && glob -c \"tsx --test --test-reporter spec \" \"./ts/test/bmp/**/*.spec.ts\"",
+    "test:qitech": "npm run build:qitech && glob -c \"tsx --test --test-reporter spec \" \"./ts/test/qitech/**/*.spec.ts\"",
+    "test": "npm run test:bmp && npm run test:qitech"
   },
   "devDependencies": {
     "@types/node": "22.5.4",
