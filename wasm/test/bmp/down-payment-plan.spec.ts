@@ -4,7 +4,7 @@ import {
   calculateDownPaymentPlan,
   Params,
   DownPaymentParams,
-} from "../pkg/wasm_payment_plan";
+} from "../../pkg/wasm_payment_plan";
 
 test("calculate down payment plan 2 installments", () => {
   const planParam: Params = {

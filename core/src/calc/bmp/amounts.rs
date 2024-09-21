@@ -76,7 +76,7 @@ pub fn calculate_amounts(
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::amounts::calculate_amounts, Params};
+    use crate::{calc::bmp::amounts::calculate_amounts, Params};
 
     #[test]
     fn test_calculate_amounts_test_7() {

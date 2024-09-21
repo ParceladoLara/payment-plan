@@ -1,4 +1,4 @@
-use core_payment_plan::{calc::calculate_payment_plan, Params};
+use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
     let first_payment_date = chrono::DateTime::from_timestamp_millis(1719025200000)

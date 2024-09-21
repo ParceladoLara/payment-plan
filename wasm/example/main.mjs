@@ -51,7 +51,7 @@ const dResult = calculateDownPaymentPlan({
   installments: 12,
   minInstallmentAmount: 50,
   params,
-  requestAmount: 1000,
+  requestedAmount: 1000,
 });
 
 console.log(result);

@@ -57,7 +57,7 @@ pub fn calculate_tec_monthly(
 mod test {
     use xirr::Payment;
 
-    use crate::{calc::inner_xirr::tec::calculate_tec_monthly, Params};
+    use crate::{calc::bmp::inner_xirr::tec::calculate_tec_monthly, Params};
 
     #[test]
     fn test_calculate_tec_monthly_test_7() {

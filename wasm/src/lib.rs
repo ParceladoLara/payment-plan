@@ -15,7 +15,7 @@ pub fn calculate_payment_plan(p: Params) -> Result<Vec<Response>, JsError> {
         Err(e) => return Err(e),
     };
 
-    let result = match core_payment_plan::calc::calculate_payment_plan(core_params) {
+    let result = match core_payment_plan::calculate_payment_plan(core_params) {
         Ok(r) => r,
         Err(e) => return Err(JsError::new(&e.to_string())),
     };
@@ -32,7 +32,7 @@ pub fn calculate_down_payment_plan(
         Ok(params) => params,
         Err(e) => return Err(e),
     };
-    let result = match core_payment_plan::calc::calculate_down_payment_plan(core_params) {
+    let result = match core_payment_plan::calculate_down_payment_plan(core_params) {
         Ok(r) => r,
         Err(e) => return Err(JsError::new(&e.to_string())),
     };

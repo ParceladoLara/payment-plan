@@ -38,7 +38,7 @@ mod test {
     use chrono::NaiveDate;
 
     use crate::{
-        calc::{inner_xirr::prepare_xirr_params, prepare::prepare_calculation},
+        calc::bmp::{inner_xirr::prepare_xirr_params, prepare::prepare_calculation},
         Params,
     };
 

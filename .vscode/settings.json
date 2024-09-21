@@ -5,6 +5,8 @@
     "powf",
     "protobuf",
     "PROTOC",
+    "qitech",
+    "serde",
     "struct",
     "structs",
     "synlink",
