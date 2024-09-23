@@ -33,7 +33,8 @@ pub fn calculate_amounts(
     let contract_amount_without_tac = requested_amount + total_iof;
 
     let installment_amount = contract_amount * (1.0 / accumulated_days_index);
-    let installment_amount_without_tac = requested_amount * (1.0 / accumulated_days_index);
+    let installment_amount_without_tac =
+        contract_amount_without_tac * (1.0 / accumulated_days_index);
 
     let total_amount = installment_amount * installments;
     let debit_service = total_amount - requested_amount - tac_amount - total_iof;

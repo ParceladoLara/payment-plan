@@ -1,27 +1,23 @@
 use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
-    let first_payment_date = chrono::DateTime::from_timestamp_millis(1719025200000)
-        .unwrap()
-        .date_naive();
+    let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 23).unwrap();
 
-    let requested_date = chrono::DateTime::from_timestamp_millis(1718983261490)
-        .unwrap()
-        .date_naive();
+    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
     let params = Params {
         max_total_amount: f64::MAX,
         min_installment_amount: 100.0,
-        requested_amount: 2770.71,
+        requested_amount: 20000.00,
         first_payment_date,
         requested_date,
-        installments: 48,
+        installments: 18,
         debit_service_percentage: 0,
-        mdr: 0.029999999329447746,
+        mdr: 0.0,
         tac_percentage: 0.0,
-        iof_overall: 0.003800000064074993,
-        iof_percentage: 0.029999999329447746,
-        interest_rate: 0.029999999329447746,
+        iof_overall: 0.0038,  // %0.38
+        iof_percentage: 0.03, // 0.0082%
+        interest_rate: 0.04,
     };
 
     let result = calculate_payment_plan(params).unwrap();
@@ -74,6 +70,5 @@ fn main() {
         println!("iof_percentage {}", response.iof_percentage);
         println!("overall_iof {}", response.overall_iof);
         println!("-------------------");
-        break;
     }
 }

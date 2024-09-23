@@ -4,8 +4,6 @@ pub mod bmp;
 pub mod qi_tech;
 
 pub trait PaymentPlan {
-    fn new() -> Self;
-
     fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError>;
     /*
         A down payment plan is a payment plan that is made before the actual payment plan.

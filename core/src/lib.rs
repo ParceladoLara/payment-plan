@@ -9,7 +9,7 @@ use calc::qi_tech::QiTech;
 
 // Default to BMP if no feature is specified
 #[cfg(not(any(feature = "bmp", feature = "qitech")))]
-use calc::bmp::BMP;
+use calc::qi_tech::QiTech;
 
 mod calc;
 mod err;
@@ -90,7 +90,7 @@ const P: QiTech = QiTech {};
 
 // Default to BMP if no feature is specified
 #[cfg(not(any(feature = "bmp", feature = "qitech")))]
-const P: BMP = BMP {};
+const P: QiTech = QiTech {};
 
 pub fn calculate_down_payment_plan(
     params: DownPaymentParams,

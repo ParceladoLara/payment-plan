@@ -19,10 +19,6 @@ mod prepare;
 pub struct BMP;
 
 impl PaymentPlan for BMP {
-    fn new() -> Self {
-        Self
-    }
-
     fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError> {
         let prepared_calculations = prepare_calculation(params);
         let calculated = calculate(params, prepared_calculations);
