@@ -31,7 +31,7 @@ pub struct Params {
     pub max_total_amount: f64,
 }
 
-#[derive(Debug, Serialize, Clone, Copy)]
+#[derive(Debug, Serialize, Clone, Copy, Default)]
 pub struct Response {
     pub installment: u32,
     pub due_date: chrono::NaiveDate,

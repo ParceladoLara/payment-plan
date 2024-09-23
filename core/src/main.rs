@@ -8,7 +8,7 @@ fn main() {
     let params = Params {
         max_total_amount: f64::MAX,
         min_installment_amount: 100.0,
-        requested_amount: 20000.00,
+        requested_amount: 2000.00,
         first_payment_date,
         requested_date,
         installments: 18,
