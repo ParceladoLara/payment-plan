@@ -11,9 +11,9 @@ fn main() {
         requested_amount: 2000.00,
         first_payment_date,
         requested_date,
-        installments: 18,
+        installments: 48,
         debit_service_percentage: 0,
-        mdr: 0.0,
+        mdr: 0.05,
         tac_percentage: 0.0,
         iof_overall: 0.0038,  // %0.38
         iof_percentage: 0.03, // 0.0082%

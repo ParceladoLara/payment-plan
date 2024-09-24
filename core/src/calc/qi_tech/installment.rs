@@ -9,8 +9,10 @@ pub struct InstallmentData {
     pub accumulated_days: Vec<i64>,
     pub diffs: Vec<i64>,
     pub amount: f64,
-    pub first_due_date: NaiveDate,
+    pub factor: f64,
+    pub accumulated_factor: f64,
     pub last_due_date: NaiveDate,
+    pub due_dates: Vec<NaiveDate>,
 }
 
 pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
@@ -27,12 +29,13 @@ pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
     let mut accumulated_days = 0;
     let mut accumulated_factor = 0.0;
 
-    let first_due_date = due_date;
-
     let mut diffs = Vec::with_capacity(installments as usize);
     let mut accumulated_days_v = Vec::with_capacity(installments as usize);
+    let mut due_dates = Vec::with_capacity(installments as usize);
 
     let mut instalment_amount_result = 0.0;
+
+    let mut factor = 0.0;
 
     for i in 0..installments {
         let main_value = qi_params.main_value;
@@ -41,10 +44,12 @@ pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
             due_date = add_months(due_date, 1);
         }
 
+        due_dates.push(due_date);
+
         let diff = due_date.signed_duration_since(last_due_date).num_days();
         diffs.push(diff);
         accumulated_days += diff;
-        let factor = 1.0 / (1.0 + daily_interest_rate).powf(accumulated_days as f64);
+        factor = 1.0 / (1.0 + daily_interest_rate).powf(accumulated_days as f64);
 
         accumulated_factor += factor;
         let installment_amount = main_value / accumulated_factor;
@@ -57,7 +62,9 @@ pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
         accumulated_days: accumulated_days_v,
         diffs,
         amount: instalment_amount_result,
-        first_due_date,
+        factor,
+        accumulated_factor,
         last_due_date: due_date,
+        due_dates,
     };
 }
