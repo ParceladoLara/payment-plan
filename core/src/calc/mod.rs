@@ -1,7 +1,7 @@
 use crate::{err::PaymentPlanError, DownPaymentParams, DownPaymentResponse, Params, Response};
 
-pub mod bmp;
-pub mod qi_tech;
+mod inner_xirr;
+pub mod providers;
 
 pub trait PaymentPlan {
     fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError>;

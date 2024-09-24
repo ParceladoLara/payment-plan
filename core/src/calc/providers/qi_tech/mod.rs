@@ -1,23 +1,25 @@
 use amounts::calculate_amounts;
-use inner_xirr::{eir::calculate_eir_monthly, prepare_xirr_params, tec::calculate_tec_monthly};
 
 use crate::{
-    err::PaymentPlanError, util::round_decimal_cases, DownPaymentParams, DownPaymentResponse,
-    Params, Response,
+    calc::{
+        inner_xirr::{eir::calculate_eir_monthly, prepare_xirr_params, tec::calculate_tec_monthly},
+        PaymentPlan,
+    },
+    err::PaymentPlanError,
+    util::round_decimal_cases,
+    DownPaymentParams, DownPaymentResponse, Params, Response,
 };
 
 const POTENCY: f64 = 0.0333333333333333333333333333333333333;
 
 const NUM_OF_RUNS: u32 = 7; //7 passes is the minimum to get the same data as the xml
 
-use super::PaymentPlan;
-
 mod amounts;
-mod inner_xirr;
 mod installment;
 
-struct QiTechParams<'a> {
-    params: &'a Params,
+#[derive(Default, Debug, Clone, Copy)]
+struct QiTechParams {
+    params: Params,
     main_value: f64,
     daily_interest_rate: f64,
 }
@@ -43,7 +45,7 @@ impl PaymentPlan for QiTech {
         for i in 1..=params.installments {
             params.installments = i;
             let params = QiTechParams {
-                params: &params,
+                params,
                 main_value,
                 daily_interest_rate,
             };
@@ -89,7 +91,7 @@ fn calc(mut params: QiTechParams) -> Response {
     let accumulated_days_index = data.accumulated_factor;
     let customer_debit_service_proportion = 1.0 - debit_service_percentage as f64 / 100.0;
 
-    let params = *params.params;
+    let params = params.params;
 
     let amounts = calculate_amounts(
         params,

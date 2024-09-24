@@ -64,7 +64,7 @@ pub fn calculate_eir_monthly(
 mod test {
     use xirr::Payment;
 
-    use crate::{calc::bmp::inner_xirr::eir::calculate_eir_monthly, Params};
+    use crate::{calc::providers::bmp::inner_xirr::eir::calculate_eir_monthly, Params};
 
     #[test]
     fn test_calculate_eir_monthly_test_7() {

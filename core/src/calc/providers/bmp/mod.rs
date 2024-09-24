@@ -4,12 +4,11 @@ use iof::calculate_iof;
 use prepare::{prepare_calculation, PreparedCalculation};
 
 use crate::{
+    calc::PaymentPlan,
     err::PaymentPlanError,
     util::{add_days, add_months},
     DownPaymentParams, DownPaymentResponse, Params, Response,
 };
-
-use super::PaymentPlan;
 
 mod amounts;
 mod inner_xirr;

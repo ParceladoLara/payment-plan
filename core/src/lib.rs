@@ -3,19 +3,19 @@ use err::PaymentPlanError;
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "bmp")]
-use calc::bmp::BMP;
+use calc::providers::bmp::BMP;
 #[cfg(feature = "qitech")]
-use calc::qi_tech::QiTech;
+use calc::providers::qi_tech::QiTech;
 
 // Default to BMP if no feature is specified
 #[cfg(not(any(feature = "bmp", feature = "qitech")))]
-use calc::qi_tech::QiTech;
+use calc::providers::qi_tech::QiTech;
 
 mod calc;
 mod err;
 mod util;
 
-#[derive(Debug, Clone, Copy, Deserialize)]
+#[derive(Debug, Default, Clone, Copy, Deserialize)]
 pub struct Params {
     pub requested_amount: f64,
     pub first_payment_date: chrono::NaiveDate,

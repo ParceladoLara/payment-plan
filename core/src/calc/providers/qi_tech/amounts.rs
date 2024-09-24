@@ -59,7 +59,7 @@ pub fn calculate_amounts(
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::qi_tech::amounts::calculate_amounts, Params};
+    use crate::{calc::providers::qi_tech::amounts::calculate_amounts, Params};
 
     #[test]
     fn test_calculate_amounts_test_7() {
