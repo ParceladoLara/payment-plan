@@ -44,3 +44,14 @@ jobs:
 
       - name: Run wasm tests
         run: cd wasm && npm ci && npm test
+
+  run-bin-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Run bin tests
+        run: cd bin && make test

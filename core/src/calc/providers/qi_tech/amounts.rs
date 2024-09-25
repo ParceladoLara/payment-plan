@@ -1,6 +1,6 @@
 use crate::Params;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct AmountsResponse {
     pub debit_service: f64,
     pub customer_debit_service_amount: f64,
@@ -12,7 +12,7 @@ pub struct AmountsResponse {
     pub settled_to_merchant: f64,
 }
 
-pub fn calculate_amounts(
+pub fn calc(
     params: Params,
     installments: f64,
     customer_debit_service_proportion: f64,
@@ -55,4 +55,56 @@ pub fn calculate_amounts(
         merchant_total_amount,
         settled_to_merchant,
     };
+}
+
+#[cfg(test)]
+mod test {
+    use crate::{calc::providers::qi_tech::amounts::AmountsResponse, Params};
+
+    #[test]
+    fn test_calc() {
+        let expected = AmountsResponse {
+            debit_service: 3264.9940111656333,
+            customer_debit_service_amount: 3264.9940111656333,
+            customer_amount: 605.4000559686463,
+            calculation_basis_for_effective_interest_rate: 594.2218895092018,
+            mdr_amount: 371.55,
+            merchant_debit_service_amount: 0.0,
+            merchant_total_amount: 371.55,
+            settled_to_merchant: 7059.45,
+        };
+
+        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
+
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
+
+        let params = Params {
+            requested_amount: 7431.0,
+            first_payment_date,
+            requested_date,
+            installments: 18,
+            debit_service_percentage: 0,
+            mdr: 0.05,
+            tac_percentage: 0.0,
+            iof_overall: 0.0038,
+            iof_percentage: 0.03,
+            interest_rate: 0.04,
+            min_installment_amount: 100.0,
+            max_total_amount: f64::MAX,
+        };
+        let installments = 18;
+        let debit_service_proportion = 1.0;
+        let iof = 201.20699627;
+        let total_amount = 10897.201007435633;
+
+        let amounts = super::calc(
+            params,
+            installments as f64,
+            debit_service_proportion,
+            iof,
+            total_amount,
+        );
+
+        assert_eq!(amounts, expected);
+    }
 }

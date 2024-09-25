@@ -38,3 +38,37 @@ pub fn calc(qi_params: &QiTechParams) -> f64 {
     }
     return total_iof;
 }
+
+#[cfg(test)]
+mod test {
+    use crate::{calc::providers::qi_tech::QiTechParams, Params};
+
+    #[test]
+    fn test_calc() {
+        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
+
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
+        let params = QiTechParams {
+            params: Params {
+                requested_amount: 7431.0,
+                first_payment_date,
+                requested_date,
+                installments: 18,
+                debit_service_percentage: 0,
+                mdr: 0.05,
+                tac_percentage: 0.0,
+                iof_overall: 0.0038,
+                iof_percentage: 0.03,
+                interest_rate: 0.04,
+                min_installment_amount: 100.0,
+                max_total_amount: f64::MAX,
+            },
+            main_value: 7431.0,
+            daily_interest_rate: 0.00130821,
+        };
+
+        let iof = super::calc(&params);
+
+        assert_eq!(iof, 195.90259933000002);
+    }
+}

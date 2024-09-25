@@ -1,5 +1,3 @@
-use amounts::calculate_amounts;
-
 use crate::{
     calc::{
         inner_xirr::{eir::calculate_eir_monthly, prepare_xirr_params, tec::calculate_tec_monthly},
@@ -92,7 +90,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
 
     let params = params.params;
 
-    let amounts = calculate_amounts(
+    let amounts = amounts::calc(
         params,
         installments as f64,
         customer_debit_service_proportion,
