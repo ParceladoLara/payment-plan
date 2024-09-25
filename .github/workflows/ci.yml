@@ -57,6 +57,7 @@ jobs:
       - name: Setup protoc
         uses: arduino/setup-protoc@v3.0.0
       - name: Add Go bin to PATH
-        run: echo "${{ github.workspace }}/go/bin" >> $GITHUB_PATH
+        run: |
+          echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> $GITHUB_PATH
       - name: Run bin tests
         run: cd bin && make test
