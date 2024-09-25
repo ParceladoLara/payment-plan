@@ -1,7 +1,14 @@
 {
   "cSpell.words": [
+    "bindgen",
     "chrono",
     "powf",
+    "protobuf",
+    "PROTOC",
+    "struct",
+    "structs",
+    "synlink",
+    "tsify",
     "XIRR"
   ]
 }

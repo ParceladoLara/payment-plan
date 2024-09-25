@@ -1,18 +1,29 @@
-use core::{calc::calculate_payment_plan, Params};
+use core_payment_plan::{calc::calculate_payment_plan, Params};
 
 fn main() {
+    let first_payment_date = chrono::DateTime::from_timestamp_millis(1719025200000)
+        .unwrap()
+        .date_naive();
+
+    let requested_date = chrono::DateTime::from_timestamp_millis(1718983261490)
+        .unwrap()
+        .date_naive();
+
     let params = Params {
-        requested_amount: 2900.0,
-        first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-        requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
-        installments: 6,
+        max_total_amount: f64::MAX,
+        min_installment_amount: 100.0,
+        requested_amount: 2770.71,
+        first_payment_date,
+        requested_date,
+        installments: 48,
         debit_service_percentage: 0,
-        mdr: 0.029900000000000003,
+        mdr: 0.029999999329447746,
         tac_percentage: 0.0,
-        iof_overall: 0.0038,
-        iof_percentage: 0.03,
-        interest_rate: 0.035,
+        iof_overall: 0.003800000064074993,
+        iof_percentage: 0.029999999329447746,
+        interest_rate: 0.029999999329447746,
     };
+
     let result = calculate_payment_plan(params).unwrap();
     for response in result {
         println!("installment {}", response.installment);
@@ -62,6 +73,7 @@ fn main() {
         println!("tac_amount {}", response.tac_amount);
         println!("iof_percentage {}", response.iof_percentage);
         println!("overall_iof {}", response.overall_iof);
-        println!("-------------------")
+        println!("-------------------");
+        break;
     }
 }

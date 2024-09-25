@@ -1,4 +1,4 @@
-use core::{Params, Response};
+use core_payment_plan::{DownPaymentParams, DownPaymentResponse, Params, Response};
 
 use chrono::NaiveTime;
 use neon::{
@@ -15,6 +15,7 @@ pub fn cast_js_object_to_param(
     cx: &mut FunctionContext,
     obj: Handle<JsObject>,
 ) -> NeonResult<Params> {
+    let max_total_amount: Handle<JsValue> = obj.get(cx, "maxTotalAmount")?;
     let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
     let first_payment_date: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
     let requested_date: Handle<JsDate> = obj.get(cx, "requestedDate")?;
@@ -25,7 +26,10 @@ pub fn cast_js_object_to_param(
     let iof_overall: Handle<JsValue> = obj.get(cx, "iofOverall")?;
     let iof_percentage: Handle<JsValue> = obj.get(cx, "iofPercentage")?;
     let interest_rate: Handle<JsValue> = obj.get(cx, "interestRate")?;
+    let min_installment_amount: Option<Handle<JsValue>> =
+        obj.get_opt(cx, "minInstallmentAmount")?;
 
+    let max_total_amount = any_to_number(cx, max_total_amount)?;
     let requested_amount = any_to_number(cx, requested_amount)?;
     let first_payment_date = first_payment_date.value(cx);
     let requested_date = requested_date.value(cx);
@@ -36,6 +40,10 @@ pub fn cast_js_object_to_param(
     let iof_overall = any_to_number(cx, iof_overall)?;
     let iof_percentage = any_to_number(cx, iof_percentage)?;
     let interest_rate = any_to_number(cx, interest_rate)?;
+    let min_installment_amount = match min_installment_amount {
+        Some(value) => any_to_number(cx, value)?,
+        None => 0.0,
+    };
 
     let first_payment_date = chrono::DateTime::from_timestamp_millis(first_payment_date as i64);
     let first_payment_date = match first_payment_date {
@@ -54,6 +62,8 @@ pub fn cast_js_object_to_param(
     };
 
     Ok(Params {
+        max_total_amount,
+        min_installment_amount,
         requested_amount,
         first_payment_date,
         requested_date,
@@ -74,7 +84,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     let installment = JsNumber::new(cx, response.installment);
     let due_date = response
         .due_date
-        .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
+        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
         .and_utc();
     let due_date = JsDate::new(cx, due_date.timestamp_millis() as f64);
     let due_date = match due_date {
@@ -169,6 +179,85 @@ pub fn cast_vec_response_to_js_array<'a, C: Context<'a>>(
     let array = JsArray::new(cx, responses.len() as usize);
     for (i, response) in responses.into_iter().enumerate() {
         let obj = cast_response_to_js_object(cx, response)?;
+        array.set(cx, i as u32, obj)?;
+    }
+    Ok(array)
+}
+
+pub fn cast_js_object_to_down_payment_param(
+    cx: &mut FunctionContext,
+    obj: Handle<JsObject>,
+) -> NeonResult<DownPaymentParams> {
+    let params: Handle<JsObject> = obj.get(cx, "params")?;
+    let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
+    let min_installment_amount: Handle<JsValue> = obj.get(cx, "minInstallmentAmount")?;
+    let first_payment_date_millis: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
+    let installments: Handle<JsValue> = obj.get(cx, "installments")?;
+
+    let params = cast_js_object_to_param(cx, params)?;
+    let requested_amount = any_to_number(cx, requested_amount)?;
+    let min_installment_amount = any_to_number(cx, min_installment_amount)?;
+    let first_payment_date_millis = first_payment_date_millis.value(cx);
+    let installments = any_to_number(cx, installments)? as u32;
+
+    let first_payment_date =
+        chrono::DateTime::from_timestamp_millis(first_payment_date_millis as i64);
+    let first_payment_date = match first_payment_date {
+        Some(date) => date.date_naive(),
+        None => {
+            return cx.throw_error("Invalid date");
+        }
+    };
+
+    Ok(DownPaymentParams {
+        params,
+        requested_amount,
+        min_installment_amount,
+        first_payment_date,
+        installments,
+    })
+}
+
+fn cast_down_payment_response_to_js_object<'a, C: Context<'a>>(
+    cx: &mut C,
+    response: DownPaymentResponse,
+) -> NeonResult<Handle<'a, JsObject>> {
+    let installment_amount = JsNumber::new(cx, response.installment_amount);
+    let total_amount = JsNumber::new(cx, response.total_amount);
+    let installment_quantity = JsNumber::new(cx, response.installment_quantity as f64);
+
+    let first_payment_date = response
+        .first_payment_date
+        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+        .and_utc();
+
+    let first_payment_date = JsDate::new(cx, first_payment_date.timestamp_millis() as f64);
+    let first_payment_date = match first_payment_date {
+        Ok(date) => date,
+        Err(_) => {
+            return cx.throw_error("Invalid date");
+        }
+    };
+
+    let plans = cast_vec_response_to_js_array(cx, response.plans)?;
+
+    let obj = JsObject::new(cx);
+    obj.set(cx, "installmentAmount", installment_amount)?;
+    obj.set(cx, "totalAmount", total_amount)?;
+    obj.set(cx, "installmentQuantity", installment_quantity)?;
+    obj.set(cx, "firstPaymentDate", first_payment_date)?;
+    obj.set(cx, "plans", plans)?;
+
+    Ok(obj)
+}
+
+pub fn cast_vec_down_payment_response_to_js_array<'a, C: Context<'a>>(
+    cx: &mut C,
+    responses: Vec<DownPaymentResponse>,
+) -> NeonResult<Handle<'a, JsArray>> {
+    let array = JsArray::new(cx, responses.len() as usize);
+    for (i, response) in responses.into_iter().enumerate() {
+        let obj = cast_down_payment_response_to_js_object(cx, response)?;
         array.set(cx, i as u32, obj)?;
     }
     Ok(array)

@@ -38,6 +38,8 @@ mod test {
     #[test]
     fn test_total_iof_test_6() {
         let params = Params {
+            max_total_amount: f64::MAX,
+            min_installment_amount: 0.0,
             requested_amount: 1500.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 09).unwrap(),
@@ -102,6 +104,8 @@ mod test {
     #[test]
     fn test_total_iof_test_7() {
         let params = Params {
+            max_total_amount: f64::MAX,
+            min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
             requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
