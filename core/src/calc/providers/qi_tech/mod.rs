@@ -7,7 +7,7 @@ use crate::{
     },
     err::PaymentPlanError,
     util::round_decimal_cases,
-    DownPaymentParams, DownPaymentResponse, Params, Response,
+    Params, Response,
 };
 
 const POTENCY: f64 = 0.0333333333333333333333333333333333333;
@@ -16,6 +16,7 @@ const NUM_OF_RUNS: u32 = 7; //7 passes is the minimum to get the same data as th
 
 mod amounts;
 mod installment;
+mod iof;
 
 #[derive(Default, Debug, Clone, Copy)]
 struct QiTechParams {
@@ -31,6 +32,12 @@ impl PaymentPlan for QiTech {
         &self,
         mut params: Params,
     ) -> Result<Vec<Response>, PaymentPlanError> {
+        if params.requested_amount <= 0.0 {
+            return Err(PaymentPlanError::InvalidRequestedAmount);
+        }
+        if params.installments == 0 {
+            return Err(PaymentPlanError::InvalidNumberOfInstallments);
+        }
         let mut response = Vec::with_capacity(params.installments as usize);
 
         let min_installment_amount = params.min_installment_amount;
@@ -50,7 +57,7 @@ impl PaymentPlan for QiTech {
                 daily_interest_rate,
             };
 
-            let resp = calc(params);
+            let resp = calc(params)?;
             if resp.installment_amount < min_installment_amount {
                 break;
             }
@@ -62,22 +69,14 @@ impl PaymentPlan for QiTech {
 
         Ok(response)
     }
-
-    fn calculate_down_payment_plan(
-        &self,
-        params: DownPaymentParams,
-    ) -> Result<Vec<DownPaymentResponse>, PaymentPlanError> {
-        println!("Params: {:?}", params);
-        todo!()
-    }
 }
 
-fn calc(mut params: QiTechParams) -> Response {
+fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let debit_service_percentage = params.params.debit_service_percentage;
     let requested_amount = params.params.requested_amount;
     let mut iof = 0.0;
     for _ in 0..NUM_OF_RUNS {
-        iof = total_iof(&params);
+        iof = iof::calc(&params);
         params.main_value = requested_amount + iof;
     }
 
@@ -108,16 +107,15 @@ fn calc(mut params: QiTechParams) -> Response {
         amounts.customer_amount,
     );
 
-    let eir_monthly =
-        calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap(); //TODO: handle error
+    let eir_monthly = calculate_eir_monthly(params, eir_params, customer_debit_service_proportion)?;
 
     let eir_yearly = (1.0 + eir_monthly).powf(12.0) - 1.0;
 
-    let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap(); //TODO: handle error
+    let tec_monthly = calculate_tec_monthly(params, tec_params)?;
 
     let tec_yearly = (1.0 + tec_monthly).powf(12.0) - 1.0;
 
-    return Response {
+    let resp = Response {
         contract_amount,
         total_amount,
         installment_amount,
@@ -147,41 +145,6 @@ fn calc(mut params: QiTechParams) -> Response {
         total_effective_cost: tec_monthly,
         ..Default::default()
     };
-}
 
-fn total_iof(qi_params: &QiTechParams) -> f64 {
-    let mut total_iof = 0.0;
-    let params = qi_params.params;
-    let installments = params.installments;
-
-    let iof_overall = params.iof_overall;
-
-    let daily_interest_rate = qi_params.daily_interest_rate;
-
-    let data = installment::calc(&qi_params);
-
-    let main_value = qi_params.main_value;
-    let mut main_value_l = main_value;
-
-    let installment_amount = data.amount;
-    for j in 0..installments {
-        let diff = data.diffs[j as usize];
-        let mut accumulated_days = data.accumulated_days[j as usize];
-        let fee = main_value_l * ((1.0 + daily_interest_rate).powf(diff as f64) - 1.0);
-
-        let installment_amount_without_fee = installment_amount - fee;
-        let main_iof = installment_amount_without_fee * iof_overall;
-        let main_iof = round_decimal_cases(main_iof, 8);
-        if accumulated_days >= 365 {
-            accumulated_days = 365;
-        }
-        let installment_iof = installment_amount_without_fee * accumulated_days as f64 * 0.000082; //TODO: hardcoded value
-        let installment_iof = round_decimal_cases(installment_iof, 8);
-
-        let iof = main_iof + installment_iof;
-
-        total_iof += iof;
-        main_value_l = main_value_l + fee - installment_amount;
-    }
-    return total_iof;
+    return Ok(resp);
 }

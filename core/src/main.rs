@@ -1,74 +1,63 @@
+use std::fs::File;
+use std::io::Write;
+
 use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
-    let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 23).unwrap();
+    let i = vec![6, 12, 18, 24];
 
-    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+    for i in i {
+        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
 
-    let params = Params {
-        max_total_amount: f64::MAX,
-        min_installment_amount: 100.0,
-        requested_amount: 2000.00,
-        first_payment_date,
-        requested_date,
-        installments: 48,
-        debit_service_percentage: 0,
-        mdr: 0.05,
-        tac_percentage: 0.0,
-        iof_overall: 0.0038,  // %0.38
-        iof_percentage: 0.03, // 0.0082%
-        interest_rate: 0.04,
-    };
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
 
-    let result = calculate_payment_plan(params).unwrap();
-    for response in result {
-        println!("installment {}", response.installment);
-        println!("due_date {}", response.due_date);
-        println!("accumulated_days {}", response.accumulated_days);
-        println!("days_index {}", response.days_index);
-        println!("accumulated_days_index {}", response.accumulated_days_index);
-        println!("interest_rate {}", response.interest_rate);
-        println!("installment_amount {}", response.installment_amount);
-        println!(
-            "installment_amount_without_tac {}",
-            response.installment_amount_without_tac
-        );
-        println!("total_amount {}", response.total_amount);
-        println!("debt_service {}", response.debit_service);
-        println!(
-            "customer_debt_service_amount {}",
-            response.customer_debit_service_amount
-        );
-        println!("customer_amount {}", response.customer_amount);
-        println!(
-            "calculation_basis_for_effective_interest_rate {}",
-            response.calculation_basis_for_effective_interest_rate
-        );
-        println!(
-            "merchant_debt_service_amount {}",
-            response.merchant_debit_service_amount
-        );
-        println!("merchant_total_amount {}", response.merchant_total_amount);
-        println!("settled_to_merchant {}", response.settled_to_merchant);
-        println!("mdr_amount {}", response.mdr_amount);
-        println!(
-            "effective_interest_rate {}",
-            response.effective_interest_rate
-        );
-        println!("total_effective_cost {}", response.total_effective_cost);
-        println!("eir_yearly {}", response.eir_yearly);
-        println!("tec_yearly {}", response.tec_yearly);
-        println!("eir_monthly {}", response.eir_monthly);
-        println!("tec_monthly {}", response.tec_monthly);
-        println!("total_iof {}", response.total_iof);
-        println!("contract_amount {}", response.contract_amount);
-        println!(
-            "contract_amount_without_tac {}",
-            response.contract_amount_without_tac
-        );
-        println!("tac_amount {}", response.tac_amount);
-        println!("iof_percentage {}", response.iof_percentage);
-        println!("overall_iof {}", response.overall_iof);
-        println!("-------------------");
+        let requested_amount = 7431.00;
+        let installments = i;
+        let interest_rate = 0.04;
+
+        let params = Params {
+            max_total_amount: f64::MAX,
+            min_installment_amount: 100.0,
+            requested_amount,
+            first_payment_date,
+            requested_date,
+            installments,
+            debit_service_percentage: 0,
+            mdr: 0.05,
+            tac_percentage: 0.0,
+            iof_overall: 0.0038,  // %0.38
+            iof_percentage: 0.03, // 0.0082%
+            interest_rate,
+        };
+
+        let file_name = format!("./csv/output_{}_{}.csv", requested_amount, i);
+
+        let mut result = calculate_payment_plan(params).unwrap();
+
+        let mut file = File::create(file_name).unwrap();
+
+        // Write the headers
+        writeln!(file, "valor solicitado;qtd parcelas;taxa de juros;data de requisicao;data de vencimento primeira parcela;data de vencimento ultima parcela;dias acumulados;fator acumulado;valor da parcela;iof;valor total;taxa de juros efetiva;valor total efetivo").unwrap() ;
+
+        let response = result.pop().unwrap();
+
+        writeln!(
+            file,
+            "{:.2};{:.0};{:.15};{};{};{};{:.0};{};{:.2};{};{:.2};{:.15};{:.15}",
+            format!("{:.2}", requested_amount).replace('.', ","),
+            response.installment,
+            format!("{:.15}", interest_rate).replace('.', ","),
+            requested_date,
+            first_payment_date,
+            response.due_date,
+            response.accumulated_days,
+            format!("{:.15}", response.accumulated_days_index).replace('.', ","),
+            response.installment_amount,
+            format!("{:.15}", response.total_iof).replace('.', ","),
+            response.total_amount,
+            format!("{:.15}", response.effective_interest_rate).replace('.', ","),
+            format!("{:.15}", response.total_effective_cost).replace('.', ",")
+        )
+        .unwrap();
     }
 }

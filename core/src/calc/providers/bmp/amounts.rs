@@ -111,7 +111,7 @@ mod test {
 
         assert_eq!(amounts.contract_amount, 2918.40904109589);
         assert_eq!(amounts.contract_amount_without_tac, 2918.40904109589);
-        assert_eq!(amounts.installment_amount_without_tac, 3004.943836914082);
+        assert_eq!(amounts.installment_amount_without_tac, 3024.0190557363558);
         assert_eq!(amounts.installment_amount, 3024.0190557363558);
         assert_eq!(amounts.total_amount, 3024.0190557363558);
         assert_eq!(amounts.debit_service, 105.61001464046535);
@@ -141,7 +141,7 @@ mod test {
 
         assert_eq!(amounts.contract_amount, 2921.984383561644);
         assert_eq!(amounts.contract_amount_without_tac, 2921.984383561644);
-        assert_eq!(amounts.installment_amount_without_tac, 1528.312958823624);
+        assert_eq!(amounts.installment_amount_without_tac, 1539.8988271991445);
         assert_eq!(amounts.installment_amount, 1539.8988271991445);
         assert_eq!(amounts.total_amount, 3079.797654398289);
         assert_eq!(amounts.debit_service, 157.81327083664524);
@@ -171,7 +171,7 @@ mod test {
 
         assert_eq!(amounts.contract_amount, 2925.639266493151);
         assert_eq!(amounts.contract_amount_without_tac, 2925.639266493151);
-        assert_eq!(amounts.installment_amount_without_tac, 1036.6792667070124);
+        assert_eq!(amounts.installment_amount_without_tac, 1045.8446791163315);
         assert_eq!(amounts.installment_amount, 1045.8446791163315);
         assert_eq!(amounts.total_amount, 3137.5340373489944);
         assert_eq!(amounts.debit_service, 211.89477085584372);
@@ -201,7 +201,7 @@ mod test {
 
         assert_eq!(amounts.contract_amount, 2929.2542465753427);
         assert_eq!(amounts.contract_amount_without_tac, 2929.2542465753427);
-        assert_eq!(amounts.installment_amount_without_tac, 790.8717949383865);
+        assert_eq!(amounts.installment_amount_without_tac, 798.8498495930802);
         assert_eq!(amounts.installment_amount, 798.8498495930802);
         assert_eq!(amounts.total_amount, 3195.399398372321);
         assert_eq!(amounts.debit_service, 266.1451517969783);
@@ -231,7 +231,7 @@ mod test {
 
         assert_eq!(amounts.contract_amount, 2932.901095890411);
         assert_eq!(amounts.contract_amount_without_tac, 2932.901095890411);
-        assert_eq!(amounts.installment_amount_without_tac, 643.5975822920393);
+        assert_eq!(amounts.installment_amount_without_tac, 650.8993291092211);
         assert_eq!(amounts.installment_amount, 650.8993291092211);
         assert_eq!(amounts.total_amount, 3254.4966455461054);
         assert_eq!(amounts.debit_service, 321.5955496556944);
@@ -261,7 +261,7 @@ mod test {
 
         assert_eq!(amounts.contract_amount, 2936.563583452055);
         assert_eq!(amounts.contract_amount_without_tac, 2936.563583452055);
-        assert_eq!(amounts.installment_amount_without_tac, 545.5538403957181);
+        assert_eq!(amounts.installment_amount_without_tac, 552.4322553512001);
         assert_eq!(amounts.installment_amount, 552.4322553512001);
         assert_eq!(amounts.total_amount, 3314.5935321072);
         assert_eq!(amounts.debit_service, 378.0299486551454);
