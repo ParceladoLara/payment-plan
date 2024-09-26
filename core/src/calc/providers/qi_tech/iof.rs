@@ -1,8 +1,8 @@
 use crate::util::round_decimal_cases;
 
-use super::{installment, QiTechParams};
+use super::{installment::InstallmentData, QiTechParams};
 
-pub fn calc(qi_params: &QiTechParams) -> f64 {
+pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
     let mut total_iof = 0.0;
     let params = qi_params.params;
     let installments = params.installments;
@@ -10,8 +10,6 @@ pub fn calc(qi_params: &QiTechParams) -> f64 {
     let iof_overall = params.iof_overall;
 
     let daily_interest_rate = qi_params.daily_interest_rate;
-
-    let data = installment::calc(&qi_params);
 
     let main_value = qi_params.main_value;
     let mut main_value_l = main_value;
@@ -41,7 +39,10 @@ pub fn calc(qi_params: &QiTechParams) -> f64 {
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::providers::qi_tech::QiTechParams, Params};
+    use crate::{
+        calc::providers::qi_tech::{installment::InstallmentData, QiTechParams},
+        Params,
+    };
 
     #[test]
     fn test_calc() {
@@ -67,7 +68,47 @@ mod test {
             daily_interest_rate: 0.00130821,
         };
 
-        let iof = super::calc(&params);
+        let due_dates = vec![
+            chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2024, 11, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2024, 12, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 01, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 02, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 03, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 04, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 05, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 06, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 07, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 08, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 09, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 10, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 11, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 12, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2026, 01, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2026, 02, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2026, 03, 24).unwrap(),
+        ];
+
+        let last_due_date = chrono::NaiveDate::from_ymd_opt(2026, 03, 24).unwrap();
+
+        let i_cal = InstallmentData {
+            accumulated_days: vec![
+                30, 61, 91, 122, 153, 181, 212, 242, 273, 303, 334, 365, 395, 426, 456, 487, 518,
+                546,
+            ],
+            diffs: vec![
+                30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28,
+            ],
+            amount: 589.4399638402917,
+            factor: 0.48977173114928746,
+            accumulated_factor: 12.606881880871965,
+            last_due_date,
+            due_dates,
+        };
+
+        println!("{:?}", i_cal);
+
+        let iof = super::calc(&params, &i_cal);
 
         assert_eq!(iof, 195.90259933000002);
     }

@@ -26,10 +26,7 @@ struct QiTechParams {
 pub struct QiTech;
 
 impl PaymentPlan for QiTech {
-    fn calculate_payment_plan(
-        &self,
-        mut params: Params,
-    ) -> Result<Vec<Response>, PaymentPlanError> {
+    fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError> {
         if params.requested_amount <= 0.0 {
             return Err(PaymentPlanError::InvalidRequestedAmount);
         }
@@ -38,8 +35,6 @@ impl PaymentPlan for QiTech {
         }
         let mut response = Vec::with_capacity(params.installments as usize);
 
-        let min_installment_amount = params.min_installment_amount;
-        let max_total_amount = params.max_total_amount;
         let interest_rate = params.interest_rate;
 
         let daily_interest_rate = (1.0 + interest_rate).powf(POTENCY) - 1.0;
@@ -47,23 +42,15 @@ impl PaymentPlan for QiTech {
 
         let main_value = params.requested_amount;
 
-        for i in 1..=params.installments {
-            params.installments = i;
-            let params = QiTechParams {
-                params,
-                main_value,
-                daily_interest_rate,
-            };
+        let params = QiTechParams {
+            params,
+            main_value,
+            daily_interest_rate,
+        };
 
-            let resp = calc(params)?;
-            if resp.installment_amount < min_installment_amount {
-                break;
-            }
-            if resp.total_amount > max_total_amount {
-                break;
-            }
-            response.push(resp);
-        }
+        let resp = calc(params)?;
+
+        response.push(resp);
 
         Ok(response)
     }
@@ -72,13 +59,22 @@ impl PaymentPlan for QiTech {
 fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let debit_service_percentage = params.params.debit_service_percentage;
     let requested_amount = params.params.requested_amount;
-    let mut iof = 0.0;
-    for _ in 0..NUM_OF_RUNS {
-        iof = iof::calc(&params);
+
+    let mut data = installment::calc(&params);
+    let mut iof = iof::calc(&params, &data);
+
+    let debit_service = data.amount;
+
+    params.main_value = requested_amount + iof;
+    for _ in 1..NUM_OF_RUNS {
+        data = installment::calc(&params);
+        iof = iof::calc(&params, &data);
         params.main_value = requested_amount + iof;
     }
 
     let mut data = installment::calc(&params);
+
+    let customer_amount = data.amount;
 
     let installment_amount = data.amount;
     let installments = params.params.installments;
@@ -101,8 +97,8 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let (eir_params, tec_params) = prepare_xirr_params(
         installments,
         &data.due_dates,
-        amounts.calculation_basis_for_effective_interest_rate,
-        amounts.customer_amount,
+        debit_service,
+        customer_amount,
     );
 
     let eir_monthly = calculate_eir_monthly(params, eir_params, customer_debit_service_proportion)?;
@@ -128,7 +124,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         accumulated_days_index,
         calculation_basis_for_effective_interest_rate: amounts
             .calculation_basis_for_effective_interest_rate,
-        customer_amount: amounts.customer_amount,
+        customer_amount,
         customer_debit_service_amount: amounts.customer_debit_service_amount,
         debit_service: amounts.debit_service,
         mdr_amount: amounts.mdr_amount,

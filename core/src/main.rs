@@ -11,9 +11,9 @@ fn main() {
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
 
-        let requested_amount = 7431.00;
+        let requested_amount = 7543.00;
         let installments = i;
-        let interest_rate = 0.04;
+        let interest_rate = 0.035;
 
         let params = Params {
             max_total_amount: f64::MAX,
@@ -43,8 +43,8 @@ fn main() {
 
         writeln!(
             file,
-            "{:.2};{:.0};{:.15};{};{};{};{:.0};{};{:.2};{};{:.2};{:.15};{:.15}",
-            format!("{:.2}", requested_amount).replace('.', ","),
+            "{};{:.0};{:.15};{};{};{};{:.0};{};{:.2};{};{:.2};{:.15};{:.15}",
+            requested_amount,
             response.installment,
             format!("{:.15}", interest_rate).replace('.', ","),
             requested_date,
