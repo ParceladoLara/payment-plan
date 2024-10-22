@@ -4,12 +4,12 @@ use std::io::Write;
 use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
-    let i = vec![6, 12, 18, 24];
+    let i = vec![18];
 
     for i in i {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
+        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 22).unwrap();
 
-        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 22).unwrap();
 
         let requested_amount = 7543.00;
         let installments = i;
@@ -59,5 +59,25 @@ fn main() {
             format!("{:.15}", response.total_effective_cost).replace('.', ",")
         )
         .unwrap();
+
+        println!("Requested amount: {}", requested_amount);
+        println!("Installments: {}", installments);
+        println!("Interest rate: {}", interest_rate);
+        println!("Requested date: {}", requested_date);
+        println!("First payment date: {}", first_payment_date);
+        println!("Due date: {}", response.due_date);
+        println!("Accumulated days: {}", response.accumulated_days);
+        println!(
+            "Accumulated days index: {}",
+            response.accumulated_days_index
+        );
+        println!("Installment amount: {}", response.installment_amount);
+        println!("IOF: {}", response.total_iof);
+        println!("Total amount: {}", response.total_amount);
+        println!(
+            "Effective interest rate: {}",
+            response.effective_interest_rate
+        );
+        println!("Total effective cost: {}", response.total_effective_cost);
     }
 }

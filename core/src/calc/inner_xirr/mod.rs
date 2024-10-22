@@ -1,14 +1,7 @@
 use chrono::NaiveDate;
 use xirr::Payment;
 
-#[cfg(feature = "qitech")]
-const MONTH_AS_YEAR_FRACTION: f64 = 0.08333333333333333; // 30/360
-
-#[cfg(feature = "bmp")]
 const MONTH_AS_YEAR_FRACTION: f64 = 0.0821917808219178; // 30/365
-
-#[cfg(not(any(feature = "bmp", feature = "qitech")))]
-const MONTH_AS_YEAR_FRACTION: f64 = 0.08333333333333333; // 30/360
 
 pub mod eir;
 pub mod tec;

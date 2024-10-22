@@ -37,8 +37,11 @@ impl PaymentPlan for QiTech {
 
         let interest_rate = params.interest_rate;
 
-        let daily_interest_rate = (1.0 + interest_rate).powf(POTENCY) - 1.0;
+        let anual_interest_rate = (1.0 + interest_rate).powf(12.0) - 1.0;
+        let daily_interest_rate = (1.0 + anual_interest_rate).powf(1.0 / 360.0) - 1.0;
+
         let daily_interest_rate = round_decimal_cases(daily_interest_rate, 8);
+        println!("daily_interest_rate: {}", daily_interest_rate);
 
         let main_value = params.requested_amount;
 
