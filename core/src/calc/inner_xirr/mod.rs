@@ -1,8 +1,6 @@
 use chrono::NaiveDate;
 use xirr::Payment;
 
-const MONTH_AS_YEAR_FRACTION: f64 = 0.0821917808219178; // 30/365
-
 pub mod eir;
 pub mod tec;
 

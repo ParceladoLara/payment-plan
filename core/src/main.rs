@@ -1,17 +1,14 @@
-use std::fs::File;
-use std::io::Write;
-
 use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
-    let i = vec![18];
+    let i = vec![48];
 
     for i in i {
         let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 22).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 22).unwrap();
 
-        let requested_amount = 45197.00;
+        let requested_amount = 12853.43;
         let installments = i;
         let interest_rate = 0.035;
 
@@ -30,57 +27,16 @@ fn main() {
             interest_rate,
         };
 
-        let file_name = format!("./csv/output_{}_{}.csv", requested_amount, i);
-
         let mut result = calculate_payment_plan(params).unwrap();
 
-        let mut file = File::create(file_name).unwrap();
+        println!("Length: {}", result.len());
 
-        // Write the headers
-        writeln!(file, "valor solicitado;qtd parcelas;taxa de juros;data de requisicao;data de vencimento primeira parcela;data de vencimento ultima parcela;dias acumulados;fator acumulado;valor da parcela;iof;valor total;taxa de juros efetiva;valor total efetivo").unwrap() ;
+        let result = result.pop().unwrap();
 
-        let response = result.pop().unwrap();
-
-        writeln!(
-            file,
-            "{};{:.0};{:.15};{};{};{};{:.0};{};{:.2};{};{:.2};{:.15};{:.15}",
-            requested_amount,
-            response.installment,
-            format!("{:.15}", interest_rate).replace('.', ","),
-            requested_date,
-            first_payment_date,
-            response.due_date,
-            response.accumulated_days,
-            format!("{:.15}", response.accumulated_days_index).replace('.', ","),
-            response.installment_amount,
-            format!("{:.15}", response.total_iof).replace('.', ","),
-            response.total_amount,
-            format!("{:.15}", response.effective_interest_rate).replace('.', ","),
-            format!("{:.15}", response.total_effective_cost).replace('.', ",")
-        )
-        .unwrap();
-
-        println!("Requested amount: {}", requested_amount);
-        println!("Installments: {}", installments);
-        println!("Interest rate: {}", interest_rate);
-        println!("Requested date: {}", requested_date);
-        println!("First payment date: {}", first_payment_date);
-        println!("Due date: {}", response.due_date);
-        println!("Accumulated days: {}", response.accumulated_days);
-        println!(
-            "Accumulated days index: {}",
-            response.accumulated_days_index
-        );
-        println!("Installment amount: {}", response.installment_amount);
-        println!("IOF: {}", response.total_iof);
-        println!("Total amount: {}", response.total_amount);
-        println!(
-            "Effective interest rate: {}",
-            response.effective_interest_rate
-        );
-        println!("Total effective cost: {}", response.total_effective_cost);
-
-        println!("-----------------------");
-        println!("{:?}", response);
+        println!("CET: {}", result.total_effective_cost);
+        println!("annual_cet: {}", result.tec_yearly);
+        println!("installment_amount: {}", result.installment_amount);
+        println!("IOF: {}", result.total_iof);
+        println!("Contract Amount: {}", result.contract_amount);
     }
 }

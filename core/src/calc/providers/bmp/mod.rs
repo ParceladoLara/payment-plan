@@ -15,6 +15,8 @@ mod amounts;
 mod iof;
 mod prepare;
 
+const CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE: f64 = 0.0821917808219178;
+
 pub struct BMP;
 
 impl PaymentPlan for BMP {
@@ -81,12 +83,20 @@ fn calculate(
             amounts.customer_amount,
         );
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion)?;
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE,
+        )?;
 
         let eir_yearly = (1.0 + eir_monthly).powf(12.0) - 1.0;
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params)?;
+        let tec_monthly = calculate_tec_monthly(
+            params,
+            tec_params,
+            CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE,
+        )?;
 
         let tec_yearly = (1.0 + tec_monthly).powf(12.0) - 1.0;
 

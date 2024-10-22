@@ -9,8 +9,9 @@ use crate::{
 };
 
 const POTENCY: f64 = 0.0027397260273972603; // 1/365
+const CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE: f64 = 0.08333333333333333; // 30/360
 
-const NUM_OF_RUNS: u32 = 7; //7 passes is the minimum to get the same data as the xml
+const NUM_OF_RUNS: u32 = 7;
 
 mod amounts;
 mod installment;
@@ -26,7 +27,10 @@ struct QiTechParams {
 pub struct QiTech;
 
 impl PaymentPlan for QiTech {
-    fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError> {
+    fn calculate_payment_plan(
+        &self,
+        mut params: Params,
+    ) -> Result<Vec<Response>, PaymentPlanError> {
         if params.requested_amount <= 0.0 {
             return Err(PaymentPlanError::InvalidRequestedAmount);
         }
@@ -37,6 +41,9 @@ impl PaymentPlan for QiTech {
 
         let interest_rate = params.interest_rate;
 
+        let min_installment_amount = params.min_installment_amount;
+        let max_total_amount = params.max_total_amount;
+
         let annual_interest_rate = (1.0 + interest_rate).powf(12.0) - 1.0;
         let daily_interest_rate = (1.0 + annual_interest_rate).powf(POTENCY) - 1.0;
 
@@ -45,15 +52,23 @@ impl PaymentPlan for QiTech {
 
         let main_value = params.requested_amount;
 
-        let params = QiTechParams {
-            params,
-            main_value,
-            daily_interest_rate,
-        };
+        for i in 1..=params.installments {
+            params.installments = i;
+            let params = QiTechParams {
+                params,
+                main_value,
+                daily_interest_rate,
+            };
 
-        let resp = calc(params)?;
-
-        response.push(resp);
+            let resp = calc(params)?;
+            if resp.installment_amount < min_installment_amount {
+                break;
+            }
+            if resp.total_amount > max_total_amount {
+                break;
+            }
+            response.push(resp);
+        }
 
         Ok(response)
     }
@@ -105,19 +120,28 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         customer_amount,
     );
 
-    let eir_monthly = calculate_eir_monthly(params, eir_params, customer_debit_service_proportion)?;
+    let eir_monthly = calculate_eir_monthly(
+        params,
+        eir_params,
+        customer_debit_service_proportion,
+        CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE,
+    )?;
 
     let eir_yearly = (1.0 + eir_monthly).powf(12.0) - 1.0;
 
-    let tec_monthly = calculate_tec_monthly(params, tec_params)?;
+    let tec_monthly = calculate_tec_monthly(
+        params,
+        tec_params,
+        CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE,
+    )?;
 
     let tec_yearly = (1.0 + tec_monthly).powf(12.0) - 1.0;
 
     let eir_monthly = round_decimal_cases(eir_monthly, 4);
     let tec_monthly = round_decimal_cases(tec_monthly, 4);
 
-    let eir_yearly = round_decimal_cases(eir_yearly, 5);
-    let tec_yearly = round_decimal_cases(tec_yearly, 5);
+    let eir_yearly = round_decimal_cases(eir_yearly, 6);
+    let tec_yearly = round_decimal_cases(tec_yearly, 6);
 
     let resp = Response {
         contract_amount,

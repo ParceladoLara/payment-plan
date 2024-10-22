@@ -2,11 +2,10 @@ use xirr::{compute, Payment};
 
 use crate::{err::PaymentPlanError, Params};
 
-use super::MONTH_AS_YEAR_FRACTION;
-
 pub fn calculate_tec_monthly(
     params: Params,
     tec_params: Vec<Payment>,
+    calculation_basis_for_effective_interest_rate: f64,
 ) -> Result<f64, PaymentPlanError> {
     let mut total_effective_cost_xirr = vec![Payment {
         amount: params.requested_amount,
@@ -30,7 +29,7 @@ pub fn calculate_tec_monthly(
     match xir_result {
         Ok(xirr) => {
             tec_monthly = xirr + 1.0;
-            tec_monthly = tec_monthly.powf(MONTH_AS_YEAR_FRACTION) - 1.0;
+            tec_monthly = tec_monthly.powf(calculation_basis_for_effective_interest_rate) - 1.0;
         }
         Err(_) => {
             let converged_tec_params: Vec<Payment> = total_effective_cost_xirr
@@ -43,7 +42,7 @@ pub fn calculate_tec_monthly(
 
             let xir_result = compute(&converged_tec_params)?;
             tec_monthly = xir_result + 1.0;
-            tec_monthly = tec_monthly.powf(MONTH_AS_YEAR_FRACTION) - 1.0;
+            tec_monthly = tec_monthly.powf(calculation_basis_for_effective_interest_rate) - 1.0;
         }
     }
 
@@ -81,7 +80,7 @@ mod test {
             date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
         }];
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap();
+        let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
 
         assert_eq!(tec_monthly, 0.041357534253765094);
 
@@ -96,7 +95,7 @@ mod test {
             },
         ];
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap();
+        let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
 
         assert_eq!(tec_monthly, 0.0401413181284036);
 
@@ -115,7 +114,7 @@ mod test {
             },
         ];
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap();
+        let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
 
         assert_eq!(tec_monthly, 0.039521601442900955);
 
@@ -138,7 +137,7 @@ mod test {
             },
         ];
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap();
+        let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
 
         assert_eq!(tec_monthly, 0.03915824678675084);
 
@@ -165,7 +164,7 @@ mod test {
             },
         ];
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap();
+        let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
 
         assert_eq!(tec_monthly, 0.038918973894719766);
 
@@ -196,7 +195,7 @@ mod test {
             },
         ];
 
-        let tec_monthly = calculate_tec_monthly(params, tec_params).unwrap();
+        let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
 
         assert_eq!(tec_monthly, 0.03875204347989669);
     }

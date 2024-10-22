@@ -22,18 +22,17 @@ pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
 
         let installment_amount_without_fee = installment_amount - fee;
         let main_iof = installment_amount_without_fee * iof_overall;
-        let main_iof = round_decimal_cases(main_iof, 8);
         if accumulated_days >= 365 {
             accumulated_days = 365;
         }
         let installment_iof = installment_amount_without_fee * accumulated_days as f64 * 0.000082; //TODO: hardcoded value
-        let installment_iof = round_decimal_cases(installment_iof, 8);
 
         let iof = main_iof + installment_iof;
 
         total_iof += iof;
         main_value_l = main_value_l + fee - installment_amount;
     }
+    let total_iof = round_decimal_cases(total_iof, 2);
     return total_iof;
 }
 

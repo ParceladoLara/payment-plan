@@ -2,12 +2,11 @@ use xirr::{compute, Payment};
 
 use crate::{err::PaymentPlanError, Params};
 
-use super::MONTH_AS_YEAR_FRACTION;
-
 pub fn calculate_eir_monthly(
     params: Params,
     eir_params: Vec<Payment>,
     customer_debit_service_proportion: f64,
+    calculation_basis_for_effective_interest_rate: f64,
 ) -> Result<f64, PaymentPlanError> {
     /*
         Para calcular a taxa efetiva de juros, calcula-se o valor de parcela considerando-se apenas o valor requisitado
@@ -37,7 +36,7 @@ pub fn calculate_eir_monthly(
         match xir_result {
             Ok(xirr) => {
                 eir_monthly = xirr + 1.0;
-                eir_monthly = eir_monthly.powf(MONTH_AS_YEAR_FRACTION) - 1.0;
+                eir_monthly = eir_monthly.powf(calculation_basis_for_effective_interest_rate) - 1.0;
             }
             Err(_) => {
                 let converged_eir_params: Vec<Payment> = effective_interest_rate_xirr
@@ -50,7 +49,7 @@ pub fn calculate_eir_monthly(
 
                 let xir_result = compute(&converged_eir_params)?;
                 eir_monthly = xir_result + 1.0;
-                eir_monthly = eir_monthly.powf(MONTH_AS_YEAR_FRACTION) - 1.0;
+                eir_monthly = eir_monthly.powf(calculation_basis_for_effective_interest_rate) - 1.0;
             }
         }
     }
@@ -89,8 +88,13 @@ mod test {
             date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
         }];
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap();
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            0.0821917808219178,
+        )
+        .unwrap();
 
         assert_eq!(eir_monthly, 0.03522205067950779);
 
@@ -105,8 +109,13 @@ mod test {
             },
         ];
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap();
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            0.0821917808219178,
+        )
+        .unwrap();
 
         assert_eq!(eir_monthly, 0.03526367198542446);
 
@@ -125,8 +134,13 @@ mod test {
             },
         ];
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap();
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            0.0821917808219178,
+        )
+        .unwrap();
 
         assert_eq!(eir_monthly, 0.03530579035535042);
 
@@ -149,8 +163,13 @@ mod test {
             },
         ];
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap();
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            0.0821917808219178,
+        )
+        .unwrap();
 
         assert_eq!(eir_monthly, 0.0353469732503493);
 
@@ -177,8 +196,13 @@ mod test {
             },
         ];
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap();
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            0.0821917808219178,
+        )
+        .unwrap();
 
         assert_eq!(eir_monthly, 0.03538811206577974);
 
@@ -209,8 +233,13 @@ mod test {
             },
         ];
 
-        let eir_monthly =
-            calculate_eir_monthly(params, eir_params, customer_debit_service_proportion).unwrap();
+        let eir_monthly = calculate_eir_monthly(
+            params,
+            eir_params,
+            customer_debit_service_proportion,
+            0.0821917808219178,
+        )
+        .unwrap();
 
         assert_eq!(eir_monthly, 0.035429014326330055);
     }
