@@ -11,7 +11,7 @@ fn main() {
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 22).unwrap();
 
-        let requested_amount = 7543.00;
+        let requested_amount = 45197.00;
         let installments = i;
         let interest_rate = 0.035;
 
@@ -79,5 +79,8 @@ fn main() {
             response.effective_interest_rate
         );
         println!("Total effective cost: {}", response.total_effective_cost);
+
+        println!("-----------------------");
+        println!("{:?}", response);
     }
 }

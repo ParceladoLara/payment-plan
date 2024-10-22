@@ -8,7 +8,7 @@ use crate::{
     Params, Response,
 };
 
-const POTENCY: f64 = 0.0333333333333333333333333333333333333;
+const POTENCY: f64 = 0.0027397260273972603; // 1/365
 
 const NUM_OF_RUNS: u32 = 7; //7 passes is the minimum to get the same data as the xml
 
@@ -37,8 +37,8 @@ impl PaymentPlan for QiTech {
 
         let interest_rate = params.interest_rate;
 
-        let anual_interest_rate = (1.0 + interest_rate).powf(12.0) - 1.0;
-        let daily_interest_rate = (1.0 + anual_interest_rate).powf(1.0 / 360.0) - 1.0;
+        let annual_interest_rate = (1.0 + interest_rate).powf(12.0) - 1.0;
+        let daily_interest_rate = (1.0 + annual_interest_rate).powf(POTENCY) - 1.0;
 
         let daily_interest_rate = round_decimal_cases(daily_interest_rate, 8);
         println!("daily_interest_rate: {}", daily_interest_rate);
@@ -82,6 +82,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let installment_amount = data.amount;
     let installments = params.params.installments;
     let total_amount = installment_amount * installments as f64;
+    let total_amount = round_decimal_cases(total_amount, 2);
     let contract_amount = params.params.requested_amount + iof;
     let accumulated_days = data.accumulated_days.pop().unwrap();
     let accumulated_days_index = data.accumulated_factor;
@@ -111,6 +112,12 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let tec_monthly = calculate_tec_monthly(params, tec_params)?;
 
     let tec_yearly = (1.0 + tec_monthly).powf(12.0) - 1.0;
+
+    let eir_monthly = round_decimal_cases(eir_monthly, 4);
+    let tec_monthly = round_decimal_cases(tec_monthly, 4);
+
+    let eir_yearly = round_decimal_cases(eir_yearly, 5);
+    let tec_yearly = round_decimal_cases(tec_yearly, 5);
 
     let resp = Response {
         contract_amount,

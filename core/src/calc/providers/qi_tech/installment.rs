@@ -1,6 +1,6 @@
 use chrono::NaiveDate;
 
-use crate::util::add_months;
+use crate::util::{add_months, round_decimal_cases};
 
 use super::QiTechParams;
 
@@ -37,6 +37,8 @@ pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
 
     let mut factor = 0.0;
 
+    let base_factor = 1.0 / (1.0 + daily_interest_rate);
+
     for i in 0..installments {
         let main_value = qi_params.main_value;
         if i != 0 {
@@ -49,11 +51,12 @@ pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
         let diff = due_date.signed_duration_since(last_due_date).num_days();
         diffs.push(diff);
         accumulated_days += diff;
-        factor = 1.0 / (1.0 + daily_interest_rate).powf(accumulated_days as f64);
+        factor = base_factor.powf(accumulated_days as f64);
+        factor = round_decimal_cases(factor, 15);
 
         accumulated_factor += factor;
         let installment_amount = main_value / accumulated_factor;
-        let installment_amount = installment_amount;
+        let installment_amount = round_decimal_cases(installment_amount, 2);
         accumulated_days_v.push(accumulated_days);
 
         instalment_amount_result = installment_amount;
