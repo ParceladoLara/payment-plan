@@ -9,6 +9,23 @@ pub enum PaymentPlanError {
     InvalidRequestedAmount,
 }
 
+impl PartialEq for PaymentPlanError {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (PaymentPlanError::CalculationError(_), PaymentPlanError::CalculationError(_)) => true,
+            (
+                PaymentPlanError::InvalidNumberOfInstallments,
+                PaymentPlanError::InvalidNumberOfInstallments,
+            ) => true,
+            (
+                PaymentPlanError::InvalidRequestedAmount,
+                PaymentPlanError::InvalidRequestedAmount,
+            ) => true,
+            _ => false,
+        }
+    }
+}
+
 impl From<InvalidPaymentsError> for PaymentPlanError {
     fn from(error: InvalidPaymentsError) -> Self {
         PaymentPlanError::CalculationError(error)
