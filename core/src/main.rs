@@ -1,12 +1,12 @@
 use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
-    let i = vec![48];
+    let i = vec![64];
 
     for i in i {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 22).unwrap();
+        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
-        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 22).unwrap();
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
         let requested_amount = 12853.43;
         let installments = i;
