@@ -5,8 +5,12 @@
   "author": "Victor Ribeiro de Lima",
   "license": "",
   "scripts": {
-    "build": "wasm-pack build --target nodejs",
-    "test": "npm run build && glob -c \"tsx --test --test-reporter spec \" \"./test/**/*.spec.ts\""
+    "build": "wasm-pack build --target nodejs --release -- --features $FEATURE",
+    "build:bmp": "FEATURE=bmp npm run build",
+    "build:qitech": "FEATURE=qitech npm run build",
+    "test:bmp": "npm run build:bmp && glob -c \"tsx --test --test-reporter spec \" \"./test/bmp/**/*.spec.ts\"",
+    "test:qitech": "npm run build:qitech && glob -c \"tsx --test --test-reporter spec \" \"./test/qitech/**/*.spec.ts\"",
+    "test": "npm run test:bmp && npm run test:qitech"
   },
   "devDependencies": {
     "@types/node": "22.5.4",

@@ -13,3 +13,7 @@ crate-type = ["cdylib"]
 core_payment_plan = { path ="../core" }
 neon = "1"
 chrono = { version = "0.4.38" }
+
+[features]
+bmp = ["core_payment_plan/bmp"]
+qitech = ["core_payment_plan/qitech"]

@@ -59,7 +59,7 @@ mod test {
     Test 7 - (2900 / 6) = (3314.5935321072 / 552.4322553512001)
      */
 
-    use crate::{calc::prepare::prepare_calculation, Params};
+    use crate::{calc::providers::bmp::prepare::prepare_calculation, Params};
 
     #[test]
     fn test_prepare_calculus_test_0() {

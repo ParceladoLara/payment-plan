@@ -6,6 +6,7 @@ The package is structured as follows:
 - `core`: Contains the core logic of the payment plan
 - `node`: Contains the [Neon](https://neon-rs.dev) for the NodeJs wrapper of the binary.
 - `bin`: Contains the binary and the protobuf specification for any communication between the binary and the language that uses it.
+- `wasm`: Contains the wasm for the payment plan.
 
 If you want to see more about each package, you can see their individual MD files.
 

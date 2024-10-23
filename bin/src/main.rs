@@ -42,7 +42,7 @@ fn calc(buf: Vec<u8>) -> ExitCode {
         }
     };
 
-    let response = core_payment_plan::calc::calculate_payment_plan(params);
+    let response = core_payment_plan::calculate_payment_plan(params);
 
     let response = match response {
         Ok(response) => response,
@@ -75,7 +75,7 @@ fn down_calc(buf: Vec<u8>) -> ExitCode {
         }
     };
 
-    let response = core_payment_plan::calc::calculate_down_payment_plan(params);
+    let response = core_payment_plan::calculate_down_payment_plan(params);
 
     let response = match response {
         Ok(response) => response,

@@ -15,3 +15,8 @@ pub fn add_days(date: chrono::NaiveDate, days: i64) -> chrono::NaiveDate {
     }
     return due_date;
 }
+
+pub fn round_decimal_cases(value: f64, round: i32) -> f64 {
+    let factor = 10f64.powi(round);
+    (value * factor).round() / factor
+}

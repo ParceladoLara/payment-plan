@@ -1,14 +1,21 @@
+use calc::PaymentPlan;
+use err::PaymentPlanError;
 use serde::{Deserialize, Serialize};
 
-// export of the calc module so it can be used by other projects
-//ctrl + click on the calc module to see the code
-pub mod calc;
+#[cfg(feature = "bmp")]
+use calc::providers::bmp::BMP;
+#[cfg(feature = "qitech")]
+use calc::providers::qi_tech::QiTech;
 
-// Does are private modules, declared here so they can be used by the rest of the project
+// Default to BMP if no feature is specified
+#[cfg(not(any(feature = "bmp", feature = "qitech")))]
+use calc::providers::qi_tech::QiTech;
+
+mod calc;
 mod err;
 mod util;
 
-#[derive(Debug, Clone, Copy, Deserialize)]
+#[derive(Debug, Default, Clone, Copy, Deserialize)]
 pub struct Params {
     pub requested_amount: f64,
     pub first_payment_date: chrono::NaiveDate,
@@ -24,7 +31,7 @@ pub struct Params {
     pub max_total_amount: f64,
 }
 
-#[derive(Debug, Serialize, Clone, Copy)]
+#[derive(Debug, Serialize, Clone, Copy, Default)]
 pub struct Response {
     pub installment: u32,
     pub due_date: chrono::NaiveDate,
@@ -74,4 +81,23 @@ pub struct DownPaymentResponse {
     pub installment_quantity: u32, // The number of installments for the down payment
     pub first_payment_date: chrono::NaiveDate, // The first payment date for the down payment
     pub plans: Vec<Response>,    // The payment plans available for the down payment
+}
+
+#[cfg(feature = "bmp")]
+const P: BMP = BMP {};
+#[cfg(feature = "qitech")]
+const P: QiTech = QiTech {};
+
+// Default to BMP if no feature is specified
+#[cfg(not(any(feature = "bmp", feature = "qitech")))]
+const P: QiTech = QiTech {};
+
+pub fn calculate_down_payment_plan(
+    params: DownPaymentParams,
+) -> Result<Vec<DownPaymentResponse>, PaymentPlanError> {
+    return P.calculate_down_payment_plan(params);
+}
+
+pub fn calculate_payment_plan(params: Params) -> Result<Vec<Response>, PaymentPlanError> {
+    return P.calculate_payment_plan(params);
 }

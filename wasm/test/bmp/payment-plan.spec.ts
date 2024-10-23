@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import * as assert from "node:assert";
-import { calculatePaymentPlan, Params } from "../pkg/wasm_payment_plan";
+import { calculatePaymentPlan, Params } from "../../pkg/wasm_payment_plan";
 
 test("calculate payment plan test 0", () => {
   const expectedContractAmount = 9037.318869753424;

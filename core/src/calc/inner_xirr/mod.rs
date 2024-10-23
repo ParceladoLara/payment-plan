@@ -1,13 +1,12 @@
+use chrono::NaiveDate;
 use xirr::Payment;
 
-use super::prepare::PreparedCalculation;
-const MONTH_AS_YEAR_FRACTION: f64 = 0.0821917808219178; // 30/365
 pub mod eir;
 pub mod tec;
 
 pub fn prepare_xirr_params(
     installments: u32,
-    prepared_calculations: &Vec<PreparedCalculation>,
+    due_dates: &Vec<NaiveDate>,
     calculation_basis_for_eir: f64,
     customer_amount: f64,
 ) -> (Vec<Payment>, Vec<Payment>) {
@@ -18,15 +17,15 @@ pub fn prepare_xirr_params(
     let tec_amount = -1.0 * customer_amount;
 
     for i in 0..installments {
-        let prepared_calculation = prepared_calculations[i as usize];
+        let date = due_dates[i as usize];
 
         eir_params.push(Payment {
             amount: eir_amount,
-            date: prepared_calculation.due_date,
+            date,
         });
         tec_params.push(Payment {
             amount: tec_amount,
-            date: prepared_calculation.due_date,
+            date,
         });
     }
 
@@ -37,30 +36,20 @@ pub fn prepare_xirr_params(
 mod test {
     use chrono::NaiveDate;
 
-    use crate::{
-        calc::{inner_xirr::prepare_xirr_params, prepare::prepare_calculation},
-        Params,
-    };
+    use crate::calc::inner_xirr::prepare_xirr_params;
 
     #[test]
     fn test_prepare_xirr_params_test_7() {
         let base_month = 4;
-        let params = Params {
-            max_total_amount: f64::MAX,
-            min_installment_amount: 0.0,
-            requested_amount: 2900.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
-            installments: 6,
-            debit_service_percentage: 0,
-            mdr: 0.029900000000000003,
-            tac_percentage: 0.0,
-            iof_overall: 0.0038,
-            iof_percentage: 0.03,
-            interest_rate: 0.035,
-        };
 
-        let prepared_calculations = prepare_calculation(params);
+        let due_dates = vec![
+            chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2022, 5, 30).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2022, 6, 30).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2022, 7, 30).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2022, 8, 30).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2022, 9, 30).unwrap(),
+        ];
 
         let installments = 1;
         let calculation_basis_for_effective_interest_rate = 3005.610014640465;
@@ -68,7 +57,7 @@ mod test {
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
-            &prepared_calculations,
+            &due_dates,
             calculation_basis_for_effective_interest_rate,
             customer_amount,
         );
@@ -94,7 +83,7 @@ mod test {
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
-            &prepared_calculations,
+            &due_dates,
             calculation_basis_for_effective_interest_rate,
             customer_amount,
         );
@@ -119,7 +108,7 @@ mod test {
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
-            &prepared_calculations,
+            &due_dates,
             calculation_basis_for_effective_interest_rate,
             customer_amount,
         );
@@ -144,7 +133,7 @@ mod test {
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
-            &prepared_calculations,
+            &due_dates,
             calculation_basis_for_effective_interest_rate,
             customer_amount,
         );
@@ -169,7 +158,7 @@ mod test {
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
-            &prepared_calculations,
+            &due_dates,
             calculation_basis_for_effective_interest_rate,
             customer_amount,
         );
@@ -194,7 +183,7 @@ mod test {
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
-            &prepared_calculations,
+            &due_dates,
             calculation_basis_for_effective_interest_rate,
             customer_amount,
         );
