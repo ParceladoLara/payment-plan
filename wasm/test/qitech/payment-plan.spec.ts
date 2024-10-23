@@ -14,11 +14,45 @@ test("calculate payment plan test 0", () => {
     mdr: 0.05,
     tacPercentage: 0.0,
     iofOverall: 0.0038,
-    iofPercentage: 0.03,
+    iofPercentage: 0.000082,
     interestRate: 0.0235,
   };
 
-  assert.throws(() => calculatePaymentPlan(params)); //TODO: qitech was not implemented yet
+  const result = calculatePaymentPlan(params);
+  const pop = result.pop();
+  const expected = {
+    installment: 24,
+    dueDate: "2024-03-18T00:00:00.000Z",
+    accumulatedDays: 731,
+    daysIndex: 0.572214390057081,
+    accumulatedDaysIndex: 18.17043451706523,
+    interestRate: 0.0235,
+    installmentAmount: 498.34,
+    installmentAmountWithoutTac: 0,
+    totalAmount: 11960.16,
+    debitService: 2905.0699999999997,
+    customerDebitServiceAmount: 2905.0699999999997,
+    customerAmount: 498.34,
+    calculationBasisForEffectiveInterestRate: 487.71125,
+    merchantDebitServiceAmount: 0,
+    merchantTotalAmount: 440,
+    settledToMerchant: 8360,
+    mdrAmount: 440,
+    effectiveInterestRate: 0.0235,
+    totalEffectiveCost: 0.0261,
+    eirYearly: 0.321453,
+    tecYearly: 0.36193,
+    eirMonthly: 0.0235,
+    tecMonthly: 0.0261,
+    totalIOF: 255.09,
+    contractAmount: 9055.09,
+    contractAmountWithoutTAC: 0,
+    tacAmount: 0,
+    iofPercentage: 0.000082,
+    overallIof: 0.0038,
+  };
+
+  assert.deepEqual(pop, expected);
 });
 
 test("Error: invalid requestedAmount", () => {
@@ -33,11 +67,11 @@ test("Error: invalid requestedAmount", () => {
     mdr: 0.05,
     tacPercentage: 0.0,
     iofOverall: 0.0038,
-    iofPercentage: 0.03,
+    iofPercentage: 0.000082,
     interestRate: 0.0235,
   };
 
-  assert.throws(() => calculatePaymentPlan(params)); //TODO: qitech was not implemented yet
+  assert.throws(() => calculatePaymentPlan(params));
 });
 
 test("Error: invalid installments", () => {
@@ -52,9 +86,9 @@ test("Error: invalid installments", () => {
     mdr: 0.05,
     tacPercentage: 0.0,
     iofOverall: 0.0038,
-    iofPercentage: 0.03,
+    iofPercentage: 0.000082,
     interestRate: 0.0235,
   };
 
-  assert.throws(() => calculatePaymentPlan(params)); //TODO: qitech was not implemented yet
+  assert.throws(() => calculatePaymentPlan(params));
 });

@@ -9,6 +9,7 @@ use super::date::Date;
 #[serde(rename_all = "camelCase")]
 pub struct Response {
     pub installment: u32,
+    #[tsify(type = "Date | string")]
     pub due_date: Date,
     pub accumulated_days: i64,
     pub days_index: f64,
@@ -86,6 +87,7 @@ pub struct DownPaymentResponse {
     pub installment_amount: f64,
     pub total_amount: f64,
     pub installment_quantity: u32,
+    #[tsify(type = "Date | string")]
     pub first_payment_date: Date,
     pub plans: Vec<Response>,
 }

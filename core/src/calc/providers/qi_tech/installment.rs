@@ -82,6 +82,7 @@ mod test {
     #[test]
     fn test_calc() {
         let last_due_date = chrono::NaiveDate::from_ymd_opt(2026, 03, 24).unwrap();
+
         let due_dates = vec![
             chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2024, 11, 24).unwrap(),
@@ -111,9 +112,9 @@ mod test {
             diffs: vec![
                 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28,
             ],
-            amount: 589.4399638402917,
-            factor: 0.48977173114928746,
-            accumulated_factor: 12.606881880871965,
+            amount: 589.44,
+            factor: 0.489771731149302,
+            accumulated_factor: 12.60688188087214,
             last_due_date,
             due_dates,
         };

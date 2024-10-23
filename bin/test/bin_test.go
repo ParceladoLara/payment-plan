@@ -30,8 +30,30 @@ var param = protos.PlanParams{
 	MaxTotalAmount:         1000000,
 }
 
+var qiTechParam = protos.PlanParams{
+	RequestedAmount:        8800,
+	FirstPaymentDateMillis: firstPaymentDate.UnixMilli(),
+	RequestedDateMillis:    requestedDate.UnixMilli(),
+	Installments:           24,
+	DebitServicePercentage: 0,
+	Mdr:                    0.05,
+	TacPercentage:          0,
+	IofOverall:             0.0038,
+	IofPercentage:          0.000082,
+	InterestRate:           0.0235,
+	MinInstallmentAmount:   100,
+	MaxTotalAmount:         1000000,
+}
 var downPaymentParams = protos.DownPaymentParams{
 	Params:                 &param,
+	FirstPaymentDateMillis: time.Date(2022, time.June, 20, 0, 0, 0, 0, time.UTC).UnixMilli(),
+	RequestedAmount:        200,
+	Installments:           2,
+	MinInstallmentAmount:   100,
+}
+
+var qiTechDownPaymentParams = protos.DownPaymentParams{
+	Params:                 &qiTechParam,
 	FirstPaymentDateMillis: time.Date(2022, time.June, 20, 0, 0, 0, 0, time.UTC).UnixMilli(),
 	RequestedAmount:        200,
 	Installments:           2,
@@ -120,7 +142,7 @@ func TestBMPPlan(t *testing.T) {
 func TestQiTechPlan(t *testing.T) {
 	var plan protos.PlanResponses
 
-	err := callBuff(&param, &plan)
+	err := callBuff(&qiTechParam, &plan)
 	if err != nil {
 		t.Errorf("Error running payment-plan CLI: %s", err)
 	}
@@ -141,7 +163,7 @@ func TestBMPDownPayment(t *testing.T) {
 func TestQiTechDownPayment(t *testing.T) {
 	var plan protos.DownPaymentResponses
 
-	err := callBuff(&downPaymentParams, &plan, "-t", "down-payment")
+	err := callBuff(&qiTechDownPaymentParams, &plan, "-t", "down-payment")
 	if err != nil {
 		t.Fatalf("Error running payment-plan CLI: %s", err)
 	}

@@ -7,6 +7,8 @@ pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
     let params = qi_params.params;
     let installments = params.installments;
 
+    let iof_percentage = params.iof_percentage;
+
     let iof_overall = params.iof_overall;
 
     let daily_interest_rate = qi_params.daily_interest_rate;
@@ -25,7 +27,8 @@ pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
         if accumulated_days >= 365 {
             accumulated_days = 365;
         }
-        let installment_iof = installment_amount_without_fee * accumulated_days as f64 * 0.000082; //TODO: hardcoded value
+        let installment_iof =
+            installment_amount_without_fee * accumulated_days as f64 * iof_percentage;
 
         let iof = main_iof + installment_iof;
 
@@ -58,7 +61,7 @@ mod test {
                 mdr: 0.05,
                 tac_percentage: 0.0,
                 iof_overall: 0.0038,
-                iof_percentage: 0.03,
+                iof_percentage: 0.000082,
                 interest_rate: 0.04,
                 min_installment_amount: 100.0,
                 max_total_amount: f64::MAX,
@@ -105,10 +108,8 @@ mod test {
             due_dates,
         };
 
-        println!("{:?}", i_cal);
-
         let iof = super::calc(&params, &i_cal);
 
-        assert_eq!(iof, 195.90259933000002);
+        assert_eq!(iof, 195.9);
     }
 }

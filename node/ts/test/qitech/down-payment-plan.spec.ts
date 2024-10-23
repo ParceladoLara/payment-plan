@@ -18,7 +18,7 @@ test('calculate down payment plan 2 installments', () => {
     mdr: 0.01,
     tacPercentage: 0.0,
     iofOverall: 0.0038,
-    iofPercentage: 0.03,
+    iofPercentage: 0.000082,
     interestRate: 0.0355,
   };
   const downPayment = 200.0;

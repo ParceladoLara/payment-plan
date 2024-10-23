@@ -22,8 +22,8 @@ fn main() {
             debit_service_percentage: 0,
             mdr: 0.05,
             tac_percentage: 0.0,
-            iof_overall: 0.0038,  // %0.38
-            iof_percentage: 0.03, // 0.0082%
+            iof_overall: 0.0038,      // %0.38
+            iof_percentage: 0.000082, // 0.0082%
             interest_rate,
         };
 
