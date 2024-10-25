@@ -15,7 +15,11 @@ pub fn cast_js_object_to_param(
     cx: &mut FunctionContext,
     obj: Handle<JsObject>,
 ) -> NeonResult<Params> {
-    let max_total_amount: Handle<JsValue> = obj.get(cx, "maxTotalAmount")?;
+    let max_total_amount: Option<Handle<JsValue>> = obj.get_opt(cx, "maxTotalAmount")?;
+    let max_total_amount = match max_total_amount {
+        Some(value) => any_to_number(cx, value)?,
+        None => f64::MAX,
+    };
     let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
     let first_payment_date: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
     let requested_date: Handle<JsDate> = obj.get(cx, "requestedDate")?;
@@ -29,7 +33,6 @@ pub fn cast_js_object_to_param(
     let min_installment_amount: Option<Handle<JsValue>> =
         obj.get_opt(cx, "minInstallmentAmount")?;
 
-    let max_total_amount = any_to_number(cx, max_total_amount)?;
     let requested_amount = any_to_number(cx, requested_amount)?;
     let first_payment_date = first_payment_date.value(cx);
     let requested_date = requested_date.value(cx);
