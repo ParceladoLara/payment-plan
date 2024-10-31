@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use calc::PaymentPlan;
 use err::PaymentPlanError;
 use serde::{Deserialize, Serialize};
@@ -29,6 +31,27 @@ pub struct Params {
     pub interest_rate: f64,            // 0.0-1.0
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
+}
+
+impl Display for Params {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "Params {{ requested_amount: {}, first_payment_date: {}, requested_date: {}, installments: {}, debit_service_percentage: {}, mdr: {}, tac_percentage: {}, iof_overall: {}, iof_percentage: {}, interest_rate: {}, min_installment_amount: {}, max_total_amount: {} }}",
+            self.requested_amount,
+            self.first_payment_date,
+            self.requested_date,
+            self.installments,
+            self.debit_service_percentage,
+            self.mdr,
+            self.tac_percentage,
+            self.iof_overall,
+            self.iof_percentage,
+            self.interest_rate,
+            self.min_installment_amount,
+            self.max_total_amount
+        )
+    }
 }
 
 #[derive(Debug, Serialize, Clone, Copy, Default, PartialEq)]

@@ -2,11 +2,14 @@ use std::fmt::Display;
 
 use xirr::InvalidPaymentsError;
 
+use crate::Params;
+
 #[derive(Debug)]
 pub enum PaymentPlanError {
     CalculationError(InvalidPaymentsError),
     InvalidNumberOfInstallments,
     InvalidRequestedAmount,
+    XirCalculationError(Params),
 }
 
 impl PartialEq for PaymentPlanError {
@@ -41,6 +44,9 @@ impl Display for PaymentPlanError {
             }
             PaymentPlanError::InvalidRequestedAmount => {
                 write!(f, "Requested amount must be greater than 0")
+            }
+            PaymentPlanError::XirCalculationError(params) => {
+                write!(f, "XIR calculation error: {}", params)
             }
         }
     }

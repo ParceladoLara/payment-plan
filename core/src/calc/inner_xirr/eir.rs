@@ -54,7 +54,7 @@ pub fn calculate_eir_monthly(
         }
     }
     if eir_monthly.is_nan() {
-        return Err(PaymentPlanError::InvalidRequestedAmount);
+        return Err(PaymentPlanError::XirCalculationError(params));
     }
     return Ok(eir_monthly);
 }

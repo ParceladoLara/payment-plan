@@ -47,7 +47,7 @@ pub fn calculate_tec_monthly(
     }
 
     if tec_monthly.is_nan() {
-        return Err(PaymentPlanError::InvalidRequestedAmount);
+        return Err(PaymentPlanError::XirCalculationError(params));
     }
     return Ok(tec_monthly);
 }
