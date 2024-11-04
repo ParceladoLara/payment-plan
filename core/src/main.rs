@@ -1,42 +1,42 @@
-use core_payment_plan::{calculate_payment_plan, types::plan::Params};
+use core_payment_plan::{
+    calculate_reimbursement,
+    types::reimbursement::{InvoiceParam, InvoiceStatus, Params},
+};
 
+// let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 fn main() {
-    let i = vec![64];
+    let due_date1 = chrono::NaiveDate::from_ymd_opt(2024, 09, 19).unwrap();
+    let due_date2 = chrono::NaiveDate::from_ymd_opt(2024, 10, 19).unwrap();
 
-    for i in i {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+    let mut invoices = Vec::new();
 
-        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
+    invoices.push(InvoiceParam {
+        due_at: due_date1,
+        id: 1,
+        main_iof_tac: 1448.8733387743182,
+        original_amount: 1569.3233494592498,
+        status: InvoiceStatus::PAID,
+    });
+    invoices.push(InvoiceParam {
+        due_at: due_date2,
+        id: 2,
+        main_iof_tac: 1506.6833849914135,
+        original_amount: 1569.3233494592498,
+        status: InvoiceStatus::READJUSTED,
+    });
 
-        let requested_amount = 12853.43;
-        let installments = i;
-        let interest_rate = 0.035;
+    let params = Params {
+        base_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 04).unwrap(),
+        fee: 0.3,
+        interest_rate: 0.039900000000000005,
+        invoice_cost: 2.0,
+        invoices,
+        max_reimbursement_payment_days: 7,
+        max_repurchase_payment_days: 3,
+        mdr: 90.0,
+    };
 
-        let params = Params {
-            max_total_amount: f64::MAX,
-            min_installment_amount: 100.0,
-            requested_amount,
-            first_payment_date,
-            requested_date,
-            installments,
-            debit_service_percentage: 0,
-            mdr: 0.05,
-            tac_percentage: 0.0,
-            iof_overall: 0.0038,      // %0.38
-            iof_percentage: 0.000082, // 0.0082%
-            interest_rate,
-        };
+    let result = calculate_reimbursement(params).unwrap();
 
-        let mut result = calculate_payment_plan(params).unwrap();
-
-        println!("Length: {}", result.len());
-
-        let result = result.pop().unwrap();
-
-        println!("CET: {}", result.total_effective_cost);
-        println!("annual_cet: {}", result.tec_yearly);
-        println!("installment_amount: {}", result.installment_amount);
-        println!("IOF: {}", result.total_iof);
-        println!("Contract Amount: {}", result.contract_amount);
-    }
+    println!("{:#?}", result);
 }

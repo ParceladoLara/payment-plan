@@ -99,8 +99,8 @@ pub trait PaymentPlan {
         let invoices = params.invoices;
         for invoice in invoices {
             let due_at = invoice.due_at;
-            let diff = reference_day_for_repurchase
-                .signed_duration_since(due_at)
+            let diff = due_at
+                .signed_duration_since(reference_day_for_repurchase)
                 .num_days();
             let present_value_repurchase;
 
@@ -130,10 +130,12 @@ pub trait PaymentPlan {
             });
         }
 
-        let subsidy_for_cancellation = 1.0 - params.fee * params.mdr;
+        let subsidy_for_cancellation = (1.0 - params.fee) * params.mdr;
 
         let reimbursement_value =
             total_present_value_repurchase - subsidy_for_cancellation + params.invoice_cost;
+
+        let customer_charge_back_amount = round_decimal_cases(customer_charge_back_amount, 2);
 
         return Ok(reimbursement::Response {
             total_present_value_repurchase,
