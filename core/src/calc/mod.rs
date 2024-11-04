@@ -2,7 +2,8 @@ use crate::{
     down_payment_plan,
     err::PaymentPlanError,
     plan,
-    util::{add_days, add_months},
+    types::reimbursement,
+    util::{add_days, add_months, round_decimal_cases},
 };
 
 mod inner_xirr;
@@ -76,5 +77,73 @@ pub trait PaymentPlan {
         }
 
         return Ok(resp);
+    }
+
+    fn calculate_reimbursement(
+        &self,
+        params: reimbursement::Params,
+    ) -> Result<reimbursement::Response, PaymentPlanError> {
+        let mut invoices_response = Vec::new();
+        let mut customer_charge_back_amount = 0.0;
+        let mut total_present_value_repurchase = 0.0;
+
+        let reference_day_for_repurchase =
+            add_days(params.base_date, params.max_repurchase_payment_days);
+
+        let interest_rate_daily = (1.0 + params.interest_rate).powf(1.0 / 30.0) - 1.0;
+        let interest_rate_daily = round_decimal_cases(interest_rate_daily, 7);
+
+        let reimbursement_invoice_due_date =
+            add_days(params.base_date, params.max_reimbursement_payment_days);
+
+        let invoices = params.invoices;
+        for invoice in invoices {
+            let due_at = invoice.due_at;
+            let diff = reference_day_for_repurchase
+                .signed_duration_since(due_at)
+                .num_days();
+            let present_value_repurchase;
+
+            match invoice.status {
+                reimbursement::InvoiceStatus::PAID => {
+                    customer_charge_back_amount += invoice.main_iof_tac;
+                    present_value_repurchase = 0.0;
+                }
+                reimbursement::InvoiceStatus::CREATED
+                | reimbursement::InvoiceStatus::READJUSTED => {
+                    present_value_repurchase =
+                        invoice.original_amount / (1.0 + interest_rate_daily).powf(diff as f64);
+                }
+                reimbursement::InvoiceStatus::OVERDUE => {
+                    present_value_repurchase = invoice.original_amount;
+                }
+                reimbursement::InvoiceStatus::IRRELEVANT => {
+                    present_value_repurchase = 0.0;
+                }
+            }
+
+            total_present_value_repurchase += present_value_repurchase;
+            invoices_response.push(reimbursement::InvoiceResponse {
+                id: invoice.id,
+                days_difference_between_repurchase_date_and_due_at: diff,
+                present_value_repurchase,
+            });
+        }
+
+        let subsidy_for_cancellation = 1.0 - params.fee * params.mdr;
+
+        let reimbursement_value =
+            total_present_value_repurchase - subsidy_for_cancellation + params.invoice_cost;
+
+        return Ok(reimbursement::Response {
+            total_present_value_repurchase,
+            reimbursement_value,
+            reference_date_for_repurchase: reference_day_for_repurchase,
+            interest_rate_daily,
+            subsidy_for_cancellation,
+            invoices: invoices_response,
+            customer_charge_back_amount,
+            reimbursement_invoice_due_date,
+        });
     }
 }

@@ -9,7 +9,8 @@ use calc::providers::qi_tech::QiTech;
 // Default to BMP if no feature is specified
 #[cfg(not(any(feature = "bmp", feature = "qitech")))]
 use calc::providers::qi_tech::QiTech;
-use types::{down_payment_plan, plan};
+
+use types::{down_payment_plan, plan, reimbursement};
 
 mod calc;
 mod err;
@@ -36,4 +37,10 @@ pub fn calculate_payment_plan(
     params: plan::Params,
 ) -> Result<Vec<plan::Response>, PaymentPlanError> {
     return P.calculate_payment_plan(params);
+}
+
+pub fn calculate_reimbursement(
+    params: reimbursement::Params,
+) -> Result<reimbursement::Response, PaymentPlanError> {
+    return P.calculate_reimbursement(params);
 }
