@@ -76,7 +76,7 @@ pub fn calc(qi_params: &QiTechParams) -> InstallmentData {
 mod test {
     use crate::{
         calc::providers::qi_tech::{installment::InstallmentData, QiTechParams},
-        Params,
+        plan::Params,
     };
 
     #[test]

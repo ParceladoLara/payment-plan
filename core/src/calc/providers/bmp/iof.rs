@@ -1,4 +1,4 @@
-use crate::Params;
+use crate::plan::Params;
 
 pub fn calculate_iof(params: Params, accumulated_days: Vec<i64>, installments: f64) -> f64 {
     let requested_amount = params.requested_amount;
@@ -33,7 +33,7 @@ pub fn calculate_iof(params: Params, accumulated_days: Vec<i64>, installments: f
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::providers::bmp::iof::calculate_iof, Params};
+    use crate::{calc::providers::bmp::iof::calculate_iof, plan::Params};
 
     #[test]
     fn test_total_iof_test_6() {

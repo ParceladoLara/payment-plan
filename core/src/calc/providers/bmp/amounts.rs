@@ -1,4 +1,4 @@
-use crate::Params;
+use crate::plan::Params;
 
 #[derive(Debug)]
 pub struct AmountsResponse {
@@ -77,7 +77,7 @@ pub fn calculate_amounts(
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::providers::bmp::amounts::calculate_amounts, Params};
+    use crate::{calc::providers::bmp::amounts::calculate_amounts, plan::Params};
 
     #[test]
     fn test_calculate_amounts_test_7() {

@@ -6,7 +6,7 @@ use std::{
 mod args;
 use args::{Args, CalcType};
 use clap::Parser;
-use core_payment_plan::{DownPaymentParams, Params};
+use core_payment_plan::types::{down_payment_plan, plan};
 use payment_plan::{
     deserialize_down_payment_params,
     types::{DownPaymentResponses, PlanResponses},
@@ -32,7 +32,7 @@ fn main() -> ExitCode {
 
 fn calc(buf: Vec<u8>) -> ExitCode {
     let params = payment_plan::deserialize_params(&buf).unwrap();
-    let params: Result<Params, _> = params.try_into();
+    let params: Result<plan::Params, _> = params.try_into();
     let params = match params {
         Ok(params) => params,
         Err(e) => {
@@ -65,7 +65,7 @@ fn calc(buf: Vec<u8>) -> ExitCode {
 
 fn down_calc(buf: Vec<u8>) -> ExitCode {
     let params = deserialize_down_payment_params(&buf).unwrap();
-    let params: Result<DownPaymentParams, _> = params.try_into();
+    let params: Result<down_payment_plan::Params, _> = params.try_into();
     let params = match params {
         Ok(params) => params,
         Err(e) => {

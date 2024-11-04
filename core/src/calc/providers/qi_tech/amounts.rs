@@ -1,4 +1,4 @@
-use crate::Params;
+use crate::plan::Params;
 
 #[derive(Debug, PartialEq)]
 pub struct AmountsResponse {
@@ -59,7 +59,7 @@ pub fn calc(
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::providers::qi_tech::amounts::AmountsResponse, Params};
+    use crate::{calc::providers::qi_tech::amounts::AmountsResponse, plan::Params};
 
     #[test]
     fn test_calc() {

@@ -4,8 +4,9 @@ use crate::{
         PaymentPlan,
     },
     err::PaymentPlanError,
+    plan::Params,
+    plan::Response,
     util::round_decimal_cases,
-    Params, Response,
 };
 
 const POTENCY: f64 = 0.0027397260273972603; // 1/365
@@ -179,7 +180,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::Params;
+    use crate::plan::Params;
 
     #[test]
     fn test_qi_tech() {

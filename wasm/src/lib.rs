@@ -4,13 +4,15 @@ use types::{
 };
 use wasm_bindgen::prelude::*;
 
+use core_payment_plan::types::{down_payment_plan, plan};
+
 mod debug;
 mod types;
 
 #[allow(non_snake_case)]
 #[wasm_bindgen(js_name = "calculatePaymentPlan")]
 pub fn calculate_payment_plan(p: Params) -> Result<Vec<Response>, JsError> {
-    let core_params: core_payment_plan::Params = match p.try_into() {
+    let core_params: plan::Params = match p.try_into() {
         Ok(params) => params,
         Err(e) => return Err(e),
     };
@@ -28,7 +30,7 @@ pub fn calculate_payment_plan(p: Params) -> Result<Vec<Response>, JsError> {
 pub fn calculate_down_payment_plan(
     p: DownPaymentParams,
 ) -> Result<Vec<DownPaymentResponse>, JsError> {
-    let core_params: core_payment_plan::DownPaymentParams = match p.try_into() {
+    let core_params: down_payment_plan::Params = match p.try_into() {
         Ok(params) => params,
         Err(e) => return Err(e),
     };

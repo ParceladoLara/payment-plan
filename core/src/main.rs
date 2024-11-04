@@ -1,4 +1,4 @@
-use core_payment_plan::{calculate_payment_plan, Params};
+use core_payment_plan::{calculate_payment_plan, types::plan::Params};
 
 fn main() {
     let i = vec![64];

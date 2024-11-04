@@ -2,7 +2,7 @@ use std::fmt::Display;
 
 use xirr::InvalidPaymentsError;
 
-use crate::Params;
+use crate::types::plan::Params;
 
 #[derive(Debug)]
 pub enum PaymentPlanError {

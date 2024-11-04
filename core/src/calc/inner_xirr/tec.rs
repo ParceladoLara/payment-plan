@@ -1,6 +1,6 @@
 use xirr::{compute, Payment};
 
-use crate::{err::PaymentPlanError, Params};
+use crate::{err::PaymentPlanError, plan::Params};
 
 pub fn calculate_tec_monthly(
     params: Params,
@@ -56,7 +56,7 @@ pub fn calculate_tec_monthly(
 mod test {
     use xirr::Payment;
 
-    use crate::{calc::inner_xirr::tec::calculate_tec_monthly, Params};
+    use crate::{calc::inner_xirr::tec::calculate_tec_monthly, plan::Params};
 
     #[test]
     fn test_calculate_tec_monthly_test_7() {

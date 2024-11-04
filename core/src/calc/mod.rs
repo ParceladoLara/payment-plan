@@ -1,14 +1,18 @@
 use crate::{
+    down_payment_plan,
     err::PaymentPlanError,
+    plan,
     util::{add_days, add_months},
-    DownPaymentParams, DownPaymentResponse, Params, Response,
 };
 
 mod inner_xirr;
 pub mod providers;
 
 pub trait PaymentPlan {
-    fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError>;
+    fn calculate_payment_plan(
+        &self,
+        params: plan::Params,
+    ) -> Result<Vec<plan::Response>, PaymentPlanError>;
     /*
         A down payment plan is a payment plan that is made before the actual payment plan.
         It is much simpler than the actual payment plan in terms of calculations.
@@ -27,8 +31,8 @@ pub trait PaymentPlan {
     */
     fn calculate_down_payment_plan(
         &self,
-        params: DownPaymentParams,
-    ) -> Result<Vec<DownPaymentResponse>, PaymentPlanError> {
+        params: down_payment_plan::Params,
+    ) -> Result<Vec<down_payment_plan::Response>, PaymentPlanError> {
         if params.requested_amount <= 0.0 {
             return Err(PaymentPlanError::InvalidRequestedAmount);
         }
@@ -58,7 +62,7 @@ pub trait PaymentPlan {
 
             let plans = self.calculate_payment_plan(base_params)?;
 
-            resp.push(DownPaymentResponse {
+            resp.push(down_payment_plan::Response {
                 first_payment_date: down_payment_first_payment_date,
                 installment_amount,
                 installment_quantity: i,

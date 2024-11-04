@@ -8,7 +8,8 @@ use crate::{
         PaymentPlan,
     },
     err::PaymentPlanError,
-    Params, Response,
+    plan::Params,
+    plan::Response,
 };
 
 mod amounts;
@@ -169,7 +170,7 @@ mod test {
     //Test 15 - (1000 / 24) = (1275.5756523433513 / 106.29797102861261) max installment amount 100
     //Test 16 - (44 / 48) = (46.05063251213531 / 46.05063251213531) min installment amount 80
 
-    use crate::{calc::PaymentPlan, Params};
+    use crate::{calc::PaymentPlan, plan::Params};
 
     const BMP: super::BMP = super::BMP {};
 
@@ -1685,12 +1686,11 @@ mod test {
 
 #[cfg(test)]
 mod down_payment_test {
-    use crate::{calc::PaymentPlan, DownPaymentParams, Params};
-
+    use crate::{calc::PaymentPlan, down_payment_plan, plan};
     const BMP: super::BMP = super::BMP {};
 
     #[allow(deprecated)]
-    const PLAN_PARAM: Params = Params {
+    const PLAN_PARAM: plan::Params = plan::Params {
         max_total_amount: f64::MAX,
         min_installment_amount: 0.0,
         requested_amount: 1000.0,
@@ -1711,7 +1711,7 @@ mod down_payment_test {
         let min_installment_amount = 100.0;
         let installments = 4;
 
-        let params = DownPaymentParams {
+        let params = down_payment_plan::Params {
             params: PLAN_PARAM,
             requested_amount: down_payment,
             min_installment_amount,
@@ -1734,7 +1734,7 @@ mod down_payment_test {
         let min_installment_amount = 100.0;
         let installments = 4;
 
-        let params = DownPaymentParams {
+        let params = down_payment_plan::Params {
             params: PLAN_PARAM,
             requested_amount: down_payment,
             min_installment_amount,
@@ -1777,7 +1777,7 @@ mod down_payment_test {
         let min_installment_amount = 100.0;
         let installments = 4;
 
-        let params = DownPaymentParams {
+        let params = down_payment_plan::Params {
             params: PLAN_PARAM,
             requested_amount: down_payment,
             min_installment_amount,
@@ -1808,7 +1808,7 @@ mod down_payment_test {
         let min_installment_amount = 100.0;
         let installments = 4;
 
-        let params = DownPaymentParams {
+        let params = down_payment_plan::Params {
             params: PLAN_PARAM,
             requested_amount: down_payment,
             min_installment_amount,
@@ -1843,7 +1843,7 @@ mod down_payment_test {
         let min_installment_amount = 100.0;
         let installments = 4;
 
-        let params = DownPaymentParams {
+        let params = down_payment_plan::Params {
             params: PLAN_PARAM,
             requested_amount: down_payment,
             min_installment_amount,

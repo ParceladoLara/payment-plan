@@ -1,6 +1,6 @@
 use xirr::{compute, Payment};
 
-use crate::{err::PaymentPlanError, Params};
+use crate::{err::PaymentPlanError, plan::Params};
 
 pub fn calculate_eir_monthly(
     params: Params,
@@ -63,7 +63,7 @@ pub fn calculate_eir_monthly(
 mod test {
     use xirr::Payment;
 
-    use crate::{calc::inner_xirr::eir::calculate_eir_monthly, Params};
+    use crate::{calc::inner_xirr::eir::calculate_eir_monthly, plan::Params};
 
     #[test]
     fn test_calculate_eir_monthly_test_7() {

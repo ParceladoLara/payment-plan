@@ -3,6 +3,7 @@ use tsify_next::Tsify;
 use wasm_bindgen::JsError;
 
 use super::date::Date;
+use core_payment_plan::types::{down_payment_plan, plan};
 
 #[allow(non_snake_case)]
 #[derive(Tsify, Debug, Deserialize, Clone)]
@@ -23,11 +24,11 @@ pub struct Params {
     pub max_total_amount: f64,
 }
 
-impl TryInto<core_payment_plan::Params> for Params {
+impl TryInto<plan::Params> for Params {
     type Error = JsError;
 
-    fn try_into(self) -> Result<core_payment_plan::Params, Self::Error> {
-        Ok(core_payment_plan::Params {
+    fn try_into(self) -> Result<plan::Params, Self::Error> {
+        Ok(plan::Params {
             requested_amount: self.requested_amount,
             first_payment_date: self.first_payment_date.try_into()?,
             requested_date: self.requested_date.try_into()?,
@@ -56,11 +57,11 @@ pub struct DownPaymentParams {
     pub installments: u32,           // The max number of installments for the down payment (ex: 12)
 }
 
-impl TryInto<core_payment_plan::DownPaymentParams> for DownPaymentParams {
+impl TryInto<down_payment_plan::Params> for DownPaymentParams {
     type Error = JsError;
 
-    fn try_into(self) -> Result<core_payment_plan::DownPaymentParams, Self::Error> {
-        Ok(core_payment_plan::DownPaymentParams {
+    fn try_into(self) -> Result<down_payment_plan::Params, Self::Error> {
+        Ok(down_payment_plan::Params {
             params: self.params.try_into()?,
             requested_amount: self.requested_amount,
             min_installment_amount: self.min_installment_amount,

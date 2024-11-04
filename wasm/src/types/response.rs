@@ -1,6 +1,8 @@
 use serde::Serialize;
 use tsify_next::Tsify;
 
+use core_payment_plan::types::{down_payment_plan, plan};
+
 use super::date::Date;
 
 #[allow(non_snake_case)]
@@ -42,8 +44,8 @@ pub struct Response {
     pub overall_iof: f64,
 }
 
-impl From<core_payment_plan::Response> for Response {
-    fn from(value: core_payment_plan::Response) -> Self {
+impl From<plan::Response> for Response {
+    fn from(value: plan::Response) -> Self {
         Self {
             installment: value.installment,
             due_date: value.due_date.into(),
@@ -92,8 +94,8 @@ pub struct DownPaymentResponse {
     pub plans: Vec<Response>,
 }
 
-impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
-    fn from(value: core_payment_plan::DownPaymentResponse) -> Self {
+impl From<down_payment_plan::Response> for DownPaymentResponse {
+    fn from(value: down_payment_plan::Response) -> Self {
         Self {
             installment_amount: value.installment_amount,
             total_amount: value.total_amount,

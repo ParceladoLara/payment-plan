@@ -1,4 +1,4 @@
-use core_payment_plan::{DownPaymentParams, DownPaymentResponse, Params, Response};
+use core_payment_plan::types::{down_payment_plan, plan};
 
 use chrono::NaiveTime;
 use neon::{
@@ -14,7 +14,7 @@ use crate::parser::any_to_number;
 pub fn cast_js_object_to_param(
     cx: &mut FunctionContext,
     obj: Handle<JsObject>,
-) -> NeonResult<Params> {
+) -> NeonResult<plan::Params> {
     let max_total_amount: Option<Handle<JsValue>> = obj.get_opt(cx, "maxTotalAmount")?;
     let max_total_amount = match max_total_amount {
         Some(value) => any_to_number(cx, value)?,
@@ -64,7 +64,7 @@ pub fn cast_js_object_to_param(
         }
     };
 
-    Ok(Params {
+    Ok(plan::Params {
         max_total_amount,
         min_installment_amount,
         requested_amount,
@@ -82,7 +82,7 @@ pub fn cast_js_object_to_param(
 
 fn cast_response_to_js_object<'a, C: Context<'a>>(
     cx: &mut C,
-    response: Response,
+    response: plan::Response,
 ) -> NeonResult<Handle<'a, JsObject>> {
     let installment = JsNumber::new(cx, response.installment);
     let due_date = response
@@ -177,7 +177,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
 
 pub fn cast_vec_response_to_js_array<'a, C: Context<'a>>(
     cx: &mut C,
-    responses: Vec<Response>,
+    responses: Vec<plan::Response>,
 ) -> NeonResult<Handle<'a, JsArray>> {
     let array = JsArray::new(cx, responses.len() as usize);
     for (i, response) in responses.into_iter().enumerate() {
@@ -190,7 +190,7 @@ pub fn cast_vec_response_to_js_array<'a, C: Context<'a>>(
 pub fn cast_js_object_to_down_payment_param(
     cx: &mut FunctionContext,
     obj: Handle<JsObject>,
-) -> NeonResult<DownPaymentParams> {
+) -> NeonResult<down_payment_plan::Params> {
     let params: Handle<JsObject> = obj.get(cx, "params")?;
     let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
     let min_installment_amount: Handle<JsValue> = obj.get(cx, "minInstallmentAmount")?;
@@ -212,7 +212,7 @@ pub fn cast_js_object_to_down_payment_param(
         }
     };
 
-    Ok(DownPaymentParams {
+    Ok(down_payment_plan::Params {
         params,
         requested_amount,
         min_installment_amount,
@@ -223,7 +223,7 @@ pub fn cast_js_object_to_down_payment_param(
 
 fn cast_down_payment_response_to_js_object<'a, C: Context<'a>>(
     cx: &mut C,
-    response: DownPaymentResponse,
+    response: down_payment_plan::Response,
 ) -> NeonResult<Handle<'a, JsObject>> {
     let installment_amount = JsNumber::new(cx, response.installment_amount);
     let total_amount = JsNumber::new(cx, response.total_amount);
@@ -256,7 +256,7 @@ fn cast_down_payment_response_to_js_object<'a, C: Context<'a>>(
 
 pub fn cast_vec_down_payment_response_to_js_array<'a, C: Context<'a>>(
     cx: &mut C,
-    responses: Vec<DownPaymentResponse>,
+    responses: Vec<down_payment_plan::Response>,
 ) -> NeonResult<Handle<'a, JsArray>> {
     let array = JsArray::new(cx, responses.len() as usize);
     for (i, response) in responses.into_iter().enumerate() {

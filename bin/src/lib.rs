@@ -1,5 +1,5 @@
 use chrono::NaiveTime;
-use core_payment_plan::{Params, Response};
+use core_payment_plan::types::{down_payment_plan, plan};
 use prost::Message;
 use types::{
     DownPaymentParams, DownPaymentResponse, DownPaymentResponses, PlanParams, PlanResponse,
@@ -10,10 +10,10 @@ pub mod types {
     include!(concat!(env!("OUT_DIR"), "/cli.types.rs"));
 }
 
-impl TryInto<Params> for PlanParams {
+impl TryInto<plan::Params> for PlanParams {
     type Error = String;
 
-    fn try_into(self) -> Result<Params, Self::Error> {
+    fn try_into(self) -> Result<plan::Params, Self::Error> {
         let first_payment_date =
             chrono::DateTime::from_timestamp_millis(self.first_payment_date_millis);
         let first_payment_date = match first_payment_date {
@@ -31,7 +31,7 @@ impl TryInto<Params> for PlanParams {
             }
         };
 
-        let params = Params {
+        let params = plan::Params {
             max_total_amount: self.max_total_amount,
             min_installment_amount: self.min_installment_amount,
             requested_amount: self.requested_amount,
@@ -49,8 +49,8 @@ impl TryInto<Params> for PlanParams {
     }
 }
 
-impl From<Response> for PlanResponse {
-    fn from(value: Response) -> Self {
+impl From<plan::Response> for PlanResponse {
+    fn from(value: plan::Response) -> Self {
         let due_date = value
             .due_date
             .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
@@ -92,8 +92,8 @@ impl From<Response> for PlanResponse {
     }
 }
 
-impl From<Vec<Response>> for PlanResponses {
-    fn from(value: Vec<Response>) -> Self {
+impl From<Vec<plan::Response>> for PlanResponses {
+    fn from(value: Vec<plan::Response>) -> Self {
         let responses = value.into_iter().map(|r| r.into()).collect();
         PlanResponses { responses }
     }
@@ -119,10 +119,10 @@ pub fn serialize_responses(responses: PlanResponses) -> Vec<u8> {
     buf
 }
 
-impl TryInto<core_payment_plan::DownPaymentParams> for DownPaymentParams {
+impl TryInto<down_payment_plan::Params> for DownPaymentParams {
     type Error = String;
 
-    fn try_into(self) -> Result<core_payment_plan::DownPaymentParams, Self::Error> {
+    fn try_into(self) -> Result<down_payment_plan::Params, Self::Error> {
         let first_payment_date =
             chrono::DateTime::from_timestamp_millis(self.first_payment_date_millis);
         let first_payment_date = match first_payment_date {
@@ -133,8 +133,8 @@ impl TryInto<core_payment_plan::DownPaymentParams> for DownPaymentParams {
         };
 
         let params = self.params.ok_or("missing params")?;
-        let params: Params = params.try_into()?;
-        let down_payment_params = core_payment_plan::DownPaymentParams {
+        let params: plan::Params = params.try_into()?;
+        let down_payment_params = down_payment_plan::Params {
             params,
             first_payment_date,
             installments: self.installments,
@@ -146,8 +146,8 @@ impl TryInto<core_payment_plan::DownPaymentParams> for DownPaymentParams {
     }
 }
 
-impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
-    fn from(value: core_payment_plan::DownPaymentResponse) -> Self {
+impl From<down_payment_plan::Response> for DownPaymentResponse {
+    fn from(value: down_payment_plan::Response) -> Self {
         let plan: PlanResponses = value.plans.into();
 
         let first_payment_date = value
@@ -166,8 +166,8 @@ impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
     }
 }
 
-impl From<Vec<core_payment_plan::DownPaymentResponse>> for DownPaymentResponses {
-    fn from(value: Vec<core_payment_plan::DownPaymentResponse>) -> Self {
+impl From<Vec<down_payment_plan::Response>> for DownPaymentResponses {
+    fn from(value: Vec<down_payment_plan::Response>) -> Self {
         let responses = value.into_iter().map(|r| r.into()).collect();
         DownPaymentResponses { responses }
     }
