@@ -270,7 +270,7 @@ func downPaymentHelper(t *testing.T, plan *protos.DownPaymentResponses) {
 
 	firstPlan := plans[0]
 
-	planDueDate := time.Date(2022, time.July, 20, 3, 0, 0, 0, time.UTC)
+	planDueDate := time.Date(2022, time.July, 20, 0, 0, 0, 0, time.UTC)
 	actualDueDate := time.UnixMilli(firstPlan.DueDateMillis).UTC()
 	if actualDueDate != planDueDate {
 		t.Errorf("Expected first plan due date to be %s, got %s", planDueDate, actualDueDate)
@@ -288,7 +288,7 @@ func downPaymentHelper(t *testing.T, plan *protos.DownPaymentResponses) {
 
 	firstPlan2 := plans2[0]
 
-	planDueDate2 := time.Date(2022, time.August, 20, 3, 0, 0, 0, time.UTC)
+	planDueDate2 := time.Date(2022, time.August, 20, 0, 0, 0, 0, time.UTC)
 	actualDueDate2 := time.UnixMilli(firstPlan2.DueDateMillis).UTC()
 	if actualDueDate2 != planDueDate2 {
 		t.Errorf("Expected first plan due date to be %s, got %s", planDueDate2, actualDueDate2)

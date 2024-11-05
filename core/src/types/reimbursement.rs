@@ -30,8 +30,8 @@ pub struct Response {
     pub interest_rate_daily: f64,
     pub subsidy_for_cancellation: f64,
     pub customer_charge_back_amount: f64,
-    pub invoices: Vec<InvoiceResponse>,
     pub reimbursement_invoice_due_date: NaiveDate,
+    pub invoices: Vec<InvoiceResponse>,
 }
 
 #[derive(Debug, Serialize, Clone, Copy, Default, PartialEq)]

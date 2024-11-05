@@ -5,6 +5,7 @@ pub enum CalcType {
     #[default]
     Normal,
     DownPayment,
+    Reimbursement,
 }
 
 #[derive(Parser, Debug)]

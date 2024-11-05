@@ -6,10 +6,10 @@ use std::{
 mod args;
 use args::{Args, CalcType};
 use clap::Parser;
-use core_payment_plan::types::{down_payment_plan, plan};
+use core_payment_plan::types::{down_payment_plan, plan, reimbursement};
 use payment_plan::{
     deserialize_down_payment_params,
-    types::{DownPaymentResponses, PlanResponses},
+    types::{DownPaymentResponses, PlanResponses, ReimbursementResponse},
 };
 
 fn main() -> ExitCode {
@@ -25,6 +25,7 @@ fn main() -> ExitCode {
     let code = match c_type {
         CalcType::Normal => calc(buf),
         CalcType::DownPayment => down_calc(buf),
+        CalcType::Reimbursement => reimbursement(buf),
     };
 
     return code;
@@ -89,6 +90,39 @@ fn down_calc(buf: Vec<u8>) -> ExitCode {
     let response: DownPaymentResponses = response.into();
 
     let response = payment_plan::serialize_down_payment_responses(response);
+
+    //Write the response to stdout
+    std::io::stdout().write_all(&response).unwrap();
+
+    return ExitCode::SUCCESS;
+}
+
+fn reimbursement(buf: Vec<u8>) -> ExitCode {
+    let params = payment_plan::deserialize_reimbursement_params(&buf).unwrap();
+    let params: Result<reimbursement::Params, _> = params.try_into();
+    let params = match params {
+        Ok(params) => params,
+        Err(e) => {
+            //eprintln! is a macro that prints to stderr
+            eprintln!("Error: Invalid input: {}", e);
+            return ExitCode::FAILURE;
+        }
+    };
+
+    let response = core_payment_plan::calculate_reimbursement(params);
+
+    let response = match response {
+        Ok(response) => response,
+        Err(e) => {
+            //eprintln! is a macro that prints to stderr
+            eprintln!("Error: {}", e);
+            return ExitCode::FAILURE;
+        }
+    };
+
+    let response: ReimbursementResponse = response.into();
+
+    let response = payment_plan::serialize_reimbursement_response(response);
 
     //Write the response to stdout
     std::io::stdout().write_all(&response).unwrap();

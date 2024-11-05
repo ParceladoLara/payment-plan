@@ -1,9 +1,10 @@
 use chrono::NaiveTime;
-use core_payment_plan::types::{down_payment_plan, plan};
+use core_payment_plan::types::{down_payment_plan, plan, reimbursement};
 use prost::Message;
 use types::{
-    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, PlanParams, PlanResponse,
-    PlanResponses,
+    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, InvoiceParamReimbursement,
+    InvoiceResponseReimbursement, InvoiceStatusReimbursement, PlanParams, PlanResponse,
+    PlanResponses, ReimbursementParams, ReimbursementResponse,
 };
 
 pub mod types {
@@ -53,7 +54,7 @@ impl From<plan::Response> for PlanResponse {
     fn from(value: plan::Response) -> Self {
         let due_date = value
             .due_date
-            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+            .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
             .and_utc()
             .timestamp_millis();
 
@@ -152,7 +153,7 @@ impl From<down_payment_plan::Response> for DownPaymentResponse {
 
         let first_payment_date = value
             .first_payment_date
-            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+            .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
             .and_utc()
             .timestamp_millis();
 
@@ -192,5 +193,136 @@ pub fn serialize_down_payment_responses(responses: DownPaymentResponses) -> Vec<
     buf.reserve(responses.encoded_len());
     // Unwrap is safe, since we have reserved sufficient capacity in the vector.
     responses.encode(&mut buf).unwrap();
+    buf
+}
+
+impl Into<reimbursement::InvoiceStatus> for InvoiceStatusReimbursement {
+    fn into(self) -> reimbursement::InvoiceStatus {
+        match self {
+            InvoiceStatusReimbursement::Created => reimbursement::InvoiceStatus::CREATED,
+            InvoiceStatusReimbursement::Overdue => reimbursement::InvoiceStatus::OVERDUE,
+            InvoiceStatusReimbursement::Paid => reimbursement::InvoiceStatus::PAID,
+            InvoiceStatusReimbursement::Readjusted => reimbursement::InvoiceStatus::READJUSTED,
+        }
+    }
+}
+
+impl TryInto<reimbursement::InvoiceParam> for InvoiceParamReimbursement {
+    type Error = String;
+
+    fn try_into(self) -> Result<reimbursement::InvoiceParam, Self::Error> {
+        let due_at = chrono::DateTime::from_timestamp_millis(self.due_at_millis);
+        let due_at = match due_at {
+            Some(date) => date.date_naive(),
+            None => {
+                return Err("invalid due at date".to_string());
+            }
+        };
+
+        let status: reimbursement::InvoiceStatus =
+            types::InvoiceStatusReimbursement::try_from(self.status)
+                .map_err(|_| format!("invalid invoice status: {}", self.status))?
+                .into();
+
+        let invoice = reimbursement::InvoiceParam {
+            id: self.id,
+            status,
+            original_amount: self.original_amount,
+            due_at,
+            main_iof_tac: self.main_iof_tac,
+        };
+
+        Ok(invoice)
+    }
+}
+
+impl TryInto<reimbursement::Params> for ReimbursementParams {
+    type Error = String;
+
+    fn try_into(self) -> Result<reimbursement::Params, Self::Error> {
+        let invoices = self
+            .invoices
+            .into_iter()
+            .map(|invoice| invoice.try_into())
+            .collect::<Result<Vec<_>, _>>()?;
+
+        let base_date = chrono::DateTime::from_timestamp_millis(self.base_date_millis);
+        let base_date = match base_date {
+            Some(date) => date.date_naive(),
+            None => {
+                return Err("invalid base date".to_string());
+            }
+        };
+
+        let params = reimbursement::Params {
+            base_date,
+            interest_rate: self.interest_rate,
+            max_repurchase_payment_days: self.max_repurchase_payment_days,
+            max_reimbursement_payment_days: self.max_reimbursement_payment_days,
+            invoices,
+            fee: self.fee,
+            invoice_cost: self.invoice_cost,
+            mdr: self.mdr,
+        };
+
+        Ok(params)
+    }
+}
+
+impl From<reimbursement::InvoiceResponse> for InvoiceResponseReimbursement {
+    fn from(value: reimbursement::InvoiceResponse) -> Self {
+        return InvoiceResponseReimbursement {
+            days_difference_between_repurchase_date_and_due_at: value
+                .days_difference_between_repurchase_date_and_due_at,
+            id: value.id,
+            present_value_repurchase: value.present_value_repurchase,
+        };
+    }
+}
+
+impl From<reimbursement::Response> for ReimbursementResponse {
+    fn from(value: reimbursement::Response) -> Self {
+        let invoices = value
+            .invoices
+            .into_iter()
+            .map(|invoice| invoice.into())
+            .collect();
+
+        let reimbursement_invoice_due_date_millis = value
+            .reimbursement_invoice_due_date
+            .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
+            .and_utc()
+            .timestamp_millis();
+
+        let reference_date_for_repurchase_millis = value
+            .reference_date_for_repurchase
+            .and_time(NaiveTime::from_hms_opt(0, 0, 0).unwrap())
+            .and_utc()
+            .timestamp_millis();
+
+        ReimbursementResponse {
+            customer_charge_back_amount: value.customer_charge_back_amount,
+            total_present_value_repurchase: value.total_present_value_repurchase,
+            subsidy_for_cancellation: value.subsidy_for_cancellation,
+            reimbursement_value: value.reimbursement_value,
+            reimbursement_invoice_due_date_millis,
+            reference_date_for_repurchase_millis,
+            invoices,
+            interest_rate_daily: value.interest_rate_daily,
+        }
+    }
+}
+
+pub fn deserialize_reimbursement_params(
+    buf: &[u8],
+) -> Result<ReimbursementParams, prost::DecodeError> {
+    ReimbursementParams::decode(buf)
+}
+
+pub fn serialize_reimbursement_response(response: ReimbursementResponse) -> Vec<u8> {
+    let mut buf = Vec::new();
+    buf.reserve(response.encoded_len());
+    // Unwrap is safe, since we have reserved sufficient capacity in the vector.
+    response.encode(&mut buf).unwrap();
     buf
 }
