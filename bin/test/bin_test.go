@@ -60,6 +60,65 @@ var qiTechDownPaymentParams = protos.DownPaymentParams{
 	MinInstallmentAmount:   100,
 }
 
+/*
+ let due_date1 = chrono::NaiveDate::from_ymd_opt(2024, 09, 19).unwrap();
+    let due_date2 = chrono::NaiveDate::from_ymd_opt(2024, 10, 19).unwrap();
+
+    let mut invoices = Vec::new();
+
+    invoices.push(InvoiceParam {
+        due_at: due_date1,
+        id: 1,
+        main_iof_tac: 1448.8733387743182,
+        original_amount: 1569.3233494592498,
+        status: InvoiceStatus::PAID,
+    });
+    invoices.push(InvoiceParam {
+        due_at: due_date2,
+        id: 2,
+        main_iof_tac: 1506.6833849914135,
+        original_amount: 1569.3233494592498,
+        status: InvoiceStatus::READJUSTED,
+    });
+
+    let params = Params {
+        base_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 04).unwrap(),
+        fee: 0.3,
+        interest_rate: 0.039900000000000005,
+        invoice_cost: 2.0,
+        invoices,
+        max_reimbursement_payment_days: 7,
+        max_repurchase_payment_days: 3,
+        mdr: 90.0,
+    };
+*/
+
+var reimbursementParams = protos.ReimbursementParams{
+	Fee:            0.3,
+	InterestRate:   0.039900000000000005,
+	InvoiceCost:    2.0,
+	Mdr:            90.0,
+	BaseDateMillis: time.Date(2024, time.November, 4, 0, 0, 0, 0, time.UTC).UnixMilli(),
+	Invoices: []*protos.InvoiceParamReimbursement{
+		{
+			DueAtMillis:    time.Date(2024, time.September, 19, 0, 0, 0, 0, time.UTC).UnixMilli(),
+			Id:             1,
+			MainIofTac:     1448.8733387743182,
+			OriginalAmount: 1569.3233494592498,
+			Status:         protos.InvoiceStatusReimbursement_PAID,
+		},
+		{
+			DueAtMillis:    time.Date(2024, time.October, 19, 0, 0, 0, 0, time.UTC).UnixMilli(),
+			Id:             2,
+			MainIofTac:     1506.6833849914135,
+			OriginalAmount: 1569.3233494592498,
+			Status:         protos.InvoiceStatusReimbursement_READJUSTED,
+		},
+	},
+	MaxRepurchasePaymentDays:    3,
+	MaxReimbursementPaymentDays: 7,
+}
+
 type expectedValues struct {
 	ContractAmount             float64
 	ContractAmountWithoutTac   float64
@@ -169,6 +228,134 @@ func TestQiTechDownPayment(t *testing.T) {
 	}
 
 	downPaymentHelper(t, &plan)
+}
+
+func TestBMPReimbursement(t *testing.T) {
+	var plan protos.ReimbursementResponse
+
+	err := callBuff(&reimbursementParams, &plan, "-t", "reimbursement")
+
+	if err != nil {
+		t.Fatalf("Error running payment-plan CLI: %s", err)
+	}
+
+	if plan.TotalPresentValueRepurchase != 1608.6951333084446 {
+		t.Errorf("Expected total present value repurchase to be 1608.6951333084446, got %f", plan.TotalPresentValueRepurchase)
+	}
+
+	if plan.ReimbursementValue != 1547.6951333084446 {
+		t.Errorf("Expected reimbursement value to be 1547.6951333084446, got %f", plan.ReimbursementValue)
+	}
+
+	if plan.InterestRateDaily != 0.001305 {
+		t.Errorf("Expected interest rate daily to be 0.001305, got %f", plan.InterestRateDaily)
+	}
+
+	if plan.SubsidyForCancellation != 62.99999999999999 {
+		t.Errorf("Expected subsidy for cancellation to be 62.99999999999999, got %f", plan.SubsidyForCancellation)
+	}
+
+	if plan.CustomerChargeBackAmount != 1448.87 {
+		t.Errorf("Expected customer charge back amount to be 1448.87, got %f", plan.CustomerChargeBackAmount)
+	}
+
+	if plan.ReimbursementInvoiceDueDateMillis != time.Date(2024, time.November, 11, 0, 0, 0, 0, time.UTC).UnixMilli() {
+		t.Errorf("Expected reimbursement invoice due date to be 2024-11-11, got %s", time.UnixMilli(plan.ReimbursementInvoiceDueDateMillis).UTC())
+	}
+
+	if len(plan.Invoices) != 2 {
+		t.Fatalf("Expected 2 invoices, got %d", len(plan.Invoices))
+	}
+
+	invoice1 := plan.Invoices[0]
+	if invoice1.Id != 1 {
+		t.Errorf("Expected invoice id to be 1, got %d", invoice1.Id)
+	}
+
+	if invoice1.DaysDifferenceBetweenRepurchaseDateAndDueAt != -49 {
+		t.Errorf("Expected days difference between repurchase date and due at to be -49, got %d", invoice1.DaysDifferenceBetweenRepurchaseDateAndDueAt)
+	}
+
+	if invoice1.PresentValueRepurchase != 0.0 {
+		t.Errorf("Expected present value repurchase to be 0.0, got %f", invoice1.PresentValueRepurchase)
+	}
+
+	invoice2 := plan.Invoices[1]
+	if invoice2.Id != 2 {
+		t.Errorf("Expected invoice id to be 2, got %d", invoice2.Id)
+	}
+
+	if invoice2.DaysDifferenceBetweenRepurchaseDateAndDueAt != -19 {
+		t.Errorf("Expected days difference between repurchase date and due at to be -19, got %d", invoice2.DaysDifferenceBetweenRepurchaseDateAndDueAt)
+	}
+
+	if invoice2.PresentValueRepurchase != 1608.6951333084446 {
+		t.Errorf("Expected present value repurchase to be 1608.6951333084446, got %f", invoice2.PresentValueRepurchase)
+	}
+}
+
+func TestQiTechReimbursement(t *testing.T) {
+	var plan protos.ReimbursementResponse
+
+	err := callBuff(&reimbursementParams, &plan, "-t", "reimbursement")
+
+	if err != nil {
+		t.Fatalf("Error running payment-plan CLI: %s", err)
+	}
+
+	if plan.TotalPresentValueRepurchase != 1608.6951333084446 {
+		t.Errorf("Expected total present value repurchase to be 1608.6951333084446, got %f", plan.TotalPresentValueRepurchase)
+	}
+
+	if plan.ReimbursementValue != 1547.6951333084446 {
+		t.Errorf("Expected reimbursement value to be 1547.6951333084446, got %f", plan.ReimbursementValue)
+	}
+
+	if plan.InterestRateDaily != 0.001305 {
+		t.Errorf("Expected interest rate daily to be 0.001305, got %f", plan.InterestRateDaily)
+	}
+
+	if plan.SubsidyForCancellation != 62.99999999999999 {
+		t.Errorf("Expected subsidy for cancellation to be 62.99999999999999, got %f", plan.SubsidyForCancellation)
+	}
+
+	if plan.CustomerChargeBackAmount != 1448.87 {
+		t.Errorf("Expected customer charge back amount to be 1448.87, got %f", plan.CustomerChargeBackAmount)
+	}
+
+	if plan.ReimbursementInvoiceDueDateMillis != time.Date(2024, time.November, 11, 0, 0, 0, 0, time.UTC).UnixMilli() {
+		t.Errorf("Expected reimbursement invoice due date to be 2024-11-11, got %s", time.UnixMilli(plan.ReimbursementInvoiceDueDateMillis).UTC())
+	}
+
+	if len(plan.Invoices) != 2 {
+		t.Fatalf("Expected 2 invoices, got %d", len(plan.Invoices))
+	}
+
+	invoice1 := plan.Invoices[0]
+	if invoice1.Id != 1 {
+		t.Errorf("Expected invoice id to be 1, got %d", invoice1.Id)
+	}
+
+	if invoice1.DaysDifferenceBetweenRepurchaseDateAndDueAt != -49 {
+		t.Errorf("Expected days difference between repurchase date and due at to be -49, got %d", invoice1.DaysDifferenceBetweenRepurchaseDateAndDueAt)
+	}
+
+	if invoice1.PresentValueRepurchase != 0.0 {
+		t.Errorf("Expected present value repurchase to be 0.0, got %f", invoice1.PresentValueRepurchase)
+	}
+
+	invoice2 := plan.Invoices[1]
+	if invoice2.Id != 2 {
+		t.Errorf("Expected invoice id to be 2, got %d", invoice2.Id)
+	}
+
+	if invoice2.DaysDifferenceBetweenRepurchaseDateAndDueAt != -19 {
+		t.Errorf("Expected days difference between repurchase date and due at to be -19, got %d", invoice2.DaysDifferenceBetweenRepurchaseDateAndDueAt)
+	}
+
+	if invoice2.PresentValueRepurchase != 1608.6951333084446 {
+		t.Errorf("Expected present value repurchase to be 1608.6951333084446, got %f", invoice2.PresentValueRepurchase)
+	}
 }
 
 func planHelper(t *testing.T, plan *protos.PlanResponses, expected *expectedValues) {
