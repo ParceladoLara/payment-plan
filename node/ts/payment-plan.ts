@@ -76,12 +76,13 @@ export type DownPaymentPlanResponse = {
 interface PaymentPlanFunctions {
   calculatePlan(params: PaymentPlanParams): PaymentPlanResponse[];
   calculateDownPaymentPlan(
-    params: DownPaymentPlanParams
+    params: DownPaymentPlanParams,
   ): DownPaymentPlanResponse[];
+  calculateReimbursementPlan(params: any): any;
 }
 
-import * as funcs from "../index.node";
-const { calculatePlan, calculateDownPaymentPlan } =
+import * as funcs from '../index.node';
+const { calculatePlan, calculateDownPaymentPlan, calculateReimbursementPlan } =
   funcs as PaymentPlanFunctions;
 
-export { calculatePlan, calculateDownPaymentPlan };
+export { calculatePlan, calculateDownPaymentPlan, calculateReimbursementPlan };
