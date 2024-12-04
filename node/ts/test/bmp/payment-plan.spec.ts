@@ -23,12 +23,14 @@ test('calculate payment plan test 0', () => {
   const expectedTotalAmount = 11980.77027564256;
   const expectedTotalIof = 237.3188697534247;
 
+  const requestedDate = new Date('2022-03-18');
+
   const params: PaymentPlanParams = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: 8800.0,
     firstPaymentDate: new Date('2022-04-18'),
-    requestedDate: new Date('2022-03-18'),
+    requestedDate,
     installments: 24,
     debitServicePercentage: 0,
     mdr: 0.05,
@@ -72,6 +74,10 @@ test('calculate payment plan test 0', () => {
   assert.equal(response.tecYearly, expectedTecYearly);
   assert.equal(response.totalAmount, expectedTotalAmount);
   assert.equal(response.totalIOF, expectedTotalIof);
+  assert.equal(
+    response.disbursementDate.toISOString().split('T')[0],
+    requestedDate.toISOString().split('T')[0],
+  );
 });
 
 test('Error: invalid requestedAmount', () => {

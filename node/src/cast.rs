@@ -9,7 +9,7 @@ use neon::{
     types::{JsArray, JsDate, JsNumber, JsObject, JsValue},
 };
 
-use crate::parser::any_to_number;
+use crate::parser::{any_to_bool, any_to_number};
 
 pub fn cast_js_object_to_param(
     cx: &mut FunctionContext,
@@ -32,6 +32,8 @@ pub fn cast_js_object_to_param(
     let interest_rate: Handle<JsValue> = obj.get(cx, "interestRate")?;
     let min_installment_amount: Option<Handle<JsValue>> =
         obj.get_opt(cx, "minInstallmentAmount")?;
+    let disbursement_only_on_business_days: Option<Handle<JsValue>> =
+        obj.get_opt(cx, "disbursementOnlyOnBusinessDays")?;
 
     let requested_amount = any_to_number(cx, requested_amount)?;
     let first_payment_date = first_payment_date.value(cx);
@@ -46,6 +48,11 @@ pub fn cast_js_object_to_param(
     let min_installment_amount = match min_installment_amount {
         Some(value) => any_to_number(cx, value)?,
         None => 0.0,
+    };
+
+    let disbursement_only_on_business_days = match disbursement_only_on_business_days {
+        Some(value) => any_to_bool(cx, value)?,
+        None => false,
     };
 
     let first_payment_date = chrono::DateTime::from_timestamp_millis(first_payment_date as i64);
@@ -77,6 +84,7 @@ pub fn cast_js_object_to_param(
         iof_overall,
         iof_percentage,
         interest_rate,
+        disbursement_only_on_business_days,
     })
 }
 
@@ -96,6 +104,20 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
             return cx.throw_error("Invalid date");
         }
     };
+
+    let disbursement_date = response
+        .disbursement_date
+        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+        .and_utc();
+
+    let disbursement_date = JsDate::new(cx, disbursement_date.timestamp_millis() as f64);
+    let disbursement_date = match disbursement_date {
+        Ok(date) => date,
+        Err(_) => {
+            return cx.throw_error("Invalid date");
+        }
+    };
+
     let accumulated_days = JsNumber::new(cx, response.accumulated_days as f64);
     let days_index = JsNumber::new(cx, response.days_index);
     let accumulated_days_index = JsNumber::new(cx, response.accumulated_days_index);
@@ -128,6 +150,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     let obj = JsObject::new(cx);
     obj.set(cx, "installment", installment)?;
     obj.set(cx, "dueDate", due_date)?;
+    obj.set(cx, "disbursementDate", disbursement_date)?;
     obj.set(cx, "accumulatedDays", accumulated_days)?;
     obj.set(cx, "daysIndex", days_index)?;
     obj.set(cx, "accumulatedDaysIndex", accumulated_days_index)?;
@@ -169,7 +192,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     obj.set(cx, "contractAmount", contract_amount)?;
     obj.set(cx, "contractAmountWithoutTAC", contract_amount_without_tac)?;
     obj.set(cx, "tacAmount", tac_amount)?;
-    obj.set(cx, "iofPercentage", iof_percentage)?;
+    obj.set(cx, "IOFPercentage", iof_percentage)?;
     obj.set(cx, "overallIOF", overall_iof)?;
 
     Ok(obj)

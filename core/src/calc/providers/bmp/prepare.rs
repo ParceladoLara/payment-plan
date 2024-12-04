@@ -64,6 +64,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_0() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 8800.0,
@@ -116,6 +117,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_1() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 6000.0,
@@ -168,6 +170,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_2() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1300.0,
@@ -220,6 +223,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_3() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1600.0,
@@ -272,6 +276,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_4() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1000.0,
@@ -324,6 +329,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_5() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 4580.0,
@@ -376,6 +382,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_6() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
@@ -429,6 +436,7 @@ mod test {
     #[test]
     fn test_prepare_calculus_test_7() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,

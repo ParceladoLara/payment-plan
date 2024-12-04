@@ -18,6 +18,7 @@ message PlanParams {
     double interest_rate = 10;
     double min_installment_amount = 11;
     double max_total_amount = 12;
+    bool disbursement_only_on_business_days = 13;
 }
 
 message PlanResponse {
@@ -50,6 +51,7 @@ message PlanResponse {
     double tac_amount = 27;
     double iof_percentage = 28;
     double overall_iof = 29;
+    int64 disbursement_date_millis = 30;
 }
 
 message PlanResponses {

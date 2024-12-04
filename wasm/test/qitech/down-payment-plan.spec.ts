@@ -20,6 +20,7 @@ test("calculate down payment plan 2 installments", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.000082,
     interestRate: 0.0355,
+    disbursementOnlyOnBusinessDays: false,
   };
   const downPayment = 200.0;
   const minInstallmentAmount = 100.0;

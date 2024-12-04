@@ -1,6 +1,10 @@
 import { test } from 'node:test';
 import * as assert from 'node:assert';
-import { calculatePlan, PaymentPlanParams } from 'ts/payment-plan';
+import {
+  calculatePlan,
+  PaymentPlanParams,
+  PaymentPlanResponse,
+} from 'ts/payment-plan';
 
 test('calculate payment plan test 0', () => {
   const params: PaymentPlanParams = {
@@ -20,7 +24,7 @@ test('calculate payment plan test 0', () => {
 
   const result = calculatePlan(params);
   const pop = result.pop();
-  const expected = {
+  const expected: PaymentPlanResponse = {
     installment: 24,
     dueDate: new Date('2024-03-18T03:00:00.000Z'),
     accumulatedDays: 731,
@@ -48,8 +52,9 @@ test('calculate payment plan test 0', () => {
     contractAmount: 9055.09,
     contractAmountWithoutTAC: 0,
     tacAmount: 0,
-    iofPercentage: 0.000082,
+    IOFPercentage: 0.000082,
     overallIOF: 0.0038,
+    disbursementDate: new Date('2022-03-18T03:00:00.000Z'),
   };
 
   assert.deepEqual(pop, expected);

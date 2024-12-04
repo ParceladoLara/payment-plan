@@ -25,6 +25,7 @@ fn main() {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate,
+            disbursement_only_on_business_days: false,
         };
 
         let mut result = calculate_payment_plan(params).unwrap();

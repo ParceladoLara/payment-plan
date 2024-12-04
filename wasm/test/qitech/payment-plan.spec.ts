@@ -1,6 +1,10 @@
 import { test } from "node:test";
 import * as assert from "node:assert";
-import { calculatePaymentPlan, Params } from "../../pkg/wasm_payment_plan";
+import {
+  calculatePaymentPlan,
+  Params,
+  Response,
+} from "../../pkg/wasm_payment_plan";
 
 test("calculate payment plan test 0", () => {
   const params: Params = {
@@ -16,11 +20,12 @@ test("calculate payment plan test 0", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.000082,
     interestRate: 0.0235,
+    disbursementOnlyOnBusinessDays: false,
   };
 
   const result = calculatePaymentPlan(params);
   const pop = result.pop();
-  const expected = {
+  const expected: Response = {
     installment: 24,
     dueDate: "2024-03-18T00:00:00.000Z",
     accumulatedDays: 731,
@@ -48,8 +53,9 @@ test("calculate payment plan test 0", () => {
     contractAmount: 9055.09,
     contractAmountWithoutTAC: 0,
     tacAmount: 0,
-    iofPercentage: 0.000082,
+    IOFPercentage: 0.000082,
     overallIof: 0.0038,
+    disbursementDate: "2022-03-18T00:00:00.000Z",
   };
 
   assert.deepEqual(pop, expected);
@@ -69,6 +75,7 @@ test("Error: invalid requestedAmount", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.000082,
     interestRate: 0.0235,
+    disbursementOnlyOnBusinessDays: false,
   };
 
   assert.throws(() => calculatePaymentPlan(params));
@@ -88,6 +95,7 @@ test("Error: invalid installments", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.000082,
     interestRate: 0.0235,
+    disbursementOnlyOnBusinessDays: false,
   };
 
   assert.throws(() => calculatePaymentPlan(params));

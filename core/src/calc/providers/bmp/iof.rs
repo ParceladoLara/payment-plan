@@ -38,6 +38,7 @@ mod test {
     #[test]
     fn test_total_iof_test_6() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
@@ -104,6 +105,7 @@ mod test {
     #[test]
     fn test_total_iof_test_7() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,

@@ -31,6 +31,7 @@ pub struct Params {
     pub interest_rate: f64,            // 0.0-1.0
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
+    pub disbursement_only_on_business_days: bool,
 }
 
 impl Display for Params {
@@ -58,6 +59,7 @@ impl Display for Params {
 pub struct Response {
     pub installment: u32,
     pub due_date: chrono::NaiveDate,
+    pub disbursement_date: chrono::NaiveDate,
     pub accumulated_days: i64,
     pub days_index: f64,
     pub accumulated_days_index: f64,

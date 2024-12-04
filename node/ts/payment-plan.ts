@@ -11,11 +11,13 @@ export type PaymentPlanParams = {
   interestRate: number;
   minInstallmentAmount?: number;
   maxTotalAmount?: number;
+  disbursementOnlyOnBusinessDays?: boolean;
 };
 
 export type PaymentPlanResponse = {
   installment: number;
   dueDate: Date;
+  disbursementDate: Date;
   accumulatedDays: number;
   daysIndex: number;
   accumulatedDaysIndex: number;
@@ -76,11 +78,11 @@ export type DownPaymentPlanResponse = {
 interface PaymentPlanFunctions {
   calculatePlan(params: PaymentPlanParams): PaymentPlanResponse[];
   calculateDownPaymentPlan(
-    params: DownPaymentPlanParams
+    params: DownPaymentPlanParams,
   ): DownPaymentPlanResponse[];
 }
 
-import * as funcs from "../index.node";
+import * as funcs from '../index.node';
 const { calculatePlan, calculateDownPaymentPlan } =
   funcs as PaymentPlanFunctions;
 

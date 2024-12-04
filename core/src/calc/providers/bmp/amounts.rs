@@ -82,6 +82,7 @@ mod test {
     #[test]
     fn test_calculate_amounts_test_7() {
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,

@@ -4,7 +4,7 @@ use crate::{
         PaymentPlan,
     },
     err::PaymentPlanError,
-    util::round_decimal_cases,
+    util::{get_next_business_day, round_decimal_cases},
     Params, Response,
 };
 
@@ -37,6 +37,12 @@ impl PaymentPlan for QiTech {
         if params.installments == 0 {
             return Err(PaymentPlanError::InvalidNumberOfInstallments);
         }
+
+        if params.disbursement_only_on_business_days {
+            //Change the base date to the next business day
+            params.requested_date = get_next_business_day(params.requested_date);
+        }
+
         let mut response = Vec::with_capacity(params.installments as usize);
 
         let interest_rate = params.interest_rate;
@@ -170,6 +176,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         tec_monthly,
         effective_interest_rate: eir_monthly,
         total_effective_cost: tec_monthly,
+        disbursement_date: params.requested_date,
         ..Default::default()
     };
 
@@ -188,6 +195,7 @@ mod test {
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
@@ -240,6 +248,7 @@ mod test {
             tac_amount: 0.0,
             iof_percentage: 0.000082,
             overall_iof: 0.0038,
+            disbursement_date: params.requested_date,
         };
 
         assert_eq!(resp, expected);
@@ -252,6 +261,7 @@ mod test {
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 100.0,
             requested_amount: 0.0,
@@ -280,6 +290,7 @@ mod test {
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
@@ -311,6 +322,7 @@ mod test {
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 100.0,
             requested_amount: 200.43,
@@ -365,6 +377,8 @@ mod test {
             tac_amount: 0.0,
             iof_percentage: 0.000082,
             overall_iof: 0.0038,
+
+            disbursement_date: params.requested_date,
         };
 
         assert_eq!(resp, expected);
@@ -377,6 +391,7 @@ mod test {
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: 2400.43,
             min_installment_amount: 100.0,
             requested_amount: 2000.43,
@@ -431,6 +446,8 @@ mod test {
             tac_amount: 0.0,
             iof_percentage: 0.000082,
             overall_iof: 0.0038,
+
+            disbursement_date: params.requested_date,
         };
 
         assert_eq!(resp, expected);

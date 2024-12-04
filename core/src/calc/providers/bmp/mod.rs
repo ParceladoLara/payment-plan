@@ -141,6 +141,8 @@ fn calculate(
             tac_amount,
             iof_percentage,
             overall_iof: iof_overall,
+
+            disbursement_date: params.requested_date,
         };
 
         responses.push(response);
@@ -196,6 +198,7 @@ mod test {
         let expected_total_iof = 237.3188697534247;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 8800.0,
@@ -275,6 +278,7 @@ mod test {
         let expected_total_iof = 148.38755720547942;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 6000.0,
@@ -354,6 +358,7 @@ mod test {
         let expected_total_iof = 26.17549594520548;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1300.0,
@@ -433,6 +438,7 @@ mod test {
         let expected_total_iof = 26.142427232876713;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1600.0,
@@ -512,6 +518,7 @@ mod test {
         let expected_total_iof = 16.210796794520547;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1000.0,
@@ -591,6 +598,7 @@ mod test {
         let expected_total_iof = 123.57314284931509;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 4580.0,
@@ -670,6 +678,7 @@ mod test {
         let expected_total_iof = 30.182876712328767;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
@@ -749,6 +758,7 @@ mod test {
         let expected_total_iof = 36.56358345205479;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
@@ -828,6 +838,7 @@ mod test {
         let expected_total_iof = 98.47127112328764;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 3769.6,
@@ -907,6 +918,7 @@ mod test {
         let expected_total_iof = 49.8888475890411;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 6200.0,
@@ -986,6 +998,7 @@ mod test {
         let expected_total_iof = 49.874829369863015;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2690.1,
@@ -1065,6 +1078,7 @@ mod test {
         let expected_total_iof = 10.98547397260274;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1089.0,
@@ -1144,6 +1158,7 @@ mod test {
         let expected_total_iof = 30.8928;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1752.0,
@@ -1223,6 +1238,7 @@ mod test {
         let expected_total_iof = 107.8733903013699;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 4000.0,
@@ -1302,6 +1318,7 @@ mod test {
         let expected_total_iof = 122.71015142465752;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 6500.0,
@@ -1381,6 +1398,7 @@ mod test {
         let expected_total_iof = 20.12111293150685;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 100.0,
             requested_amount: 1000.0,
@@ -1460,6 +1478,7 @@ mod test {
         let expected_total_iof = 0.280198301369863;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 80.0,
             requested_amount: 44.14,
@@ -1539,6 +1558,7 @@ mod test {
         let expected_total_iof = 114.61369863013698;
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: 8145.322444824322,
             min_installment_amount: 0.0,
             requested_amount: 6500.0,
@@ -1626,6 +1646,7 @@ mod test {
             .date_naive();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             max_total_amount: f64::MAX,
             min_installment_amount: 100.0,
             requested_amount: 2770.71,
@@ -1691,6 +1712,7 @@ mod down_payment_test {
 
     #[allow(deprecated)]
     const PLAN_PARAM: Params = Params {
+        disbursement_only_on_business_days: false,
         max_total_amount: f64::MAX,
         min_installment_amount: 0.0,
         requested_amount: 1000.0,

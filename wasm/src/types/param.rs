@@ -21,6 +21,7 @@ pub struct Params {
     pub interest_rate: f64,
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
+    pub disbursement_only_on_business_days: bool,
 }
 
 impl TryInto<core_payment_plan::Params> for Params {
@@ -40,6 +41,7 @@ impl TryInto<core_payment_plan::Params> for Params {
             interest_rate: self.interest_rate,
             min_installment_amount: self.min_installment_amount,
             max_total_amount: self.max_total_amount,
+            disbursement_only_on_business_days: self.disbursement_only_on_business_days,
         })
     }
 }

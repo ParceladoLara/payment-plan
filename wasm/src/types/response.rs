@@ -38,8 +38,11 @@ pub struct Response {
     #[serde(rename = "contractAmountWithoutTAC")]
     pub contract_amount_without_tac: f64,
     pub tac_amount: f64,
+    #[serde(rename = "IOFPercentage")]
     pub iof_percentage: f64,
     pub overall_iof: f64,
+    #[tsify(type = "Date | string")]
+    pub disbursement_date: Date,
 }
 
 impl From<core_payment_plan::Response> for Response {
@@ -75,6 +78,7 @@ impl From<core_payment_plan::Response> for Response {
             tac_amount: value.tac_amount,
             iof_percentage: value.iof_percentage,
             overall_iof: value.overall_iof,
+            disbursement_date: value.disbursement_date.into(),
         }
     }
 }

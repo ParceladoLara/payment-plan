@@ -44,6 +44,7 @@ impl TryInto<Params> for PlanParams {
             tac_percentage: self.tac_percentage,
             first_payment_date,
             requested_date,
+            disbursement_only_on_business_days: self.disbursement_only_on_business_days,
         };
         return Ok(params);
     }
@@ -53,6 +54,12 @@ impl From<Response> for PlanResponse {
     fn from(value: Response) -> Self {
         let due_date = value
             .due_date
+            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+            .and_utc()
+            .timestamp_millis();
+
+        let disbursement_date = value
+            .disbursement_date
             .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
             .and_utc()
             .timestamp_millis();
@@ -88,6 +95,7 @@ impl From<Response> for PlanResponse {
             mdr_amount: value.mdr_amount,
             overall_iof: value.overall_iof,
             iof_percentage: value.iof_percentage,
+            disbursement_date_millis: disbursement_date,
         }
     }
 }

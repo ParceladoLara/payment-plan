@@ -79,6 +79,7 @@ mod test {
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
 
         let params = Params {
+            disbursement_only_on_business_days: false,
             requested_amount: 7431.0,
             first_payment_date,
             requested_date,

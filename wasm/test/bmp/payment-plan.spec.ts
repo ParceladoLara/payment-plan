@@ -36,6 +36,7 @@ test("calculate payment plan test 0", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.03,
     interestRate: 0.0235,
+    disbursementOnlyOnBusinessDays: false,
   };
 
   const result = calculatePaymentPlan(params);
@@ -88,6 +89,7 @@ test("Error: invalid requestedAmount", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.03,
     interestRate: 0.0235,
+    disbursementOnlyOnBusinessDays: false,
   };
 
   assert.throws(() => calculatePaymentPlan(params), {
@@ -109,6 +111,7 @@ test("Error: invalid installments", () => {
     iofOverall: 0.0038,
     iofPercentage: 0.03,
     interestRate: 0.0235,
+    disbursementOnlyOnBusinessDays: false,
   };
 
   assert.throws(() => calculatePaymentPlan(params), {
