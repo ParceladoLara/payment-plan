@@ -43,7 +43,8 @@ pub trait PaymentPlan {
         let down_payment_first_payment_date = params.first_payment_date;
 
         // The start of the actual payment plan for 1 installment (we will update this in every iteration)
-        let mut contract_start_date = add_days(down_payment_first_payment_date, 1);
+        //6 days because the each payment has 5 days to be paid and the contract starts 1 day after the first payment
+        let mut contract_start_date = add_days(down_payment_first_payment_date, 6);
         // The first payment date of the actual payment plan for 1 installment (we will update this in every iteration)
         let mut contract_first_payment_date = add_months(down_payment_first_payment_date, 1);
 
