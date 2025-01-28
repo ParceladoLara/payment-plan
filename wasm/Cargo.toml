@@ -8,7 +8,7 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2.93"
+wasm-bindgen = "0.2.100"
 tsify-next = "0.5.4"
 core_payment_plan = { path ="../core" }
 chrono = { version = "0.4.38", features = ["serde"] }

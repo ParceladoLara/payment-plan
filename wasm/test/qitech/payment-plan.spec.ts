@@ -3,7 +3,7 @@ import * as assert from "node:assert";
 import {
   calculatePaymentPlan,
   Params,
-  Response,
+  InnerResponse,
 } from "../../pkg/wasm_payment_plan";
 
 test("calculate payment plan test 0", () => {
@@ -25,15 +25,15 @@ test("calculate payment plan test 0", () => {
 
   const result = calculatePaymentPlan(params);
   const pop = result.pop();
-  const expected: Response = {
+  const expected: InnerResponse = {
     installment: 24,
-    dueDate: "2024-03-18T00:00:00.000Z",
+    dueDate: new Date("2024-03-18T00:00:00.000Z"),
     accumulatedDays: 731,
     daysIndex: 0.572214390057081,
     accumulatedDaysIndex: 18.17043451706523,
     interestRate: 0.0235,
     installmentAmount: 498.34,
-    installmentAmountWithoutTac: 0,
+    installmentAmountWithoutTAC: 0,
     totalAmount: 11960.16,
     debitService: 2905.0699999999997,
     customerDebitServiceAmount: 2905.0699999999997,
@@ -54,11 +54,40 @@ test("calculate payment plan test 0", () => {
     contractAmountWithoutTAC: 0,
     tacAmount: 0,
     IOFPercentage: 0.000082,
-    overallIof: 0.0038,
-    disbursementDate: "2022-03-18T00:00:00.000Z",
-  };
+    overallIOF: 0.0038,
+    disbursementDate:  new Date("2022-03-18T00:00:00.000Z"),
+  } as InnerResponse;
 
-  assert.deepEqual(pop, expected);
+  assert.equal(pop.installment, expected.installment);
+  assert.deepEqual(pop.dueDate, expected.dueDate);
+  assert.equal(pop.accumulatedDays, expected.accumulatedDays);
+  assert.equal(pop.daysIndex, expected.daysIndex);
+  assert.equal(pop.accumulatedDaysIndex, expected.accumulatedDaysIndex);
+  assert.equal(pop.interestRate, expected.interestRate);
+  assert.equal(pop.installmentAmount, expected.installmentAmount);
+  assert.equal(pop.installmentAmountWithoutTAC, expected.installmentAmountWithoutTAC);
+  assert.equal(pop.totalAmount, expected.totalAmount);
+  assert.equal(pop.debitService, expected.debitService);
+  assert.equal(pop.customerDebitServiceAmount, expected.customerDebitServiceAmount);
+  assert.equal(pop.customerAmount, expected.customerAmount);
+  assert.equal(pop.calculationBasisForEffectiveInterestRate, expected.calculationBasisForEffectiveInterestRate);
+  assert.equal(pop.merchantDebitServiceAmount, expected.merchantDebitServiceAmount);
+  assert.equal(pop.merchantTotalAmount, expected.merchantTotalAmount);
+  assert.equal(pop.settledToMerchant, expected.settledToMerchant);
+  assert.equal(pop.mdrAmount, expected.mdrAmount);
+  assert.equal(pop.effectiveInterestRate, expected.effectiveInterestRate);
+  assert.equal(pop.totalEffectiveCost, expected.totalEffectiveCost);
+  assert.equal(pop.eirYearly, expected.eirYearly);
+  assert.equal(pop.tecYearly, expected.tecYearly);
+  assert.equal(pop.eirMonthly, expected.eirMonthly);
+  assert.equal(pop.tecMonthly, expected.tecMonthly);
+  assert.equal(pop.totalIOF, expected.totalIOF);
+  assert.equal(pop.contractAmount, expected.contractAmount);
+  assert.equal(pop.contractAmountWithoutTAC, expected.contractAmountWithoutTAC);
+  assert.equal(pop.tacAmount, expected.tacAmount);
+  assert.equal(pop.IOFPercentage, expected.IOFPercentage);
+  assert.equal(pop.overallIOF, expected.overallIOF);
+  assert.deepEqual(pop.disbursementDate, expected.disbursementDate);
 });
 
 test("Error: invalid requestedAmount", () => {

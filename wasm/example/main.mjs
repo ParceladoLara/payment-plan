@@ -3,9 +3,12 @@
 import init, {
   calculatePaymentPlan,
   calculateDownPaymentPlan,
+  nextDisbursementDate,
 } from "./pkg/wasm_payment_plan.js";
 
 await init();
+
+
 
 const params = {
   maxTotalAmount: Number.MAX_VALUE,
@@ -18,8 +21,9 @@ const params = {
   mdr: 0.05,
   tacPercentage: 0.0,
   iofOverall: 0.0038,
-  iofPercentage: 0.03,
+  iofPercentage: 0.000082,
   interestRate: 0.0235,
+  disbursementOnlyOnBusinessDays:true,
 };
 
 console.log(params);
@@ -46,6 +50,9 @@ const expectedTotalIof = 237.3188697534247;
 
 const result = calculatePaymentPlan(params);
 
+console.log(result);
+
+
 const dResult = calculateDownPaymentPlan({
   firstPaymentDate: new Date(),
   installments: 12,
@@ -54,11 +61,16 @@ const dResult = calculateDownPaymentPlan({
   requestedAmount: 1000,
 });
 
-console.log(result);
+console.log(result[0].dueDate.toISOString());
+console.log(typeof result[0].dueDate);
 
 console.log(typeof dResult[0].firstPaymentDate); //comes as string see: https://github.com/rustwasm/wasm-bindgen/issues/1519
 
 const r = result.pop();
+
+console.log(r);
+console.log(typeof r?.dueDate);
+
 
 if (r) {
   console.log(
@@ -68,7 +80,7 @@ if (r) {
   );
   console.log(
     "expectedContractAmountWithoutTac",
-    r.contractAmountWithoutTac,
+    r.contractAmountWithoutTAC,
     expectedContractAmountWithoutTac
   );
   console.log(
@@ -115,5 +127,5 @@ if (r) {
   console.log("expectedTecMonthly", r.tecMonthly, expectedTecMonthly);
   console.log("expectedTecYearly", r.tecYearly, expectedTecYearly);
   console.log("expectedTotalAmount", r.totalAmount, expectedTotalAmount);
-  console.log("expectedTotalIof", r.totalIof, expectedTotalIof);
+  console.log("expectedTotalIof", r.totalIOF, expectedTotalIof);
 }
