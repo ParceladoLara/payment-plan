@@ -126,3 +126,17 @@ pub fn calculate_down_payment_plan(
 pub fn calculate_payment_plan(params: Params) -> Result<Vec<Response>, PaymentPlanError> {
     return P.calculate_payment_plan(params);
 }
+
+pub fn next_disbursement_date(
+    mut base_date: chrono::NaiveDate,
+) -> Result<chrono::NaiveDate, PaymentPlanError> {
+    let today = chrono::Local::now().date_naive();
+    if base_date < today {
+        return Err(PaymentPlanError::InvalidDate(base_date));
+    }
+    if base_date == today {
+        base_date = util::add_days(base_date, 1);
+    }
+
+    return Ok(util::get_next_business_day(base_date));
+}

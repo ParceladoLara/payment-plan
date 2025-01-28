@@ -9,6 +9,7 @@ pub enum PaymentPlanError {
     CalculationError(InvalidPaymentsError),
     InvalidNumberOfInstallments,
     InvalidRequestedAmount,
+    InvalidDate(chrono::NaiveDate),
     XirCalculationError(Params),
 }
 
@@ -48,6 +49,7 @@ impl Display for PaymentPlanError {
             PaymentPlanError::XirCalculationError(params) => {
                 write!(f, "XIR calculation error: {}", params)
             }
+            PaymentPlanError::InvalidDate(date) => write!(f, "Invalid date: {}", date),
         }
     }
 }
