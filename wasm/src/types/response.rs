@@ -1,80 +1,53 @@
-use js_sys::Date;
+use tsify_next::Tsify;
 use wasm_bindgen::prelude::*;
 
-use super::date::InnerDate;
+use super::date::Date;
 
 #[allow(non_snake_case)]
-#[wasm_bindgen]
-#[derive(Debug, Clone)]
-pub struct InnerResponse {
+#[derive(Tsify, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct PaymentPlanResponse {
     pub installment: u32,
-    #[wasm_bindgen(getter_with_clone, js_name = "dueDate")]
     pub due_date: Date,
-    #[wasm_bindgen(js_name = "accumulatedDays")]
     pub accumulated_days: i32,
-    #[wasm_bindgen(js_name = "daysIndex")]
     pub days_index: f64,
-    #[wasm_bindgen(js_name = "accumulatedDaysIndex")]
     pub accumulated_days_index: f64,
-    #[wasm_bindgen(js_name = "interestRate")]
     pub interest_rate: f64,
-    #[wasm_bindgen(js_name = "installmentAmount")]
     pub installment_amount: f64,
-    #[wasm_bindgen(js_name = "installmentAmountWithoutTAC")]
     pub installment_amount_without_tac: f64,
-    #[wasm_bindgen(js_name = "totalAmount")]
     pub total_amount: f64,
-    #[wasm_bindgen(js_name = "debitService")]
     pub debit_service: f64,
-    #[wasm_bindgen(js_name = "customerDebitServiceAmount")]
     pub customer_debit_service_amount: f64,
-    #[wasm_bindgen(js_name = "customerAmount")]
     pub customer_amount: f64,
-    #[wasm_bindgen(js_name = "calculationBasisForEffectiveInterestRate")]
     pub calculation_basis_for_effective_interest_rate: f64,
-    #[wasm_bindgen(js_name = "merchantDebitServiceAmount")]
     pub merchant_debit_service_amount: f64,
-    #[wasm_bindgen(js_name = "merchantTotalAmount")]
     pub merchant_total_amount: f64,
-    #[wasm_bindgen(js_name = "settledToMerchant")]
     pub settled_to_merchant: f64,
-    #[wasm_bindgen(js_name = "mdrAmount")]
     pub mdr_amount: f64,
-    #[wasm_bindgen(js_name = "effectiveInterestRate")]
     pub effective_interest_rate: f64,
-    #[wasm_bindgen(js_name = "totalEffectiveCost")]
     pub total_effective_cost: f64,
-    #[wasm_bindgen(js_name = "eirYearly")]
     pub eir_yearly: f64,
-    #[wasm_bindgen(js_name = "tecYearly")]
     pub tec_yearly: f64,
-    #[wasm_bindgen(js_name = "eirMonthly")]
     pub eir_monthly: f64,
-    #[wasm_bindgen(js_name = "tecMonthly")]
     pub tec_monthly: f64,
-    #[wasm_bindgen(js_name = "totalIOF")]
+    #[serde(rename = "totalIOF")]
     pub total_iof: f64,
-    #[wasm_bindgen(js_name = "contractAmount")]
     pub contract_amount: f64,
-    #[wasm_bindgen(js_name = "contractAmountWithoutTAC")]
+    #[serde(rename = "contractAmountWithoutTAC")]
     pub contract_amount_without_tac: f64,
-    #[wasm_bindgen(js_name = "tacAmount")]
     pub tac_amount: f64,
-    #[wasm_bindgen(js_name = "IOFPercentage")]
+    #[serde(rename = "IOFPercentage")]
     pub iof_percentage: f64,
-    #[wasm_bindgen(js_name = "overallIOF")]
+    #[serde(rename = "overallIOF")]
     pub overall_iof: f64,
-    #[wasm_bindgen(getter_with_clone, js_name = "disbursementDate")]
     pub disbursement_date: Date,
 }
 
-impl From<core_payment_plan::Response> for InnerResponse {
+impl From<core_payment_plan::Response> for PaymentPlanResponse {
     fn from(value: core_payment_plan::Response) -> Self {
-        let due_date: InnerDate = value.due_date.into();
-        let disbursement_date: InnerDate = value.disbursement_date.into();
         Self {
             installment: value.installment,
-            due_date: due_date.into(),
+            due_date: value.due_date.into(),
             accumulated_days: value.accumulated_days as i32,
             days_index: value.days_index,
             accumulated_days_index: value.accumulated_days_index,
@@ -103,35 +76,162 @@ impl From<core_payment_plan::Response> for InnerResponse {
             tac_amount: value.tac_amount,
             iof_percentage: value.iof_percentage,
             overall_iof: value.overall_iof,
-            disbursement_date: disbursement_date.into(),
+            disbursement_date: value.disbursement_date.into(),
         }
     }
 }
 
+impl Into<js_sys::Object> for PaymentPlanResponse {
+    fn into(self) -> js_sys::Object {
+        let obj = js_sys::Object::new();
+        let _ = js_sys::Reflect::set(&obj, &"installment".into(), &self.installment.into());
+        let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &self.due_date.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"accumulatedDays".into(),
+            &self.accumulated_days.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"daysIndex".into(), &self.days_index.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"accumulatedDaysIndex".into(),
+            &self.accumulated_days_index.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"interestRate".into(), &self.interest_rate.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"installmentAmount".into(),
+            &self.installment_amount.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"installmentAmountWithoutTAC".into(),
+            &self.installment_amount_without_tac.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"totalAmount".into(), &self.total_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"debitService".into(), &self.debit_service.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"customerDebitServiceAmount".into(),
+            &self.customer_debit_service_amount.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"customerAmount".into(), &self.customer_amount.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"calculationBasisForEffectiveInterestRate".into(),
+            &self.calculation_basis_for_effective_interest_rate.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"merchantDebitServiceAmount".into(),
+            &self.merchant_debit_service_amount.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"merchantTotalAmount".into(),
+            &self.merchant_total_amount.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"settledToMerchant".into(),
+            &self.settled_to_merchant.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"mdrAmount".into(), &self.mdr_amount.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"effectiveInterestRate".into(),
+            &self.effective_interest_rate.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"totalEffectiveCost".into(),
+            &self.total_effective_cost.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"eirYearly".into(), &self.eir_yearly.into());
+        let _ = js_sys::Reflect::set(&obj, &"tecYearly".into(), &self.tec_yearly.into());
+        let _ = js_sys::Reflect::set(&obj, &"eirMonthly".into(), &self.eir_monthly.into());
+        let _ = js_sys::Reflect::set(&obj, &"tecMonthly".into(), &self.tec_monthly.into());
+        let _ = js_sys::Reflect::set(&obj, &"totalIOF".into(), &self.total_iof.into());
+        let _ = js_sys::Reflect::set(&obj, &"contractAmount".into(), &self.contract_amount.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"contractAmountWithoutTAC".into(),
+            &self.contract_amount_without_tac.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"tacAmount".into(), &self.tac_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"IOFPercentage".into(), &self.iof_percentage.into());
+        let _ = js_sys::Reflect::set(&obj, &"overallIOF".into(), &self.overall_iof.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"disbursementDate".into(),
+            &self.disbursement_date.into(),
+        );
+        obj
+    }
+}
+
+impl Into<JsValue> for PaymentPlanResponse {
+    fn into(self) -> JsValue {
+        let obj: js_sys::Object = self.into();
+        obj.into()
+    }
+}
 #[allow(non_snake_case)]
-#[derive(Debug, Clone)]
-#[wasm_bindgen]
+#[derive(Debug, Clone, Tsify)]
+#[serde(rename_all = "camelCase")]
 pub struct DownPaymentResponse {
-    #[wasm_bindgen(js_name = "installmentAmount")]
     pub installment_amount: f64,
-    #[wasm_bindgen(js_name = "totalAmount")]
     pub total_amount: f64,
-    #[wasm_bindgen(js_name = "installmentQuantity")]
     pub installment_quantity: u32,
-    #[wasm_bindgen(getter_with_clone, js_name = "firstPaymentDate")]
     pub first_payment_date: Date,
-    #[wasm_bindgen(getter_with_clone)]
-    pub plans: Vec<InnerResponse>,
+    pub plans: Vec<PaymentPlanResponse>,
+}
+
+impl Into<js_sys::Object> for DownPaymentResponse {
+    fn into(self) -> js_sys::Object {
+        let obj = js_sys::Object::new();
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"installmentAmount".into(),
+            &self.installment_amount.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"totalAmount".into(), &self.total_amount.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"installmentQuantity".into(),
+            &self.installment_quantity.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"firstPaymentDate".into(),
+            &self.first_payment_date.into(),
+        );
+
+        let array = js_sys::Array::new_with_length(self.plans.len() as u32);
+        for (i, plan) in self.plans.into_iter().enumerate() {
+            let js_plan: js_sys::Object = plan.into();
+            let _ = js_sys::Reflect::set(&array, &i.into(), &js_plan.into());
+        }
+        let _ = js_sys::Reflect::set(&obj, &"plans".into(), &array.into());
+
+        obj
+    }
+}
+
+impl Into<JsValue> for DownPaymentResponse {
+    fn into(self) -> JsValue {
+        let obj: js_sys::Object = self.into();
+        obj.into()
+    }
 }
 
 impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
     fn from(value: core_payment_plan::DownPaymentResponse) -> Self {
-        let first_payment_date: InnerDate = value.first_payment_date.into();
         Self {
             installment_amount: value.installment_amount,
             total_amount: value.total_amount,
             installment_quantity: value.installment_quantity,
-            first_payment_date: first_payment_date.into(),
+            first_payment_date: value.first_payment_date.into(),
             plans: value.plans.into_iter().map(|r| r.into()).collect(),
         }
     }
