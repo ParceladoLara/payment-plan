@@ -1,16 +1,16 @@
 {
   "name": "@ParceladoLara/payment-plan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "module": "./src/index.mjs",
   "types": "./src/index.d.ts",
   "files": [
-    "src/main.mjs",
+    "src/index.mjs",
     "src/index.d.ts"
   ],
   "exports": {
     ".": {
       "import": "./src/main.mjs",
-      "types": "./base64.d.ts"
+      "types": "./src/index.d.ts"
     }
   },
   "publishConfig": {
