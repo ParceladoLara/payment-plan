@@ -23,6 +23,7 @@ jobs:
           echo "ls the directory"
           ls
           echo "Publish to GitHub Package Registry"
+          export NODE_AUTH_TOKEN=${{secrets.GITHUB_TOKEN}}
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
