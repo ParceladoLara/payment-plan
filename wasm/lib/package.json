@@ -1,6 +1,6 @@
 {
-  "name": "@ParceladoLara/payment-plan",
-  "version": "1.0.2",
+  "name": "@ParceladoLara/payment-plan-web",
+  "version": "1.0.3",
   "main": "./src/index.mjs",
   "module": "./src/index.mjs",
   "types": "./src/index.d.ts",
@@ -10,9 +10,11 @@
   ],
   "exports": {
     ".": {
-      "import": "./src/main.mjs",
-      "require": "./src/main.mjs",
-      "types": "./src/index.d.ts"
+      "import": "./src/index.mjs",
+      "require": "./src/index.mjs",
+      "types": "./src/index.d.ts",
+      "default": "./src/index.mjs",
+      "node": "./src/index.mjs"
     }
   },
   "publishConfig": {
