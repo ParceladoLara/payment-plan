@@ -12,14 +12,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Change to right directory
-        run: cd wasm/lib
-      - name: ls the directory
-        run: ls
-      - name: Install dependencies
-        run: npm ci
       - name: Build
-        run: npm run build
+        run: |
+          echo "Change to right directory"
+          cd wasm/lib
+          echo "ls the directory"
+          ls
+          echo "Install dependencies"
+          npm ci
+          echo "Build"
+          npm run build
 
   publish-gpr:
     needs: build
@@ -31,11 +33,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 22
           registry-url: https://npm.pkg.github.com/
-      - name: Change to right directory
-        run: cd wasm/lib
-      - run: npm ci
-      - run: npm publish
+      - name: Publish to GitHub Package Registry
+        run: |
+          echo "Change to right directory"
+          cd wasm/lib
+          echo "ls the directory"
+          ls
+          echo "Install dependencies"
+          npm ci
+          echo "Publish to GitHub Package Registry"
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
