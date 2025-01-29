@@ -1,15 +1,15 @@
 {
   "name": "@VictorRibeiroLima/payment-plan-web",
   "version": "1.0.0",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "module": "./src/index.mjs",
+  "types": "./src/index.d.ts",
   "files": [
-    "dist/main.mjs",
-    "dist/index.d.ts"
+    "src/main.mjs",
+    "src/index.d.ts"
   ],
   "exports": {
     ".": {
-      "import": "./dist/main.mjs",
+      "import": "./src/main.mjs",
       "types": "./base64.d.ts"
     }
   },
@@ -17,7 +17,7 @@
     "@VictorRibeiroLima:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "build": "vite build && mv wasm/index.d.ts dist/index.d.ts",
+    "build": "vite build && cp wasm/index.d.ts src/index.d.ts",
     "test": "exit 0"
   },
   "dependencies": {

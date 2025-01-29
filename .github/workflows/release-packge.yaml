@@ -5,26 +5,7 @@ on:
     types: [created]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Build
-        run: |
-          echo "Change to right directory"
-          cd wasm/lib
-          echo "ls the directory"
-          ls
-          echo "Install dependencies"
-          npm ci
-          echo "Build"
-          npm run build
-
   publish-gpr:
-    needs: build
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -41,8 +22,6 @@ jobs:
           cd wasm/lib
           echo "ls the directory"
           ls
-          echo "Install dependencies"
-          npm ci
           echo "Publish to GitHub Package Registry"
           npm publish
         env:

@@ -1,0 +1,70 @@
+/* tslint:disable */
+/* eslint-disable */
+export function calculateDownPaymentPlan(p: DownPaymentParams): Array<DownPaymentResponse>;
+export function nextDisbursementDate(base_date: Date): Date;
+export function calculatePaymentPlan(p: Params): Array<PaymentPlanResponse>;
+export interface PaymentPlanResponse {
+    installment: number;
+    dueDate: Date;
+    accumulatedDays: number;
+    daysIndex: number;
+    accumulatedDaysIndex: number;
+    interestRate: number;
+    installmentAmount: number;
+    installmentAmountWithoutTac: number;
+    totalAmount: number;
+    debitService: number;
+    customerDebitServiceAmount: number;
+    customerAmount: number;
+    calculationBasisForEffectiveInterestRate: number;
+    merchantDebitServiceAmount: number;
+    merchantTotalAmount: number;
+    settledToMerchant: number;
+    mdrAmount: number;
+    effectiveInterestRate: number;
+    totalEffectiveCost: number;
+    eirYearly: number;
+    tecYearly: number;
+    eirMonthly: number;
+    tecMonthly: number;
+    totalIOF: number;
+    contractAmount: number;
+    contractAmountWithoutTAC: number;
+    tacAmount: number;
+    IOFPercentage: number;
+    overallIOF: number;
+    disbursementDate: Date;
+}
+
+export interface DownPaymentResponse {
+    installmentAmount: number;
+    totalAmount: number;
+    installmentQuantity: number;
+    firstPaymentDate: Date;
+    plans: PaymentPlanResponse[];
+}
+
+export interface DownPaymentParams {
+    params: Params;
+    requestedAmount: number;
+    minInstallmentAmount: number;
+    firstPaymentDate: Date;
+    installments: number;
+}
+
+export interface Params {
+    requestedAmount: number;
+    firstPaymentDate: Date;
+    requestedDate: Date;
+    installments: number;
+    debitServicePercentage: number;
+    mdr: number;
+    tacPercentage: number;
+    iofOverall: number;
+    iofPercentage: number;
+    interestRate: number;
+    minInstallmentAmount: number;
+    maxTotalAmount: number;
+    disbursementOnlyOnBusinessDays: boolean;
+}
+
