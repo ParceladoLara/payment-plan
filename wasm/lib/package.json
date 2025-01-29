@@ -14,7 +14,7 @@
     }
   },
   "publishConfig": {
-    "@ParceladoLara/payment-plan": "https://npm.pkg.github.com"
+    "@ParceladoLara:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "build": "vite build && cp wasm/index.d.ts src/index.d.ts",
