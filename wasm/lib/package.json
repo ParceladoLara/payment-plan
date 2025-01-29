@@ -1,5 +1,5 @@
 {
-  "name": "@VictorRibeiroLima/payment-plan-web",
+  "name": "@ParceladoLara/payment-plan",
   "version": "1.0.0",
   "module": "./src/index.mjs",
   "types": "./src/index.d.ts",
