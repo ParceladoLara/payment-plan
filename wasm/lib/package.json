@@ -1,0 +1,31 @@
+{
+  "name": "@VictorRibeiroLima/payment-plan-web",
+  "version": "1.0.0",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/main.mjs",
+    "dist/index.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/main.mjs",
+      "types": "./base64.d.ts"
+    }
+  },
+  "publishConfig": {
+    "@VictorRibeiroLima:registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "vite build && mv wasm/index.d.ts dist/index.d.ts",
+    "test": "exit 0"
+  },
+  "dependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vite-plugin-wasm": "^3.0.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

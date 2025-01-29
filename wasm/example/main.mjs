@@ -8,7 +8,7 @@ import init, {
 
 await init();
 
-
+console.log(nextDisbursementDate(new Date()).toISOString());
 
 const params = {
   maxTotalAmount: Number.MAX_VALUE,

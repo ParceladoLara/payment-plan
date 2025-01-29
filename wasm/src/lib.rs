@@ -46,6 +46,7 @@ pub fn next_disbursement_date(base_date: js_sys::Date) -> Result<js_sys::Date, J
         Err(e) => return Err(JsError::new(&e.to_string())),
     };
     let js_result: types::date::Date = result.into();
+
     Ok(js_result.into())
 }
 
