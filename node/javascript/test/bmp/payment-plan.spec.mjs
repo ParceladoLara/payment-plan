@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import * as assert from 'node:assert';
-import { calculatePlan, PaymentPlanParams } from 'ts/payment-plan';
+import { calculatePlan, PaymentPlanParams } from '../../src/index.js';
 
 test('calculate payment plan test 0', () => {
   const expectedContractAmount = 9037.318869753424;
@@ -25,7 +25,10 @@ test('calculate payment plan test 0', () => {
 
   const requestedDate = new Date('2022-03-18');
 
-  const params: PaymentPlanParams = {
+  /**
+   * @type {PaymentPlanParams}
+   */
+  const params = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: 8800.0,
@@ -81,7 +84,10 @@ test('calculate payment plan test 0', () => {
 });
 
 test('Error: invalid requestedAmount', () => {
-  const params: PaymentPlanParams = {
+   /**
+   * @type {PaymentPlanParams}
+   */
+  const params = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: -8800.0,
@@ -102,7 +108,10 @@ test('Error: invalid requestedAmount', () => {
 });
 
 test('Error: invalid installments', () => {
-  const params: PaymentPlanParams = {
+   /**
+   * @type {PaymentPlanParams}
+   */
+  const params = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: 8800.0,

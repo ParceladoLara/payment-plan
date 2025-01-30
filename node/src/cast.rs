@@ -1,6 +1,5 @@
 use core_payment_plan::{DownPaymentParams, DownPaymentResponse, Params, Response};
 
-use chrono::NaiveTime;
 use neon::{
     context::{Context, FunctionContext},
     handle::Handle,
@@ -9,7 +8,7 @@ use neon::{
     types::{JsArray, JsDate, JsNumber, JsObject, JsValue},
 };
 
-use crate::parser::{any_to_bool, any_to_number};
+use crate::parser::{self, any_to_bool, any_to_number};
 
 pub fn cast_js_object_to_param(
     cx: &mut FunctionContext,
@@ -36,8 +35,6 @@ pub fn cast_js_object_to_param(
         obj.get_opt(cx, "disbursementOnlyOnBusinessDays")?;
 
     let requested_amount = any_to_number(cx, requested_amount)?;
-    let first_payment_date = first_payment_date.value(cx);
-    let requested_date = requested_date.value(cx);
     let installments = any_to_number(cx, installments)? as u32;
     let debt_service_percentage = any_to_number(cx, debt_service_percentage)? as u16;
     let mdr = any_to_number(cx, mdr)?;
@@ -45,6 +42,10 @@ pub fn cast_js_object_to_param(
     let iof_overall = any_to_number(cx, iof_overall)?;
     let iof_percentage = any_to_number(cx, iof_percentage)?;
     let interest_rate = any_to_number(cx, interest_rate)?;
+
+    let first_payment_date = parser::js_date_to_naive(cx, first_payment_date)?;
+    let requested_date = parser::js_date_to_naive(cx, requested_date)?;
+
     let min_installment_amount = match min_installment_amount {
         Some(value) => any_to_number(cx, value)?,
         None => 0.0,
@@ -53,22 +54,6 @@ pub fn cast_js_object_to_param(
     let disbursement_only_on_business_days = match disbursement_only_on_business_days {
         Some(value) => any_to_bool(cx, value)?,
         None => false,
-    };
-
-    let first_payment_date = chrono::DateTime::from_timestamp_millis(first_payment_date as i64);
-    let first_payment_date = match first_payment_date {
-        Some(date) => date.date_naive(),
-        None => {
-            return cx.throw_error("Invalid date");
-        }
-    };
-
-    let requested_date = chrono::DateTime::from_timestamp_millis(requested_date as i64);
-    let requested_date = match requested_date {
-        Some(date) => date.date_naive(),
-        None => {
-            return cx.throw_error("Invalid date");
-        }
     };
 
     Ok(Params {
@@ -93,31 +78,8 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     response: Response,
 ) -> NeonResult<Handle<'a, JsObject>> {
     let installment = JsNumber::new(cx, response.installment);
-    let due_date = response
-        .due_date
-        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
-        .and_utc();
-    let due_date = JsDate::new(cx, due_date.timestamp_millis() as f64);
-    let due_date = match due_date {
-        Ok(date) => date,
-        Err(_) => {
-            return cx.throw_error("Invalid date");
-        }
-    };
-
-    let disbursement_date = response
-        .disbursement_date
-        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
-        .and_utc();
-
-    let disbursement_date = JsDate::new(cx, disbursement_date.timestamp_millis() as f64);
-    let disbursement_date = match disbursement_date {
-        Ok(date) => date,
-        Err(_) => {
-            return cx.throw_error("Invalid date");
-        }
-    };
-
+    let due_date = parser::naive_to_js_date(cx, response.due_date)?;
+    let disbursement_date = parser::naive_to_js_date(cx, response.disbursement_date)?;
     let accumulated_days = JsNumber::new(cx, response.accumulated_days as f64);
     let days_index = JsNumber::new(cx, response.days_index);
     let accumulated_days_index = JsNumber::new(cx, response.accumulated_days_index);
@@ -223,17 +185,9 @@ pub fn cast_js_object_to_down_payment_param(
     let params = cast_js_object_to_param(cx, params)?;
     let requested_amount = any_to_number(cx, requested_amount)?;
     let min_installment_amount = any_to_number(cx, min_installment_amount)?;
-    let first_payment_date_millis = first_payment_date_millis.value(cx);
     let installments = any_to_number(cx, installments)? as u32;
 
-    let first_payment_date =
-        chrono::DateTime::from_timestamp_millis(first_payment_date_millis as i64);
-    let first_payment_date = match first_payment_date {
-        Some(date) => date.date_naive(),
-        None => {
-            return cx.throw_error("Invalid date");
-        }
-    };
+    let first_payment_date = parser::js_date_to_naive(cx, first_payment_date_millis)?;
 
     Ok(DownPaymentParams {
         params,
@@ -251,19 +205,7 @@ fn cast_down_payment_response_to_js_object<'a, C: Context<'a>>(
     let installment_amount = JsNumber::new(cx, response.installment_amount);
     let total_amount = JsNumber::new(cx, response.total_amount);
     let installment_quantity = JsNumber::new(cx, response.installment_quantity as f64);
-
-    let first_payment_date = response
-        .first_payment_date
-        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
-        .and_utc();
-
-    let first_payment_date = JsDate::new(cx, first_payment_date.timestamp_millis() as f64);
-    let first_payment_date = match first_payment_date {
-        Ok(date) => date,
-        Err(_) => {
-            return cx.throw_error("Invalid date");
-        }
-    };
+    let first_payment_date = parser::naive_to_js_date(cx, response.first_payment_date)?;
 
     let plans = cast_vec_response_to_js_array(cx, response.plans)?;
 

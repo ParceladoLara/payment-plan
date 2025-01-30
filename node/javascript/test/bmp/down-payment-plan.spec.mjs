@@ -4,10 +4,13 @@ import {
   calculateDownPaymentPlan,
   DownPaymentPlanParams,
   PaymentPlanParams,
-} from 'ts/payment-plan';
+} from '../../src/index.js';
 
 test('calculate down payment plan 2 installments', () => {
-  const planParam: PaymentPlanParams = {
+  /**
+   * @type {PaymentPlanParams}
+   */
+  const planParam = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: 1000.0,
@@ -25,7 +28,10 @@ test('calculate down payment plan 2 installments', () => {
   const minInstallmentAmount = 100.0;
   const installments = 4;
 
-  const params: DownPaymentPlanParams = {
+  /**
+   * @type {DownPaymentPlanParams}
+   */
+  const params = {
     params: planParam,
     requestedAmount: downPayment,
     minInstallmentAmount,

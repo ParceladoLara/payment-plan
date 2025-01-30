@@ -4,10 +4,13 @@ import {
   calculatePlan,
   PaymentPlanParams,
   PaymentPlanResponse,
-} from 'ts/payment-plan';
+} from '../../src/index.js';
 
 test('calculate payment plan test 0', () => {
-  const params: PaymentPlanParams = {
+  /**
+   * @type {PaymentPlanParams}
+   */
+  const params = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: 8800.0,
@@ -24,7 +27,10 @@ test('calculate payment plan test 0', () => {
 
   const result = calculatePlan(params);
   const pop = result.pop();
-  const expected: PaymentPlanResponse = {
+  /**
+   * @type {PaymentPlanResponse}
+   */
+  const expected = {
     installment: 24,
     dueDate: new Date('2024-03-18T03:00:00.000Z'),
     accumulatedDays: 731,
@@ -61,7 +67,10 @@ test('calculate payment plan test 0', () => {
 });
 
 test('Error: invalid requestedAmount', () => {
-  const params: PaymentPlanParams = {
+  /**
+   * @type {PaymentPlanParams}
+   */
+  const params = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: -8800.0,
@@ -80,7 +89,10 @@ test('Error: invalid requestedAmount', () => {
 });
 
 test('Error: invalid installments', () => {
-  const params: PaymentPlanParams = {
+  /**
+   * @type {PaymentPlanParams}
+   */
+  const params = {
     maxTotalAmount: Number.MAX_VALUE,
     minInstallmentAmount: 0.0,
     requestedAmount: 8800.0,

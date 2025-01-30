@@ -1,5 +1,5 @@
 [package]
-name = "node-payment-plan"
+name = "payment-plan-node"
 version = "0.1.0"
 license = "ISC"
 edition = "2021"

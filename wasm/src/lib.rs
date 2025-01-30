@@ -1,5 +1,6 @@
 use js_sys::Array;
 use types::{
+    date::Date,
     param::{DownPaymentParams, Params},
     response::{DownPaymentResponse, PaymentPlanResponse},
 };
@@ -41,8 +42,8 @@ pub fn next_disbursement_date(base_date: js_sys::Date) -> Result<js_sys::Date, J
         Ok(date) => date,
         Err(e) => return Err(e),
     };
-    let result = match core_payment_plan::next_disbursement_date(core_date) {
-        Ok(r) => r,
+    let result: Date = match core_payment_plan::next_disbursement_date(core_date) {
+        Ok(r) => r.into(),
         Err(e) => return Err(JsError::new(&e.to_string())),
     };
     let js_result: types::date::Date = result.into();

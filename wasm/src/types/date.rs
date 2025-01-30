@@ -1,3 +1,4 @@
+use chrono::NaiveTime;
 use std::ops::Deref;
 use wasm_bindgen::{JsError, JsValue};
 
@@ -62,6 +63,10 @@ impl TryInto<chrono::NaiveDate> for Date {
 
 impl From<chrono::NaiveDate> for Date {
     fn from(date: chrono::NaiveDate) -> Self {
+        let date = date
+            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+            .and_utc();
+
         let date_str = date.to_string();
         let date = js_sys::Date::new(&date_str.into());
 
