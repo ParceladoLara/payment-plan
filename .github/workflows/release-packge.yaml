@@ -124,8 +124,8 @@ jobs:
       fail-fast: false
       matrix:
         branch:
-          - v3.19
-          - v3.18
+          - v3.21 #nodejs 22
+          - v3.19 #nodejs 20
         system:
           - os: ubuntu-20.04
             target: x86_64-unknown-linux-musl
