@@ -38,15 +38,6 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com/
-      - name: Set release version
-        # Set release version in all three os, the commented run should suffice for linux and mac.
-        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
-        # run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - name: Tweak package.json
-        # This will update the package version to tag version and
-        # add an install script in package.json so users who `npm i` this package
-        # will trigger the node-pre-gyp to pull the os and arch specific binary.
-        run: python3 -c "import os; import json; p = json.load(open('./node/package.json')); p['scripts']['install'] = 'node-pre-gyp install'; p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./node/package.json', 'w'), indent=2, ensure_ascii=False);"
       - name: Publish to GitHub Package Registry
         run: |
           cd node
