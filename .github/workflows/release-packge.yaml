@@ -53,7 +53,7 @@ jobs:
           cat package.json
           echo "Publish to GitHub Package Registry"
           export NODE_AUTH_TOKEN=${{secrets.GITHUB_TOKEN}}
-          npm publish
+          npm publish --registry=https://npm.pkg.github.com/
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
