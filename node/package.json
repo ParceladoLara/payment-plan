@@ -1,6 +1,6 @@
 {
   "name": "@ParceladoLara/payment-plan-node",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "",
   "main": "./javascript/src/index.js",
   "module": "./javascript/src/index.js",
@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "tsx ./ts/index.ts",
-    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "npm run build -- --release --features $FEATURE && npx tsc  && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
+    "build": "cross-env FEATURE=$FEATURE cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE && npx tsc && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
     "build:bmp": "cross-env FEATURE=bmp npm run build:release",
     "build:qitech": "cross-env FEATURE=qitech npm run build:release",
     "test:bmp": "npm run build:bmp && node --test 'javascript/test/bmp/*.spec.*'",
@@ -32,7 +32,6 @@
     "@types/node": "22.5.4",
     "cargo-cp-artifact": "0.1",
     "cross-env": "^7.0.3",
-    "glob": "11.0.0",
     "i": "0.3.7",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
