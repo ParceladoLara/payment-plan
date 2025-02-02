@@ -8,8 +8,9 @@
   "types": "./javascript/types/src/index.d.ts",
   "license": "",
   "files": [
-    "javascript/src/index.mjs",
-    "javascript/src/types/index.d.ts",
+    "javascript/src/index.js",
+    "javascript/types/src/index.d.ts",
+    "javascript/types/src/index.d.ts.map",
     "native/index.node"
   ],
   "engines": {
