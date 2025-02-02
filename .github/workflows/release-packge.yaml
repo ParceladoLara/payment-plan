@@ -50,10 +50,8 @@ jobs:
 
       - name: Publish to GitHub Package Registry
         run: |
-          echo "Change to right directory"
           cd node
-          echo "ls the directory"
-          ls
+          cat package.json
           echo "Publish to GitHub Package Registry"
           export NODE_AUTH_TOKEN=${{secrets.GITHUB_TOKEN}}
           npm publish
