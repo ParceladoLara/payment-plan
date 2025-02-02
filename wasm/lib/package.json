@@ -1,6 +1,6 @@
 {
   "name": "@ParceladoLara/payment-plan-web",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./src/index.mjs",
   "module": "./src/index.mjs",
   "types": "./src/index.d.ts",

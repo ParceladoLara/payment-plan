@@ -149,8 +149,9 @@ jobs:
         shell: alpine.sh --root {0}
 
       - name: install npm
+        # i'm hardcoding the version of npm here, because the version of npm in the alpine repo is too old.
         run: |
-          echo "http://dl-cdn.alpinelinux.org/alpine/${{matrix.branch}}/community" > /etc/apk/repositories
+          echo "http://dl-cdn.alpinelinux.org/alpine/v3.21/community" > /etc/apk/repositories
           apk update
           apk add npm
         shell: alpine.sh --root {0}
