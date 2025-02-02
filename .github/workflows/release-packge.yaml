@@ -31,6 +31,9 @@ jobs:
   publish-node:
     name: publish-node
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     # Prevent a situation where native build fails and an npm package is uploaded.
     needs: [nodejs-github-native]
     steps:
@@ -44,10 +47,7 @@ jobs:
         # add an install script in package.json so users who `npm i` this package
         # will trigger the node-pre-gyp to pull the os and arch specific binary.
         run: python3 -c "import os; import json; p = json.load(open('./node/package.json')); p['scripts']['install'] = 'node-pre-gyp install'; p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./node/package.json', 'w'), indent=2, ensure_ascii=False);"
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 22
-          registry-url: https://npm.pkg.github.com/
+
       - name: Publish to GitHub Package Registry
         run: |
           echo "Change to right directory"
