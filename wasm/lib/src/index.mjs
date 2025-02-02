@@ -270,6 +270,7 @@ function __wbindgen_throw(arg0, arg1) {
 }
 
 URL = globalThis.URL;
+console.time("wasm");
 const __vite__wasmModule = await __vite__initWasm({ "./index_bg.js": { "__wbindgen_string_new": __wbindgen_string_new,
 "__wbindgen_is_undefined": __wbindgen_is_undefined,
 "__wbindgen_number_new": __wbindgen_number_new,
@@ -287,6 +288,7 @@ const __vite__wasmModule = await __vite__initWasm({ "./index_bg.js": { "__wbindg
 "__wbg_stringify_8bde2d9422edb447": __wbg_stringify_8bde2d9422edb447,
 "__wbindgen_throw": __wbindgen_throw,
 "__wbindgen_init_externref_table": __wbindgen_init_externref_table } }, __vite__wasmUrl);
+console.timeEnd("wasm");
 const memory = __vite__wasmModule.memory;
 const calculateDownPaymentPlan = __vite__wasmModule.calculateDownPaymentPlan;
 const nextDisbursementDate = __vite__wasmModule.nextDisbursementDate;
