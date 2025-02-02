@@ -19,8 +19,8 @@
     "start": "tsx ./ts/index.ts",
     "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
     "build:release": "npm run build -- --release --features $FEATURE && npx tsc  && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
-    "build:bmp": "FEATURE=bmp npm run build:release",
-    "build:qitech": "FEATURE=qitech npm run build:release",
+    "build:bmp": "cross-env FEATURE=bmp npm run build:release",
+    "build:qitech": "cross-env FEATURE=qitech npm run build:release",
     "test:bmp": "npm run build:bmp && node --test 'javascript/test/bmp/*.spec.*'",
     "test:qitech": "npm run build:qitech && node --test 'javascript/test/qitech/*.spec.*'",
     "test": "npm run test:bmp && npm run test:qitech"
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/node": "22.5.4",
     "cargo-cp-artifact": "0.1",
+    "cross-env": "^7.0.3",
     "glob": "11.0.0",
     "i": "0.3.7",
     "ts-loader": "9.5.1",
