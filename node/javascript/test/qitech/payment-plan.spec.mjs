@@ -2,8 +2,6 @@ import { test } from 'node:test';
 import * as assert from 'node:assert';
 import {
   calculatePlan,
-  PaymentPlanParams,
-  PaymentPlanResponse,
 } from '../../src/index.js';
 
 test('calculate payment plan test 0', () => {

@@ -1,6 +1,6 @@
 {
   "name": "@ParceladoLara/payment-plan-node",
-  "version": "0.1.0",
+  "version": "1.0.4",
   "description": "",
   "main": "./javascript/src/index.js",
   "module": "./javascript/src/index.js",
@@ -12,16 +12,21 @@
     "javascript/src/types/index.d.ts",
     "native/index.node"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "start": "tsx ./ts/index.ts",
     "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "npm run build -- --release --features $FEATURE && npx tsc",
+    "build:release": "npm run build -- --release --features $FEATURE && npx tsc  && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
     "build:bmp": "FEATURE=bmp npm run build:release",
     "build:qitech": "FEATURE=qitech npm run build:release",
-    "release:native": "npm run build:qitech && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
-    "test:bmp": "node --test 'javascript/test/bmp/*.spec.*'",
-    "test:qitech": "node --test 'javascript/test/qitech/*.spec.*'",
+    "test:bmp": "npm run build:bmp && node --test 'javascript/test/bmp/*.spec.*'",
+    "test:qitech": "npm run build:qitech && node --test 'javascript/test/qitech/*.spec.*'",
     "test": "npm run test:bmp && npm run test:qitech"
+  },
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "2.0.0"
   },
   "devDependencies": {
     "@types/node": "22.5.4",
@@ -34,5 +39,24 @@
     "tsconfig-paths": "4.2.0",
     "tsx": "4.19.1",
     "typescript": "5.4.5"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ParceladoLara/payment-plan.git"
+  },
+  "binary": {
+    "module_name": "index",
+    "module_path": "./native",
+    "host": "https://github.com/ParceladoLara/payment-plan/releases/download/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
+    "remote_path": "v{version}"
   }
 }
