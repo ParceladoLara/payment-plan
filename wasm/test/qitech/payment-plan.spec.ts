@@ -3,7 +3,7 @@ import * as assert from "node:assert";
 import {
   calculatePaymentPlan,
   Params,
-  InnerResponse,
+  PaymentPlanResponse,
 } from "../../pkg/wasm_payment_plan";
 
 test("calculate payment plan test 0", () => {
@@ -25,9 +25,9 @@ test("calculate payment plan test 0", () => {
 
   const result = calculatePaymentPlan(params);
   const pop = result.pop();
-  const expected: InnerResponse = {
+  const expected: PaymentPlanResponse = {
     installment: 24,
-    dueDate: new Date("2024-03-18T00:00:00.000Z"),
+    dueDate: new Date("2024-03-18T03:00:00.000Z"),
     accumulatedDays: 731,
     daysIndex: 0.572214390057081,
     accumulatedDaysIndex: 18.17043451706523,
@@ -55,8 +55,8 @@ test("calculate payment plan test 0", () => {
     tacAmount: 0,
     IOFPercentage: 0.000082,
     overallIOF: 0.0038,
-    disbursementDate:  new Date("2022-03-18T00:00:00.000Z"),
-  } as InnerResponse;
+    disbursementDate: new Date("2022-03-18T03:00:00.000Z"),
+  } as PaymentPlanResponse;
 
   assert.equal(pop.installment, expected.installment);
   assert.deepEqual(pop.dueDate, expected.dueDate);
@@ -65,13 +65,25 @@ test("calculate payment plan test 0", () => {
   assert.equal(pop.accumulatedDaysIndex, expected.accumulatedDaysIndex);
   assert.equal(pop.interestRate, expected.interestRate);
   assert.equal(pop.installmentAmount, expected.installmentAmount);
-  assert.equal(pop.installmentAmountWithoutTAC, expected.installmentAmountWithoutTAC);
+  assert.equal(
+    pop.installmentAmountWithoutTAC,
+    expected.installmentAmountWithoutTAC
+  );
   assert.equal(pop.totalAmount, expected.totalAmount);
   assert.equal(pop.debitService, expected.debitService);
-  assert.equal(pop.customerDebitServiceAmount, expected.customerDebitServiceAmount);
+  assert.equal(
+    pop.customerDebitServiceAmount,
+    expected.customerDebitServiceAmount
+  );
   assert.equal(pop.customerAmount, expected.customerAmount);
-  assert.equal(pop.calculationBasisForEffectiveInterestRate, expected.calculationBasisForEffectiveInterestRate);
-  assert.equal(pop.merchantDebitServiceAmount, expected.merchantDebitServiceAmount);
+  assert.equal(
+    pop.calculationBasisForEffectiveInterestRate,
+    expected.calculationBasisForEffectiveInterestRate
+  );
+  assert.equal(
+    pop.merchantDebitServiceAmount,
+    expected.merchantDebitServiceAmount
+  );
   assert.equal(pop.merchantTotalAmount, expected.merchantTotalAmount);
   assert.equal(pop.settledToMerchant, expected.settledToMerchant);
   assert.equal(pop.mdrAmount, expected.mdrAmount);

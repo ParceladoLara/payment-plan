@@ -14,6 +14,7 @@ pub struct PaymentPlanResponse {
     pub accumulated_days_index: f64,
     pub interest_rate: f64,
     pub installment_amount: f64,
+    #[serde(rename = "installmentAmountWithoutTAC")]
     pub installment_amount_without_tac: f64,
     pub total_amount: f64,
     pub debit_service: f64,
