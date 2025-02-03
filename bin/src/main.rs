@@ -5,6 +5,7 @@ use std::{
 
 mod args;
 use args::{Args, CalcType};
+use chrono::NaiveTime;
 use clap::Parser;
 use core_payment_plan::{DownPaymentParams, Params};
 use payment_plan::{
@@ -25,6 +26,7 @@ fn main() -> ExitCode {
     let code = match c_type {
         CalcType::Normal => calc(buf),
         CalcType::DownPayment => down_calc(buf),
+        CalcType::NextDisbursementDate => next_disbursement_date(buf),
     };
 
     return code;
@@ -94,4 +96,45 @@ fn down_calc(buf: Vec<u8>) -> ExitCode {
     std::io::stdout().write_all(&response).unwrap();
 
     return ExitCode::SUCCESS;
+}
+
+fn next_disbursement_date(buf: Vec<u8>) -> ExitCode {
+    let buf: [u8; 8] = match buf.as_slice().try_into() {
+        Ok(value) => value,
+        Err(e) => {
+            eprintln!("Failed to convert buffer to u64: {:?}", e);
+            return ExitCode::FAILURE;
+        }
+    };
+    let date = i64::from_be_bytes(buf);
+    let requested_date = chrono::DateTime::from_timestamp_millis(date);
+    let requested_date = match requested_date {
+        Some(date) => date.date_naive(),
+        None => {
+            eprintln!("Error: Invalid requested date");
+            return ExitCode::FAILURE;
+        }
+    };
+
+    let response = core_payment_plan::next_disbursement_date(requested_date);
+
+    let response = match response {
+        Ok(response) => response,
+        Err(e) => {
+            eprintln!("Error getting next disbursement date: {}", e);
+            return ExitCode::FAILURE;
+        }
+    };
+
+    let response = response
+        .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+        .and_utc()
+        .timestamp_millis();
+
+    let response = response.to_be_bytes();
+
+    //Write the response to stdout
+    std::io::stdout().write_all(&response).unwrap();
+
+    ExitCode::SUCCESS
 }

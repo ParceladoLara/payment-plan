@@ -5,6 +5,8 @@ pub enum CalcType {
     #[default]
     Normal,
     DownPayment,
+    #[clap(name = "next-disbursement-date", alias = "nd")]
+    NextDisbursementDate,
 }
 
 #[derive(Parser, Debug)]

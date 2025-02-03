@@ -3,6 +3,7 @@ package bin_test
 import (
 	"bin/protos"
 	"bytes"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"os/exec"
@@ -169,6 +170,33 @@ func TestQiTechDownPayment(t *testing.T) {
 	}
 
 	downPaymentHelper(t, &plan)
+}
+
+//chrono::NaiveDate::from_ymd(2024, 12, 25),
+
+func TestNextDisbursementDate(t *testing.T) {
+	date := time.Date(2078, time.December, 25, 0, 0, 0, 0, time.UTC).UnixMilli()
+	byteBuffer := make([]byte, 8)
+	binary.BigEndian.PutUint64(byteBuffer, uint64(date))
+	cmd := exec.Command("../../target/release/payment-plan", "-t", "next-disbursement-date")
+	cmd.Stdin = bytes.NewReader(byteBuffer)
+	var out bytes.Buffer
+	var errOut bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &errOut
+	err := cmd.Run()
+	if err != nil {
+		err := errors.New(errOut.String())
+		t.Fatalf("Error running payment-plan CLI: %s", err)
+	}
+
+	expected := time.Date(2078, time.December, 26, 3, 0, 0, 0, time.UTC)
+	actualMillis := binary.BigEndian.Uint64(out.Bytes())
+	actual := time.UnixMilli(int64(actualMillis)).UTC()
+	if actual != expected {
+		t.Errorf("Expected next down payment to be %s, got %s", expected, actual)
+	}
+
 }
 
 func planHelper(t *testing.T, plan *protos.PlanResponses, expected *expectedValues) {
