@@ -11,7 +11,7 @@ export interface PaymentPlanResponse {
     accumulatedDaysIndex: number;
     interestRate: number;
     installmentAmount: number;
-    installmentAmountWithoutTac: number;
+    installmentAmountWithoutTAC: number;
     totalAmount: number;
     debitService: number;
     customerDebitServiceAmount: number;
