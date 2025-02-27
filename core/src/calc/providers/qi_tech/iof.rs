@@ -18,15 +18,17 @@ pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
 
     let installment_amount = data.amount;
     for j in 0..installments {
-        let diff = data.diffs[j as usize];
         let mut accumulated_days = data.accumulated_days[j as usize];
-        let fee = main_value_l * ((1.0 + daily_interest_rate).powf(diff as f64) - 1.0);
+        let business_diff = data.business_diffs[j as usize];
+        let fee = main_value_l * ((1.0 + daily_interest_rate).powf(business_diff as f64) - 1.0);
 
         let installment_amount_without_fee = installment_amount - fee;
+
         let main_iof = installment_amount_without_fee * iof_overall;
         if accumulated_days >= 365 {
             accumulated_days = 365;
         }
+
         let installment_iof =
             installment_amount_without_fee * accumulated_days as f64 * iof_percentage;
 
@@ -99,7 +101,14 @@ mod test {
                 30, 61, 91, 122, 153, 181, 212, 242, 273, 303, 334, 365, 395, 426, 456, 487, 518,
                 546,
             ],
+            accumulated_business_days: vec![
+                30, 61, 91, 122, 153, 181, 212, 242, 273, 303, 334, 365, 395, 426, 456, 487, 518,
+                546,
+            ],
             diffs: vec![
+                30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28,
+            ],
+            business_diffs: vec![
                 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28,
             ],
             amount: 589.4399638402917,

@@ -1,9 +1,7 @@
 use chrono::{Datelike, Days, Months};
 
 #[allow(deprecated)]
-const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
-    chrono::NaiveDate::from_ymd(2024, 12, 25),
-    chrono::NaiveDate::from_ymd(2025, 1, 1),
+const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 701] = [
     chrono::NaiveDate::from_ymd(2025, 3, 3),
     chrono::NaiveDate::from_ymd(2025, 3, 4),
     chrono::NaiveDate::from_ymd(2025, 4, 18),
@@ -14,6 +12,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2025, 10, 12),
     chrono::NaiveDate::from_ymd(2025, 11, 2),
     chrono::NaiveDate::from_ymd(2025, 11, 15),
+    chrono::NaiveDate::from_ymd(2025, 11, 20),
     chrono::NaiveDate::from_ymd(2025, 12, 25),
     chrono::NaiveDate::from_ymd(2026, 1, 1),
     chrono::NaiveDate::from_ymd(2026, 2, 16),
@@ -26,6 +25,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2026, 10, 12),
     chrono::NaiveDate::from_ymd(2026, 11, 2),
     chrono::NaiveDate::from_ymd(2026, 11, 15),
+    chrono::NaiveDate::from_ymd(2026, 11, 20),
     chrono::NaiveDate::from_ymd(2026, 12, 25),
     chrono::NaiveDate::from_ymd(2027, 1, 1),
     chrono::NaiveDate::from_ymd(2027, 2, 8),
@@ -38,6 +38,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2027, 10, 12),
     chrono::NaiveDate::from_ymd(2027, 11, 2),
     chrono::NaiveDate::from_ymd(2027, 11, 15),
+    chrono::NaiveDate::from_ymd(2027, 11, 20),
     chrono::NaiveDate::from_ymd(2027, 12, 25),
     chrono::NaiveDate::from_ymd(2028, 1, 1),
     chrono::NaiveDate::from_ymd(2028, 2, 28),
@@ -50,6 +51,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2028, 10, 12),
     chrono::NaiveDate::from_ymd(2028, 11, 2),
     chrono::NaiveDate::from_ymd(2028, 11, 15),
+    chrono::NaiveDate::from_ymd(2028, 11, 20),
     chrono::NaiveDate::from_ymd(2028, 12, 25),
     chrono::NaiveDate::from_ymd(2029, 1, 1),
     chrono::NaiveDate::from_ymd(2029, 2, 12),
@@ -62,6 +64,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2029, 10, 12),
     chrono::NaiveDate::from_ymd(2029, 11, 2),
     chrono::NaiveDate::from_ymd(2029, 11, 15),
+    chrono::NaiveDate::from_ymd(2029, 11, 20),
     chrono::NaiveDate::from_ymd(2029, 12, 25),
     chrono::NaiveDate::from_ymd(2030, 1, 1),
     chrono::NaiveDate::from_ymd(2030, 3, 4),
@@ -74,6 +77,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2030, 10, 12),
     chrono::NaiveDate::from_ymd(2030, 11, 2),
     chrono::NaiveDate::from_ymd(2030, 11, 15),
+    chrono::NaiveDate::from_ymd(2030, 11, 20),
     chrono::NaiveDate::from_ymd(2030, 12, 25),
     chrono::NaiveDate::from_ymd(2031, 1, 1),
     chrono::NaiveDate::from_ymd(2031, 2, 24),
@@ -86,6 +90,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2031, 10, 12),
     chrono::NaiveDate::from_ymd(2031, 11, 2),
     chrono::NaiveDate::from_ymd(2031, 11, 15),
+    chrono::NaiveDate::from_ymd(2031, 11, 20),
     chrono::NaiveDate::from_ymd(2031, 12, 25),
     chrono::NaiveDate::from_ymd(2032, 1, 1),
     chrono::NaiveDate::from_ymd(2032, 2, 9),
@@ -98,6 +103,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2032, 10, 12),
     chrono::NaiveDate::from_ymd(2032, 11, 2),
     chrono::NaiveDate::from_ymd(2032, 11, 15),
+    chrono::NaiveDate::from_ymd(2032, 11, 20),
     chrono::NaiveDate::from_ymd(2032, 12, 25),
     chrono::NaiveDate::from_ymd(2033, 1, 1),
     chrono::NaiveDate::from_ymd(2033, 2, 28),
@@ -110,6 +116,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2033, 10, 12),
     chrono::NaiveDate::from_ymd(2033, 11, 2),
     chrono::NaiveDate::from_ymd(2033, 11, 15),
+    chrono::NaiveDate::from_ymd(2033, 11, 20),
     chrono::NaiveDate::from_ymd(2033, 12, 25),
     chrono::NaiveDate::from_ymd(2034, 1, 1),
     chrono::NaiveDate::from_ymd(2034, 2, 20),
@@ -122,6 +129,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2034, 10, 12),
     chrono::NaiveDate::from_ymd(2034, 11, 2),
     chrono::NaiveDate::from_ymd(2034, 11, 15),
+    chrono::NaiveDate::from_ymd(2034, 11, 20),
     chrono::NaiveDate::from_ymd(2034, 12, 25),
     chrono::NaiveDate::from_ymd(2035, 1, 1),
     chrono::NaiveDate::from_ymd(2035, 2, 5),
@@ -134,6 +142,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2035, 10, 12),
     chrono::NaiveDate::from_ymd(2035, 11, 2),
     chrono::NaiveDate::from_ymd(2035, 11, 15),
+    chrono::NaiveDate::from_ymd(2035, 11, 20),
     chrono::NaiveDate::from_ymd(2035, 12, 25),
     chrono::NaiveDate::from_ymd(2036, 1, 1),
     chrono::NaiveDate::from_ymd(2036, 2, 25),
@@ -146,6 +155,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2036, 10, 12),
     chrono::NaiveDate::from_ymd(2036, 11, 2),
     chrono::NaiveDate::from_ymd(2036, 11, 15),
+    chrono::NaiveDate::from_ymd(2036, 11, 20),
     chrono::NaiveDate::from_ymd(2036, 12, 25),
     chrono::NaiveDate::from_ymd(2037, 1, 1),
     chrono::NaiveDate::from_ymd(2037, 2, 16),
@@ -158,6 +168,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2037, 10, 12),
     chrono::NaiveDate::from_ymd(2037, 11, 2),
     chrono::NaiveDate::from_ymd(2037, 11, 15),
+    chrono::NaiveDate::from_ymd(2037, 11, 20),
     chrono::NaiveDate::from_ymd(2037, 12, 25),
     chrono::NaiveDate::from_ymd(2038, 1, 1),
     chrono::NaiveDate::from_ymd(2038, 3, 8),
@@ -170,6 +181,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2038, 10, 12),
     chrono::NaiveDate::from_ymd(2038, 11, 2),
     chrono::NaiveDate::from_ymd(2038, 11, 15),
+    chrono::NaiveDate::from_ymd(2038, 11, 20),
     chrono::NaiveDate::from_ymd(2038, 12, 25),
     chrono::NaiveDate::from_ymd(2039, 1, 1),
     chrono::NaiveDate::from_ymd(2039, 2, 21),
@@ -182,6 +194,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2039, 10, 12),
     chrono::NaiveDate::from_ymd(2039, 11, 2),
     chrono::NaiveDate::from_ymd(2039, 11, 15),
+    chrono::NaiveDate::from_ymd(2039, 11, 20),
     chrono::NaiveDate::from_ymd(2039, 12, 25),
     chrono::NaiveDate::from_ymd(2040, 1, 1),
     chrono::NaiveDate::from_ymd(2040, 2, 13),
@@ -194,6 +207,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2040, 10, 12),
     chrono::NaiveDate::from_ymd(2040, 11, 2),
     chrono::NaiveDate::from_ymd(2040, 11, 15),
+    chrono::NaiveDate::from_ymd(2040, 11, 20),
     chrono::NaiveDate::from_ymd(2040, 12, 25),
     chrono::NaiveDate::from_ymd(2041, 1, 1),
     chrono::NaiveDate::from_ymd(2041, 3, 4),
@@ -206,6 +220,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2041, 10, 12),
     chrono::NaiveDate::from_ymd(2041, 11, 2),
     chrono::NaiveDate::from_ymd(2041, 11, 15),
+    chrono::NaiveDate::from_ymd(2041, 11, 20),
     chrono::NaiveDate::from_ymd(2041, 12, 25),
     chrono::NaiveDate::from_ymd(2042, 1, 1),
     chrono::NaiveDate::from_ymd(2042, 2, 17),
@@ -218,6 +233,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2042, 10, 12),
     chrono::NaiveDate::from_ymd(2042, 11, 2),
     chrono::NaiveDate::from_ymd(2042, 11, 15),
+    chrono::NaiveDate::from_ymd(2042, 11, 20),
     chrono::NaiveDate::from_ymd(2042, 12, 25),
     chrono::NaiveDate::from_ymd(2043, 1, 1),
     chrono::NaiveDate::from_ymd(2043, 2, 9),
@@ -230,6 +246,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2043, 10, 12),
     chrono::NaiveDate::from_ymd(2043, 11, 2),
     chrono::NaiveDate::from_ymd(2043, 11, 15),
+    chrono::NaiveDate::from_ymd(2043, 11, 20),
     chrono::NaiveDate::from_ymd(2043, 12, 25),
     chrono::NaiveDate::from_ymd(2044, 1, 1),
     chrono::NaiveDate::from_ymd(2044, 2, 29),
@@ -242,6 +259,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2044, 10, 12),
     chrono::NaiveDate::from_ymd(2044, 11, 2),
     chrono::NaiveDate::from_ymd(2044, 11, 15),
+    chrono::NaiveDate::from_ymd(2044, 11, 20),
     chrono::NaiveDate::from_ymd(2044, 12, 25),
     chrono::NaiveDate::from_ymd(2045, 1, 1),
     chrono::NaiveDate::from_ymd(2045, 2, 20),
@@ -254,6 +272,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2045, 10, 12),
     chrono::NaiveDate::from_ymd(2045, 11, 2),
     chrono::NaiveDate::from_ymd(2045, 11, 15),
+    chrono::NaiveDate::from_ymd(2045, 11, 20),
     chrono::NaiveDate::from_ymd(2045, 12, 25),
     chrono::NaiveDate::from_ymd(2046, 1, 1),
     chrono::NaiveDate::from_ymd(2046, 2, 5),
@@ -266,6 +285,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2046, 10, 12),
     chrono::NaiveDate::from_ymd(2046, 11, 2),
     chrono::NaiveDate::from_ymd(2046, 11, 15),
+    chrono::NaiveDate::from_ymd(2046, 11, 20),
     chrono::NaiveDate::from_ymd(2046, 12, 25),
     chrono::NaiveDate::from_ymd(2047, 1, 1),
     chrono::NaiveDate::from_ymd(2047, 2, 25),
@@ -278,6 +298,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2047, 10, 12),
     chrono::NaiveDate::from_ymd(2047, 11, 2),
     chrono::NaiveDate::from_ymd(2047, 11, 15),
+    chrono::NaiveDate::from_ymd(2047, 11, 20),
     chrono::NaiveDate::from_ymd(2047, 12, 25),
     chrono::NaiveDate::from_ymd(2048, 1, 1),
     chrono::NaiveDate::from_ymd(2048, 2, 17),
@@ -290,6 +311,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2048, 10, 12),
     chrono::NaiveDate::from_ymd(2048, 11, 2),
     chrono::NaiveDate::from_ymd(2048, 11, 15),
+    chrono::NaiveDate::from_ymd(2048, 11, 20),
     chrono::NaiveDate::from_ymd(2048, 12, 25),
     chrono::NaiveDate::from_ymd(2049, 1, 1),
     chrono::NaiveDate::from_ymd(2049, 3, 1),
@@ -302,6 +324,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2049, 10, 12),
     chrono::NaiveDate::from_ymd(2049, 11, 2),
     chrono::NaiveDate::from_ymd(2049, 11, 15),
+    chrono::NaiveDate::from_ymd(2049, 11, 20),
     chrono::NaiveDate::from_ymd(2049, 12, 25),
     chrono::NaiveDate::from_ymd(2050, 1, 1),
     chrono::NaiveDate::from_ymd(2050, 2, 21),
@@ -314,6 +337,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2050, 10, 12),
     chrono::NaiveDate::from_ymd(2050, 11, 2),
     chrono::NaiveDate::from_ymd(2050, 11, 15),
+    chrono::NaiveDate::from_ymd(2050, 11, 20),
     chrono::NaiveDate::from_ymd(2050, 12, 25),
     chrono::NaiveDate::from_ymd(2051, 1, 1),
     chrono::NaiveDate::from_ymd(2051, 2, 13),
@@ -326,6 +350,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2051, 10, 12),
     chrono::NaiveDate::from_ymd(2051, 11, 2),
     chrono::NaiveDate::from_ymd(2051, 11, 15),
+    chrono::NaiveDate::from_ymd(2051, 11, 20),
     chrono::NaiveDate::from_ymd(2051, 12, 25),
     chrono::NaiveDate::from_ymd(2052, 1, 1),
     chrono::NaiveDate::from_ymd(2052, 3, 4),
@@ -338,6 +363,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2052, 10, 12),
     chrono::NaiveDate::from_ymd(2052, 11, 2),
     chrono::NaiveDate::from_ymd(2052, 11, 15),
+    chrono::NaiveDate::from_ymd(2052, 11, 20),
     chrono::NaiveDate::from_ymd(2052, 12, 25),
     chrono::NaiveDate::from_ymd(2053, 1, 1),
     chrono::NaiveDate::from_ymd(2053, 2, 17),
@@ -350,6 +376,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2053, 10, 12),
     chrono::NaiveDate::from_ymd(2053, 11, 2),
     chrono::NaiveDate::from_ymd(2053, 11, 15),
+    chrono::NaiveDate::from_ymd(2053, 11, 20),
     chrono::NaiveDate::from_ymd(2053, 12, 25),
     chrono::NaiveDate::from_ymd(2054, 1, 1),
     chrono::NaiveDate::from_ymd(2054, 2, 9),
@@ -362,6 +389,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2054, 10, 12),
     chrono::NaiveDate::from_ymd(2054, 11, 2),
     chrono::NaiveDate::from_ymd(2054, 11, 15),
+    chrono::NaiveDate::from_ymd(2054, 11, 20),
     chrono::NaiveDate::from_ymd(2054, 12, 25),
     chrono::NaiveDate::from_ymd(2055, 1, 1),
     chrono::NaiveDate::from_ymd(2055, 3, 1),
@@ -374,6 +402,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2055, 10, 12),
     chrono::NaiveDate::from_ymd(2055, 11, 2),
     chrono::NaiveDate::from_ymd(2055, 11, 15),
+    chrono::NaiveDate::from_ymd(2055, 11, 20),
     chrono::NaiveDate::from_ymd(2055, 12, 25),
     chrono::NaiveDate::from_ymd(2056, 1, 1),
     chrono::NaiveDate::from_ymd(2056, 2, 14),
@@ -386,6 +415,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2056, 10, 12),
     chrono::NaiveDate::from_ymd(2056, 11, 2),
     chrono::NaiveDate::from_ymd(2056, 11, 15),
+    chrono::NaiveDate::from_ymd(2056, 11, 20),
     chrono::NaiveDate::from_ymd(2056, 12, 25),
     chrono::NaiveDate::from_ymd(2057, 1, 1),
     chrono::NaiveDate::from_ymd(2057, 3, 5),
@@ -398,6 +428,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2057, 10, 12),
     chrono::NaiveDate::from_ymd(2057, 11, 2),
     chrono::NaiveDate::from_ymd(2057, 11, 15),
+    chrono::NaiveDate::from_ymd(2057, 11, 20),
     chrono::NaiveDate::from_ymd(2057, 12, 25),
     chrono::NaiveDate::from_ymd(2058, 1, 1),
     chrono::NaiveDate::from_ymd(2058, 2, 25),
@@ -410,6 +441,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2058, 10, 12),
     chrono::NaiveDate::from_ymd(2058, 11, 2),
     chrono::NaiveDate::from_ymd(2058, 11, 15),
+    chrono::NaiveDate::from_ymd(2058, 11, 20),
     chrono::NaiveDate::from_ymd(2058, 12, 25),
     chrono::NaiveDate::from_ymd(2059, 1, 1),
     chrono::NaiveDate::from_ymd(2059, 2, 10),
@@ -422,6 +454,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2059, 10, 12),
     chrono::NaiveDate::from_ymd(2059, 11, 2),
     chrono::NaiveDate::from_ymd(2059, 11, 15),
+    chrono::NaiveDate::from_ymd(2059, 11, 20),
     chrono::NaiveDate::from_ymd(2059, 12, 25),
     chrono::NaiveDate::from_ymd(2060, 1, 1),
     chrono::NaiveDate::from_ymd(2060, 3, 1),
@@ -434,6 +467,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2060, 10, 12),
     chrono::NaiveDate::from_ymd(2060, 11, 2),
     chrono::NaiveDate::from_ymd(2060, 11, 15),
+    chrono::NaiveDate::from_ymd(2060, 11, 20),
     chrono::NaiveDate::from_ymd(2060, 12, 25),
     chrono::NaiveDate::from_ymd(2061, 1, 1),
     chrono::NaiveDate::from_ymd(2061, 2, 21),
@@ -446,6 +480,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2061, 10, 12),
     chrono::NaiveDate::from_ymd(2061, 11, 2),
     chrono::NaiveDate::from_ymd(2061, 11, 15),
+    chrono::NaiveDate::from_ymd(2061, 11, 20),
     chrono::NaiveDate::from_ymd(2061, 12, 25),
     chrono::NaiveDate::from_ymd(2062, 1, 1),
     chrono::NaiveDate::from_ymd(2062, 2, 6),
@@ -458,6 +493,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2062, 10, 12),
     chrono::NaiveDate::from_ymd(2062, 11, 2),
     chrono::NaiveDate::from_ymd(2062, 11, 15),
+    chrono::NaiveDate::from_ymd(2062, 11, 20),
     chrono::NaiveDate::from_ymd(2062, 12, 25),
     chrono::NaiveDate::from_ymd(2063, 1, 1),
     chrono::NaiveDate::from_ymd(2063, 2, 26),
@@ -470,6 +506,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2063, 10, 12),
     chrono::NaiveDate::from_ymd(2063, 11, 2),
     chrono::NaiveDate::from_ymd(2063, 11, 15),
+    chrono::NaiveDate::from_ymd(2063, 11, 20),
     chrono::NaiveDate::from_ymd(2063, 12, 25),
     chrono::NaiveDate::from_ymd(2064, 1, 1),
     chrono::NaiveDate::from_ymd(2064, 2, 18),
@@ -482,6 +519,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2064, 10, 12),
     chrono::NaiveDate::from_ymd(2064, 11, 2),
     chrono::NaiveDate::from_ymd(2064, 11, 15),
+    chrono::NaiveDate::from_ymd(2064, 11, 20),
     chrono::NaiveDate::from_ymd(2064, 12, 25),
     chrono::NaiveDate::from_ymd(2065, 1, 1),
     chrono::NaiveDate::from_ymd(2065, 2, 9),
@@ -494,6 +532,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2065, 10, 12),
     chrono::NaiveDate::from_ymd(2065, 11, 2),
     chrono::NaiveDate::from_ymd(2065, 11, 15),
+    chrono::NaiveDate::from_ymd(2065, 11, 20),
     chrono::NaiveDate::from_ymd(2065, 12, 25),
     chrono::NaiveDate::from_ymd(2066, 1, 1),
     chrono::NaiveDate::from_ymd(2066, 2, 22),
@@ -506,6 +545,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2066, 10, 12),
     chrono::NaiveDate::from_ymd(2066, 11, 2),
     chrono::NaiveDate::from_ymd(2066, 11, 15),
+    chrono::NaiveDate::from_ymd(2066, 11, 20),
     chrono::NaiveDate::from_ymd(2066, 12, 25),
     chrono::NaiveDate::from_ymd(2067, 1, 1),
     chrono::NaiveDate::from_ymd(2067, 2, 14),
@@ -518,6 +558,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2067, 10, 12),
     chrono::NaiveDate::from_ymd(2067, 11, 2),
     chrono::NaiveDate::from_ymd(2067, 11, 15),
+    chrono::NaiveDate::from_ymd(2067, 11, 20),
     chrono::NaiveDate::from_ymd(2067, 12, 25),
     chrono::NaiveDate::from_ymd(2068, 1, 1),
     chrono::NaiveDate::from_ymd(2068, 3, 5),
@@ -530,6 +571,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2068, 10, 12),
     chrono::NaiveDate::from_ymd(2068, 11, 2),
     chrono::NaiveDate::from_ymd(2068, 11, 15),
+    chrono::NaiveDate::from_ymd(2068, 11, 20),
     chrono::NaiveDate::from_ymd(2068, 12, 25),
     chrono::NaiveDate::from_ymd(2069, 1, 1),
     chrono::NaiveDate::from_ymd(2069, 2, 25),
@@ -542,6 +584,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2069, 10, 12),
     chrono::NaiveDate::from_ymd(2069, 11, 2),
     chrono::NaiveDate::from_ymd(2069, 11, 15),
+    chrono::NaiveDate::from_ymd(2069, 11, 20),
     chrono::NaiveDate::from_ymd(2069, 12, 25),
     chrono::NaiveDate::from_ymd(2070, 1, 1),
     chrono::NaiveDate::from_ymd(2070, 2, 10),
@@ -554,6 +597,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2070, 10, 12),
     chrono::NaiveDate::from_ymd(2070, 11, 2),
     chrono::NaiveDate::from_ymd(2070, 11, 15),
+    chrono::NaiveDate::from_ymd(2070, 11, 20),
     chrono::NaiveDate::from_ymd(2070, 12, 25),
     chrono::NaiveDate::from_ymd(2071, 1, 1),
     chrono::NaiveDate::from_ymd(2071, 3, 2),
@@ -566,6 +610,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2071, 10, 12),
     chrono::NaiveDate::from_ymd(2071, 11, 2),
     chrono::NaiveDate::from_ymd(2071, 11, 15),
+    chrono::NaiveDate::from_ymd(2071, 11, 20),
     chrono::NaiveDate::from_ymd(2071, 12, 25),
     chrono::NaiveDate::from_ymd(2072, 1, 1),
     chrono::NaiveDate::from_ymd(2072, 2, 22),
@@ -578,6 +623,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2072, 10, 12),
     chrono::NaiveDate::from_ymd(2072, 11, 2),
     chrono::NaiveDate::from_ymd(2072, 11, 15),
+    chrono::NaiveDate::from_ymd(2072, 11, 20),
     chrono::NaiveDate::from_ymd(2072, 12, 25),
     chrono::NaiveDate::from_ymd(2073, 1, 1),
     chrono::NaiveDate::from_ymd(2073, 2, 6),
@@ -590,6 +636,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2073, 10, 12),
     chrono::NaiveDate::from_ymd(2073, 11, 2),
     chrono::NaiveDate::from_ymd(2073, 11, 15),
+    chrono::NaiveDate::from_ymd(2073, 11, 20),
     chrono::NaiveDate::from_ymd(2073, 12, 25),
     chrono::NaiveDate::from_ymd(2074, 1, 1),
     chrono::NaiveDate::from_ymd(2074, 2, 26),
@@ -602,6 +649,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2074, 10, 12),
     chrono::NaiveDate::from_ymd(2074, 11, 2),
     chrono::NaiveDate::from_ymd(2074, 11, 15),
+    chrono::NaiveDate::from_ymd(2074, 11, 20),
     chrono::NaiveDate::from_ymd(2074, 12, 25),
     chrono::NaiveDate::from_ymd(2075, 1, 1),
     chrono::NaiveDate::from_ymd(2075, 2, 18),
@@ -614,6 +662,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2075, 10, 12),
     chrono::NaiveDate::from_ymd(2075, 11, 2),
     chrono::NaiveDate::from_ymd(2075, 11, 15),
+    chrono::NaiveDate::from_ymd(2075, 11, 20),
     chrono::NaiveDate::from_ymd(2075, 12, 25),
     chrono::NaiveDate::from_ymd(2076, 1, 1),
     chrono::NaiveDate::from_ymd(2076, 3, 2),
@@ -626,6 +675,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2076, 10, 12),
     chrono::NaiveDate::from_ymd(2076, 11, 2),
     chrono::NaiveDate::from_ymd(2076, 11, 15),
+    chrono::NaiveDate::from_ymd(2076, 11, 20),
     chrono::NaiveDate::from_ymd(2076, 12, 25),
     chrono::NaiveDate::from_ymd(2077, 1, 1),
     chrono::NaiveDate::from_ymd(2077, 2, 22),
@@ -638,6 +688,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2077, 10, 12),
     chrono::NaiveDate::from_ymd(2077, 11, 2),
     chrono::NaiveDate::from_ymd(2077, 11, 15),
+    chrono::NaiveDate::from_ymd(2077, 11, 20),
     chrono::NaiveDate::from_ymd(2077, 12, 25),
     chrono::NaiveDate::from_ymd(2078, 1, 1),
     chrono::NaiveDate::from_ymd(2078, 2, 14),
@@ -650,6 +701,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 649] = [
     chrono::NaiveDate::from_ymd(2078, 10, 12),
     chrono::NaiveDate::from_ymd(2078, 11, 2),
     chrono::NaiveDate::from_ymd(2078, 11, 15),
+    chrono::NaiveDate::from_ymd(2078, 11, 20),
     chrono::NaiveDate::from_ymd(2078, 12, 25),
 ];
 
@@ -659,6 +711,16 @@ pub fn is_holiday(date: chrono::NaiveDate) -> bool {
         Ok(_) => true,
         Err(_) => false,
     }
+}
+
+pub fn is_business_day(date: chrono::NaiveDate) -> bool {
+    if date.weekday() == chrono::Weekday::Sat || date.weekday() == chrono::Weekday::Sun {
+        return false;
+    }
+    if is_holiday(date) {
+        return false;
+    }
+    return true;
 }
 
 pub fn add_months(date: chrono::NaiveDate, months: u32) -> chrono::NaiveDate {
@@ -684,26 +746,44 @@ pub fn round_decimal_cases(value: f64, round: i32) -> f64 {
 
 pub fn get_next_business_day(date: chrono::NaiveDate) -> chrono::NaiveDate {
     let mut date = date;
-    //Check if is Saturday
-    if date.weekday() == chrono::Weekday::Sat {
-        date = add_days(date, 2);
-    }
-    //Check if is Sunday
-    if date.weekday() == chrono::Weekday::Sun {
-        date = add_days(date, 1);
-    }
 
-    while is_holiday(date) {
-        date = add_days(date, 1);
-        //Check if is Saturday
-        if date.weekday() == chrono::Weekday::Sat {
-            date = add_days(date, 2);
+    loop {
+        if is_business_day(date) {
+            break;
         }
-        //Check if is Sunday
-        if date.weekday() == chrono::Weekday::Sun {
-            date = add_days(date, 1);
-        }
+        date = date.checked_add_days(Days::new(1)).unwrap();
     }
 
     return date;
+}
+
+pub fn diff_in_business_days(start_date: chrono::NaiveDate, end_date: chrono::NaiveDate) -> i64 {
+    let mut diff = 0;
+    let mut date = start_date;
+
+    while date < end_date {
+        date = date.checked_add_days(Days::new(1)).unwrap();
+        if is_business_day(date) {
+            diff += 1;
+        }
+    }
+
+    return diff;
+}
+
+pub fn get_non_business_days_between(
+    start_date: chrono::NaiveDate,
+    end_date: chrono::NaiveDate,
+) -> Vec<chrono::NaiveDate> {
+    let mut holidays = Vec::new();
+    let mut date = start_date;
+
+    while date <= end_date {
+        if !is_business_day(date) {
+            holidays.push(date);
+        }
+        date = date.checked_add_days(Days::new(1)).unwrap();
+    }
+
+    return holidays;
 }

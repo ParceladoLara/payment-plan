@@ -76,3 +76,59 @@ pub fn calculate_payment_plan(p: Params) -> Result<Array, JsError> {
 
     return Ok(array);
 }
+
+#[allow(non_snake_case)]
+#[wasm_bindgen(js_name = "disbursementDateRange")]
+pub fn disbursement_date_range(base_date: js_sys::Date, days: u32) -> Result<Array, JsError> {
+    let inner_date: types::date::Date = base_date.into();
+    let core_date: chrono::NaiveDate = match inner_date.try_into() {
+        Ok(date) => date,
+        Err(e) => return Err(e),
+    };
+
+    let result = match core_payment_plan::disbursement_data_range(core_date, days) {
+        Ok(r) => r,
+        Err(e) => return Err(JsError::new(&e.to_string())),
+    };
+
+    let array = Array::new_with_length(2);
+
+    let start_date: Date = result.0.into();
+    let end_date: Date = result.1.into();
+
+    array.set(0, start_date.into());
+    array.set(1, end_date.into());
+
+    return Ok(array);
+}
+
+#[allow(non_snake_case)]
+#[wasm_bindgen(js_name = "getNonBusinessDaysBetween")]
+pub fn get_non_business_days_between(
+    start_date: js_sys::Date,
+    end_date: js_sys::Date,
+) -> Result<Array, JsError> {
+    let start_date: types::date::Date = start_date.into();
+    let end_date: types::date::Date = end_date.into();
+
+    let core_start_date: chrono::NaiveDate = match start_date.try_into() {
+        Ok(date) => date,
+        Err(e) => return Err(e),
+    };
+
+    let core_end_date: chrono::NaiveDate = match end_date.try_into() {
+        Ok(date) => date,
+        Err(e) => return Err(e),
+    };
+
+    let result = core_payment_plan::get_non_business_days_between(core_start_date, core_end_date);
+
+    let array = Array::new_with_length(result.len() as u32);
+
+    for (i, date) in result.into_iter().enumerate() {
+        let js_date: types::date::Date = date.into();
+        array.set(i as u32, js_date.into());
+    }
+
+    return Ok(array);
+}

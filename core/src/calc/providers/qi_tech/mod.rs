@@ -8,8 +8,8 @@ use crate::{
     Params, Response,
 };
 
-const POTENCY: f64 = 0.0027397260273972603; // 1/365
-const CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE: f64 = 0.08333333333333333; // 30/360
+const POTENCY: f64 = 0.003968253968253968; // 1/252
+const CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE: f64 = 0.08333333333333333; // 1/12
 
 const NUM_OF_RUNS: u32 = 7;
 
@@ -53,8 +53,7 @@ impl PaymentPlan for QiTech {
         let annual_interest_rate = (1.0 + interest_rate).powf(12.0) - 1.0;
         let daily_interest_rate = (1.0 + annual_interest_rate).powf(POTENCY) - 1.0;
 
-        let daily_interest_rate = round_decimal_cases(daily_interest_rate, 8);
-
+        let daily_interest_rate = round_decimal_cases(daily_interest_rate, 10);
         let main_value = params.requested_amount;
 
         for i in 1..=params.installments {
@@ -84,6 +83,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let requested_amount = params.params.requested_amount;
 
     let mut data = installment::calc(&params);
+
     let mut iof = iof::calc(&params, &data);
 
     let debit_service = data.amount;

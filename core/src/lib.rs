@@ -140,3 +140,67 @@ pub fn next_disbursement_date(
 
     return Ok(util::get_next_business_day(base_date));
 }
+
+pub fn disbursement_data_range(
+    base_date: chrono::NaiveDate,
+    days: u32,
+) -> Result<(chrono::NaiveDate, chrono::NaiveDate), PaymentPlanError> {
+    let start_date = next_disbursement_date(base_date)?;
+
+    let mut end_date = start_date;
+    let mut i = 1;
+    while i < days {
+        end_date = util::add_days(end_date, 1);
+        if util::is_business_day(end_date) {
+            i += 1;
+        }
+    }
+
+    return Ok((start_date, end_date));
+}
+
+pub fn get_non_business_days_between(
+    start_date: chrono::NaiveDate,
+    end_date: chrono::NaiveDate,
+) -> Vec<chrono::NaiveDate> {
+    return util::get_non_business_days_between(start_date, end_date);
+}
+
+#[cfg(test)]
+mod test {
+
+    #[test]
+    fn test_next_disbursement_date() {
+        let base_date = chrono::NaiveDate::from_ymd_opt(2078, 02, 12).unwrap();
+        let result = super::next_disbursement_date(base_date).unwrap();
+        let expected = chrono::NaiveDate::from_ymd_opt(2078, 02, 16).unwrap();
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_disbursement_data_range() {
+        let base_date = chrono::NaiveDate::from_ymd_opt(2078, 02, 12).unwrap();
+        let days = 5;
+        let result = super::disbursement_data_range(base_date, days).unwrap();
+        let expected = (
+            chrono::NaiveDate::from_ymd_opt(2078, 02, 16).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 02, 22).unwrap(),
+        );
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_get_non_business_days_between() {
+        let start_date = chrono::NaiveDate::from_ymd_opt(2078, 11, 12).unwrap();
+        let end_date = chrono::NaiveDate::from_ymd_opt(2078, 11, 22).unwrap();
+        let result = super::get_non_business_days_between(start_date, end_date);
+        let expected = vec![
+            chrono::NaiveDate::from_ymd_opt(2078, 11, 12).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 11, 13).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 11, 15).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 11, 19).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 11, 20).unwrap(),
+        ];
+        assert_eq!(result, expected);
+    }
+}
