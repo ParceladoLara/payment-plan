@@ -78,7 +78,10 @@ pub fn calculate_payment_plan(p: Params) -> Result<Array, JsError> {
 }
 
 #[allow(non_snake_case)]
-#[wasm_bindgen(js_name = "disbursementDateRange")]
+#[wasm_bindgen(
+    js_name = "disbursementDateRange",
+    unchecked_return_type = "Array<Date>"
+)]
 pub fn disbursement_date_range(base_date: js_sys::Date, days: u32) -> Result<Array, JsError> {
     let inner_date: types::date::Date = base_date.into();
     let core_date: chrono::NaiveDate = match inner_date.try_into() {
@@ -103,7 +106,10 @@ pub fn disbursement_date_range(base_date: js_sys::Date, days: u32) -> Result<Arr
 }
 
 #[allow(non_snake_case)]
-#[wasm_bindgen(js_name = "getNonBusinessDaysBetween")]
+#[wasm_bindgen(
+    js_name = "getNonBusinessDaysBetween",
+    unchecked_return_type = "Array<Date>"
+)]
 pub fn get_non_business_days_between(
     start_date: js_sys::Date,
     end_date: js_sys::Date,

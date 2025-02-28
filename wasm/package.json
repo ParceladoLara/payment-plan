@@ -1,6 +1,6 @@
 {
   "name": "wasm-payment-plan",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "",
   "author": "Victor Ribeiro de Lima",
   "license": "",
@@ -10,6 +10,7 @@
     "build:qitech": "FEATURE=qitech npm run build",
     "test:bmp": "npm run build:bmp && glob -c \"tsx --test --test-reporter spec \" \"./test/bmp/**/*.spec.ts\"",
     "test:qitech": "npm run build:qitech && glob -c \"tsx --test --test-reporter spec \" \"./test/qitech/**/*.spec.ts\"",
+    "build:web": "wasm-pack build --out-name index --release -- --features qitech",
     "test": "npm run test:bmp && npm run test:qitech"
   },
   "devDependencies": {
