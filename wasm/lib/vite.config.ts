@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [wasm()],
   build: {
     lib: {
-      entry: path.resolve(__dirname, "wasm/wasm_payment_plan.js"),
+      entry: path.resolve(__dirname, "wasm/index.js"),
       name: "payment_plan",
       fileName: "index",
       formats: ["es"],
