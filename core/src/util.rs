@@ -744,6 +744,11 @@ pub fn round_decimal_cases(value: f64, round: i32) -> f64 {
     (value * factor).round() / factor
 }
 
+pub fn ceil_decimal_cases(value: f64, round: i32) -> f64 {
+    let factor = 10f64.powi(round);
+    (value * factor).ceil() / factor
+}
+
 pub fn get_next_business_day(date: chrono::NaiveDate) -> chrono::NaiveDate {
     let mut date = date;
 

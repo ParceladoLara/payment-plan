@@ -4,13 +4,13 @@ fn main() {
     let requested_date = chrono::NaiveDate::from_ymd_opt(2025, 02, 26).unwrap();
     let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 03, 2).unwrap();
 
-    let requested_amount = 4000.00;
+    let requested_amount = 20000.00;
     let installments = 18;
     let interest_rate = 0.0436; //Interest rate do caiao da massa
 
     let params = Params {
         max_total_amount: f64::MAX,
-        min_installment_amount: 0.0,
+        min_installment_amount: 100.0,
         requested_amount,
         first_payment_date,
         requested_date,

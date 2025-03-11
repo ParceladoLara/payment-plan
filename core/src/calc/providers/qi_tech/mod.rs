@@ -97,6 +97,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         params.main_value = requested_amount + iof;
     }
 
+    let iof = round_decimal_cases(iof, 2);
     let mut data = installment::calc(&params);
 
     let customer_amount = data.amount;
@@ -152,10 +153,13 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
 
     let present_value = present_value(installment_amount, &data, params.interest_rate);
     let present_value = round_decimal_cases(present_value, 2);
-    println!("present_value: {}", present_value);
-    let fake_value = present_value - iof;
+    let pre_disbursement_amount = present_value - iof;
+    let pre_disbursement_amount = round_decimal_cases(pre_disbursement_amount, 2);
+    let diff = pre_disbursement_amount - requested_amount;
+    let diff = round_decimal_cases(diff, 2);
 
-    println!("fake_value: {}", fake_value);
+    let paid_iof = iof + diff;
+    let paid_iof = round_decimal_cases(paid_iof, 2);
 
     let resp = Response {
         contract_amount,
@@ -186,6 +190,9 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         effective_interest_rate: eir_monthly,
         total_effective_cost: tec_monthly,
         disbursement_date: params.requested_date,
+        pre_disbursement_amount,
+        paid_total_iof: paid_iof,
+        paid_contract_amount: requested_amount + paid_iof,
         ..Default::default()
     };
 
