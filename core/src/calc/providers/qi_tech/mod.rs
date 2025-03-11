@@ -206,9 +206,8 @@ fn present_value(
 ) -> f64 {
     let mut present_value = 0.0;
     let annual_interest_rate = (1.0 + interest_rate).powf(12.0);
-    println!("annual_interest_rate: {}", annual_interest_rate);
-    for (i, days) in installments.accumulated_business_days.iter().enumerate() {
-        let days = (*days) as f64;
+    for days in &installments.accumulated_business_days {
+        let days = *days as f64;
 
         let days_diff = days / 252.0;
         let potency = annual_interest_rate.powf(days_diff);
@@ -255,35 +254,38 @@ mod test {
 
         let expected = Response {
             installment: 48,
+            disbursement_date: requested_date,
             due_date: expected_due_date,
             accumulated_days: 1461,
-            days_index: 0.191588419996811,
-            accumulated_days_index: 23.089551521795638,
+            days_index: 0.091322653312291,
+            accumulated_days_index: 17.78149283013243,
             interest_rate: 0.035,
-            installment_amount: 575.19,
+            installment_amount: 747.31,
             installment_amount_without_tac: 0.0,
-            total_amount: 27609.12,
-            debit_service: 14328.21,
-            customer_debit_service_amount: 14328.21,
-            customer_amount: 575.19,
-            calculation_basis_for_effective_interest_rate: 566.2841666666667,
+            total_amount: 35870.88,
+            debit_service: 22582.639999999996,
+            customer_debit_service_amount: 22582.639999999996,
+            customer_amount: 747.31,
+            calculation_basis_for_effective_interest_rate: 738.2514583333332,
             merchant_debit_service_amount: 0.0,
             merchant_total_amount: 642.6715,
             settled_to_merchant: 12210.7585,
             mdr_amount: 642.6715,
-            effective_interest_rate: 0.035,
-            total_effective_cost: 0.0369,
-            eir_yearly: 0.511076,
-            tec_yearly: 0.544336,
-            eir_monthly: 0.035,
-            tec_monthly: 0.0369,
-            total_iof: 427.48,
-            contract_amount: 13280.91,
+            effective_interest_rate: 0.0511,
+            total_effective_cost: 0.0533,
+            eir_yearly: 0.818342,
+            tec_yearly: 0.865534,
+            eir_monthly: 0.0511,
+            tec_monthly: 0.0533,
+            total_iof: 434.81,
+            contract_amount: 13288.24,
             contract_amount_without_tac: 0.0,
             tac_amount: 0.0,
-            iof_percentage: 0.000082,
+            iof_percentage: 8.2e-5,
             overall_iof: 0.0038,
-            disbursement_date: params.requested_date,
+            pre_disbursement_amount: 12853.48,
+            paid_total_iof: 434.86,
+            paid_contract_amount: 13288.29,
         };
 
         assert_eq!(resp, expected);
@@ -385,35 +387,37 @@ mod test {
         let expected = Response {
             installment: 2,
             due_date: expected_due_date,
+            disbursement_date: params.requested_date,
             accumulated_days: 61,
-            days_index: 0.93333450122513,
-            accumulated_days_index: 1.898880713036613,
+            days_index: 0.904902610445393,
+            accumulated_days_index: 1.8553874582128072,
             interest_rate: 0.035,
-            installment_amount: 106.36,
+            installment_amount: 108.85,
             installment_amount_without_tac: 0.0,
-            total_amount: 212.72,
-            debit_service: 10.759999999999993,
-            customer_debit_service_amount: 10.759999999999993,
-            customer_amount: 106.36,
-            calculation_basis_for_effective_interest_rate: 105.595,
+            total_amount: 217.7,
+            debit_service: 15.739999999999982,
+            customer_debit_service_amount: 15.739999999999982,
+            customer_amount: 108.85,
+            calculation_basis_for_effective_interest_rate: 108.085,
             merchant_debit_service_amount: 0.0,
             merchant_total_amount: 10.021500000000001,
             settled_to_merchant: 190.4085,
             mdr_amount: 10.021500000000001,
-            effective_interest_rate: 0.035,
-            total_effective_cost: 0.0403,
-            eir_yearly: 0.510882,
-            tec_yearly: 0.605951,
-            eir_monthly: 0.035,
-            tec_monthly: 0.0403,
+            effective_interest_rate: 0.0511,
+            total_effective_cost: 0.0564,
+            eir_yearly: 0.818895,
+            tec_yearly: 0.932356,
+            eir_monthly: 0.0511,
+            tec_monthly: 0.0564,
             total_iof: 1.53,
             contract_amount: 201.96,
             contract_amount_without_tac: 0.0,
             tac_amount: 0.0,
-            iof_percentage: 0.000082,
+            iof_percentage: 8.2e-5,
             overall_iof: 0.0038,
-
-            disbursement_date: params.requested_date,
+            pre_disbursement_amount: 200.43,
+            paid_total_iof: 1.53,
+            paid_contract_amount: 201.96,
         };
 
         assert_eq!(resp, expected);
@@ -445,44 +449,46 @@ mod test {
 
         let mut resp = qi_tech.calculate_payment_plan(params).unwrap();
 
-        assert_eq!(resp.len(), 8);
+        assert_eq!(resp.len(), 5);
 
         let resp = resp.pop().unwrap();
 
-        let expected_due_date = chrono::NaiveDate::from_ymd_opt(2025, 6, 23).unwrap();
+        let expected_due_date = chrono::NaiveDate::from_ymd_opt(2025, 3, 23).unwrap();
 
         let expected = Response {
-            installment: 8,
+            installment: 5,
             due_date: expected_due_date,
-            accumulated_days: 243,
-            days_index: 0.759697105502466,
-            accumulated_days_index: 6.873654600884539,
+            disbursement_date: params.requested_date,
+            accumulated_days: 151,
+            days_index: 0.780857472156382,
+            accumulated_days_index: 4.313849574971558,
             interest_rate: 0.035,
-            installment_amount: 295.6,
+            installment_amount: 469.14,
             installment_amount_without_tac: 0.0,
-            total_amount: 2364.8,
-            debit_service: 332.92000000000013,
-            customer_debit_service_amount: 332.92000000000013,
-            customer_amount: 295.6,
-            calculation_basis_for_effective_interest_rate: 291.66875000000005,
+            total_amount: 2345.7,
+            debit_service: 321.87999999999977,
+            customer_debit_service_amount: 321.87999999999977,
+            customer_amount: 469.14,
+            calculation_basis_for_effective_interest_rate: 464.462,
             merchant_debit_service_amount: 0.0,
             merchant_total_amount: 100.0215,
             settled_to_merchant: 1900.4085,
             mdr_amount: 100.0215,
-            effective_interest_rate: 0.035,
-            total_effective_cost: 0.0387,
-            eir_yearly: 0.511091,
-            tec_yearly: 0.578041,
-            eir_monthly: 0.035,
-            tec_monthly: 0.0387,
-            total_iof: 31.45,
-            contract_amount: 2031.88,
+            effective_interest_rate: 0.0511,
+            total_effective_cost: 0.0553,
+            eir_yearly: 0.818306,
+            tec_yearly: 0.90758,
+            eir_monthly: 0.0511,
+            tec_monthly: 0.0553,
+            total_iof: 23.39,
+            contract_amount: 2023.8200000000002,
             contract_amount_without_tac: 0.0,
             tac_amount: 0.0,
-            iof_percentage: 0.000082,
+            iof_percentage: 8.2e-5,
             overall_iof: 0.0038,
-
-            disbursement_date: params.requested_date,
+            pre_disbursement_amount: 2000.41,
+            paid_total_iof: 23.37,
+            paid_contract_amount: 2023.8,
         };
 
         assert_eq!(resp, expected);

@@ -44,6 +44,9 @@ export type PaymentPlanResponse = {
     tacAmount: number;
     IOFPercentage: number;
     overallIOF: number;
+    preDisbursementAmount: number;
+    paidTotalIOF: number;
+    paidContractAmount: number;
 };
 export type DownPaymentPlanParams = {
     params: PaymentPlanParams;
@@ -107,6 +110,9 @@ export type DownPaymentPlanResponse = {
  * @property {number} tacAmount
  * @property {number} IOFPercentage
  * @property {number} overallIOF
+ * @property {number} preDisbursementAmount
+ * @property {number} paidTotalIOF
+ * @property {number} paidContractAmount
  */
 /**
  * @typedef {Object} DownPaymentPlanParams

@@ -60,6 +60,9 @@ export interface PaymentPlanResponse {
     IOFPercentage: number;
     overallIOF: number;
     disbursementDate: Date;
+    paidTotalIOF: number;
+    paidContractAmount: number;
+    preDisbursementAmount: number;
 }
 
 export interface DownPaymentResponse {

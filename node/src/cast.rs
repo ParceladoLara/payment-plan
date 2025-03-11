@@ -108,6 +108,9 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     let tac_amount = JsNumber::new(cx, response.tac_amount);
     let iof_percentage = JsNumber::new(cx, response.iof_percentage);
     let overall_iof = JsNumber::new(cx, response.overall_iof);
+    let pre_disbursement_amount = JsNumber::new(cx, response.pre_disbursement_amount);
+    let paid_total_iof = JsNumber::new(cx, response.paid_total_iof);
+    let paid_contract_amount = JsNumber::new(cx, response.paid_contract_amount);
 
     let obj = JsObject::new(cx);
     obj.set(cx, "installment", installment)?;
@@ -156,6 +159,9 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     obj.set(cx, "tacAmount", tac_amount)?;
     obj.set(cx, "IOFPercentage", iof_percentage)?;
     obj.set(cx, "overallIOF", overall_iof)?;
+    obj.set(cx, "preDisbursementAmount", pre_disbursement_amount)?;
+    obj.set(cx, "paidTotalIOF", paid_total_iof)?;
+    obj.set(cx, "paidContractAmount", paid_contract_amount)?;
 
     Ok(obj)
 }

@@ -96,6 +96,9 @@ impl From<Response> for PlanResponse {
             overall_iof: value.overall_iof,
             iof_percentage: value.iof_percentage,
             disbursement_date_millis: disbursement_date,
+            paid_contract_amount: value.paid_contract_amount,
+            paid_total_iof: value.paid_total_iof,
+            pre_disbursement_amount: value.pre_disbursement_amount,
         }
     }
 }
