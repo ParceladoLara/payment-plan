@@ -1,3 +1,5 @@
+use installment::InstallmentData;
+
 use crate::{
     calc::{
         inner_xirr::{eir::calculate_eir_monthly, prepare_xirr_params, tec::calculate_tec_monthly},
@@ -148,6 +150,13 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     let eir_yearly = round_decimal_cases(eir_yearly, 6);
     let tec_yearly = round_decimal_cases(tec_yearly, 6);
 
+    let present_value = present_value(installment_amount, &data, params.interest_rate);
+    let present_value = round_decimal_cases(present_value, 2);
+    println!("present_value: {}", present_value);
+    let fake_value = present_value - iof;
+
+    println!("fake_value: {}", fake_value);
+
     let resp = Response {
         contract_amount,
         total_amount,
@@ -181,6 +190,25 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
     };
 
     return Ok(resp);
+}
+
+fn present_value(
+    installment_amount: f64,
+    installments: &InstallmentData,
+    interest_rate: f64,
+) -> f64 {
+    let mut present_value = 0.0;
+    let annual_interest_rate = (1.0 + interest_rate).powf(12.0);
+    println!("annual_interest_rate: {}", annual_interest_rate);
+    for (i, days) in installments.accumulated_business_days.iter().enumerate() {
+        let days = (*days) as f64;
+
+        let days_diff = days / 252.0;
+        let potency = annual_interest_rate.powf(days_diff);
+        let installment_value = installment_amount / potency;
+        present_value += installment_value;
+    }
+    return present_value;
 }
 
 #[cfg(test)]
