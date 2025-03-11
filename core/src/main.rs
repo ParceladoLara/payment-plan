@@ -4,7 +4,7 @@ fn main() {
     let requested_date = chrono::NaiveDate::from_ymd_opt(2025, 02, 26).unwrap();
     let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 03, 2).unwrap();
 
-    let requested_amount = 3500.00;
+    let requested_amount = 20000.00;
     let installments = 18;
     let interest_rate = 0.0436; //Interest rate do caiao da massa
 

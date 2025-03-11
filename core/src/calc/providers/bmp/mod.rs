@@ -141,8 +141,10 @@ fn calculate(
             tac_amount,
             iof_percentage,
             overall_iof: iof_overall,
-
             disbursement_date: params.requested_date,
+            pre_disbursement_amount: amounts.total_amount,
+            paid_total_iof: total_iof,
+            paid_contract_amount: amounts.contract_amount,
         };
 
         responses.push(response);

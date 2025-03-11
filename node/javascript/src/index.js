@@ -4,8 +4,6 @@ const __calculateDownPaymentPlan = funcs.calculateDownPaymentPlan;
 const __nextDisbursementDate = funcs.nextDisbursementDate;
 // @ts-check
 
-
-
 /**
  * @typedef {Object} PaymentPlanParams
  * @property {number} requestedAmount
@@ -22,8 +20,6 @@ const __nextDisbursementDate = funcs.nextDisbursementDate;
  * @property {number} [maxTotalAmount]
  * @property {boolean} [disbursementOnlyOnBusinessDays]
  */
-
-
 
 /**
  * @typedef {Object} PaymentPlanResponse
@@ -57,9 +53,10 @@ const __nextDisbursementDate = funcs.nextDisbursementDate;
  * @property {number} tacAmount
  * @property {number} IOFPercentage
  * @property {number} overallIOF
+ * @property {number} preDisbursementAmount
+ * @property {number} paidTotalIOF
+ * @property {number} paidContractAmount
  */
-
-
 
 /**
  * @typedef {Object} DownPaymentPlanParams
@@ -79,7 +76,6 @@ const __nextDisbursementDate = funcs.nextDisbursementDate;
  * @property {PaymentPlanResponse[]} plans
  */
 
-
 /**
  * @param {PaymentPlanParams} params
  * @returns {PaymentPlanResponse[]}
@@ -87,7 +83,6 @@ const __nextDisbursementDate = funcs.nextDisbursementDate;
 function calculatePlan(params) {
   return __calculatePlan(params);
 }
-
 
 /**
  * @param {DownPaymentPlanParams} params

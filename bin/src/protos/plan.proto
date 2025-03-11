@@ -52,6 +52,9 @@ message PlanResponse {
     double iof_percentage = 28;
     double overall_iof = 29;
     int64 disbursement_date_millis = 30;
+    double pre_disbursement_amount = 33;
+    double paid_total_iof = 34;
+    double paid_contract_amount = 35;
 }
 
 message PlanResponses {

@@ -16,26 +16,43 @@ pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
     let main_value = qi_params.main_value;
     let mut main_value_l = main_value;
 
+    main_value_l = round_decimal_cases(main_value_l, 8);
+
     let installment_amount = data.amount;
+    let mut acc_installment_amount_without_fee = 0.0;
     for j in 0..installments {
         let mut accumulated_days = data.accumulated_days[j as usize];
         let business_diff = data.business_diffs[j as usize];
         let fee = main_value_l * ((1.0 + daily_interest_rate).powf(business_diff as f64) - 1.0);
 
-        let installment_amount_without_fee = installment_amount - fee;
+        let fee = round_decimal_cases(fee, 7);
+
+        let installment_amount_without_fee: f64;
+        if j == installments - 1 {
+            installment_amount_without_fee = main_value - acc_installment_amount_without_fee;
+        } else {
+            installment_amount_without_fee = installment_amount - fee;
+        }
+
+        let installment_amount_without_fee = round_decimal_cases(installment_amount_without_fee, 8);
 
         let main_iof = installment_amount_without_fee * iof_overall;
         if accumulated_days >= 365 {
             accumulated_days = 365;
         }
+        let main_iof = round_decimal_cases(main_iof, 2);
 
         let installment_iof =
             installment_amount_without_fee * accumulated_days as f64 * iof_percentage;
+
+        let installment_iof = round_decimal_cases(installment_iof, 8);
 
         let iof = main_iof + installment_iof;
 
         total_iof += iof;
         main_value_l = main_value_l + fee - installment_amount;
+        main_value_l = round_decimal_cases(main_value_l, 8);
+        acc_installment_amount_without_fee += installment_amount_without_fee;
     }
     let total_iof = round_decimal_cases(total_iof, 2);
     return total_iof;

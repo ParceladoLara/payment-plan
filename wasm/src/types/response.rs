@@ -42,6 +42,12 @@ pub struct PaymentPlanResponse {
     #[serde(rename = "overallIOF")]
     pub overall_iof: f64,
     pub disbursement_date: Date,
+    #[serde(rename = "paidTotalIOF")]
+    pub paid_total_iof: f64,
+    #[serde(rename = "paidContractAmount")]
+    pub paid_contract_amount: f64,
+    #[serde(rename = "preDisbursementAmount")]
+    pub pre_disbursement_amount: f64,
 }
 
 impl From<core_payment_plan::Response> for PaymentPlanResponse {
@@ -78,6 +84,9 @@ impl From<core_payment_plan::Response> for PaymentPlanResponse {
             iof_percentage: value.iof_percentage,
             overall_iof: value.overall_iof,
             disbursement_date: value.disbursement_date.into(),
+            paid_total_iof: value.paid_total_iof,
+            paid_contract_amount: value.paid_contract_amount,
+            pre_disbursement_amount: value.pre_disbursement_amount,
         }
     }
 }
@@ -166,6 +175,18 @@ impl Into<js_sys::Object> for PaymentPlanResponse {
             &obj,
             &"disbursementDate".into(),
             &self.disbursement_date.into(),
+        );
+
+        let _ = js_sys::Reflect::set(&obj, &"paidTotalIOF".into(), &self.paid_total_iof.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"paidContractAmount".into(),
+            &self.paid_contract_amount.into(),
+        );
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"preDisbursementAmount".into(),
+            &self.pre_disbursement_amount.into(),
         );
         obj
     }
