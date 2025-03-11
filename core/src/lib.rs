@@ -87,6 +87,8 @@ pub struct Response {
     pub tac_amount: f64,
     pub iof_percentage: f64,
     pub overall_iof: f64,
+    pub pre_disbursement_amount: f64,
+    pub paid_total_iof: f64,
 }
 
 #[derive(Debug, Deserialize, Clone, Copy)]
