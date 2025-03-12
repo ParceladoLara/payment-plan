@@ -145,4 +145,16 @@ export function calculateDownPaymentPlan(params: DownPaymentPlanParams): DownPay
  * @returns {Date}
  */
 export function nextDisbursementDate(date: Date): Date;
+/**
+ * @param {Date} base_date
+ * @param {number} days
+ * @returns {Date[]}
+ */
+export function disbursementDataRange(base_date: Date, days: number): Date[];
+/**
+ * @param {Date} start_date
+ * @param {Date} end_date
+ * @returns {Date[]}
+ */
+export function getNonBusinessDaysBetween(start_date: Date, end_date: Date): Date[];
 //# sourceMappingURL=index.d.ts.map
