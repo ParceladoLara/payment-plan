@@ -11,6 +11,8 @@
     "structs",
     "synlink",
     "tsify",
+    "uffi",
+    "uniffi",
     "XIRR"
   ]
 }
