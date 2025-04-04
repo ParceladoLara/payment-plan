@@ -1,9 +1,10 @@
 package payment_plan_test
 
 import (
-	"payment_plan"
 	"testing"
 	"time"
+
+	payment_plan "github.com/ParceladoLara/payment-plan-go-sdk"
 )
 
 func TestCalculatePaymentPlan(t *testing.T) {

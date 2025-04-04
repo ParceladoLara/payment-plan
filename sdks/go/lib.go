@@ -1,8 +1,6 @@
 package payment_plan
 
-import (
-	"payment_plan/internal/payment_plan_uniffi"
-)
+import "github.com/ParceladoLara/payment-plan-go-sdk/internal/payment_plan_uniffi"
 
 type Params payment_plan_uniffi.Params
 type Response payment_plan_uniffi.Response
