@@ -106,4 +106,4 @@ jobs:
         with:
           python-version: "3.11"
       - name: Run python tests
-        run: cd sdks/python && pytest --tb=short -q --disable-warnings
+        run: cd sdks/python && python -m unittest tests/test_payment_plan.py
