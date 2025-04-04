@@ -1,4 +1,4 @@
-from .internal.payment_plan_uniffi import (
+from ._internal.payment_plan_uniffi import (
     DownPaymentParams,
     DownPaymentResponse,
     Params,

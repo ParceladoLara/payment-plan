@@ -11,6 +11,7 @@ clean:
 	rm -rf ./sdks/go/internal/libs/linux
 	rm -rf ./sdks/go/internal/libs/windows
 	rm -rf ./sdks/go/internal/libs/darwin
+	rm -rf ./sdks/python/payment_plan/_internal
 	mkdir -p ./sdks/go/internal/libs/linux
 	mkdir -p ./sdks/go/internal/libs/windows
 	mkdir -p ./sdks/go/internal/libs/darwin
@@ -38,16 +39,16 @@ build-go-sdk-linux:
 build-python-sdk:
 	cargo build --package payment_plan_uniffi --release
 	cargo build --package payment_plan_uniffi --release --target x86_64-pc-windows-gnu
-	cargo run --bin uniffi-bindgen generate --library target/release/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/internal
-	cp target/release/libpayment_plan_uniffi.so sdks/python/payment_plan/internal/libpayment_plan_uniffi.so
-	cp target/x86_64-pc-windows-gnu/release/payment_plan_uniffi.dll sdks/python/payment_plan/internal/payment_plan_uniffi.dll
+	cargo run --bin uniffi-bindgen generate --library target/release/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/_internal
+	cp target/release/libpayment_plan_uniffi.so sdks/python/payment_plan/_internal/libpayment_plan_uniffi.so
+	cp target/x86_64-pc-windows-gnu/release/payment_plan_uniffi.dll sdks/python/payment_plan/_internal/payment_plan_uniffi.dll
 
 build-python-sdk-windows:
 	cargo build --package payment_plan_uniffi --release --target x86_64-pc-windows-gnu
-	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/internal
-	cp target/x86_64-pc-windows-gnu/release/payment_plan_uniffi.dll sdks/python/payment_plan/internal/payment_plan_uniffi.dll
+	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/_internal
+	cp target/x86_64-pc-windows-gnu/release/payment_plan_uniffi.dll sdks/python/payment_plan/_internal/payment_plan_uniffi.dll
 
 build-python-sdk-linux:
 	cargo build --package payment_plan_uniffi --release
-	cargo run --bin uniffi-bindgen generate --library target/release/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/internal
-	cp target/release/libpayment_plan_uniffi.so sdks/python/payment_plan/internal/libpayment_plan_uniffi.so
+	cargo run --bin uniffi-bindgen generate --library target/release/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/_internal
+	cp target/release/libpayment_plan_uniffi.so sdks/python/payment_plan/_internal/libpayment_plan_uniffi.so
