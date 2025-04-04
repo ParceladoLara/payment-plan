@@ -4,3 +4,4 @@
 **/dist
 bin/test/protos
 node/build
+__pycache__
