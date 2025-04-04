@@ -23,6 +23,8 @@ jobs:
         run: cargo install uniffi-bindgen-go --git https://github.com/NordSecurity/uniffi-bindgen-go --tag v0.3.0+v0.28.3
       - name: build go sdk
         run: make build-go-sdk
+      - name: build python sdk
+        run: make build-python-sdk
 
   run-cargo-tests:
     needs: build-sdks
