@@ -136,7 +136,7 @@ jobs:
           cp -r sdks/go/* public-repo/
           cd public-repo
           git add .
-          git commit -m "Update Go SDK"
+          git commit -m "Update Go SDK"  --allow-empty
 
       - name: Push Go SDK to public repository
         env:
@@ -167,7 +167,7 @@ jobs:
           cp -r sdks/python/* public-repo/
           cd public-repo
           git add .
-          git commit -m "Update Python SDK"
+          git commit -m "Update Python SDK" --allow-empty
 
       - name: Push Python SDK to public repository
         env:
