@@ -5,14 +5,14 @@ This is the Lara Payment Plan, the heart of Lara Credit Proposal System. It is a
 The package is structured as follows:
 - `core`: Contains the core logic of the payment plan
 - `node`: Contains the [Neon](https://neon-rs.dev) for the NodeJs wrapper of the binary.
-- `bin`: Contains the binary and the protobuf specification for any communication between the binary and the language that uses it.
+- `cli`: Contains the binary and the protobuf specification for any communication between the binary and the language that uses it.
 - `wasm`: Contains the wasm for the payment plan.
 
 If you want to see more about each package, you can see their individual MD files.
 
 - [core](docs/core.md)
 - [node](docs/node.md)
-- [bin](docs/bin.md)
+- [cli](docs/cli.md)
 - [wasm](docs/wasm.md)
 
 And if you have no knowledge of Rust, you can see how rust project are structured [here](docs/rust.md)
@@ -33,11 +33,11 @@ npm run build:release
 
 This will generate a `index.node` file in the `node` directory.
 
-## Binary
+## CLI
 
-For the binary, you will need protoc installed.
+For the CLI, you will need protoc installed.
 
-```bash	
+```bash
 sudo apt update
 sudo apt install -y protobuf-compiler
 ```
@@ -46,17 +46,17 @@ Set the variable `PROTOC` on your bashrc or zshrc to the path of the protoc bina
 
 ```bash
 sudo nano ~/.bashrc
-export PROTOC=/usr/bin/protoc
+export PROTOC=/usr/cli/protoc
 source ~/.bashrc
 ```
 
-Then you can build the binary by running the following commands:
+Then you can build the CLI binary by running the following commands:
 
 ```bash
-cargo build --package payment-plan --release
+cargo build --package payment_plan_cli --release
 ```
 
-This will generate a binary called `payment-plan` in the `target/release` directory.
+This will generate a binary called `payment_plan_cli` in the `target/release` directory.
 
 ## WASM
 
@@ -70,7 +70,7 @@ Then you can build the wasm by running the following commands:
 
 ```bash
 cd wasm
-wasm-pack build --target web  
+wasm-pack build --target web
 ```
 
 And then to run the example um can run with a simple server like so:
@@ -85,14 +85,14 @@ Then you can open your browser and go to `http://localhost:8000` to see the exam
 First create a synlink to the binary in your project.
 
 ```bash
-sudo ln -s ~/path/to/your/project/target/release/payment-plan /usr/local/bin/payment-plan
+sudo ln -s ~/path/to/your/project/target/release/payment_plan_cli /usr/local/cli/payment_plan_cli
 ```
 Now you can call the binary from your project without having to specify the full path.
 
 On docker, you can add the binary to the container by adding the following line to your Dockerfile.
 
 ```Dockerfile
-COPY --from=builder /path/to/your/project/bin/payment-plan /usr/local/bin/payment-plan
+COPY --from=builder /path/to/your/project/cli/payment_plan_cli /usr/local/cli/payment_plan_cli
 ```
 
 ## NodeJs
@@ -108,7 +108,7 @@ Then you can use it in your project like so:
 ```typescript
 import * as funcs from 'path/to/your/project/index.node';
 //you can type the functions to get intellisense
-const { calculatePlan } = funcs as PaymentPlanFunctions; 
+const { calculatePlan } = funcs as PaymentPlanFunctions;
 
 export { calculatePlan };
 ```
@@ -132,7 +132,7 @@ and include it in your tsconfig.json
 ```
 
 ## Go
-Assuming that the synlink has already been created, and/or your Docker image has the line to copy the binary to the bin directory.
+Assuming that the synlink has already been created, and/or your Docker image has the line to copy the binary to the cli directory.
 
 You will need the protoc-gen-go plugin to generate the Go code from the protobuf file.
 
@@ -143,14 +143,14 @@ Add the Go binary path to your system's PATH
 
 ```bash
 sudo nano ~/.bashrc
-export PATH=$PATH:$(go env GOPATH)/bin
+export PATH=$PATH:$(go env GOPATH)/cli
 source ~/.bashrc
 ```
 
 Then you can generate the Go code by running the following command:
 
 ```bash
-protoc --proto_path=/path/to/payment-plan/bin/src --go_out=. --go_opt=paths=source_relative protos/plan.proto
+protoc --proto_path=/path/to/payment_plan_cli/cli/src --go_out=. --go_opt=paths=source_relative protos/plan.proto
 ```
 
 This will generate a `plan.pb.go` file in the root of your project.
@@ -169,7 +169,7 @@ func main() {
 	}
 
 	// Prepare the command you want to execute
-	cmd := exec.Command("payment-plan") 
+	cmd := exec.Command("payment_plan_cli")
 
 	// Create a bytes buffer to hold the serialized data
 	var in bytes.Buffer
@@ -199,3 +199,22 @@ Assuming that you already have the setup for every package, you can run the test
 ```bash
 make test
 ```
+
+# TODO
+Things that need to be done in the future.
+
+## SDKs
+
+- [x] NodeJs
+- [x] Go
+- [ ] Python
+- [ ] Kotlin
+- [ ] Swift
+- [ ] C#
+- [ ] Ruby
+
+## Documentation
+I still need to write a documentation for all the sdks
+
+## Tests
+I still need to write tests for the sdks for the BMP feature.

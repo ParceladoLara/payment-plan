@@ -1,4 +1,4 @@
 [workspace]
 resolver = "2"
 
-members = ["core", "node", "bin", "wasm"]
+members = ["core", "node", "cli", "wasm", "uniffi" ,"uniffi-bindgen"]
