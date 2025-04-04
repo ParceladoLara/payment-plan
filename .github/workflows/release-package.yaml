@@ -134,7 +134,7 @@ jobs:
 
       - name: Push Go SDK to public repository
         env:
-          REPO_TOKEN: ${{ secrets.GO_REPO_TOKEN }}
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           cd go-sdk
           git init
