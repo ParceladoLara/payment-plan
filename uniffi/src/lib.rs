@@ -35,7 +35,7 @@ pub fn calculate_down_payment_plan(
 
 #[uniffi::export]
 pub fn calculate_payment_plan(params: Params) -> Result<Vec<Response>, Error> {
-    let params: core_payment_plan::Params = params.into(); //remove unwrap
+    let params: core_payment_plan::Params = params.into();
     let result = core_payment_plan::calculate_payment_plan(params).unwrap(); //remove unwrap
     let result: Vec<Response> = result.into_iter().map(|x| x.into()).collect();
     Ok(result)

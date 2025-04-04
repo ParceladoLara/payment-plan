@@ -1,9 +1,9 @@
 package payment_plan_uniffi
 
 /*
-#cgo windows LDFLAGS: -L./../libs/windows -lpayment_plan_uniffi
+#cgo windows LDFLAGS: -L./../libs/windows -lpayment_plan_uniffi -lws2_32 -luserenv -lkernel32 -lntdll
 #cgo linux LDFLAGS: -L./../libs/linux -lpayment_plan_uniffi  -lm -ldl
-#cgo darwin LDFLAGS: -L./../libs/darwin -lpayment_plan_uniffi
+#cgo darwin LDFLAGS: -L./../libs/darwin -lpayment_plan_uniffi  -lm -ldl
 #include <payment_plan_uniffi.h>
 */
 import "C"

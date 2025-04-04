@@ -48,6 +48,9 @@ impl From<core_payment_plan::Response> for Response {
             DateTime::from_naive_utc_and_offset(disbursement_date, Utc);
         let due_date: DateTime<Utc> = DateTime::from_naive_utc_and_offset(due_date, Utc);
 
+        let disbursement_date: DateTime<Utc> = disbursement_date + chrono::Duration::hours(10);
+        let due_date: DateTime<Utc> = due_date + chrono::Duration::hours(10);
+
         let disbursement_date: SystemTime = disbursement_date.into();
         let due_date: SystemTime = due_date.into();
 
@@ -104,6 +107,9 @@ impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
         let first_payment_date: NaiveDateTime = value.first_payment_date.into();
         let first_payment_date: DateTime<Utc> =
             DateTime::from_naive_utc_and_offset(first_payment_date, Utc);
+        //add 10 hours to the first payment date
+        let first_payment_date: DateTime<Utc> = first_payment_date + chrono::Duration::hours(10);
+
         let first_payment_date: SystemTime = first_payment_date.into();
 
         Self {
