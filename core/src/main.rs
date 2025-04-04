@@ -6,9 +6,9 @@ fn main() {
 
     let params = Params {
         requested_amount: 7800.0,
-        first_payment_date: first_payment_date,
-        requested_date: requested_date,
-        installments: 24,
+        first_payment_date,
+        requested_date,
+        installments: 4,
         debit_service_percentage: 0,
         mdr: 0.05,
         tac_percentage: 0.0,

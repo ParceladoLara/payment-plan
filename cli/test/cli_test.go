@@ -1,8 +1,8 @@
-package bin_test
+package cli_test
 
 import (
-	"bin/protos"
 	"bytes"
+	"cli/protos"
 	"encoding/binary"
 	"errors"
 	"fmt"
@@ -178,7 +178,7 @@ func TestNextDisbursementDate(t *testing.T) {
 	date := time.Date(2078, time.December, 25, 0, 0, 0, 0, time.UTC).UnixMilli()
 	byteBuffer := make([]byte, 8)
 	binary.BigEndian.PutUint64(byteBuffer, uint64(date))
-	cmd := exec.Command("../../target/release/payment-plan", "-t", "next-disbursement-date")
+	cmd := exec.Command("../../target/release/payment_plan_cli", "-t", "next-disbursement-date")
 	cmd.Stdin = bytes.NewReader(byteBuffer)
 	var out bytes.Buffer
 	var errOut bytes.Buffer
@@ -333,7 +333,7 @@ func callBuff[I proto.Message, O proto.Message](i I, o O, arg ...string) error {
 		return err
 	}
 
-	cmd := exec.Command("../../target/release/payment-plan", arg...)
+	cmd := exec.Command("../../target/release/payment_plan_cli", arg...)
 
 	// Create a bytes buffer to hold the serialized data
 	var in bytes.Buffer

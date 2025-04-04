@@ -2,7 +2,7 @@
 
 Rust has a tree-like structure with modules and submodules. every project can have 1 or 2 entry points, the `main.rs` and the `lib.rs`. The `main.rs` is the entry point for binaries and the `lib.rs` is the entry point for libraries.
 
-So the `bin` package has a [main.rs](../bin/src/main.rs) file that builds the binary.
+So the `cli` package has a [main.rs](../cli/src/main.rs) file that builds the CLI binary.
 
 The same it's not true for the `node` package [lib.rs](../node/src/lib.rs) for the sake of the Neon library standard.
 
@@ -31,19 +31,19 @@ pub struct Params {
     pub first_payment_date: chrono::NaiveDate,
     pub requested_date: chrono::NaiveDate,
     pub installments: u32,
-    pub debit_service_percentage: u16, 
-    pub mdr: f64,                      
-    pub tac_percentage: f64,           
-    pub iof_overall: f64,              
-    pub iof_percentage: f64,           
-    pub interest_rate: f64,            
+    pub debit_service_percentage: u16,
+    pub mdr: f64,
+    pub tac_percentage: f64,
+    pub iof_overall: f64,
+    pub iof_percentage: f64,
+    pub interest_rate: f64,
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
 }
 ```
 
 This struct now implements following traits:
-- Debug: 
+- Debug:
   - This allows the struct to be printed using the `{:?}` formatter.
 
 - Clone:
@@ -52,7 +52,7 @@ This struct now implements following traits:
   When a struct only implements `Clone` generally it means that the size of the struct is not fixed and the values are stored on the heap,calling `clone` will create another struct with the same values on the heap.
   The `clone()` invocation is explicit, meaning that you have to call it to create a new instance of the struct.
 
-- Copy: 
+- Copy:
   - This allows the struct to be copied. `copy` is a type of clone but for types and values that have a fixed size. this means that the values will be copied on the stack.(copy requires that the type implements the `Clone` trait)
   The `copy` invocation is implicit, meaning that the struct will be copied when passed to a function or assigned to a variable.
 

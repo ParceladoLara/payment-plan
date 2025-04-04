@@ -8,7 +8,7 @@ use args::{Args, CalcType};
 use chrono::NaiveTime;
 use clap::Parser;
 use core_payment_plan::{DownPaymentParams, Params};
-use payment_plan::{
+use payment_plan_cli::{
     deserialize_down_payment_params,
     types::{DownPaymentResponses, PlanResponses},
 };
@@ -33,7 +33,7 @@ fn main() -> ExitCode {
 }
 
 fn calc(buf: Vec<u8>) -> ExitCode {
-    let params = payment_plan::deserialize_params(&buf).unwrap();
+    let params = payment_plan_cli::deserialize_params(&buf).unwrap();
     let params: Result<Params, _> = params.try_into();
     let params = match params {
         Ok(params) => params,
@@ -57,7 +57,7 @@ fn calc(buf: Vec<u8>) -> ExitCode {
 
     let response: PlanResponses = response.into();
 
-    let response = payment_plan::serialize_responses(response);
+    let response = payment_plan_cli::serialize_responses(response);
 
     //Write the response to stdout
     std::io::stdout().write_all(&response).unwrap();
@@ -90,7 +90,7 @@ fn down_calc(buf: Vec<u8>) -> ExitCode {
 
     let response: DownPaymentResponses = response.into();
 
-    let response = payment_plan::serialize_down_payment_responses(response);
+    let response = payment_plan_cli::serialize_down_payment_responses(response);
 
     //Write the response to stdout
     std::io::stdout().write_all(&response).unwrap();
