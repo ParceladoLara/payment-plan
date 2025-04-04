@@ -93,3 +93,15 @@ jobs:
           go-version: "1.24"
       - name: run go tests
         run: cd sdks/go && go test -v ./...
+
+  run-python-tests:
+    needs: build-sdks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run python tests
+        run: cd sdks/python && pytest --tb=short -q --disable-warnings

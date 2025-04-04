@@ -122,27 +122,59 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Set up Git
+      - name: Clone the public repository
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git clone https://x-access-token:${REPO_TOKEN}@github.com/ParceladoLara/payment-plan-go-sdk.git public-repo
+          cd public-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Copy Go SDK to a temporary directory
+      - name: Copy Go SDK to the public repository
         run: |
-          mkdir -p go-sdk
-          cp -r sdks/go/* go-sdk/
+          cp -r sdks/go/* public-repo/
+          cd public-repo
+          git add .
+          git commit -m "Update Go SDK"
 
       - name: Push Go SDK to public repository
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
-          cd go-sdk
-          git init
-          git remote add origin https://x-access-token:${REPO_TOKEN}@github.com/ParceladoLara/payment-plan-go-sdk.git
+          cd public-repo
+          git push origin main --force
+
+  deploy-python-sdk:
+    name: Deploy Python SDK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Clone the public repository
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${REPO_TOKEN}@github.com/ParceladoLara/payment-plan-python-sdk.git public-repo
+          cd public-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Copy Go SDK to the public repository
+        run: |
+          cp -r sdks/python/* public-repo/
+          cd public-repo
           git add .
-          git commit -m "Deploy Go SDK"
-          git branch -M main
-          git push -f origin main
+          git commit -m "Update Python SDK"
+
+      - name: Push Python SDK to public repository
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          cd public-repo
+          git push origin main --force
 
 # This job is for musl based linux systems.(not working yet)
 #  nodejs-github-native-musl:
