@@ -21,6 +21,8 @@ impl Display for Error {
     }
 }
 
+impl std::error::Error for Error {}
+
 #[uniffi::export]
 pub fn calculate_down_payment_plan(
     params: DownPaymentParams,

@@ -1,26 +1,28 @@
 use core_payment_plan::{calculate_payment_plan, Params};
 
 fn main() {
-    let requested_date = chrono::NaiveDate::from_ymd_opt(2025, 02, 26).unwrap();
-    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 03, 2).unwrap();
+    /*
+     */
+    let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 04, 03).unwrap();
+    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 05, 3).unwrap();
 
     let requested_amount = 20000.00;
     let installments = 18;
     let interest_rate = 0.0436; //Interest rate do caiao da massa
 
     let params = Params {
-        max_total_amount: f64::MAX,
-        min_installment_amount: 100.0,
-        requested_amount,
-        first_payment_date,
-        requested_date,
-        installments,
+        requested_amount: 4800.0,
+        first_payment_date: first_payment_date,
+        requested_date: requested_date,
+        installments: 24,
         debit_service_percentage: 0,
-        mdr: 0.1,
+        mdr: 0.05,
         tac_percentage: 0.0,
-        iof_overall: 0.0038,      // %0.38
-        iof_percentage: 0.000082, // 0.0082%
-        interest_rate,
+        iof_overall: 0.0038,
+        iof_percentage: 0.03,
+        interest_rate: 0.0235,
+        min_installment_amount: 100.0,
+        max_total_amount: 1000000.0,
         disbursement_only_on_business_days: true,
     };
 
