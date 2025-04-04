@@ -113,6 +113,37 @@ jobs:
         run: gh release upload ${{ env.RELEASE_VERSION }} "$(find ./node/build -name *.tar.gz)" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-go-sdk:
+    name: Deploy Go SDK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Copy Go SDK to a temporary directory
+        run: |
+          mkdir -p go-sdk
+          cp -r sdks/go/* go-sdk/
+
+      - name: Push Go SDK to public repository
+        env:
+          REPO_TOKEN: ${{ secrets.GO_REPO_TOKEN }}
+        run: |
+          cd go-sdk
+          git init
+          git remote add origin https://x-access-token:${REPO_TOKEN}@github.com/ParceladoLara/payment-plan-go-sdk.git
+          git add .
+          git commit -m "Deploy Go SDK"
+          git branch -M main
+          git push -f origin main
+
 # This job is for musl based linux systems.(not working yet)
 #  nodejs-github-native-musl:
 #    name: musl-branch-${{ matrix.branch }}-x86_64-unknown-linux-musl-${{ matrix.system.os }}
