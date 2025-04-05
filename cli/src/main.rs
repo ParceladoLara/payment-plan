@@ -118,14 +118,6 @@ fn next_disbursement_date(buf: Vec<u8>) -> ExitCode {
 
     let response = core_payment_plan::next_disbursement_date(requested_date);
 
-    let response = match response {
-        Ok(response) => response,
-        Err(e) => {
-            eprintln!("Error getting next disbursement date: {}", e);
-            return ExitCode::FAILURE;
-        }
-    };
-
     let response = response
         .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
         .and_utc()

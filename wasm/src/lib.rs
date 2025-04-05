@@ -42,10 +42,7 @@ pub fn next_disbursement_date(base_date: js_sys::Date) -> Result<js_sys::Date, J
         Ok(date) => date,
         Err(e) => return Err(e),
     };
-    let result: Date = match core_payment_plan::next_disbursement_date(core_date) {
-        Ok(r) => r.into(),
-        Err(e) => return Err(JsError::new(&e.to_string())),
-    };
+    let result: Date = core_payment_plan::next_disbursement_date(core_date).into();
     let js_result: types::date::Date = result.into();
 
     Ok(js_result.into())
@@ -89,10 +86,7 @@ pub fn disbursement_date_range(base_date: js_sys::Date, days: u32) -> Result<Arr
         Err(e) => return Err(e),
     };
 
-    let result = match core_payment_plan::disbursement_data_range(core_date, days) {
-        Ok(r) => r,
-        Err(e) => return Err(JsError::new(&e.to_string())),
-    };
+    let result = core_payment_plan::disbursement_date_range(core_date, days);
 
     let array = Array::new_with_length(2);
 

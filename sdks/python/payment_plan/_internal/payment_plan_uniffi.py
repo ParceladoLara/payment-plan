@@ -464,6 +464,12 @@ def _uniffi_check_api_checksums(lib):
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan() != 58298:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range() != 5651:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between() != 34693:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date() != 25001:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
 
 # A ctypes library to expose the extern-C FFI definitions.
 # This is an implementation detail which will be called internally by the public API.
@@ -580,6 +586,23 @@ _UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan.argtypes = 
     ctypes.POINTER(_UniffiRustCallStatus),
 )
 _UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan.restype = _UniffiRustBuffer
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_disbursement_date_range.argtypes = (
+    _UniffiRustBuffer,
+    ctypes.c_uint32,
+    ctypes.POINTER(_UniffiRustCallStatus),
+)
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_disbursement_date_range.restype = _UniffiRustBuffer
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between.argtypes = (
+    _UniffiRustBuffer,
+    _UniffiRustBuffer,
+    ctypes.POINTER(_UniffiRustCallStatus),
+)
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between.restype = _UniffiRustBuffer
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_next_disbursement_date.argtypes = (
+    _UniffiRustBuffer,
+    ctypes.POINTER(_UniffiRustCallStatus),
+)
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_next_disbursement_date.restype = _UniffiRustBuffer
 _UniffiLib.ffi_payment_plan_uniffi_rustbuffer_alloc.argtypes = (
     ctypes.c_uint64,
     ctypes.POINTER(_UniffiRustCallStatus),
@@ -854,6 +877,15 @@ _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_calculate_down_payment_plan.
 _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan.argtypes = (
 )
 _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan.restype = ctypes.c_uint16
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range.argtypes = (
+)
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range.restype = ctypes.c_uint16
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between.argtypes = (
+)
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between.restype = ctypes.c_uint16
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date.argtypes = (
+)
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date.restype = ctypes.c_uint16
 _UniffiLib.ffi_payment_plan_uniffi_uniffi_contract_version.argtypes = (
 )
 _UniffiLib.ffi_payment_plan_uniffi_uniffi_contract_version.restype = ctypes.c_uint32
@@ -1542,6 +1574,31 @@ class _UniffiConverterTypeError(_UniffiConverterRustBuffer):
 
 
 
+class _UniffiConverterSequenceTimestamp(_UniffiConverterRustBuffer):
+    @classmethod
+    def check_lower(cls, value):
+        for item in value:
+            _UniffiConverterTimestamp.check_lower(item)
+
+    @classmethod
+    def write(cls, value, buf):
+        items = len(value)
+        buf.write_i32(items)
+        for item in value:
+            _UniffiConverterTimestamp.write(item, buf)
+
+    @classmethod
+    def read(cls, buf):
+        count = buf.read_i32()
+        if count < 0:
+            raise InternalError("Unexpected negative sequence length")
+
+        return [
+            _UniffiConverterTimestamp.read(buf) for i in range(count)
+        ]
+
+
+
 class _UniffiConverterSequenceTypeDownPaymentResponse(_UniffiConverterRustBuffer):
     @classmethod
     def check_lower(cls, value):
@@ -1606,6 +1663,33 @@ def calculate_payment_plan(params: "Params") -> "typing.List[Response]":
         _UniffiConverterTypeParams.lower(params)))
 
 
+def disbursement_date_range(base_date: "Timestamp",days: "int") -> "typing.List[Timestamp]":
+    _UniffiConverterTimestamp.check_lower(base_date)
+    
+    _UniffiConverterUInt32.check_lower(days)
+    
+    return _UniffiConverterSequenceTimestamp.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_disbursement_date_range,
+        _UniffiConverterTimestamp.lower(base_date),
+        _UniffiConverterUInt32.lower(days)))
+
+
+def get_non_business_days_between(start_date: "Timestamp",end_date: "Timestamp") -> "typing.List[Timestamp]":
+    _UniffiConverterTimestamp.check_lower(start_date)
+    
+    _UniffiConverterTimestamp.check_lower(end_date)
+    
+    return _UniffiConverterSequenceTimestamp.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between,
+        _UniffiConverterTimestamp.lower(start_date),
+        _UniffiConverterTimestamp.lower(end_date)))
+
+
+def next_disbursement_date(base_date: "Timestamp") -> "Timestamp":
+    _UniffiConverterTimestamp.check_lower(base_date)
+    
+    return _UniffiConverterTimestamp.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_next_disbursement_date,
+        _UniffiConverterTimestamp.lower(base_date)))
+
+
 __all__ = [
     "InternalError",
     "Error",
@@ -1615,5 +1699,8 @@ __all__ = [
     "Response",
     "calculate_down_payment_plan",
     "calculate_payment_plan",
+    "disbursement_date_range",
+    "get_non_business_days_between",
+    "next_disbursement_date",
 ]
 

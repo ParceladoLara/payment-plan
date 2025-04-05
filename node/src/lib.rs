@@ -40,12 +40,6 @@ fn next_disbursement_date(mut cx: FunctionContext) -> JsResult<JsDate> {
     let js_date: Handle<JsDate> = cx.argument(0)?;
     let date = parser::js_date_to_naive(&mut cx, js_date)?;
     let result = core_payment_plan::next_disbursement_date(date);
-    let result = match result {
-        Ok(date) => date,
-        Err(e) => {
-            return cx.throw_error(e.to_string());
-        }
-    };
     let result = parser::naive_to_js_date(&mut cx, result)?;
     Ok(result)
 }
@@ -55,13 +49,7 @@ fn disbursement_data_range(mut cx: FunctionContext) -> JsResult<JsArray> {
     let date = parser::js_date_to_naive(&mut cx, js_date)?;
     let js_number: Handle<JsValue> = cx.argument(1)?;
     let days = parser::any_to_number(&mut cx, js_number)? as u32;
-    let result = core_payment_plan::disbursement_data_range(date, days);
-    let result = match result {
-        Ok((start_date, end_date)) => (start_date, end_date),
-        Err(e) => {
-            return cx.throw_error(e.to_string());
-        }
-    };
+    let result = core_payment_plan::disbursement_date_range(date, days);
     let start_date = parser::naive_to_js_date(&mut cx, result.0)?;
     let end_date = parser::naive_to_js_date(&mut cx, result.1)?;
     let js_array = JsArray::new(&mut cx, 2);
