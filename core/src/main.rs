@@ -32,16 +32,17 @@ fn main() {
     let result = calculate_down_payment_plan(down_payment_params).unwrap();
 
     let mut buff = String::new();
-    buff.push_str(r#"expected := []payment_plan.DownPaymentResponse{"#);
+    buff.push_str(r#"        expected = ["#);
 
     for i in &result {
         buff.push_str(&format!(
-            r#"{{
-                InstallmentAmount:   {},
-                TotalAmount:         {},
-                InstallmentQuantity: {},
-                FirstPaymentDate:    time.Date({},{}, {}, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
-                Plans: []payment_plan.Response{{"#,
+            r#"
+            DownPaymentResponse(
+                installment_amount={},
+                total_amount={},
+                installment_quantity={},
+                first_payment_date=datetime({}, {}, {}, tzinfo=timezone(timedelta(hours=-3))),
+                plans=["#,
             i.installment_amount,
             i.total_amount,
             i.installment_quantity,
@@ -52,42 +53,42 @@ fn main() {
 
         for j in &i.plans {
             buff.push_str(&format!(
-                r#"{{
-                    Installment:                              {},
-                    DueDate:                                  time.Date({},{}, {}, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
-                    DisbursementDate:                         time.Date({},{}, {}, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
-                    AccumulatedDays:                          {},
-                    DaysIndex:                                {},
-                    AccumulatedDaysIndex:                     {},
-                    InterestRate:                             {},
-                    InstallmentAmount:                        {},
-                    InstallmentAmountWithoutTac:              {},
-                    TotalAmount:                              {},
-                    DebitService:                             {},
-                    CustomerDebitServiceAmount:               {},
-                    CustomerAmount:                           {},
-                    CalculationBasisForEffectiveInterestRate: {},
-                    MerchantDebitServiceAmount:               {},
-                    MerchantTotalAmount:                      {},
-                    SettledToMerchant:                        {},
-                    MdrAmount:                                {},
-                    EffectiveInterestRate:                    {},
-                    TotalEffectiveCost:                       {},
-                    EirYearly:                                {},
-                    TecYearly:                                {},
-                    EirMonthly:                               {},
-                    TecMonthly:                               {},
-                    TotalIof:                                 {},
-                    ContractAmount:                           {},
-                    ContractAmountWithoutTac:                 {},
-                    TacAmount:                                {},
-                    IofPercentage:                            {},
-                    OverallIof:                               {},
-                    PreDisbursementAmount:                    {},
-                    PaidTotalIof:                             {},
-                    PaidContractAmount:                       {},
-                }},
-"#,
+                r#"
+                    Response(
+                        installment={},
+                        due_date=datetime({}, {}, {}, tzinfo=timezone(timedelta(hours=-3))),
+                        disbursement_date=datetime({}, {}, {}, tzinfo=timezone(timedelta(hours=-3))),
+                        accumulated_days={},
+                        days_index={},
+                        accumulated_days_index={},
+                        interest_rate={},
+                        installment_amount={},
+                        installment_amount_without_tac={},
+                        total_amount={},
+                        debit_service={},
+                        customer_debit_service_amount={},
+                        customer_amount={},
+                        calculation_basis_for_effective_interest_rate={},
+                        merchant_debit_service_amount={},
+                        merchant_total_amount={},
+                        settled_to_merchant={},
+                        mdr_amount={},
+                        effective_interest_rate={},
+                        total_effective_cost={},
+                        eir_yearly={},
+                        tec_yearly={},
+                        eir_monthly={},
+                        tec_monthly={},
+                        total_iof={},
+                        contract_amount={},
+                        contract_amount_without_tac={},
+                        tac_amount={},
+                        iof_percentage={},
+                        overall_iof={},
+                        pre_disbursement_amount={},
+                        paid_total_iof={},
+                        paid_contract_amount={}
+                    ),"#,
                 j.installment,
                 j.due_date.year(),
                 j.due_date.month(),
@@ -127,9 +128,9 @@ fn main() {
                 j.paid_contract_amount,
             ));
         }
-        buff.push_str("}},");
-        buff.push_str("");
+        buff.push_str("                ]\n");
+        buff.push_str("            ),\n");
     }
-    buff.push_str("}\n");
+    buff.push_str("        ]\n");
     println!("{}", buff);
 }
