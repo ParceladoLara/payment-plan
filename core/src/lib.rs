@@ -130,25 +130,20 @@ pub fn calculate_payment_plan(params: Params) -> Result<Vec<Response>, PaymentPl
     return P.calculate_payment_plan(params);
 }
 
-pub fn next_disbursement_date(
-    mut base_date: chrono::NaiveDate,
-) -> Result<chrono::NaiveDate, PaymentPlanError> {
+pub fn next_disbursement_date(mut base_date: chrono::NaiveDate) -> chrono::NaiveDate {
     let today = chrono::Local::now().date_naive();
-    if base_date < today {
-        return Err(PaymentPlanError::InvalidDate(base_date));
-    }
     if base_date == today {
         base_date = util::add_days(base_date, 1);
     }
 
-    return Ok(util::get_next_business_day(base_date));
+    return util::get_next_business_day(base_date);
 }
 
-pub fn disbursement_data_range(
+pub fn disbursement_date_range(
     base_date: chrono::NaiveDate,
     days: u32,
-) -> Result<(chrono::NaiveDate, chrono::NaiveDate), PaymentPlanError> {
-    let start_date = next_disbursement_date(base_date)?;
+) -> (chrono::NaiveDate, chrono::NaiveDate) {
+    let start_date = next_disbursement_date(base_date);
 
     let mut end_date = start_date;
     let mut i = 1;
@@ -159,7 +154,7 @@ pub fn disbursement_data_range(
         }
     }
 
-    return Ok((start_date, end_date));
+    return (start_date, end_date);
 }
 
 pub fn get_non_business_days_between(
@@ -175,7 +170,7 @@ mod test {
     #[test]
     fn test_next_disbursement_date() {
         let base_date = chrono::NaiveDate::from_ymd_opt(2078, 02, 12).unwrap();
-        let result = super::next_disbursement_date(base_date).unwrap();
+        let result = super::next_disbursement_date(base_date);
         let expected = chrono::NaiveDate::from_ymd_opt(2078, 02, 16).unwrap();
         assert_eq!(result, expected);
     }
@@ -184,7 +179,7 @@ mod test {
     fn test_disbursement_data_range() {
         let base_date = chrono::NaiveDate::from_ymd_opt(2078, 02, 12).unwrap();
         let days = 5;
-        let result = super::disbursement_data_range(base_date, days).unwrap();
+        let result = super::disbursement_date_range(base_date, days);
         let expected = (
             chrono::NaiveDate::from_ymd_opt(2078, 02, 16).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2078, 02, 22).unwrap(),

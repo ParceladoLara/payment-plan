@@ -368,6 +368,33 @@ func uniffiCheckChecksums() {
 			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan: UniFFI API checksum mismatch")
 		}
 	}
+	{
+		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
+			return C.uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range()
+		})
+		if checksum != 5651 {
+			// If this happens try cleaning and rebuilding your project
+			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range: UniFFI API checksum mismatch")
+		}
+	}
+	{
+		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
+			return C.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between()
+		})
+		if checksum != 34693 {
+			// If this happens try cleaning and rebuilding your project
+			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between: UniFFI API checksum mismatch")
+		}
+	}
+	{
+		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
+			return C.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date()
+		})
+		if checksum != 25001 {
+			// If this happens try cleaning and rebuilding your project
+			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date: UniFFI API checksum mismatch")
+		}
+	}
 }
 
 type FfiConverterUint16 struct{}
@@ -1053,6 +1080,49 @@ func (_ FfiDestroyerError) Destroy(value *Error) {
 	}
 }
 
+type FfiConverterSequenceTimestamp struct{}
+
+var FfiConverterSequenceTimestampINSTANCE = FfiConverterSequenceTimestamp{}
+
+func (c FfiConverterSequenceTimestamp) Lift(rb RustBufferI) []time.Time {
+	return LiftFromRustBuffer[[]time.Time](c, rb)
+}
+
+func (c FfiConverterSequenceTimestamp) Read(reader io.Reader) []time.Time {
+	length := readInt32(reader)
+	if length == 0 {
+		return nil
+	}
+	result := make([]time.Time, 0, length)
+	for i := int32(0); i < length; i++ {
+		result = append(result, FfiConverterTimestampINSTANCE.Read(reader))
+	}
+	return result
+}
+
+func (c FfiConverterSequenceTimestamp) Lower(value []time.Time) C.RustBuffer {
+	return LowerIntoRustBuffer[[]time.Time](c, value)
+}
+
+func (c FfiConverterSequenceTimestamp) Write(writer io.Writer, value []time.Time) {
+	if len(value) > math.MaxInt32 {
+		panic("[]time.Time is too large to fit into Int32")
+	}
+
+	writeInt32(writer, int32(len(value)))
+	for _, item := range value {
+		FfiConverterTimestampINSTANCE.Write(writer, item)
+	}
+}
+
+type FfiDestroyerSequenceTimestamp struct{}
+
+func (FfiDestroyerSequenceTimestamp) Destroy(sequence []time.Time) {
+	for _, value := range sequence {
+		FfiDestroyerTimestamp{}.Destroy(value)
+	}
+}
+
 type FfiConverterSequenceDownPaymentResponse struct{}
 
 var FfiConverterSequenceDownPaymentResponseINSTANCE = FfiConverterSequenceDownPaymentResponse{}
@@ -1165,4 +1235,28 @@ func CalculatePaymentPlan(params Params) ([]Response, *Error) {
 	} else {
 		return FfiConverterSequenceResponseINSTANCE.Lift(_uniffiRV), _uniffiErr
 	}
+}
+
+func DisbursementDateRange(baseDate time.Time, days uint32) []time.Time {
+	return FfiConverterSequenceTimestampINSTANCE.Lift(rustCall(func(_uniffiStatus *C.RustCallStatus) RustBufferI {
+		return GoRustBuffer{
+			inner: C.uniffi_payment_plan_uniffi_fn_func_disbursement_date_range(FfiConverterTimestampINSTANCE.Lower(baseDate), FfiConverterUint32INSTANCE.Lower(days), _uniffiStatus),
+		}
+	}))
+}
+
+func GetNonBusinessDaysBetween(startDate time.Time, endDate time.Time) []time.Time {
+	return FfiConverterSequenceTimestampINSTANCE.Lift(rustCall(func(_uniffiStatus *C.RustCallStatus) RustBufferI {
+		return GoRustBuffer{
+			inner: C.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between(FfiConverterTimestampINSTANCE.Lower(startDate), FfiConverterTimestampINSTANCE.Lower(endDate), _uniffiStatus),
+		}
+	}))
+}
+
+func NextDisbursementDate(baseDate time.Time) time.Time {
+	return FfiConverterTimestampINSTANCE.Lift(rustCall(func(_uniffiStatus *C.RustCallStatus) RustBufferI {
+		return GoRustBuffer{
+			inner: C.uniffi_payment_plan_uniffi_fn_func_next_disbursement_date(FfiConverterTimestampINSTANCE.Lower(baseDate), _uniffiStatus),
+		}
+	}))
 }

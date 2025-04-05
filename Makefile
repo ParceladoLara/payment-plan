@@ -1,9 +1,14 @@
 test:
+	make clean
+	make build-go-sdk
+	make build-python-sdk
 	cargo test
 	cd cli && make test
 	cd node && npm i && npm run test
 	cd wasm && npm i && npm run test
 	cd cli && make test
+	cd sdks/go && go test ./...
+	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 
 clean:
 	cargo clean

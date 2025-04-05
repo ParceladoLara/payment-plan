@@ -1,9 +1,9 @@
 import unittest
 from datetime import datetime, timedelta, timezone
-from payment_plan import Params, Response, calculate_payment_plan
+from payment_plan import disbursement_date_range, next_disbursement_date, get_non_business_days_between,Response, Params, calculate_payment_plan
 
 
-class TestCalculatePaymentPlan(unittest.TestCase):
+class TestPaymentPlanUtilities(unittest.TestCase):
     def test_calculate_payment_plan(self):
         disbursement_date = datetime(2025, 4, 7, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3)))
 
@@ -220,6 +220,65 @@ class TestCalculatePaymentPlan(unittest.TestCase):
             self.assertAlmostEqual(r.paid_total_iof, e.paid_total_iof, places=2, msg=f"Installment {i + 1}: PaidTotalIof mismatch")
             self.assertAlmostEqual(r.paid_contract_amount, e.paid_contract_amount, places=2, msg=f"Installment {i + 1}: PaidContractAmount mismatch")
 
+    def test_disbursement_date_range(self):
+        base_date = datetime(2025, 4, 3, tzinfo=timezone.utc)
+        days = 5
+
+        start, end = disbursement_date_range(base_date, days)
+
+        expected_start = datetime(2025, 4, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3)))
+        expected_end = datetime(2025, 4, 9, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3)))
+
+        self.assertEqual(start, expected_start, f"Expected start date {expected_start}, got {start}")
+        self.assertEqual(end, expected_end, f"Expected end date {expected_end}, got {end}")
+
+    def test_next_disbursement_date(self):
+        base_date = datetime(2025, 4, 3, tzinfo=timezone.utc)
+
+        next_date = next_disbursement_date(base_date)
+
+        expected_date = datetime(2025, 4, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3)))
+
+        self.assertEqual(next_date, expected_date, f"Expected next disbursement date {expected_date}, got {next_date}")
+
+    def test_next_disbursement_date_not_today(self):
+        today = datetime.now(timezone.utc)
+
+        next_date = next_disbursement_date(today)
+
+        self.assertNotEqual(
+            (next_date.year, next_date.month, next_date.day),
+            (today.year, today.month, today.day),
+            f"Next disbursement date should not be the same as today. Got: {next_date}",
+        )
+
+    def test_get_non_business_days_between(self):
+        start_date = datetime(2025, 4, 1, tzinfo=timezone.utc)
+        end_date = datetime(2025, 4, 30, tzinfo=timezone.utc)
+
+        expected_non_business_days = [
+            datetime(2025, 4, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 6, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 12, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 13, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 18, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 19, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 20, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 21, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 26, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+            datetime(2025, 4, 27, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))),
+        ]
+
+        non_business_days = get_non_business_days_between(start_date, end_date)
+
+        self.assertGreater(len(non_business_days), 0, f"Expected non-business days between {start_date} and {end_date}, but got none")
+
+        for expected_date in expected_non_business_days:
+            self.assertIn(expected_date, non_business_days, f"Expected non-business day {expected_date} not found in the result")
+
+
+if __name__ == "__main__":
+    unittest.main()
 
 if __name__ == "__main__":
     unittest.main()
