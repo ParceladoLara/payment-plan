@@ -849,91 +849,91 @@ func helperAssert(r payment_plan.Response, e payment_plan.Response, i int, t *te
 		t.Errorf("Installment %d: Expected AccumulatedDays %d, got %d", i+1, e.AccumulatedDays, r.AccumulatedDays)
 	}
 	if r.DaysIndex != e.DaysIndex {
-		t.Errorf("Installment %d: Expected DaysIndex %f, got %f", i+1, e.DaysIndex, r.DaysIndex)
+		t.Errorf("Installment %d: Expected DaysIndex %.17g, got %.17g", i+1, e.DaysIndex, r.DaysIndex)
 	}
 	if r.AccumulatedDaysIndex != e.AccumulatedDaysIndex {
-		t.Errorf("Installment %d: Expected AccumulatedDaysIndex %f, got %f", i+1, e.AccumulatedDaysIndex, r.AccumulatedDaysIndex)
+		t.Errorf("Installment %d: Expected AccumulatedDaysIndex %.17g, got %.17g", i+1, e.AccumulatedDaysIndex, r.AccumulatedDaysIndex)
 	}
 	if r.InterestRate != e.InterestRate {
-		t.Errorf("Installment %d: Expected InterestRate %f, got %f", i+1, e.InterestRate, r.InterestRate)
+		t.Errorf("Installment %d: Expected InterestRate %.17g, got %.17g", i+1, e.InterestRate, r.InterestRate)
 	}
 	if r.InstallmentAmount != e.InstallmentAmount {
-		t.Errorf("Installment %d: Expected InstallmentAmount %f, got %f", i+1, e.InstallmentAmount, r.InstallmentAmount)
+		t.Errorf("Installment %d: Expected InstallmentAmount %.17g, got %.17g", i+1, e.InstallmentAmount, r.InstallmentAmount)
 	}
 	if r.InstallmentAmountWithoutTac != e.InstallmentAmountWithoutTac {
-		t.Errorf("Installment %d: Expected InstallmentAmountWithoutTac %f, got %f", i+1, e.InstallmentAmountWithoutTac, r.InstallmentAmountWithoutTac)
+		t.Errorf("Installment %d: Expected InstallmentAmountWithoutTac %.17g, got %.17g", i+1, e.InstallmentAmountWithoutTac, r.InstallmentAmountWithoutTac)
 	}
 	if r.TotalAmount != e.TotalAmount {
-		t.Errorf("Installment %d: Expected TotalAmount %f, got %f", i+1, e.TotalAmount, r.TotalAmount)
+		t.Errorf("Installment %d: Expected TotalAmount %.17g, got %.17g", i+1, e.TotalAmount, r.TotalAmount)
 	}
 	if r.DebitService != e.DebitService {
-		t.Errorf("Installment %d: Expected DebitService %f, got %f", i+1, e.DebitService, r.DebitService)
+		t.Errorf("Installment %d: Expected DebitService %.17g, got %.17g", i+1, e.DebitService, r.DebitService)
 	}
 	if r.CustomerDebitServiceAmount != e.CustomerDebitServiceAmount {
-		t.Errorf("Installment %d: Expected CustomerDebitServiceAmount %f, got %f", i+1, e.CustomerDebitServiceAmount, r.CustomerDebitServiceAmount)
+		t.Errorf("Installment %d: Expected CustomerDebitServiceAmount %.17g, got %.17g", i+1, e.CustomerDebitServiceAmount, r.CustomerDebitServiceAmount)
 	}
 	if r.CustomerAmount != e.CustomerAmount {
-		t.Errorf("Installment %d: Expected CustomerAmount %f, got %f", i+1, e.CustomerAmount, r.CustomerAmount)
+		t.Errorf("Installment %d: Expected CustomerAmount %.17g, got %.17g", i+1, e.CustomerAmount, r.CustomerAmount)
 	}
 	if r.CalculationBasisForEffectiveInterestRate != e.CalculationBasisForEffectiveInterestRate {
-		t.Errorf("Installment %d: Expected CalculationBasisForEffectiveInterestRate %f, got %f", i+1, e.CalculationBasisForEffectiveInterestRate, r.CalculationBasisForEffectiveInterestRate)
+		t.Errorf("Installment %d: Expected CalculationBasisForEffectiveInterestRate %.17g, got %.17g", i+1, e.CalculationBasisForEffectiveInterestRate, r.CalculationBasisForEffectiveInterestRate)
 	}
 	if r.MerchantDebitServiceAmount != e.MerchantDebitServiceAmount {
-		t.Errorf("Installment %d: Expected MerchantDebitServiceAmount %f, got %f", i+1, e.MerchantDebitServiceAmount, r.MerchantDebitServiceAmount)
+		t.Errorf("Installment %d: Expected MerchantDebitServiceAmount %.17g, got %.17g", i+1, e.MerchantDebitServiceAmount, r.MerchantDebitServiceAmount)
 	}
 	if r.MerchantTotalAmount != e.MerchantTotalAmount {
-		t.Errorf("Installment %d: Expected MerchantTotalAmount %f, got %f", i+1, e.MerchantTotalAmount, r.MerchantTotalAmount)
+		t.Errorf("Installment %d: Expected MerchantTotalAmount %.17g, got %.17g", i+1, e.MerchantTotalAmount, r.MerchantTotalAmount)
 	}
 	if r.SettledToMerchant != e.SettledToMerchant {
-		t.Errorf("Installment %d: Expected SettledToMerchant %f, got %f", i+1, e.SettledToMerchant, r.SettledToMerchant)
+		t.Errorf("Installment %d: Expected SettledToMerchant %.17g, got %.17g", i+1, e.SettledToMerchant, r.SettledToMerchant)
 	}
 	if r.MdrAmount != e.MdrAmount {
-		t.Errorf("Installment %d: Expected MdrAmount %f, got %f", i+1, e.MdrAmount, r.MdrAmount)
+		t.Errorf("Installment %d: Expected MdrAmount %.17g, got %.17g", i+1, e.MdrAmount, r.MdrAmount)
 	}
 	if r.EffectiveInterestRate != e.EffectiveInterestRate {
-		t.Errorf("Installment %d: Expected EffectiveInterestRate %f, got %f", i+1, e.EffectiveInterestRate, r.EffectiveInterestRate)
+		t.Errorf("Installment %d: Expected EffectiveInterestRate %.17g, got %.17g", i+1, e.EffectiveInterestRate, r.EffectiveInterestRate)
 	}
 	if r.TotalEffectiveCost != e.TotalEffectiveCost {
-		t.Errorf("Installment %d: Expected TotalEffectiveCost %f, got %f", i+1, e.TotalEffectiveCost, r.TotalEffectiveCost)
+		t.Errorf("Installment %d: Expected TotalEffectiveCost %.17g, got %.17g", i+1, e.TotalEffectiveCost, r.TotalEffectiveCost)
 	}
 	if r.EirYearly != e.EirYearly {
-		t.Errorf("Installment %d: Expected EirYearly %f, got %f", i+1, e.EirYearly, r.EirYearly)
+		t.Errorf("Installment %d: Expected EirYearly %.17g, got %.17g", i+1, e.EirYearly, r.EirYearly)
 	}
 	if r.TecYearly != e.TecYearly {
-		t.Errorf("Installment %d: Expected TecYearly %f, got %f", i+1, e.TecYearly, r.TecYearly)
+		t.Errorf("Installment %d: Expected TecYearly %.17g, got %.17g", i+1, e.TecYearly, r.TecYearly)
 	}
 	if r.EirMonthly != e.EirMonthly {
-		t.Errorf("Installment %d: Expected EirMonthly %f, got %f", i+1, e.EirMonthly, r.EirMonthly)
+		t.Errorf("Installment %d: Expected EirMonthly %.17g, got %.17g", i+1, e.EirMonthly, r.EirMonthly)
 	}
 	if r.TecMonthly != e.TecMonthly {
-		t.Errorf("Installment %d: Expected TecMonthly %f, got %f", i+1, e.TecMonthly, r.TecMonthly)
+		t.Errorf("Installment %d: Expected TecMonthly %.17g, got %.17g", i+1, e.TecMonthly, r.TecMonthly)
 	}
 	if r.TotalIof != e.TotalIof {
-		t.Errorf("Installment %d: Expected TotalIof %f, got %f", i+1, e.TotalIof, r.TotalIof)
+		t.Errorf("Installment %d: Expected TotalIof %.17g, got %.17g", i+1, e.TotalIof, r.TotalIof)
 	}
 	if r.ContractAmount != e.ContractAmount {
-		t.Errorf("Installment %d: Expected ContractAmount %f, got %f", i+1, e.ContractAmount, r.ContractAmount)
+		t.Errorf("Installment %d: Expected ContractAmount %.17g, got %.17g", i+1, e.ContractAmount, r.ContractAmount)
 	}
 	if r.ContractAmountWithoutTac != e.ContractAmountWithoutTac {
-		t.Errorf("Installment %d: Expected ContractAmountWithoutTac %f, got %f", i+1, e.ContractAmountWithoutTac, r.ContractAmountWithoutTac)
+		t.Errorf("Installment %d: Expected ContractAmountWithoutTac %.17g, got %.17g", i+1, e.ContractAmountWithoutTac, r.ContractAmountWithoutTac)
 	}
 	if r.TacAmount != e.TacAmount {
-		t.Errorf("Installment %d: Expected TacAmount %f, got %f", i+1, e.TacAmount, r.TacAmount)
+		t.Errorf("Installment %d: Expected TacAmount %.17g, got %.17g", i+1, e.TacAmount, r.TacAmount)
 	}
 	if r.IofPercentage != e.IofPercentage {
-		t.Errorf("Installment %d: Expected IofPercentage %f, got %f", i+1, e.IofPercentage, r.IofPercentage)
+		t.Errorf("Installment %d: Expected IofPercentage %.17g, got %.17g", i+1, e.IofPercentage, r.IofPercentage)
 	}
 	if r.OverallIof != e.OverallIof {
-		t.Errorf("Installment %d: Expected OverallIof %f, got %f", i+1, e.OverallIof, r.OverallIof)
+		t.Errorf("Installment %d: Expected OverallIof %.17g, got %.17g", i+1, e.OverallIof, r.OverallIof)
 	}
 	if r.PreDisbursementAmount != e.PreDisbursementAmount {
-		t.Errorf("Installment %d: Expected PreDisbursementAmount %f, got %f", i+1, e.PreDisbursementAmount, r.PreDisbursementAmount)
+		t.Errorf("Installment %d: Expected PreDisbursementAmount %.17g, got %.17g", i+1, e.PreDisbursementAmount, r.PreDisbursementAmount)
 	}
 	if r.PaidTotalIof != e.PaidTotalIof {
-		t.Errorf("Installment %d: Expected PaidTotalIof %f, got %f", i+1, e.PaidTotalIof, r.PaidTotalIof)
+		t.Errorf("Installment %d: Expected PaidTotalIof %.17g, got %.17g", i+1, e.PaidTotalIof, r.PaidTotalIof)
 	}
 	if r.PaidContractAmount != e.PaidContractAmount {
-		t.Errorf("Installment %d: Expected PaidContractAmount %f, got %f", i+1, e.PaidContractAmount, r.PaidContractAmount)
+		t.Errorf("Installment %d: Expected PaidContractAmount %.17g, got %.17g", i+1, e.PaidContractAmount, r.PaidContractAmount)
 	}
 }
 
