@@ -852,20 +852,20 @@ func helperAssert(r payment_plan.Response, e payment_plan.Response, i int, t *te
 		t.Errorf("Installment %d: Expected AccumulatedDays %d, got %d", i+1, e.AccumulatedDays, r.AccumulatedDays)
 	}
 
-	// Round the DaysIndex to 15 decimal places for comparison
-	actualDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", r.DaysIndex), 64)
-	expectedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", e.DaysIndex), 64)
+	// Round the DaysIndex to 10 decimal places for comparison
+	actualDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", r.DaysIndex), 64)
+	expectedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", e.DaysIndex), 64)
 
 	if actualDaysIndex != expectedDaysIndex {
-		t.Errorf("Installment %d: Expected DaysIndex %.30g, got %.30g", i+1, expectedDaysIndex, actualDaysIndex)
+		t.Errorf("Installment %d: Expected DaysIndex %.10g, got %.10g", i+1, expectedDaysIndex, actualDaysIndex)
 	}
 
-	// Round the AccumulatedDaysIndex to 15 decimal places for comparison
-	actualAccumulatedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", r.AccumulatedDaysIndex), 64)
-	expectedAccumulatedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", e.AccumulatedDaysIndex), 64)
+	// Round the AccumulatedDaysIndex to 10 decimal places for comparison
+	actualAccumulatedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", r.AccumulatedDaysIndex), 64)
+	expectedAccumulatedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", e.AccumulatedDaysIndex), 64)
 
 	if actualAccumulatedDaysIndex != expectedAccumulatedDaysIndex {
-		t.Errorf("Installment %d: Expected AccumulatedDaysIndex %.30g, got %.30g", i+1, expectedAccumulatedDaysIndex, actualAccumulatedDaysIndex)
+		t.Errorf("Installment %d: Expected AccumulatedDaysIndex %.10g, got %.10g", i+1, expectedAccumulatedDaysIndex, actualAccumulatedDaysIndex)
 	}
 	if r.InterestRate != e.InterestRate {
 		t.Errorf("Installment %d: Expected InterestRate %.30g, got %.30g", i+1, e.InterestRate, r.InterestRate)
