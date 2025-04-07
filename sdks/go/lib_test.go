@@ -1,7 +1,8 @@
 package payment_plan_test
 
 import (
-	"math"
+	"fmt"
+	"strconv"
 	"testing"
 	"time"
 
@@ -852,16 +853,16 @@ func helperAssert(r payment_plan.Response, e payment_plan.Response, i int, t *te
 	}
 
 	// Round the DaysIndex to 15 decimal places for comparison
-	actualDaysIndex := math.Round(r.DaysIndex*1e15) / 1e15
-	expectedDaysIndex := math.Round(e.DaysIndex*1e15) / 1e15
+	actualDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", r.DaysIndex), 64)
+	expectedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", e.DaysIndex), 64)
 
 	if actualDaysIndex != expectedDaysIndex {
 		t.Errorf("Installment %d: Expected DaysIndex %.30g, got %.30g", i+1, expectedDaysIndex, actualDaysIndex)
 	}
 
 	// Round the AccumulatedDaysIndex to 15 decimal places for comparison
-	actualAccumulatedDaysIndex := math.Round(r.AccumulatedDaysIndex*1e15) / 1e15
-	expectedAccumulatedDaysIndex := math.Round(e.AccumulatedDaysIndex*1e15) / 1e15
+	actualAccumulatedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", r.AccumulatedDaysIndex), 64)
+	expectedAccumulatedDaysIndex, _ := strconv.ParseFloat(fmt.Sprintf("%.15f", e.AccumulatedDaysIndex), 64)
 
 	if actualAccumulatedDaysIndex != expectedAccumulatedDaysIndex {
 		t.Errorf("Installment %d: Expected AccumulatedDaysIndex %.30g, got %.30g", i+1, expectedAccumulatedDaysIndex, actualAccumulatedDaysIndex)
