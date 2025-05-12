@@ -1,6 +1,6 @@
 {
   "name": "@ParceladoLara/payment-plan-web",
-  "version": "2.0.6",
+  "version": "2.1.6",
   "main": "./src/index.mjs",
   "module": "./src/index.mjs",
   "types": "./src/index.d.ts",
@@ -21,7 +21,7 @@
     "@ParceladoLara:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "build": "cd ../ && npm run build:web && cd lib && cp -r ../pkg ./wasm && vite build  && cp wasm/index.d.ts src/index.d.ts",
+    "build": "rm -rf wasm && cd ../ && npm run build:web && cd lib && cp -r ../pkg ./wasm && vite build  && cp wasm/index.d.ts src/index.d.ts",
     "test": "exit 0"
   },
   "dependencies": {

@@ -10,7 +10,7 @@
     "build:qitech": "FEATURE=qitech npm run build",
     "test:bmp": "npm run build:bmp && glob -c \"tsx --test --test-reporter spec \" \"./test/bmp/**/*.spec.ts\"",
     "test:qitech": "npm run build:qitech && glob -c \"tsx --test --test-reporter spec \" \"./test/qitech/**/*.spec.ts\"",
-    "build:web": "wasm-pack build --out-name index --release -- --features qitech",
+    "build:web": "rm -rf pkg && wasm-pack build --out-name index --release -- --features qitech",
     "test": "npm run test:bmp && npm run test:qitech"
   },
   "devDependencies": {
