@@ -1,4 +1,4 @@
-use chrono::NaiveTime;
+use chrono::Datelike;
 use std::ops::Deref;
 use wasm_bindgen::{JsError, JsValue};
 
@@ -39,6 +39,10 @@ impl<'de> Deserialize<'de> for Date {
         D: Deserializer<'de>,
     {
         let date_str = String::deserialize(deserializer)?;
+
+        //Remove UTC and Z from the date string
+        let date_str = date_str.replace("UTC", "").replace("Z", "");
+        let date_str = date_str.trim();
         let date = js_sys::Date::new(&date_str.into());
 
         Ok(Date(date))
@@ -63,12 +67,12 @@ impl TryInto<chrono::NaiveDate> for Date {
 
 impl From<chrono::NaiveDate> for Date {
     fn from(date: chrono::NaiveDate) -> Self {
-        let date = date
-            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
-            .and_utc();
+        let year = date.year() as u32;
+        let month = date.month() as i32 - 1;
+        let day = date.day() as i32;
 
-        let date_str = date.to_string();
-        let date = js_sys::Date::new(&date_str.into());
+        let date =
+            js_sys::Date::new_with_year_month_day_hr_min_sec_milli(year, month, day, 3, 0, 0, 0);
 
         Self(date)
     }
