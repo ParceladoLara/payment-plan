@@ -111,7 +111,7 @@ fn next_disbursement_date(buf: Vec<u8>) -> ExitCode {
     let disbursement_date = match disbursement_date {
         Some(date) => date.date_naive(),
         None => {
-            eprintln!("Error: Invalid requested date");
+            eprintln!("Error: Invalid disbursement date");
             return ExitCode::FAILURE;
         }
     };

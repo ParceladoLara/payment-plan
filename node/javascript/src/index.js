@@ -10,7 +10,7 @@ const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
  * @typedef {Object} PaymentPlanParams
  * @property {number} requestedAmount
  * @property {Date} firstPaymentDate
- * @property {Date} requestedDate
+ * @property {Date} disbursementDate
  * @property {number} installments
  * @property {number} debitServicePercentage
  * @property {number} mdr

@@ -15,7 +15,7 @@ const params = {
   minInstallmentAmount: 0.0,
   requestedAmount: 8800.0,
   firstPaymentDate: new Date("2022-04-18"),
-  requestedDate: new Date("2022-03-18"),
+  disbursementDate: new Date("2022-03-18"),
   installments: 24,
   debitServicePercentage: 0,
   mdr: 0.05,
@@ -23,7 +23,7 @@ const params = {
   iofOverall: 0.0038,
   iofPercentage: 0.000082,
   interestRate: 0.0235,
-  disbursementOnlyOnBusinessDays:true,
+  disbursementOnlyOnBusinessDays: true,
 };
 
 console.log(params);
@@ -52,7 +52,6 @@ const result = calculatePaymentPlan(params);
 
 console.log(result);
 
-
 const dResult = calculateDownPaymentPlan({
   firstPaymentDate: new Date(),
   installments: 12,
@@ -70,7 +69,6 @@ const r = result.pop();
 
 console.log(r);
 console.log(typeof r?.dueDate);
-
 
 if (r) {
   console.log(

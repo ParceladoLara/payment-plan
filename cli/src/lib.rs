@@ -27,7 +27,7 @@ impl TryInto<Params> for PlanParams {
         let disbursement_date = match disbursement_date {
             Some(date) => date.date_naive(),
             None => {
-                return Err("invalid requested date".to_string());
+                return Err("invalid disbursement date".to_string());
             }
         };
 

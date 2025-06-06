@@ -1651,23 +1651,23 @@ class _UniffiConverterSequenceTypeResponse(_UniffiConverterRustBuffer):
 
 def calculate_down_payment_plan(params: "DownPaymentParams") -> "typing.List[DownPaymentResponse]":
     _UniffiConverterTypeDownPaymentParams.check_lower(params)
-
+    
     return _UniffiConverterSequenceTypeDownPaymentResponse.lift(_uniffi_rust_call_with_error(_UniffiConverterTypeError,_UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_down_payment_plan,
         _UniffiConverterTypeDownPaymentParams.lower(params)))
 
 
 def calculate_payment_plan(params: "Params") -> "typing.List[Response]":
     _UniffiConverterTypeParams.check_lower(params)
-
+    
     return _UniffiConverterSequenceTypeResponse.lift(_uniffi_rust_call_with_error(_UniffiConverterTypeError,_UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan,
         _UniffiConverterTypeParams.lower(params)))
 
 
 def disbursement_date_range(base_date: "Timestamp",days: "int") -> "typing.List[Timestamp]":
     _UniffiConverterTimestamp.check_lower(base_date)
-
+    
     _UniffiConverterUInt32.check_lower(days)
-
+    
     return _UniffiConverterSequenceTimestamp.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_disbursement_date_range,
         _UniffiConverterTimestamp.lower(base_date),
         _UniffiConverterUInt32.lower(days)))
@@ -1675,9 +1675,9 @@ def disbursement_date_range(base_date: "Timestamp",days: "int") -> "typing.List[
 
 def get_non_business_days_between(start_date: "Timestamp",end_date: "Timestamp") -> "typing.List[Timestamp]":
     _UniffiConverterTimestamp.check_lower(start_date)
-
+    
     _UniffiConverterTimestamp.check_lower(end_date)
-
+    
     return _UniffiConverterSequenceTimestamp.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between,
         _UniffiConverterTimestamp.lower(start_date),
         _UniffiConverterTimestamp.lower(end_date)))
@@ -1685,7 +1685,7 @@ def get_non_business_days_between(start_date: "Timestamp",end_date: "Timestamp")
 
 def next_disbursement_date(base_date: "Timestamp") -> "Timestamp":
     _UniffiConverterTimestamp.check_lower(base_date)
-
+    
     return _UniffiConverterTimestamp.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_next_disbursement_date,
         _UniffiConverterTimestamp.lower(base_date)))
 

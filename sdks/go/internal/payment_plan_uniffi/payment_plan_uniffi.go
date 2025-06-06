@@ -542,7 +542,7 @@ func (FfiConverterString) Read(reader io.Reader) string {
 	length := readInt32(reader)
 	buffer := make([]byte, length)
 	read_length, err := reader.Read(buffer)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		panic(err)
 	}
 	if read_length != int(length) {
@@ -721,7 +721,7 @@ func (_ FfiDestroyerDownPaymentResponse) Destroy(value DownPaymentResponse) {
 type Params struct {
 	RequestedAmount                float64
 	FirstPaymentDate               time.Time
-	RequestedDate                  time.Time
+	DisbursementDate               time.Time
 	Installments                   uint32
 	DebitServicePercentage         uint16
 	Mdr                            float64
@@ -737,7 +737,7 @@ type Params struct {
 func (r *Params) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.RequestedAmount)
 	FfiDestroyerTimestamp{}.Destroy(r.FirstPaymentDate)
-	FfiDestroyerTimestamp{}.Destroy(r.RequestedDate)
+	FfiDestroyerTimestamp{}.Destroy(r.DisbursementDate)
 	FfiDestroyerUint32{}.Destroy(r.Installments)
 	FfiDestroyerUint16{}.Destroy(r.DebitServicePercentage)
 	FfiDestroyerFloat64{}.Destroy(r.Mdr)
@@ -783,7 +783,7 @@ func (c FfiConverterParams) Lower(value Params) C.RustBuffer {
 func (c FfiConverterParams) Write(writer io.Writer, value Params) {
 	FfiConverterFloat64INSTANCE.Write(writer, value.RequestedAmount)
 	FfiConverterTimestampINSTANCE.Write(writer, value.FirstPaymentDate)
-	FfiConverterTimestampINSTANCE.Write(writer, value.RequestedDate)
+	FfiConverterTimestampINSTANCE.Write(writer, value.DisbursementDate)
 	FfiConverterUint32INSTANCE.Write(writer, value.Installments)
 	FfiConverterUint16INSTANCE.Write(writer, value.DebitServicePercentage)
 	FfiConverterFloat64INSTANCE.Write(writer, value.Mdr)
@@ -1209,7 +1209,7 @@ func (FfiDestroyerSequenceResponse) Destroy(sequence []Response) {
 	}
 }
 
-func CalculateDownPaymentPlan(params DownPaymentParams) ([]DownPaymentResponse, *Error) {
+func CalculateDownPaymentPlan(params DownPaymentParams) ([]DownPaymentResponse, error) {
 	_uniffiRV, _uniffiErr := rustCallWithError[Error](FfiConverterError{}, func(_uniffiStatus *C.RustCallStatus) RustBufferI {
 		return GoRustBuffer{
 			inner: C.uniffi_payment_plan_uniffi_fn_func_calculate_down_payment_plan(FfiConverterDownPaymentParamsINSTANCE.Lower(params), _uniffiStatus),
@@ -1219,11 +1219,11 @@ func CalculateDownPaymentPlan(params DownPaymentParams) ([]DownPaymentResponse, 
 		var _uniffiDefaultValue []DownPaymentResponse
 		return _uniffiDefaultValue, _uniffiErr
 	} else {
-		return FfiConverterSequenceDownPaymentResponseINSTANCE.Lift(_uniffiRV), _uniffiErr
+		return FfiConverterSequenceDownPaymentResponseINSTANCE.Lift(_uniffiRV), nil
 	}
 }
 
-func CalculatePaymentPlan(params Params) ([]Response, *Error) {
+func CalculatePaymentPlan(params Params) ([]Response, error) {
 	_uniffiRV, _uniffiErr := rustCallWithError[Error](FfiConverterError{}, func(_uniffiStatus *C.RustCallStatus) RustBufferI {
 		return GoRustBuffer{
 			inner: C.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan(FfiConverterParamsINSTANCE.Lower(params), _uniffiStatus),
@@ -1233,7 +1233,7 @@ func CalculatePaymentPlan(params Params) ([]Response, *Error) {
 		var _uniffiDefaultValue []Response
 		return _uniffiDefaultValue, _uniffiErr
 	} else {
-		return FfiConverterSequenceResponseINSTANCE.Lift(_uniffiRV), _uniffiErr
+		return FfiConverterSequenceResponseINSTANCE.Lift(_uniffiRV), nil
 	}
 }
 

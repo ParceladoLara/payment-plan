@@ -14,12 +14,12 @@ import (
 )
 
 var firstPaymentDate = time.Date(2022, time.April, 18, 0, 0, 0, 0, time.Local)
-var requestedDate = time.Date(2022, time.March, 18, 0, 0, 0, 0, time.Local)
+var disbursementDate = time.Date(2022, time.March, 18, 0, 0, 0, 0, time.Local)
 
 var param = protos.PlanParams{
 	RequestedAmount:        8800,
 	FirstPaymentDateMillis: firstPaymentDate.UnixMilli(),
-	RequestedDateMillis:    requestedDate.UnixMilli(),
+	RequestedDateMillis:    disbursementDate.UnixMilli(),
 	Installments:           24,
 	DebitServicePercentage: 0,
 	Mdr:                    0.05,
@@ -34,7 +34,7 @@ var param = protos.PlanParams{
 var qiTechParam = protos.PlanParams{
 	RequestedAmount:        8800,
 	FirstPaymentDateMillis: firstPaymentDate.UnixMilli(),
-	RequestedDateMillis:    requestedDate.UnixMilli(),
+	RequestedDateMillis:    disbursementDate.UnixMilli(),
 	Installments:           24,
 	DebitServicePercentage: 0,
 	Mdr:                    0.05,

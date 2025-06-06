@@ -1,7 +1,7 @@
 export type PaymentPlanParams = {
     requestedAmount: number;
     firstPaymentDate: Date;
-    requestedDate: Date;
+    disbursementDate: Date;
     installments: number;
     debitServicePercentage: number;
     mdr: number;
@@ -66,7 +66,7 @@ export type DownPaymentPlanResponse = {
  * @typedef {Object} PaymentPlanParams
  * @property {number} requestedAmount
  * @property {Date} firstPaymentDate
- * @property {Date} requestedDate
+ * @property {Date} disbursementDate
  * @property {number} installments
  * @property {number} debitServicePercentage
  * @property {number} mdr

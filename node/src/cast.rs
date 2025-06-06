@@ -21,7 +21,7 @@ pub fn cast_js_object_to_param(
     };
     let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
     let first_payment_date: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
-    let disbursement_date: Handle<JsDate> = obj.get(cx, "requestedDate")?;
+    let disbursement_date: Handle<JsDate> = obj.get(cx, "disbursementDate")?;
     let installments: Handle<JsValue> = obj.get(cx, "installments")?;
     let debt_service_percentage: Handle<JsValue> = obj.get(cx, "debitServicePercentage")?;
     let mdr: Handle<JsValue> = obj.get(cx, "mdr")?;
