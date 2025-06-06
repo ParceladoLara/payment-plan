@@ -121,7 +121,7 @@ pub struct DownPaymentResponse {
 }
 
 #[cfg(feature = "simple")]
-const P: BMP = BMP {};
+const P: Simple = Simple {};
 #[cfg(feature = "iterative")]
 const P: Iterative = Iterative {};
 
