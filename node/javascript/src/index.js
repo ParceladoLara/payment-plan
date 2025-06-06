@@ -1,4 +1,4 @@
-const funcs = require('../../native/index.node');
+const funcs = require('../native/index.node');
 const __calculatePlan = funcs.calculatePlan;
 const __calculateDownPaymentPlan = funcs.calculateDownPaymentPlan;
 const __nextDisbursementDate = funcs.nextDisbursementDate;

@@ -19,7 +19,7 @@
   "scripts": {
     "start": "tsx ./ts/index.ts",
     "build": "cross-env FEATURE=$FEATURE cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE && npx tsc && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
+    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE && npx tsc && rm -rf javascript/native && mkdir javascript/native && mv ./index.node ./javascript/native/index.node",
     "build:simple": "cross-env FEATURE=simple npm run build:release",
     "build:iterative": "cross-env FEATURE=iterative npm run build:release",
     "test:simple": "npm run build:simple && node --test 'javascript/test/simple/*.spec.*'",
