@@ -1,37 +1,18 @@
 {
-  "name": "@ParceladoLara/payment-plan-node",
+  "name": "payment-plan-node",
   "version": "2.1.8",
   "description": "",
   "main": "./javascript/src/index.js",
   "module": "./javascript/src/index.js",
   "author": "Victor Ribeiro de Lima",
-  "types": "./javascript/types/src/index.d.ts",
+  "types": "./types/src/index.d.ts",
   "license": "",
-  "files": [
-    "javascript/src/index.js",
-    "javascript/types/src/index.d.ts",
-    "javascript/types/src/index.d.ts.map",
-    "native/index.node"
-  ],
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "scripts": {
-    "start": "tsx ./ts/index.ts",
-    "build": "cross-env FEATURE=$FEATURE cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE && npx tsc && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
-    "build:simple": "cross-env FEATURE=simple npm run build:release",
-    "build:iterative": "cross-env FEATURE=iterative npm run build:release",
-    "test:simple": "npm run build:simple && node --test 'javascript/test/simple/*.spec.*'",
-    "test:iterative": "npm run build:iterative && node --test 'javascript/test/iterative/*.spec.*'",
-    "test": "npm run test:simple && npm run test:iterative"
-  },
-  "dependencies": {
-    "@mapbox/node-pre-gyp": "2.0.0"
+    "build": "npx tsc",
+    "test": "node --test './test/*.spec.*'"
   },
   "devDependencies": {
     "@types/node": "22.5.4",
-    "cargo-cp-artifact": "0.1",
     "cross-env": "^7.0.3",
     "i": "0.3.7",
     "ts-loader": "9.5.1",
@@ -40,24 +21,5 @@
     "tsconfig-paths": "4.2.0",
     "tsx": "4.19.1",
     "typescript": "5.4.5"
-  },
-  "os": [
-    "darwin",
-    "linux",
-    "win32"
-  ],
-  "cpu": [
-    "x64"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ParceladoLara/payment-plan.git"
-  },
-  "binary": {
-    "module_name": "index",
-    "module_path": "./native",
-    "host": "https://github.com/ParceladoLara/payment-plan/releases/download/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
-    "remote_path": "v{version}"
   }
 }

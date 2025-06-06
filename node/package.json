@@ -17,29 +17,17 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "start": "tsx ./ts/index.ts",
     "build": "cross-env FEATURE=$FEATURE cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE && npx tsc && rm -rf javascript/native && mkdir javascript/native && mv ./index.node ./javascript/native/index.node",
+    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE",
     "build:simple": "cross-env FEATURE=simple npm run build:release",
-    "build:iterative": "cross-env FEATURE=iterative npm run build:release",
-    "test:simple": "npm run build:simple && node --test 'javascript/test/simple/*.spec.*'",
-    "test:iterative": "npm run build:iterative && node --test 'javascript/test/iterative/*.spec.*'",
-    "test": "npm run test:simple && npm run test:iterative"
+    "build:iterative": "cross-env FEATURE=iterative npm run build:release"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "2.0.0"
   },
   "devDependencies": {
-    "@types/node": "22.5.4",
     "cargo-cp-artifact": "0.1",
-    "cross-env": "^7.0.3",
-    "i": "0.3.7",
-    "ts-loader": "9.5.1",
-    "ts-node": "10.9.2",
-    "tsc-alias": "1.8.10",
-    "tsconfig-paths": "4.2.0",
-    "tsx": "4.19.1",
-    "typescript": "5.4.5"
+    "cross-env": "^7.0.3"
   },
   "os": [
     "darwin",

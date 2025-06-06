@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import * as assert from 'node:assert';
-import { calculatePlan } from '../../src/index.js';
+import { calculatePlan } from '../src/index.js';
 
 test('calculate payment plan test 0', () => {
   /**

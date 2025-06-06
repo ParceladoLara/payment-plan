@@ -6,8 +6,8 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "removeComments": false,
-    "rootDir": "./javascript",
-    "outDir": "./javascript/types",
+    "rootDir": ".",
+    "outDir": "./types",
   },
-  "include": ["./javascript/src/*.js"]
+  "include": ["./src/*.js"]
 }

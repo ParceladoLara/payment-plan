@@ -2,13 +2,15 @@ test:
 	make clean
 	make build-go-sdk
 	make build-python-sdk
+	make build-node-sdk
 	cargo test
 	cd cli && make test
-	cd node && npm i && npm run test
 	cd wasm && npm i && npm run test
 	cd cli && make test
 	cd sdks/go && go test ./...
 	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
+	cd sdks/node && npm test
+
 
 clean:
 	cargo clean
@@ -17,6 +19,8 @@ clean:
 	rm -rf ./sdks/go/internal/libs/windows
 	rm -rf ./sdks/go/internal/libs/darwin
 	rm -rf ./sdks/python/payment_plan/_internal
+	rm -rf ./sdks/node/node_modules
+	rm -rf ./sdks/node/native
 	mkdir -p ./sdks/go/internal/libs/linux
 	mkdir -p ./sdks/go/internal/libs/windows
 	mkdir -p ./sdks/go/internal/libs/darwin
@@ -57,3 +61,10 @@ build-python-sdk-linux:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
 	cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language python --out-dir sdks/python/payment_plan/_internal
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/python/payment_plan/_internal/libpayment_plan_uniffi.so
+
+build-node-sdk:
+	cd node && npm run build:iterative
+	mkdir -p sdks/node/native
+	cp ./node/index.node sdks/node/native/index.node
+	cd sdks/node && npm i
+	cd sdks/node && npm run build
