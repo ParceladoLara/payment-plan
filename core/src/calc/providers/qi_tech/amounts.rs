@@ -74,7 +74,7 @@ mod test {
             settled_to_merchant: 7059.45,
         };
 
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
 
@@ -82,7 +82,7 @@ mod test {
             disbursement_only_on_business_days: false,
             requested_amount: 7431.0,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: 18,
             debit_service_percentage: 0,
             mdr: 0.05,

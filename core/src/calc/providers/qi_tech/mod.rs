@@ -42,7 +42,7 @@ impl PaymentPlan for QiTech {
 
         if params.disbursement_only_on_business_days {
             //Change the base date to the next business day
-            params.requested_date = get_next_business_day(params.requested_date);
+            params.disbursement_date = get_next_business_day(params.disbursement_date);
         }
 
         let mut response = Vec::with_capacity(params.installments as usize);
@@ -189,7 +189,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         tec_monthly,
         effective_interest_rate: eir_monthly,
         total_effective_cost: tec_monthly,
-        disbursement_date: params.requested_date,
+        disbursement_date: params.disbursement_date,
         pre_disbursement_amount,
         paid_total_iof: paid_iof,
         paid_contract_amount: requested_amount + paid_iof,
@@ -224,7 +224,7 @@ mod test {
 
     #[test]
     fn test_qi_tech() {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
@@ -234,7 +234,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -254,7 +254,7 @@ mod test {
 
         let expected = Response {
             installment: 48,
-            disbursement_date: requested_date,
+            disbursement_date: disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 1461,
             days_index: 0.091322653312291,
@@ -293,7 +293,7 @@ mod test {
 
     #[test]
     fn test_qi_tech_wrong_amount() {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
@@ -303,7 +303,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 0.0,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -322,7 +322,7 @@ mod test {
 
     #[test]
     fn test_qi_tech_wrong_installments() {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
@@ -332,7 +332,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: 0,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -354,7 +354,7 @@ mod test {
 
     #[test]
     fn test_qi_tech_min_installment_amount_reached() {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
@@ -364,7 +364,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 200.43,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -387,7 +387,7 @@ mod test {
         let expected = Response {
             installment: 2,
             due_date: expected_due_date,
-            disbursement_date: params.requested_date,
+            disbursement_date: params.disbursement_date,
             accumulated_days: 61,
             days_index: 0.904902610445393,
             accumulated_days_index: 1.8553874582128072,
@@ -425,7 +425,7 @@ mod test {
 
     #[test]
     fn test_qi_tech_max_amount_reached() {
-        let requested_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap();
 
@@ -435,7 +435,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 2000.43,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -458,7 +458,7 @@ mod test {
         let expected = Response {
             installment: 5,
             due_date: expected_due_date,
-            disbursement_date: params.requested_date,
+            disbursement_date: params.disbursement_date,
             accumulated_days: 151,
             days_index: 0.780857472156382,
             accumulated_days_index: 4.313849574971558,

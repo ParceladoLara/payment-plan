@@ -22,7 +22,7 @@ pub trait PaymentPlan {
             until the number of installments is reached or the minimum installment amount is reached.
 
         Because the customer will start the actual payment after the last installment of the down payment plan,
-        in every iteration, we must update the "requested_date" and "first_payment_date" of the actual payment plan.
+        in every iteration, we must update the "disbursement_date" and "first_payment_date" of the actual payment plan.
 
     */
     fn calculate_down_payment_plan(
@@ -50,7 +50,7 @@ pub trait PaymentPlan {
 
         for i in 1..=params.installments {
             base_params.first_payment_date = contract_first_payment_date;
-            base_params.requested_date = contract_start_date;
+            base_params.disbursement_date = contract_start_date;
             let installment_amount = down_payment_amount / i as f64;
 
             if installment_amount < min_installment_amount && i != 1 {

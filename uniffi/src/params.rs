@@ -6,7 +6,7 @@ use chrono::{DateTime, Utc};
 pub struct Params {
     pub requested_amount: f64,
     pub first_payment_date: SystemTime,
-    pub requested_date: SystemTime,
+    pub disbursement_date: SystemTime,
     pub installments: u32,
     pub debit_service_percentage: u16,
     pub mdr: f64,
@@ -21,16 +21,16 @@ pub struct Params {
 
 impl Into<core_payment_plan::Params> for Params {
     fn into(self) -> core_payment_plan::Params {
-        let requested_date: DateTime<Utc> = self.requested_date.into();
+        let disbursement_date: DateTime<Utc> = self.disbursement_date.into();
         let first_payment_date: DateTime<Utc> = self.first_payment_date.into();
 
-        let requested_date = requested_date.date_naive();
+        let disbursement_date = disbursement_date.date_naive();
         let first_payment_date = first_payment_date.date_naive();
 
         core_payment_plan::Params {
             requested_amount: self.requested_amount,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             installments: self.installments,
             debit_service_percentage: self.debit_service_percentage,
             mdr: self.mdr,

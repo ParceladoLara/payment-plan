@@ -10,7 +10,7 @@ pub struct PreparedCalculation {
 }
 
 pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
-    let requested_date = params.requested_date;
+    let disbursement_date = params.disbursement_date;
     let mut prepared_calculations: Vec<PreparedCalculation> = Vec::new();
     let first_payment_date = params.first_payment_date;
     let installments = params.installments;
@@ -25,7 +25,7 @@ pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
             due_date = add_months(due_date, 1);
         }
 
-        let accumulated_days = due_date.signed_duration_since(requested_date).num_days();
+        let accumulated_days = due_date.signed_duration_since(disbursement_date).num_days();
         let exponent = (accumulated_days as f64) / 30.0;
         let days_index = base.powf(exponent);
         let mut accumulated_days_index = days_index;
@@ -69,7 +69,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 8800.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 18).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 18).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 18).unwrap(),
             installments: 24,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -122,7 +122,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 6000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 18).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 17).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 17).unwrap(),
             installments: 18,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -175,7 +175,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 1300.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 21).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 21).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 21).unwrap(),
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -228,7 +228,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 1600.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 29).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 29).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 29).unwrap(),
             installments: 9,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -281,7 +281,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 1000.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 08).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 10).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 10).unwrap(),
             installments: 9,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -334,7 +334,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 4580.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 05).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 04).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 04).unwrap(),
             installments: 24,
             debit_service_percentage: 0,
             mdr: 0.01,
@@ -387,7 +387,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 09).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 09).unwrap(),
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -441,7 +441,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
             installments: 6,
             debit_service_percentage: 0,
             mdr: 0.029900000000000003,
