@@ -4,25 +4,24 @@ use calc::PaymentPlan;
 use err::PaymentPlanError;
 use serde::{Deserialize, Serialize};
 
-#[cfg(feature = "bmp")]
-use calc::providers::bmp::BMP;
-#[cfg(feature = "qitech")]
-use calc::providers::qi_tech::QiTech;
+#[cfg(feature = "iterative")]
+use calc::providers::iterative::Iterative;
+#[cfg(feature = "simple")]
+use calc::providers::simple::Simple;
 
 // Default to BMP if no feature is specified
-#[cfg(not(any(feature = "bmp", feature = "qitech")))]
-use calc::providers::qi_tech::QiTech;
+#[cfg(not(any(feature = "simple", feature = "iterative")))]
+use calc::providers::iterative::Iterative;
 
 mod calc;
 mod err;
 mod util;
 
-#[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq)]
+#[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]
 pub struct Installment {
     accumulated_days: i64,
     factor: f64,
     accumulated_factor: f64,
-    installment_amount: f64,
     due_date: chrono::NaiveDate,
 }
 
@@ -99,6 +98,7 @@ pub struct Response {
     pub pre_disbursement_amount: f64,
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
+    pub installments: Vec<Installment>,
 }
 
 #[derive(Debug, Deserialize, Clone, Copy)]
@@ -120,14 +120,14 @@ pub struct DownPaymentResponse {
     pub plans: Vec<Response>,    // The payment plans available for the down payment
 }
 
-#[cfg(feature = "bmp")]
+#[cfg(feature = "simple")]
 const P: BMP = BMP {};
-#[cfg(feature = "qitech")]
-const P: QiTech = QiTech {};
+#[cfg(feature = "iterative")]
+const P: Iterative = Iterative {};
 
 // Default to BMP if no feature is specified
-#[cfg(not(any(feature = "bmp", feature = "qitech")))]
-const P: QiTech = QiTech {};
+#[cfg(not(any(feature = "simple", feature = "iterative")))]
+const P: Iterative = Iterative {};
 
 pub fn calculate_down_payment_plan(
     params: DownPaymentParams,

@@ -1,4 +1,4 @@
-use crate::{util::add_months, Params};
+use crate::{util::add_months, Installment, Params};
 
 #[derive(Debug, Clone, Copy)]
 pub struct PreparedCalculation {
@@ -7,6 +7,7 @@ pub struct PreparedCalculation {
     pub accumulated_days: i64,
     pub days_index: f64,
     pub accumulated_days_index: f64,
+    pub installment_struct: Installment,
 }
 
 pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
@@ -33,12 +34,20 @@ pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
             accumulated_days_index += prepared_calculations[j as usize].days_index;
         }
 
+        let installment = Installment {
+            accumulated_days,
+            factor: days_index,
+            accumulated_factor: accumulated_days_index,
+            due_date,
+        };
+
         prepared_calculations.push(PreparedCalculation {
             installment: i + 1,
             due_date,
             accumulated_days,
             days_index,
             accumulated_days_index,
+            installment_struct: installment,
         });
     }
 
@@ -59,7 +68,7 @@ mod test {
     Test 7 - (2900 / 6) = (3314.5935321072 / 552.4322553512001)
      */
 
-    use crate::{calc::providers::bmp::prepare::prepare_calculation, Params};
+    use crate::{calc::providers::simple::prepare::prepare_calculation, Params};
 
     #[test]
     fn test_prepare_calculus_test_0() {

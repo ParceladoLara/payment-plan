@@ -1,8 +1,8 @@
 use crate::util::round_decimal_cases;
 
-use super::{installment::InstallmentData, QiTechParams};
+use super::{installment::InstallmentData, InnerParams};
 
-pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
+pub fn calc(qi_params: &InnerParams, data: &InstallmentData) -> f64 {
     let mut total_iof = 0.0;
     let params = qi_params.params;
     let installments = params.installments;
@@ -61,7 +61,7 @@ pub fn calc(qi_params: &QiTechParams, data: &InstallmentData) -> f64 {
 #[cfg(test)]
 mod test {
     use crate::{
-        calc::providers::qi_tech::{installment::InstallmentData, QiTechParams},
+        calc::providers::iterative::{installment::InstallmentData, InnerParams},
         Params,
     };
 
@@ -70,7 +70,7 @@ mod test {
         let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
-        let params = QiTechParams {
+        let params = InnerParams {
             params: Params {
                 disbursement_only_on_business_days: false,
                 requested_amount: 7431.0,

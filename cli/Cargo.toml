@@ -14,5 +14,5 @@ clap = { version = "4.5.17", features = ["derive"] }
 prost-build = "0.13.2"
 
 [features]
-bmp = ["core_payment_plan/bmp"]
-qitech = ["core_payment_plan/qitech"]
+simple = ["core_payment_plan/simple"]
+iterative = ["core_payment_plan/iterative"]

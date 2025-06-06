@@ -102,7 +102,7 @@ jobs:
           override: true
 
       - name: Build native
-        run: cd node && npm run build:qitech # for now we are using qitech
+        run: cd node && npm run build:iterative # for now we are using iterative
       - name: Package the asset
         # This will make a node-pre-gyp package.
         run: cd node && npx node-pre-gyp package
@@ -237,7 +237,7 @@ jobs:
 #      - name: Build native
 #        run: |
 #          cd node
-#          npm run build:qitech
+#          npm run build:iterative
 #        shell: alpine.sh --root {0}
 #
 #      - name: Package the asset

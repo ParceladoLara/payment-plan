@@ -6,12 +6,12 @@
   "license": "",
   "scripts": {
     "build": "wasm-pack build --target nodejs --release -- --features $FEATURE",
-    "build:bmp": "FEATURE=bmp npm run build",
-    "build:qitech": "FEATURE=qitech npm run build",
-    "test:bmp": "npm run build:bmp && glob -c \"tsx --test --test-reporter spec \" \"./test/bmp/**/*.spec.ts\"",
-    "test:qitech": "npm run build:qitech && glob -c \"tsx --test --test-reporter spec \" \"./test/qitech/**/*.spec.ts\"",
-    "build:web": "rm -rf pkg && wasm-pack build --out-name index --release -- --features qitech",
-    "test": "npm run test:bmp && npm run test:qitech"
+    "build:simple": "FEATURE=simple npm run build",
+    "build:iterative": "FEATURE=iterative npm run build",
+    "test:simple": "npm run build:simple && glob -c \"tsx --test --test-reporter spec \" \"./test/simple/**/*.spec.ts\"",
+    "test:iterative": "npm run build:iterative && glob -c \"tsx --test --test-reporter spec \" \"./test/iterative/**/*.spec.ts\"",
+    "build:web": "rm -rf pkg && wasm-pack build --out-name index --release -- --features iterative",
+    "test": "npm run test:simple && npm run test:iterative"
   },
   "devDependencies": {
     "@types/node": "22.5.4",

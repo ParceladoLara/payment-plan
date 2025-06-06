@@ -17,9 +17,17 @@ mod prepare;
 
 const CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE: f64 = 0.0821917808219178;
 
-pub struct BMP;
+/**
+ * This is a simpler implementation of the payment plan calculation.
+ * It estimates the iof final iof value based on the overall iof percentage
+ * This results in less precise results, because the real iof value comes from a iterative calculation that uses the result of the previous iteration to calculate the next one.
+ * But it is much faster and simpler to understand.
+ * And as is cannot calculate the plan on business days only
+ * Right now it is here for legacy reasons, but it is not recommended to use it in new code.
+ */
+pub struct Simple;
 
-impl PaymentPlan for BMP {
+impl PaymentPlan for Simple {
     fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError> {
         let prepared_calculations = prepare_calculation(params);
         let calculated = calculate(params, prepared_calculations);
@@ -145,6 +153,7 @@ fn calculate(
             pre_disbursement_amount: amounts.total_amount,
             paid_total_iof: total_iof,
             paid_contract_amount: amounts.contract_amount,
+            installments: vec![prepared_calculation.installment_struct],
         };
 
         responses.push(response);
@@ -175,7 +184,7 @@ mod test {
 
     use crate::{calc::PaymentPlan, Params};
 
-    const BMP: super::BMP = super::BMP {};
+    const BMP: super::Simple = super::Simple {};
 
     #[test]
     fn test_calculate_payment_plan_test_0() {
@@ -1710,7 +1719,7 @@ mod test {
 mod down_payment_test {
     use crate::{calc::PaymentPlan, DownPaymentParams, Params};
 
-    const BMP: super::BMP = super::BMP {};
+    const BMP: super::Simple = super::Simple {};
 
     #[allow(deprecated)]
     const PLAN_PARAM: Params = Params {

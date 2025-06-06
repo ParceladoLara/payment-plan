@@ -20,15 +20,22 @@ mod installment;
 mod iof;
 
 #[derive(Default, Debug, Clone, Copy)]
-struct QiTechParams {
+struct InnerParams {
     params: Params,
     main_value: f64,
     daily_interest_rate: f64,
 }
 
-pub struct QiTech;
+/**
+ * This is the main implementation of the payment plan calculation.
+ * It uses an iterative approach to calculate the payment plan based on the provided parameters.
+ * It calculates the payment plan by iterating through the installments over and over again to better approximate the real iof value.
+ * It's slower than the simple implementation, but it provides a more accurate result.
+ * This is the recommended implementation for most cases.
+ */
+pub struct Iterative;
 
-impl PaymentPlan for QiTech {
+impl PaymentPlan for Iterative {
     fn calculate_payment_plan(
         &self,
         mut params: Params,
@@ -60,7 +67,7 @@ impl PaymentPlan for QiTech {
 
         for i in 1..=params.installments {
             params.installments = i;
-            let params = QiTechParams {
+            let params = InnerParams {
                 params,
                 main_value,
                 daily_interest_rate,
@@ -80,7 +87,7 @@ impl PaymentPlan for QiTech {
     }
 }
 
-fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
+fn calc(mut params: InnerParams) -> Result<Response, PaymentPlanError> {
     let debit_service_percentage = params.params.debit_service_percentage;
     let requested_amount = params.params.requested_amount;
 
@@ -193,6 +200,7 @@ fn calc(mut params: QiTechParams) -> Result<Response, PaymentPlanError> {
         pre_disbursement_amount,
         paid_total_iof: paid_iof,
         paid_contract_amount: requested_amount + paid_iof,
+        installments: data.installments,
         ..Default::default()
     };
 
@@ -244,7 +252,7 @@ mod test {
             interest_rate: 0.035,
         };
 
-        let qi_tech = QiTech;
+        let qi_tech = Iterative;
         let mut resp = qi_tech.calculate_payment_plan(params).unwrap();
         assert_eq!(resp.len(), 48);
 
@@ -286,6 +294,7 @@ mod test {
             pre_disbursement_amount: 12853.48,
             paid_total_iof: 434.86,
             paid_contract_amount: 13288.29,
+            installments: vec![],
         };
 
         assert_eq!(resp, expected);
@@ -313,7 +322,7 @@ mod test {
             interest_rate: 0.035,
         };
 
-        let qi_tech = QiTech;
+        let qi_tech = Iterative;
         let resp = qi_tech.calculate_payment_plan(params);
         assert_eq!(resp.is_err(), true);
 
@@ -342,7 +351,7 @@ mod test {
             interest_rate: 0.035,
         };
 
-        let qi_tech = QiTech;
+        let qi_tech = Iterative;
         let resp = qi_tech.calculate_payment_plan(params);
         assert_eq!(resp.is_err(), true);
 
@@ -374,7 +383,7 @@ mod test {
             interest_rate: 0.035,
         };
 
-        let qi_tech = QiTech;
+        let qi_tech = Iterative;
 
         let mut resp = qi_tech.calculate_payment_plan(params).unwrap();
 
@@ -445,7 +454,7 @@ mod test {
             interest_rate: 0.035,
         };
 
-        let qi_tech = QiTech;
+        let qi_tech = Iterative;
 
         let mut resp = qi_tech.calculate_payment_plan(params).unwrap();
 

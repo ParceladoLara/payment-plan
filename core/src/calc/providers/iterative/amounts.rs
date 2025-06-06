@@ -59,7 +59,7 @@ pub fn calc(
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::providers::qi_tech::amounts::AmountsResponse, Params};
+    use crate::{calc::providers::iterative::amounts::AmountsResponse, Params};
 
     #[test]
     fn test_calc() {

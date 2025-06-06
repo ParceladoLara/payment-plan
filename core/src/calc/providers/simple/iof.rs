@@ -33,7 +33,7 @@ pub fn calculate_iof(params: Params, accumulated_days: Vec<i64>, installments: f
 
 #[cfg(test)]
 mod test {
-    use crate::{calc::providers::bmp::iof::calculate_iof, Params};
+    use crate::{calc::providers::simple::iof::calculate_iof, Params};
 
     #[test]
     fn test_total_iof_test_6() {
