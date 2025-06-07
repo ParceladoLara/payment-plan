@@ -19,7 +19,7 @@ var disbursementDate = time.Date(2022, time.March, 18, 0, 0, 0, 0, time.Local)
 var param = protos.PlanParams{
 	RequestedAmount:        8800,
 	FirstPaymentDateMillis: firstPaymentDate.UnixMilli(),
-	RequestedDateMillis:    disbursementDate.UnixMilli(),
+	DisbursementDateMillis: disbursementDate.UnixMilli(),
 	Installments:           24,
 	DebitServicePercentage: 0,
 	Mdr:                    0.05,
@@ -31,10 +31,10 @@ var param = protos.PlanParams{
 	MaxTotalAmount:         1000000,
 }
 
-var qiTechParam = protos.PlanParams{
+var iterativeParam = protos.PlanParams{
 	RequestedAmount:        8800,
 	FirstPaymentDateMillis: firstPaymentDate.UnixMilli(),
-	RequestedDateMillis:    disbursementDate.UnixMilli(),
+	DisbursementDateMillis: disbursementDate.UnixMilli(),
 	Installments:           24,
 	DebitServicePercentage: 0,
 	Mdr:                    0.05,
@@ -53,8 +53,8 @@ var downPaymentParams = protos.DownPaymentParams{
 	MinInstallmentAmount:   100,
 }
 
-var qiTechDownPaymentParams = protos.DownPaymentParams{
-	Params:                 &qiTechParam,
+var iterativeDownPaymentParams = protos.DownPaymentParams{
+	Params:                 &iterativeParam,
 	FirstPaymentDateMillis: time.Date(2022, time.June, 20, 0, 0, 0, 0, time.UTC).UnixMilli(),
 	RequestedAmount:        200,
 	Installments:           2,
@@ -83,7 +83,7 @@ type expectedValues struct {
 	TotalIof                   float64
 }
 
-func TestBMPPlan(t *testing.T) {
+func TestSimplePlan(t *testing.T) {
 
 	expected := expectedValues{
 		ContractAmount:             9037.318869753424,
@@ -140,10 +140,10 @@ func TestBMPPlan(t *testing.T) {
 	})
 
 }
-func TestQiTechPlan(t *testing.T) {
+func TestIterativePlan(t *testing.T) {
 	var plan protos.PlanResponses
 
-	err := callBuff(&qiTechParam, &plan)
+	err := callBuff(&iterativeParam, &plan)
 	if err != nil {
 		t.Errorf("Error running payment-plan CLI: %s", err)
 	}
@@ -161,18 +161,16 @@ func TestBMPDownPayment(t *testing.T) {
 
 }
 
-func TestQiTechDownPayment(t *testing.T) {
+func TestIterativeDownPayment(t *testing.T) {
 	var plan protos.DownPaymentResponses
 
-	err := callBuff(&qiTechDownPaymentParams, &plan, "-t", "down-payment")
+	err := callBuff(&iterativeDownPaymentParams, &plan, "-t", "down-payment")
 	if err != nil {
 		t.Fatalf("Error running payment-plan CLI: %s", err)
 	}
 
 	downPaymentHelper(t, &plan)
 }
-
-//chrono::NaiveDate::from_ymd(2024, 12, 25),
 
 func TestNextDisbursementDate(t *testing.T) {
 	date := time.Date(2078, time.December, 25, 0, 0, 0, 0, time.UTC).UnixMilli()

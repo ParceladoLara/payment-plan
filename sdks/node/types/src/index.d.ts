@@ -13,6 +13,12 @@ export type PaymentPlanParams = {
     maxTotalAmount?: number;
     disbursementOnlyOnBusinessDays?: boolean;
 };
+export type Invoice = {
+    accumulatedDays: number;
+    factor: number;
+    accumulatedFactor: number;
+    dueDate: Date;
+};
 export type PaymentPlanResponse = {
     installment: number;
     dueDate: Date;
@@ -47,6 +53,7 @@ export type PaymentPlanResponse = {
     preDisbursementAmount: number;
     paidTotalIOF: number;
     paidContractAmount: number;
+    invoices: Invoice[];
 };
 export type DownPaymentPlanParams = {
     params: PaymentPlanParams;
@@ -77,6 +84,13 @@ export type DownPaymentPlanResponse = {
  * @property {number} [minInstallmentAmount]
  * @property {number} [maxTotalAmount]
  * @property {boolean} [disbursementOnlyOnBusinessDays]
+ */
+/**
+ * @typedef {Object} Invoice
+ * @property {number} accumulatedDays
+ * @property {number} factor
+ * @property {number} accumulatedFactor
+ * @property {Date} dueDate
  */
 /**
  * @typedef {Object} PaymentPlanResponse
@@ -113,6 +127,7 @@ export type DownPaymentPlanResponse = {
  * @property {number} preDisbursementAmount
  * @property {number} paidTotalIOF
  * @property {number} paidContractAmount
+ * @property {Invoice[]} invoices
  */
 /**
  * @typedef {Object} DownPaymentPlanParams

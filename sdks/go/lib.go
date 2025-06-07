@@ -6,6 +6,7 @@ import (
 	"github.com/ParceladoLara/payment-plan-go-sdk/internal/payment_plan_uniffi"
 )
 
+type Invoice = payment_plan_uniffi.Invoice
 type Params = payment_plan_uniffi.Params
 type Response = payment_plan_uniffi.Response
 type DownPaymentParams = payment_plan_uniffi.DownPaymentParams

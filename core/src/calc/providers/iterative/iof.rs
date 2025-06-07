@@ -133,7 +133,7 @@ mod test {
             accumulated_factor: 12.606881880871965,
             last_due_date,
             due_dates,
-            installments: vec![],
+            invoices: vec![],
         };
 
         let iof = super::calc(&params, &i_cal);

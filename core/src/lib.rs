@@ -18,11 +18,11 @@ mod err;
 mod util;
 
 #[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]
-pub struct Installment {
-    accumulated_days: i64,
-    factor: f64,
-    accumulated_factor: f64,
-    due_date: chrono::NaiveDate,
+pub struct Invoice {
+    pub accumulated_days: i64,
+    pub factor: f64,
+    pub accumulated_factor: f64,
+    pub due_date: chrono::NaiveDate,
 }
 
 #[derive(Debug, Default, Clone, Copy, Deserialize)]
@@ -98,7 +98,7 @@ pub struct Response {
     pub pre_disbursement_amount: f64,
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
-    pub installments: Vec<Installment>,
+    pub invoices: Vec<Invoice>,
 }
 
 #[derive(Debug, Deserialize, Clone, Copy)]

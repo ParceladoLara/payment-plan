@@ -1,6 +1,6 @@
 {
-  "name": "@ParceladoLara/payment-plan-node",
-  "version": "2.1.8",
+  "name": "payment-plan-node",
+  "version": "2.3.4",
   "description": "",
   "main": "./javascript/src/index.js",
   "module": "./javascript/src/index.js",

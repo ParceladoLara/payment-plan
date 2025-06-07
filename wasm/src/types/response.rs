@@ -6,6 +6,46 @@ use super::date::Date;
 #[allow(non_snake_case)]
 #[derive(Tsify, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
+pub struct Invoice {
+    pub accumulated_days: i64,
+    pub factor: f64,
+    pub accumulated_factor: f64,
+    pub due_date: Date,
+}
+
+impl From<core_payment_plan::Invoice> for Invoice {
+    fn from(value: core_payment_plan::Invoice) -> Self {
+        Self {
+            accumulated_days: value.accumulated_days,
+            factor: value.factor,
+            accumulated_factor: value.accumulated_factor,
+            due_date: value.due_date.into(),
+        }
+    }
+}
+
+impl Into<js_sys::Object> for Invoice {
+    fn into(self) -> js_sys::Object {
+        let obj = js_sys::Object::new();
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"accumulatedDays".into(),
+            &self.accumulated_days.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"factor".into(), &self.factor.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"accumulatedFactor".into(),
+            &self.accumulated_factor.into(),
+        );
+        let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &self.due_date.into());
+        obj
+    }
+}
+
+#[allow(non_snake_case)]
+#[derive(Tsify, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PaymentPlanResponse {
     pub installment: u32,
     pub due_date: Date,
@@ -48,6 +88,7 @@ pub struct PaymentPlanResponse {
     pub paid_contract_amount: f64,
     #[serde(rename = "preDisbursementAmount")]
     pub pre_disbursement_amount: f64,
+    pub invoices: Vec<Invoice>,
 }
 
 impl From<core_payment_plan::Response> for PaymentPlanResponse {
@@ -87,6 +128,7 @@ impl From<core_payment_plan::Response> for PaymentPlanResponse {
             paid_total_iof: value.paid_total_iof,
             paid_contract_amount: value.paid_contract_amount,
             pre_disbursement_amount: value.pre_disbursement_amount,
+            invoices: value.invoices.into_iter().map(|i| i.into()).collect(),
         }
     }
 }
@@ -188,6 +230,12 @@ impl Into<js_sys::Object> for PaymentPlanResponse {
             &"preDisbursementAmount".into(),
             &self.pre_disbursement_amount.into(),
         );
+        let array = js_sys::Array::new_with_length(self.invoices.len() as u32);
+        for (i, invoice) in self.invoices.into_iter().enumerate() {
+            let js_invoice: js_sys::Object = invoice.into();
+            let _ = js_sys::Reflect::set(&array, &i.into(), &js_invoice.into());
+        }
+        let _ = js_sys::Reflect::set(&obj, &"invoices".into(), &array.into());
         obj
     }
 }

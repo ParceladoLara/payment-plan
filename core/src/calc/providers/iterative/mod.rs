@@ -200,7 +200,7 @@ fn calc(mut params: InnerParams) -> Result<Response, PaymentPlanError> {
         pre_disbursement_amount,
         paid_total_iof: paid_iof,
         paid_contract_amount: requested_amount + paid_iof,
-        installments: data.installments,
+        invoices: data.invoices,
         ..Default::default()
     };
 
@@ -228,7 +228,7 @@ fn present_value(
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::{Installment, Params};
+    use crate::{Invoice, Params};
 
     #[test]
     fn test_iterative() {
@@ -294,290 +294,290 @@ mod test {
             pre_disbursement_amount: 12853.48,
             paid_total_iof: 434.86,
             paid_contract_amount: 13288.29,
-            installments: vec![
-                Installment {
+            invoices: vec![
+                Invoice {
                     accumulated_days: 31,
                     factor: 0.950484847767414,
                     accumulated_factor: 0.950484847767414,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 61,
                     factor: 0.904902610445393,
                     accumulated_factor: 1.8553874582128072,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 12, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 92,
                     factor: 0.860096219933525,
                     accumulated_factor: 2.7154836781463323,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 1, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 123,
                     factor: 0.817508424668844,
                     accumulated_factor: 3.532992102815176,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 2, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 151,
                     factor: 0.780857472156382,
                     accumulated_factor: 4.313849574971558,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 3, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 182,
                     factor: 0.742193195550606,
                     accumulated_factor: 5.056042770522164,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 4, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 212,
                     factor: 0.706599964940101,
                     accumulated_factor: 5.762642735462265,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 5, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 243,
                     factor: 0.671612560108552,
                     accumulated_factor: 6.434255295570817,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 6, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 273,
                     factor: 0.639404152814921,
                     accumulated_factor: 7.0736594483857385,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 7, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 304,
                     factor: 0.607743958850142,
                     accumulated_factor: 7.68140340723588,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 8, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 335,
                     factor: 0.577651424209242,
                     accumulated_factor: 8.259054831445122,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 9, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 365,
                     factor: 0.549949094845911,
                     accumulated_factor: 8.809003926291032,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 10, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 396,
                     factor: 0.522718281694443,
                     accumulated_factor: 9.331722207985475,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 11, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 426,
                     factor: 0.497650371538146,
                     accumulated_factor: 9.829372579523621,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 12, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 457,
                     factor: 0.473009137632831,
                     accumulated_factor: 10.302381717156452,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 1, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 488,
                     factor: 0.449588018175537,
                     accumulated_factor: 10.75196973533199,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 2, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 516,
                     factor: 0.429431860016068,
                     accumulated_factor: 11.181401595348058,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 3, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 547,
                     factor: 0.40816847609385,
                     accumulated_factor: 11.589570071441909,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 4, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 577,
                     factor: 0.388594011136961,
                     accumulated_factor: 11.97816408257887,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 5, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 608,
                     factor: 0.369352719518843,
                     accumulated_factor: 12.347516802097713,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 6, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 638,
                     factor: 0.351639735081282,
                     accumulated_factor: 12.699156537178995,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 7, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 669,
                     factor: 0.334228240067706,
                     accumulated_factor: 13.0333847772467,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 8, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 700,
                     factor: 0.317678877880324,
                     accumulated_factor: 13.351063655127025,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 9, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 730,
                     factor: 0.302444006921837,
                     accumulated_factor: 13.653507662048861,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 10, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 761,
                     factor: 0.287468445877269,
                     accumulated_factor: 13.940976107926131,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 11, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 791,
                     factor: 0.273682371377135,
                     accumulated_factor: 14.214658479303266,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 12, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 822,
                     factor: 0.26013094709502,
                     accumulated_factor: 14.474789426398285,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 1, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 853,
                     factor: 0.247250523649204,
                     accumulated_factor: 14.722039950047488,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 2, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 881,
                     factor: 0.236165662713833,
                     accumulated_factor: 14.958205612761322,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 3, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 912,
                     factor: 0.224471883972448,
                     accumulated_factor: 15.18267749673377,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 4, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 942,
                     factor: 0.213706924687313,
                     accumulated_factor: 15.396384421421084,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 5, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 973,
                     factor: 0.203125193778263,
                     accumulated_factor: 15.599509615199347,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 6, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1003,
                     factor: 0.193383954019807,
                     accumulated_factor: 15.792893569219153,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 7, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1034,
                     factor: 0.183808518097177,
                     accumulated_factor: 15.97670208731633,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 8, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1065,
                     factor: 0.174707211341949,
                     accumulated_factor: 16.15140929865828,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 9, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1095,
                     factor: 0.166328807848234,
                     accumulated_factor: 16.317738106506514,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 10, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1126,
                     factor: 0.158093011606965,
                     accumulated_factor: 16.47583111811348,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 11, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1156,
                     factor: 0.150511372414138,
                     accumulated_factor: 16.626342490527616,
                     due_date: chrono::NaiveDate::from_ymd_opt(2027, 12, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1187,
                     factor: 0.143058778896316,
                     accumulated_factor: 16.76940126942393,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 1, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1218,
                     factor: 0.135975201681057,
                     accumulated_factor: 16.905376471104987,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 2, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1247,
                     factor: 0.129666503471616,
                     accumulated_factor: 17.0350429745766,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 3, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1278,
                     factor: 0.123246046812752,
                     accumulated_factor: 17.158289021389354,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 4, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1308,
                     factor: 0.117335557478792,
                     accumulated_factor: 17.275624578868147,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 5, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1339,
                     factor: 0.111525669487934,
                     accumulated_factor: 17.387150248356082,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 6, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1369,
                     factor: 0.106177252260624,
                     accumulated_factor: 17.493327500616708,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 7, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1400,
                     factor: 0.100919869451302,
                     accumulated_factor: 17.59424737006801,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 8, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1431,
                     factor: 0.095922806752128,
                     accumulated_factor: 17.69017017682014,
                     due_date: chrono::NaiveDate::from_ymd_opt(2028, 9, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 1461,
                     factor: 0.091322653312291,
                     accumulated_factor: 17.78149283013243,
@@ -716,14 +716,14 @@ mod test {
             pre_disbursement_amount: 200.43,
             paid_total_iof: 1.53,
             paid_contract_amount: 201.96,
-            installments: vec![
-                Installment {
+            invoices: vec![
+                Invoice {
                     accumulated_days: 31,
                     factor: 0.950484847767414,
                     accumulated_factor: 0.950484847767414,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 61,
                     factor: 0.904902610445393,
                     accumulated_factor: 1.8553874582128072,
@@ -801,32 +801,32 @@ mod test {
             pre_disbursement_amount: 2000.41,
             paid_total_iof: 23.37,
             paid_contract_amount: 2023.8,
-            installments: vec![
-                Installment {
+            invoices: vec![
+                Invoice {
                     accumulated_days: 31,
                     factor: 0.950484847767414,
                     accumulated_factor: 0.950484847767414,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 61,
                     factor: 0.904902610445393,
                     accumulated_factor: 1.8553874582128072,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 12, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 92,
                     factor: 0.860096219933525,
                     accumulated_factor: 2.7154836781463323,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 1, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 123,
                     factor: 0.817508424668844,
                     accumulated_factor: 3.532992102815176,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 2, 23).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 151,
                     factor: 0.780857472156382,
                     accumulated_factor: 4.313849574971558,

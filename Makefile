@@ -10,6 +10,7 @@ test:
 	cd sdks/go && go test ./...
 	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 	cd sdks/node && npm test
+	cd cli && make test
 
 
 clean:
