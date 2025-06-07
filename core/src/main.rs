@@ -1,5 +1,7 @@
 use chrono::Datelike;
-use core_payment_plan::{calculate_down_payment_plan, DownPaymentParams, Params};
+use core_payment_plan::{
+    calculate_down_payment_plan, calculate_payment_plan, DownPaymentParams, Params,
+};
 
 fn main() {
     let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 04, 05).unwrap();
@@ -29,10 +31,12 @@ fn main() {
         requested_amount: 1000.0,
     };
 
+    let result = calculate_payment_plan(params).unwrap();
+
+    println!("Payment Plan: {:#?}", result);
+    return;
     let result = calculate_down_payment_plan(down_payment_params).unwrap();
 
-    println!("Result: {:#?}", result);
-    /*
     let mut buff = String::new();
     buff.push_str(r#"        expected = ["#);
 
@@ -54,6 +58,26 @@ fn main() {
         ));
 
         for j in &i.plans {
+            let mut invoices = String::new();
+            invoices.push_str("[");
+            for inv in &j.invoices {
+                invoices.push_str(&format!(
+                    r#"
+                        Invoice(
+                            accumulated_days={},
+                            accumulated_factor={},
+                            factor={},
+                            due_date=datetime({}, {}, {}, tzinfo=timezone(timedelta(hours=-3))),
+                        ),"#,
+                    inv.accumulated_days,
+                    inv.accumulated_factor,
+                    inv.factor,
+                    inv.due_date.year(),
+                    inv.due_date.month(),
+                    inv.due_date.day(),
+                ));
+            }
+            invoices.push_str("]");
             buff.push_str(&format!(
                 r#"
                     Response(
@@ -89,7 +113,8 @@ fn main() {
                         overall_iof={},
                         pre_disbursement_amount={},
                         paid_total_iof={},
-                        paid_contract_amount={}
+                        paid_contract_amount={},
+                        invoices={}
                     ),"#,
                 j.installment,
                 j.due_date.year(),
@@ -128,6 +153,7 @@ fn main() {
                 j.pre_disbursement_amount,
                 j.paid_total_iof,
                 j.paid_contract_amount,
+                invoices
             ));
         }
         buff.push_str("                ]\n");
@@ -135,5 +161,4 @@ fn main() {
     }
     buff.push_str("        ]\n");
     println!("{}", buff);
-     */
 }
