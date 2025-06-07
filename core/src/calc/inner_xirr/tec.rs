@@ -9,7 +9,7 @@ pub fn calculate_tec_monthly(
 ) -> Result<f64, PaymentPlanError> {
     let mut total_effective_cost_xirr = vec![Payment {
         amount: params.requested_amount,
-        date: params.requested_date,
+        date: params.disbursement_date,
     }];
     total_effective_cost_xirr.extend(tec_params);
 
@@ -17,7 +17,7 @@ pub fn calculate_tec_monthly(
     let tec_greater_than_two = total_effective_cost_xirr.len() > 2;
     let date_on_same_day = params
         .first_payment_date
-        .signed_duration_since(params.requested_date)
+        .signed_duration_since(params.disbursement_date)
         .num_days()
         == 0;
 
@@ -66,7 +66,7 @@ mod test {
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            requested_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
             installments: 6,
             debit_service_percentage: 0,
             mdr: 0.029900000000000003,

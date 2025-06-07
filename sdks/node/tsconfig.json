@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "removeComments": false,
+    "rootDir": ".",
+    "outDir": "./types",
+  },
+  "include": ["./src/*.js"]
+}

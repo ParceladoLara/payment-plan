@@ -1,0 +1,25 @@
+{
+  "name": "payment-plan-node",
+  "version": "2.1.8",
+  "description": "",
+  "main": "./javascript/src/index.js",
+  "module": "./javascript/src/index.js",
+  "author": "Victor Ribeiro de Lima",
+  "types": "./types/src/index.d.ts",
+  "license": "",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "node --test './test/*.spec.*'"
+  },
+  "devDependencies": {
+    "@types/node": "22.5.4",
+    "cross-env": "^7.0.3",
+    "i": "0.3.7",
+    "ts-loader": "9.5.1",
+    "ts-node": "10.9.2",
+    "tsc-alias": "1.8.10",
+    "tsconfig-paths": "4.2.0",
+    "tsx": "4.19.1",
+    "typescript": "5.4.5"
+  }
+}

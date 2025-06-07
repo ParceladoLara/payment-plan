@@ -4,24 +4,32 @@ use calc::PaymentPlan;
 use err::PaymentPlanError;
 use serde::{Deserialize, Serialize};
 
-#[cfg(feature = "bmp")]
-use calc::providers::bmp::BMP;
-#[cfg(feature = "qitech")]
-use calc::providers::qi_tech::QiTech;
+#[cfg(feature = "iterative")]
+use calc::providers::iterative::Iterative;
+#[cfg(feature = "simple")]
+use calc::providers::simple::Simple;
 
 // Default to BMP if no feature is specified
-#[cfg(not(any(feature = "bmp", feature = "qitech")))]
-use calc::providers::qi_tech::QiTech;
+#[cfg(not(any(feature = "simple", feature = "iterative")))]
+use calc::providers::iterative::Iterative;
 
 mod calc;
 mod err;
 mod util;
 
+#[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]
+pub struct Installment {
+    accumulated_days: i64,
+    factor: f64,
+    accumulated_factor: f64,
+    due_date: chrono::NaiveDate,
+}
+
 #[derive(Debug, Default, Clone, Copy, Deserialize)]
 pub struct Params {
     pub requested_amount: f64,
     pub first_payment_date: chrono::NaiveDate,
-    pub requested_date: chrono::NaiveDate,
+    pub disbursement_date: chrono::NaiveDate,
     pub installments: u32,
     pub debit_service_percentage: u16, // 0-100
     pub mdr: f64,                      // 0.0-1.0
@@ -38,10 +46,10 @@ impl Display for Params {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "Params {{ requested_amount: {}, first_payment_date: {}, requested_date: {}, installments: {}, debit_service_percentage: {}, mdr: {}, tac_percentage: {}, iof_overall: {}, iof_percentage: {}, interest_rate: {}, min_installment_amount: {}, max_total_amount: {} }}",
+            "Params {{ requested_amount: {}, first_payment_date: {}, disbursement_date: {}, installments: {}, debit_service_percentage: {}, mdr: {}, tac_percentage: {}, iof_overall: {}, iof_percentage: {}, interest_rate: {}, min_installment_amount: {}, max_total_amount: {} }}",
             self.requested_amount,
             self.first_payment_date,
-            self.requested_date,
+            self.disbursement_date,
             self.installments,
             self.debit_service_percentage,
             self.mdr,
@@ -55,7 +63,7 @@ impl Display for Params {
     }
 }
 
-#[derive(Debug, Serialize, Clone, Copy, Default, PartialEq)]
+#[derive(Debug, Serialize, Clone, Default, PartialEq)]
 pub struct Response {
     pub installment: u32,
     pub due_date: chrono::NaiveDate,
@@ -90,6 +98,7 @@ pub struct Response {
     pub pre_disbursement_amount: f64,
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
+    pub installments: Vec<Installment>,
 }
 
 #[derive(Debug, Deserialize, Clone, Copy)]
@@ -111,14 +120,14 @@ pub struct DownPaymentResponse {
     pub plans: Vec<Response>,    // The payment plans available for the down payment
 }
 
-#[cfg(feature = "bmp")]
-const P: BMP = BMP {};
-#[cfg(feature = "qitech")]
-const P: QiTech = QiTech {};
+#[cfg(feature = "simple")]
+const P: Simple = Simple {};
+#[cfg(feature = "iterative")]
+const P: Iterative = Iterative {};
 
 // Default to BMP if no feature is specified
-#[cfg(not(any(feature = "bmp", feature = "qitech")))]
-const P: QiTech = QiTech {};
+#[cfg(not(any(feature = "simple", feature = "iterative")))]
+const P: Iterative = Iterative {};
 
 pub fn calculate_down_payment_plan(
     params: DownPaymentParams,

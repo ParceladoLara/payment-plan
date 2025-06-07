@@ -11,7 +11,7 @@ use super::date::Date;
 pub struct Params {
     pub requested_amount: f64,
     pub first_payment_date: Date,
-    pub requested_date: Date,
+    pub disbursement_date: Date,
     pub installments: u32,
     pub debit_service_percentage: u16,
     pub mdr: f64,
@@ -31,7 +31,7 @@ impl TryInto<core_payment_plan::Params> for Params {
         Ok(core_payment_plan::Params {
             requested_amount: self.requested_amount,
             first_payment_date: self.first_payment_date.try_into()?,
-            requested_date: self.requested_date.try_into()?,
+            disbursement_date: self.disbursement_date.try_into()?,
             installments: self.installments,
             debit_service_percentage: self.debit_service_percentage,
             mdr: self.mdr,

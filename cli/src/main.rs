@@ -107,16 +107,16 @@ fn next_disbursement_date(buf: Vec<u8>) -> ExitCode {
         }
     };
     let date = i64::from_be_bytes(buf);
-    let requested_date = chrono::DateTime::from_timestamp_millis(date);
-    let requested_date = match requested_date {
+    let disbursement_date = chrono::DateTime::from_timestamp_millis(date);
+    let disbursement_date = match disbursement_date {
         Some(date) => date.date_naive(),
         None => {
-            eprintln!("Error: Invalid requested date");
+            eprintln!("Error: Invalid disbursement date");
             return ExitCode::FAILURE;
         }
     };
 
-    let response = core_payment_plan::next_disbursement_date(requested_date);
+    let response = core_payment_plan::next_disbursement_date(disbursement_date);
 
     let response = response
         .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())

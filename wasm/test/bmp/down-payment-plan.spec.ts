@@ -12,7 +12,7 @@ test("calculate down payment plan 2 installments", () => {
     minInstallmentAmount: 0.0,
     requestedAmount: 1000.0,
     firstPaymentDate: new Date("2022-06-20"),
-    requestedDate: new Date("2022-05-20"),
+    disbursementDate: new Date("2022-05-20"),
     installments: 1,
     debitServicePercentage: 0,
     mdr: 0.01,

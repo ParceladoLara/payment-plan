@@ -21,7 +21,7 @@ pub fn cast_js_object_to_param(
     };
     let requested_amount: Handle<JsValue> = obj.get(cx, "requestedAmount")?;
     let first_payment_date: Handle<JsDate> = obj.get(cx, "firstPaymentDate")?;
-    let requested_date: Handle<JsDate> = obj.get(cx, "requestedDate")?;
+    let disbursement_date: Handle<JsDate> = obj.get(cx, "disbursementDate")?;
     let installments: Handle<JsValue> = obj.get(cx, "installments")?;
     let debt_service_percentage: Handle<JsValue> = obj.get(cx, "debitServicePercentage")?;
     let mdr: Handle<JsValue> = obj.get(cx, "mdr")?;
@@ -44,7 +44,7 @@ pub fn cast_js_object_to_param(
     let interest_rate = any_to_number(cx, interest_rate)?;
 
     let first_payment_date = parser::js_date_to_naive(cx, first_payment_date)?;
-    let requested_date = parser::js_date_to_naive(cx, requested_date)?;
+    let disbursement_date = parser::js_date_to_naive(cx, disbursement_date)?;
 
     let min_installment_amount = match min_installment_amount {
         Some(value) => any_to_number(cx, value)?,
@@ -61,7 +61,7 @@ pub fn cast_js_object_to_param(
         min_installment_amount,
         requested_amount,
         first_payment_date,
-        requested_date,
+        disbursement_date: disbursement_date,
         installments,
         debit_service_percentage: debt_service_percentage,
         mdr,

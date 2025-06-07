@@ -23,11 +23,11 @@ impl TryInto<Params> for PlanParams {
             }
         };
 
-        let requested_date = chrono::DateTime::from_timestamp_millis(self.requested_date_millis);
-        let requested_date = match requested_date {
+        let disbursement_date = chrono::DateTime::from_timestamp_millis(self.requested_date_millis);
+        let disbursement_date = match disbursement_date {
             Some(date) => date.date_naive(),
             None => {
-                return Err("invalid requested date".to_string());
+                return Err("invalid disbursement date".to_string());
             }
         };
 
@@ -43,7 +43,7 @@ impl TryInto<Params> for PlanParams {
             mdr: self.mdr,
             tac_percentage: self.tac_percentage,
             first_payment_date,
-            requested_date,
+            disbursement_date: disbursement_date,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
         };
         return Ok(params);

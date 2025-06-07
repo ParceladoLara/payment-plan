@@ -1152,7 +1152,7 @@ class _UniffiConverterTypeDownPaymentResponse(_UniffiConverterRustBuffer):
 class Params:
     requested_amount: "float"
     first_payment_date: "Timestamp"
-    requested_date: "Timestamp"
+    disbursement_date: "Timestamp"
     installments: "int"
     debit_service_percentage: "int"
     mdr: "float"
@@ -1163,10 +1163,10 @@ class Params:
     min_installment_amount: "float"
     max_total_amount: "float"
     disbursement_only_on_business_days: "bool"
-    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", requested_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool"):
+    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool"):
         self.requested_amount = requested_amount
         self.first_payment_date = first_payment_date
-        self.requested_date = requested_date
+        self.disbursement_date = disbursement_date
         self.installments = installments
         self.debit_service_percentage = debit_service_percentage
         self.mdr = mdr
@@ -1179,14 +1179,14 @@ class Params:
         self.disbursement_only_on_business_days = disbursement_only_on_business_days
 
     def __str__(self):
-        return "Params(requested_amount={}, first_payment_date={}, requested_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={})".format(self.requested_amount, self.first_payment_date, self.requested_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days)
+        return "Params(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days)
 
     def __eq__(self, other):
         if self.requested_amount != other.requested_amount:
             return False
         if self.first_payment_date != other.first_payment_date:
             return False
-        if self.requested_date != other.requested_date:
+        if self.disbursement_date != other.disbursement_date:
             return False
         if self.installments != other.installments:
             return False
@@ -1216,7 +1216,7 @@ class _UniffiConverterTypeParams(_UniffiConverterRustBuffer):
         return Params(
             requested_amount=_UniffiConverterDouble.read(buf),
             first_payment_date=_UniffiConverterTimestamp.read(buf),
-            requested_date=_UniffiConverterTimestamp.read(buf),
+            disbursement_date=_UniffiConverterTimestamp.read(buf),
             installments=_UniffiConverterUInt32.read(buf),
             debit_service_percentage=_UniffiConverterUInt16.read(buf),
             mdr=_UniffiConverterDouble.read(buf),
@@ -1233,7 +1233,7 @@ class _UniffiConverterTypeParams(_UniffiConverterRustBuffer):
     def check_lower(value):
         _UniffiConverterDouble.check_lower(value.requested_amount)
         _UniffiConverterTimestamp.check_lower(value.first_payment_date)
-        _UniffiConverterTimestamp.check_lower(value.requested_date)
+        _UniffiConverterTimestamp.check_lower(value.disbursement_date)
         _UniffiConverterUInt32.check_lower(value.installments)
         _UniffiConverterUInt16.check_lower(value.debit_service_percentage)
         _UniffiConverterDouble.check_lower(value.mdr)
@@ -1249,7 +1249,7 @@ class _UniffiConverterTypeParams(_UniffiConverterRustBuffer):
     def write(value, buf):
         _UniffiConverterDouble.write(value.requested_amount, buf)
         _UniffiConverterTimestamp.write(value.first_payment_date, buf)
-        _UniffiConverterTimestamp.write(value.requested_date, buf)
+        _UniffiConverterTimestamp.write(value.disbursement_date, buf)
         _UniffiConverterUInt32.write(value.installments, buf)
         _UniffiConverterUInt16.write(value.debit_service_percentage, buf)
         _UniffiConverterDouble.write(value.mdr, buf)

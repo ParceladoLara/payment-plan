@@ -17,5 +17,5 @@ js-sys = "0.3.70"
 serde-wasm-bindgen = "0.6.5"
 
 [features]
-bmp = ["core_payment_plan/bmp"]
-qitech = ["core_payment_plan/qitech"]
+simple = ["core_payment_plan/simple"]
+iterative = ["core_payment_plan/iterative"]

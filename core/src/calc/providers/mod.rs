@@ -1,2 +1,2 @@
-pub mod bmp;
-pub mod qi_tech;
+pub mod iterative;
+pub mod simple;

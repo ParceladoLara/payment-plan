@@ -29,7 +29,7 @@ The `derive` attribute is used to automatically implement traits for a type. Thi
 pub struct Params {
     pub requested_amount: f64,
     pub first_payment_date: chrono::NaiveDate,
-    pub requested_date: chrono::NaiveDate,
+    pub disbursement_date: chrono::NaiveDate,
     pub installments: u32,
     pub debit_service_percentage: u16,
     pub mdr: f64,

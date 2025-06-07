@@ -153,7 +153,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
         params = Params(
             requested_amount=7800,
             first_payment_date=datetime(2025, 5, 3, tzinfo=timezone(timedelta(hours=-3))),
-            requested_date=datetime(2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))),
+            disbursement_date=datetime(2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))),
             installments=4,
             debit_service_percentage=0,
             mdr=0.05,
@@ -874,7 +874,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
         params = Params(
             requested_amount=7800,
             first_payment_date=datetime(2025, 5, 3, tzinfo=timezone(timedelta(hours=-3))),
-            requested_date=datetime(2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))),
+            disbursement_date=datetime(2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))),
             installments=4,
             debit_service_percentage=0,
             mdr=0.05,

@@ -160,7 +160,7 @@ func TestCalculatePaymentPlan(t *testing.T) {
 	params := payment_plan.Params{
 		RequestedAmount:                7800,
 		FirstPaymentDate:               time.Date(2025, 05, 3, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
-		RequestedDate:                  time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		DisbursementDate:               time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
 		Installments:                   4,
 		DebitServicePercentage:         0,
 		Mdr:                            0.05,
@@ -786,7 +786,7 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 	params := payment_plan.Params{
 		RequestedAmount:                7800,
 		FirstPaymentDate:               time.Date(2025, 05, 3, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
-		RequestedDate:                  time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		DisbursementDate:               time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
 		Installments:                   4,
 		DebitServicePercentage:         0,
 		Mdr:                            0.05,
