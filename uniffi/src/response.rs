@@ -3,6 +3,31 @@ use std::time::SystemTime;
 use chrono::{DateTime, NaiveDateTime, Utc};
 
 #[derive(uniffi::Record)]
+pub struct Invoice {
+    pub accumulated_days: i64,
+    pub factor: f64,
+    pub accumulated_factor: f64,
+    pub due_date: SystemTime,
+}
+
+impl From<core_payment_plan::Invoice> for Invoice {
+    fn from(value: core_payment_plan::Invoice) -> Self {
+        let due_date: NaiveDateTime = value.due_date.into();
+        let due_date: DateTime<Utc> = DateTime::from_naive_utc_and_offset(due_date, Utc);
+        //add 10 hours to the due date
+        let due_date: DateTime<Utc> = due_date + chrono::Duration::hours(10);
+        let due_date: SystemTime = due_date.into();
+
+        Self {
+            accumulated_days: value.accumulated_days,
+            factor: value.factor,
+            accumulated_factor: value.accumulated_factor,
+            due_date,
+        }
+    }
+}
+
+#[derive(uniffi::Record)]
 pub struct Response {
     pub installment: u32,
     pub due_date: SystemTime,
@@ -37,6 +62,7 @@ pub struct Response {
     pub pre_disbursement_amount: f64,
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
+    pub invoices: Vec<Invoice>,
 }
 
 impl From<core_payment_plan::Response> for Response {
@@ -89,6 +115,7 @@ impl From<core_payment_plan::Response> for Response {
             pre_disbursement_amount: value.pre_disbursement_amount,
             paid_total_iof: value.paid_total_iof,
             paid_contract_amount: value.paid_contract_amount,
+            invoices: value.invoices.into_iter().map(Into::into).collect(),
         }
     }
 }

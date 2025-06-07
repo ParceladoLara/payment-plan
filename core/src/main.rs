@@ -1,17 +1,15 @@
 use chrono::Datelike;
-use core_payment_plan::{
-    calculate_down_payment_plan, calculate_payment_plan, DownPaymentParams, Params,
-}; // Import the Datelike trait to access the `year` method
+use core_payment_plan::{calculate_down_payment_plan, DownPaymentParams, Params};
 
 fn main() {
-    let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 06, 06).unwrap();
-    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 06, 13).unwrap();
+    let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 04, 05).unwrap();
+    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 05, 3).unwrap();
 
     let params = Params {
         requested_amount: 7800.0,
         first_payment_date,
         disbursement_date: disbursement_date,
-        installments: 24,
+        installments: 4,
         debit_service_percentage: 0,
         mdr: 0.05,
         tac_percentage: 0.0,
@@ -31,9 +29,9 @@ fn main() {
         requested_amount: 1000.0,
     };
 
-    let result = calculate_payment_plan(params).unwrap();
-    //let result = calculate_down_payment_plan(down_payment_params).unwrap();
+    let result = calculate_down_payment_plan(down_payment_params).unwrap();
 
+    println!("Result: {:#?}", result);
     /*
     let mut buff = String::new();
     buff.push_str(r#"        expected = ["#);

@@ -48,6 +48,14 @@ func TestCalculatePaymentPlan(t *testing.T) {
 			PreDisbursementAmount:                    7800.0,
 			PaidTotalIof:                             47.84,
 			PaidContractAmount:                       7847.84,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+			},
 		},
 		{
 
@@ -84,6 +92,20 @@ func TestCalculatePaymentPlan(t *testing.T) {
 			PreDisbursementAmount:                    7800.0,
 			PaidTotalIof:                             57.31,
 			PaidContractAmount:                       7857.31,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+				{
+					AccumulatedDays:   57,
+					Factor:            0.958839243657051,
+					AccumulatedFactor: 1.94021120955322,
+					DueDate:           time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+			},
 		},
 		{
 			Installment:                              3,
@@ -119,8 +141,29 @@ func TestCalculatePaymentPlan(t *testing.T) {
 			PreDisbursementAmount:                    7799.99,
 			PaidTotalIof:                             67.08,
 			PaidContractAmount:                       7867.08,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+				{
+					AccumulatedDays:   57,
+					Factor:            0.958839243657051,
+					AccumulatedFactor: 1.94021120955322,
+					DueDate:           time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+				{
+					AccumulatedDays:   87,
+					Factor:            0.936823882407599,
+					AccumulatedFactor: 2.8770350919608187,
+					DueDate:           time.Date(2025, 07, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+			},
 		},
 		{
+
 			Installment:                              4,
 			DueDate:                                  time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
 			DisbursementDate:                         disbursementDate,
@@ -154,6 +197,32 @@ func TestCalculatePaymentPlan(t *testing.T) {
 			PreDisbursementAmount:                    7800.02,
 			PaidTotalIof:                             77.38,
 			PaidContractAmount:                       7877.38,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+				{
+					AccumulatedDays:   57,
+					Factor:            0.958839243657051,
+					AccumulatedFactor: 1.94021120955322,
+					DueDate:           time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+				{
+					AccumulatedDays:   87,
+					Factor:            0.936823882407599,
+					AccumulatedFactor: 2.8770350919608187,
+					DueDate:           time.Date(2025, 07, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+				{
+					AccumulatedDays:   119,
+					Factor:            0.914302133077605,
+					AccumulatedFactor: 3.791337225038424,
+					DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+				},
+			},
 		},
 	}
 
@@ -229,6 +298,14 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             45.89,
 					PaidContractAmount:                       7845.89,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   25,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 6, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              2,
@@ -264,6 +341,20 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7799.99,
 					PaidTotalIof:                             55.68,
 					PaidContractAmount:                       7855.68,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   25,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 6, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   55,
+							Factor:            0.958839243657051,
+							AccumulatedFactor: 1.94021120955322,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              3,
@@ -299,6 +390,26 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7799.99,
 					PaidTotalIof:                             66,
 					PaidContractAmount:                       7866,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   25,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 6, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   55,
+							Factor:            0.958839243657051,
+							AccumulatedFactor: 1.94021120955322,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   87,
+							Factor:            0.935788233217493,
+							AccumulatedFactor: 2.875999442770713,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              4,
@@ -334,6 +445,32 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7799.98,
 					PaidTotalIof:                             76.19,
 					PaidContractAmount:                       7876.19,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   25,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 6, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   55,
+							Factor:            0.958839243657051,
+							AccumulatedFactor: 1.94021120955322,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   87,
+							Factor:            0.935788233217493,
+							AccumulatedFactor: 2.875999442770713,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   117,
+							Factor:            0.913291381450307,
+							AccumulatedFactor: 3.78929082422102,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 			},
 		},
@@ -377,6 +514,14 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             45.25,
 					PaidContractAmount:                       7845.25,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   24,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              2,
@@ -412,6 +557,20 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             55.68,
 					PaidContractAmount:                       7855.68,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   24,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   56,
+							Factor:            0.957779256710963,
+							AccumulatedFactor: 1.9391512226071321,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              3,
@@ -447,6 +606,26 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             65.79,
 					PaidContractAmount:                       7865.79,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   24,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   56,
+							Factor:            0.957779256710963,
+							AccumulatedFactor: 1.9391512226071321,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   86,
+							Factor:            0.93475372892694,
+							AccumulatedFactor: 2.873904951534072,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              4,
@@ -482,6 +661,32 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7799.98,
 					PaidTotalIof:                             75.87,
 					PaidContractAmount:                       7875.87,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   24,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 7, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   56,
+							Factor:            0.957779256710963,
+							AccumulatedFactor: 1.9391512226071321,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   86,
+							Factor:            0.93475372892694,
+							AccumulatedFactor: 2.873904951534072,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   116,
+							Factor:            0.912281747198563,
+							AccumulatedFactor: 3.786186698732635,
+							DueDate:           time.Date(2025, 10, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 			},
 		},
@@ -525,6 +730,14 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             46.55,
 					PaidContractAmount:                       7846.55,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   26,
+							Factor:            0.980287069256833,
+							AccumulatedFactor: 0.980287069256833,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              2,
@@ -560,6 +773,20 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800.01,
 					PaidTotalIof:                             56.35,
 					PaidContractAmount:                       7856.35,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   26,
+							Factor:            0.980287069256833,
+							AccumulatedFactor: 0.980287069256833,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   56,
+							Factor:            0.956720441569568,
+							AccumulatedFactor: 1.937007510826401,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              3,
@@ -595,6 +822,26 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800.01,
 					PaidTotalIof:                             66.25,
 					PaidContractAmount:                       7866.25,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   26,
+							Factor:            0.980287069256833,
+							AccumulatedFactor: 0.980287069256833,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   56,
+							Factor:            0.956720441569568,
+							AccumulatedFactor: 1.937007510826401,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   86,
+							Factor:            0.933720368270266,
+							AccumulatedFactor: 2.870727879096667,
+							DueDate:           time.Date(2025, 10, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              4,
@@ -630,6 +877,32 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             76.42,
 					PaidContractAmount:                       7876.42,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   26,
+							Factor:            0.980287069256833,
+							AccumulatedFactor: 0.980287069256833,
+							DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   56,
+							Factor:            0.956720441569568,
+							AccumulatedFactor: 1.937007510826401,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   86,
+							Factor:            0.933720368270266,
+							AccumulatedFactor: 2.870727879096667,
+							DueDate:           time.Date(2025, 10, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   117,
+							Factor:            0.912281747198563,
+							AccumulatedFactor: 3.78300962629523,
+							DueDate:           time.Date(2025, 11, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 			},
 		},
@@ -673,6 +946,14 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             44.6,
 					PaidContractAmount:                       7844.6,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   23,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              2,
@@ -708,6 +989,20 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800.01,
 					PaidTotalIof:                             54.4,
 					PaidContractAmount:                       7854.4,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   23,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   53,
+							Factor:            0.957779256710963,
+							AccumulatedFactor: 1.9391512226071321,
+							DueDate:           time.Date(2025, 10, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              3,
@@ -743,6 +1038,26 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800.01,
 					PaidTotalIof:                             64.51,
 					PaidContractAmount:                       7864.51,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   23,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   53,
+							Factor:            0.957779256710963,
+							AccumulatedFactor: 1.9391512226071321,
+							DueDate:           time.Date(2025, 10, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   84,
+							Factor:            0.935788233217493,
+							AccumulatedFactor: 2.874939455824625,
+							DueDate:           time.Date(2025, 11, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 				{
 					Installment:                              4,
@@ -778,6 +1093,32 @@ func TestCalculateDownPaymentPlan(t *testing.T) {
 					PreDisbursementAmount:                    7800,
 					PaidTotalIof:                             74.61,
 					PaidContractAmount:                       7874.61,
+					Invoices: []payment_plan.Invoice{
+						{
+							AccumulatedDays:   23,
+							Factor:            0.981371965896169,
+							AccumulatedFactor: 0.981371965896169,
+							DueDate:           time.Date(2025, 9, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   53,
+							Factor:            0.957779256710963,
+							AccumulatedFactor: 1.9391512226071321,
+							DueDate:           time.Date(2025, 10, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   84,
+							Factor:            0.935788233217493,
+							AccumulatedFactor: 2.874939455824625,
+							DueDate:           time.Date(2025, 11, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+						{
+							AccumulatedDays:   114,
+							Factor:            0.914302133077605,
+							AccumulatedFactor: 3.78924158890223,
+							DueDate:           time.Date(2025, 12, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+						},
+					},
 				},
 			},
 		},
@@ -947,6 +1288,26 @@ func helperAssert(r payment_plan.Response, e payment_plan.Response, i int, t *te
 	}
 	if r.PaidContractAmount != e.PaidContractAmount {
 		t.Errorf("Installment %d: Expected PaidContractAmount %.30g, got %.30g", i+1, e.PaidContractAmount, r.PaidContractAmount)
+	}
+	invoicesExpected := e.Invoices
+	invoicesActual := r.Invoices
+	if len(invoicesExpected) != len(invoicesActual) {
+		t.Errorf("Installment %d: Expected %d invoices, got %d", i+1, len(invoicesExpected), len(invoicesActual))
+	} else {
+		for j, invoice := range invoicesExpected {
+			if invoice.AccumulatedDays != invoicesActual[j].AccumulatedDays {
+				t.Errorf("Installment %d, Invoice %d: Expected AccumulatedDays %d, got %d", i+1, j+1, invoice.AccumulatedDays, invoicesActual[j].AccumulatedDays)
+			}
+			if !invoice.DueDate.Equal(invoicesActual[j].DueDate) {
+				t.Errorf("Installment %d, Invoice %d: Expected DueDate %v, got %v", i+1, j+1, invoice.DueDate, invoicesActual[j].DueDate)
+			}
+			if invoice.Factor != invoicesActual[j].Factor {
+				t.Errorf("Installment %d, Invoice %d: Expected Factor %.30g, got %.30g", i+1, j+1, invoice.Factor, invoicesActual[j].Factor)
+			}
+			if invoice.AccumulatedFactor != invoicesActual[j].AccumulatedFactor {
+				t.Errorf("Installment %d, Invoice %d: Expected AccumulatedFactor %.30g, got %.30g", i+1, j+1, invoice.AccumulatedFactor, invoicesActual[j].AccumulatedFactor)
+			}
+		}
 	}
 }
 

@@ -718,6 +718,54 @@ func (_ FfiDestroyerDownPaymentResponse) Destroy(value DownPaymentResponse) {
 	value.Destroy()
 }
 
+type Invoice struct {
+	AccumulatedDays   int64
+	Factor            float64
+	AccumulatedFactor float64
+	DueDate           time.Time
+}
+
+func (r *Invoice) Destroy() {
+	FfiDestroyerInt64{}.Destroy(r.AccumulatedDays)
+	FfiDestroyerFloat64{}.Destroy(r.Factor)
+	FfiDestroyerFloat64{}.Destroy(r.AccumulatedFactor)
+	FfiDestroyerTimestamp{}.Destroy(r.DueDate)
+}
+
+type FfiConverterInvoice struct{}
+
+var FfiConverterInvoiceINSTANCE = FfiConverterInvoice{}
+
+func (c FfiConverterInvoice) Lift(rb RustBufferI) Invoice {
+	return LiftFromRustBuffer[Invoice](c, rb)
+}
+
+func (c FfiConverterInvoice) Read(reader io.Reader) Invoice {
+	return Invoice{
+		FfiConverterInt64INSTANCE.Read(reader),
+		FfiConverterFloat64INSTANCE.Read(reader),
+		FfiConverterFloat64INSTANCE.Read(reader),
+		FfiConverterTimestampINSTANCE.Read(reader),
+	}
+}
+
+func (c FfiConverterInvoice) Lower(value Invoice) C.RustBuffer {
+	return LowerIntoRustBuffer[Invoice](c, value)
+}
+
+func (c FfiConverterInvoice) Write(writer io.Writer, value Invoice) {
+	FfiConverterInt64INSTANCE.Write(writer, value.AccumulatedDays)
+	FfiConverterFloat64INSTANCE.Write(writer, value.Factor)
+	FfiConverterFloat64INSTANCE.Write(writer, value.AccumulatedFactor)
+	FfiConverterTimestampINSTANCE.Write(writer, value.DueDate)
+}
+
+type FfiDestroyerInvoice struct{}
+
+func (_ FfiDestroyerInvoice) Destroy(value Invoice) {
+	value.Destroy()
+}
+
 type Params struct {
 	RequestedAmount                float64
 	FirstPaymentDate               time.Time
@@ -836,6 +884,7 @@ type Response struct {
 	PreDisbursementAmount                    float64
 	PaidTotalIof                             float64
 	PaidContractAmount                       float64
+	Invoices                                 []Invoice
 }
 
 func (r *Response) Destroy() {
@@ -872,6 +921,7 @@ func (r *Response) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.PreDisbursementAmount)
 	FfiDestroyerFloat64{}.Destroy(r.PaidTotalIof)
 	FfiDestroyerFloat64{}.Destroy(r.PaidContractAmount)
+	FfiDestroyerSequenceInvoice{}.Destroy(r.Invoices)
 }
 
 type FfiConverterResponse struct{}
@@ -917,6 +967,7 @@ func (c FfiConverterResponse) Read(reader io.Reader) Response {
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
+		FfiConverterSequenceInvoiceINSTANCE.Read(reader),
 	}
 }
 
@@ -958,6 +1009,7 @@ func (c FfiConverterResponse) Write(writer io.Writer, value Response) {
 	FfiConverterFloat64INSTANCE.Write(writer, value.PreDisbursementAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.PaidTotalIof)
 	FfiConverterFloat64INSTANCE.Write(writer, value.PaidContractAmount)
+	FfiConverterSequenceInvoiceINSTANCE.Write(writer, value.Invoices)
 }
 
 type FfiDestroyerResponse struct{}
@@ -1163,6 +1215,49 @@ type FfiDestroyerSequenceDownPaymentResponse struct{}
 func (FfiDestroyerSequenceDownPaymentResponse) Destroy(sequence []DownPaymentResponse) {
 	for _, value := range sequence {
 		FfiDestroyerDownPaymentResponse{}.Destroy(value)
+	}
+}
+
+type FfiConverterSequenceInvoice struct{}
+
+var FfiConverterSequenceInvoiceINSTANCE = FfiConverterSequenceInvoice{}
+
+func (c FfiConverterSequenceInvoice) Lift(rb RustBufferI) []Invoice {
+	return LiftFromRustBuffer[[]Invoice](c, rb)
+}
+
+func (c FfiConverterSequenceInvoice) Read(reader io.Reader) []Invoice {
+	length := readInt32(reader)
+	if length == 0 {
+		return nil
+	}
+	result := make([]Invoice, 0, length)
+	for i := int32(0); i < length; i++ {
+		result = append(result, FfiConverterInvoiceINSTANCE.Read(reader))
+	}
+	return result
+}
+
+func (c FfiConverterSequenceInvoice) Lower(value []Invoice) C.RustBuffer {
+	return LowerIntoRustBuffer[[]Invoice](c, value)
+}
+
+func (c FfiConverterSequenceInvoice) Write(writer io.Writer, value []Invoice) {
+	if len(value) > math.MaxInt32 {
+		panic("[]Invoice is too large to fit into Int32")
+	}
+
+	writeInt32(writer, int32(len(value)))
+	for _, item := range value {
+		FfiConverterInvoiceINSTANCE.Write(writer, item)
+	}
+}
+
+type FfiDestroyerSequenceInvoice struct{}
+
+func (FfiDestroyerSequenceInvoice) Destroy(sequence []Invoice) {
+	for _, value := range sequence {
+		FfiDestroyerInvoice{}.Destroy(value)
 	}
 }
 
