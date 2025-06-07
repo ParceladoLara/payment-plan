@@ -49,8 +49,8 @@ jobs:
 
       - name: Copy Node SDK to the public repository
         run: |
-          cp -r sdks/node/src/* public-repo/src
-          cp -r sdks/node/types/* public-repo/types
+          cp -r sdks/node/src/* public-repo/src/
+          cp -r sdks/node/types/* public-repo/types/
           cd public-repo
           python3 -c "import os; import json; p = json.load(open('./package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./package.json', 'w'), indent=2, ensure_ascii=False);"
           git add .
