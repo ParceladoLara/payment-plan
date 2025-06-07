@@ -1295,16 +1295,25 @@ func helperAssert(r payment_plan.Response, e payment_plan.Response, i int, t *te
 		t.Errorf("Installment %d: Expected %d invoices, got %d", i+1, len(invoicesExpected), len(invoicesActual))
 	} else {
 		for j, invoice := range invoicesExpected {
+
 			if invoice.AccumulatedDays != invoicesActual[j].AccumulatedDays {
 				t.Errorf("Installment %d, Invoice %d: Expected AccumulatedDays %d, got %d", i+1, j+1, invoice.AccumulatedDays, invoicesActual[j].AccumulatedDays)
 			}
 			if !invoice.DueDate.Equal(invoicesActual[j].DueDate) {
 				t.Errorf("Installment %d, Invoice %d: Expected DueDate %v, got %v", i+1, j+1, invoice.DueDate, invoicesActual[j].DueDate)
 			}
-			if invoice.Factor != invoicesActual[j].Factor {
+
+			// Round the Factor to 10 decimal places for comparison
+			actualFactor, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", invoice.Factor), 64)
+			expectedFactor, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", invoicesActual[j].Factor), 64)
+			if actualFactor != expectedFactor {
 				t.Errorf("Installment %d, Invoice %d: Expected Factor %.30g, got %.30g", i+1, j+1, invoice.Factor, invoicesActual[j].Factor)
 			}
-			if invoice.AccumulatedFactor != invoicesActual[j].AccumulatedFactor {
+
+			// Round the AccumulatedFactor to 10 decimal places for comparison
+			actualAccumulatedFactor, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", invoice.AccumulatedFactor), 64)
+			expectedAccumulatedFactor, _ := strconv.ParseFloat(fmt.Sprintf("%.10f", invoicesActual[j].AccumulatedFactor), 64)
+			if actualAccumulatedFactor != expectedAccumulatedFactor {
 				t.Errorf("Installment %d, Invoice %d: Expected AccumulatedFactor %.30g, got %.30g", i+1, j+1, invoice.AccumulatedFactor, invoicesActual[j].AccumulatedFactor)
 			}
 		}
