@@ -1,5 +1,5 @@
 use chrono::NaiveTime;
-use core_payment_plan::{Installment, Params, Response};
+use core_payment_plan::{Invoice, Params, Response};
 use prost::Message;
 use types::{
     DownPaymentParams, DownPaymentResponse, DownPaymentResponses, Installment as CliInstallment,
@@ -102,7 +102,7 @@ impl From<Response> for PlanResponse {
             paid_contract_amount: value.paid_contract_amount,
             paid_total_iof: value.paid_total_iof,
             pre_disbursement_amount: value.pre_disbursement_amount,
-            installments: Some(value.installments.into()),
+            installments: Some(value.invoices.into()),
         }
     }
 }
@@ -114,8 +114,8 @@ impl From<Vec<Response>> for PlanResponses {
     }
 }
 
-impl From<Installment> for CliInstallment {
-    fn from(value: Installment) -> Self {
+impl From<Invoice> for CliInstallment {
+    fn from(value: Invoice) -> Self {
         let due_date = value
             .due_date
             .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
@@ -130,8 +130,8 @@ impl From<Installment> for CliInstallment {
     }
 }
 
-impl From<Vec<Installment>> for Installments {
-    fn from(value: Vec<Installment>) -> Self {
+impl From<Vec<Invoice>> for Installments {
+    fn from(value: Vec<Invoice>) -> Self {
         let installments: Vec<CliInstallment> = value.into_iter().map(|i| i.into()).collect();
         Installments { installments }
     }

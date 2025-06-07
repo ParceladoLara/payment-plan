@@ -1,4 +1,4 @@
-use crate::{util::add_months, Installment, Params};
+use crate::{util::add_months, Invoice, Params};
 
 #[derive(Debug, Clone, Copy)]
 pub struct PreparedCalculation {
@@ -7,7 +7,7 @@ pub struct PreparedCalculation {
     pub accumulated_days: i64,
     pub days_index: f64,
     pub accumulated_days_index: f64,
-    pub installment_struct: Installment,
+    pub invoice: Invoice,
 }
 
 pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
@@ -34,7 +34,7 @@ pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
             accumulated_days_index += prepared_calculations[j as usize].days_index;
         }
 
-        let installment = Installment {
+        let invoice = Invoice {
             accumulated_days,
             factor: days_index,
             accumulated_factor: accumulated_days_index,
@@ -47,7 +47,7 @@ pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
             accumulated_days,
             days_index,
             accumulated_days_index,
-            installment_struct: installment,
+            invoice,
         });
     }
 

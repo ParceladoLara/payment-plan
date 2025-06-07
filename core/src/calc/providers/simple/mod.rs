@@ -153,7 +153,7 @@ fn calculate(
             pre_disbursement_amount: amounts.total_amount,
             paid_total_iof: total_iof,
             paid_contract_amount: amounts.contract_amount,
-            installments: vec![prepared_calculation.installment_struct],
+            invoices: vec![prepared_calculation.invoice],
         };
 
         responses.push(response);

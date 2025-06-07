@@ -18,7 +18,7 @@ mod err;
 mod util;
 
 #[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]
-pub struct Installment {
+pub struct Invoice {
     pub accumulated_days: i64,
     pub factor: f64,
     pub accumulated_factor: f64,
@@ -98,7 +98,7 @@ pub struct Response {
     pub pre_disbursement_amount: f64,
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
-    pub installments: Vec<Installment>,
+    pub invoices: Vec<Invoice>,
 }
 
 #[derive(Debug, Deserialize, Clone, Copy)]

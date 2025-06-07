@@ -2,7 +2,7 @@ use chrono::NaiveDate;
 
 use crate::{
     util::{add_months, diff_in_business_days, get_next_business_day, round_decimal_cases},
-    Installment,
+    Invoice,
 };
 
 use super::InnerParams;
@@ -18,7 +18,7 @@ pub struct InstallmentData {
     pub accumulated_factor: f64,
     pub last_due_date: NaiveDate,
     pub due_dates: Vec<NaiveDate>,
-    pub installments: Vec<Installment>,
+    pub invoices: Vec<Invoice>,
 }
 
 pub fn calc(qi_params: &InnerParams) -> InstallmentData {
@@ -75,7 +75,7 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
         accumulated_days_v.push(accumulated_days);
 
         instalment_amount_result = installment_amount;
-        installments_v.push(Installment {
+        installments_v.push(Invoice {
             accumulated_days: accumulated_days,
             factor,
             accumulated_factor,
@@ -92,7 +92,7 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
         accumulated_factor,
         last_due_date: due_date,
         due_dates,
-        installments: installments_v,
+        invoices: installments_v,
     };
 }
 
@@ -117,7 +117,7 @@ fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentDat
     let mut accumulated_days_v = Vec::with_capacity(installments as usize);
     let mut accumulated_business_days_v = Vec::with_capacity(installments as usize);
     let mut due_dates = Vec::with_capacity(installments as usize);
-    let mut installments_v = Vec::with_capacity(installments as usize);
+    let mut invoices = Vec::with_capacity(installments as usize);
 
     let mut instalment_amount_result = 0.0;
 
@@ -151,7 +151,7 @@ fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentDat
         accumulated_business_days_v.push(accumulated_business_days);
 
         instalment_amount_result = installment_amount;
-        installments_v.push(Installment {
+        invoices.push(Invoice {
             accumulated_days,
             factor,
             accumulated_factor,
@@ -170,7 +170,7 @@ fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentDat
         accumulated_factor,
         last_due_date: due_date,
         due_dates,
-        installments: installments_v,
+        invoices,
     };
 }
 
@@ -178,7 +178,7 @@ fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentDat
 mod test {
     use crate::{
         calc::providers::iterative::{installment::InstallmentData, InnerParams},
-        Installment, Params,
+        Invoice, Params,
     };
 
     #[test]
@@ -226,110 +226,110 @@ mod test {
             accumulated_factor: 12.60688188087214,
             last_due_date,
             due_dates,
-            installments: vec![
-                Installment {
+            invoices: vec![
+                Invoice {
                     accumulated_days: 30,
                     factor: 0.961538521141742,
                     accumulated_factor: 0.961538521141742,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 61,
                     factor: 0.923348394036885,
                     accumulated_factor: 1.884886915178627,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 91,
                     factor: 0.887835049300829,
                     accumulated_factor: 2.772721964479456,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 12, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 122,
                     factor: 0.852572256770495,
                     accumulated_factor: 3.625294221249951,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 01, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 153,
                     factor: 0.818710022303302,
                     accumulated_factor: 4.444004243553253,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 02, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 181,
                     factor: 0.789282272705526,
                     accumulated_factor: 5.2332865162587785,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 03, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 212,
                     factor: 0.757933772719854,
                     accumulated_factor: 5.991220288978632,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 04, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 242,
                     factor: 0.72878251894443,
                     accumulated_factor: 6.720002807923063,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 05, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 273,
                     factor: 0.699836931827195,
                     accumulated_factor: 7.419839739750258,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 06, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 303,
                     factor: 0.672920168469495,
                     accumulated_factor: 8.092759908219753,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 07, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 334,
                     factor: 0.646193307090341,
                     accumulated_factor: 8.738953215310094,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 08, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 365,
                     factor: 0.620527975967898,
                     accumulated_factor: 9.359481191277991,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 09, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 395,
                     factor: 0.596661552339251,
                     accumulated_factor: 9.956142743617242,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 10, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 426,
                     factor: 0.572963510064917,
                     accumulated_factor: 10.529106253682158,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 11, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 456,
                     factor: 0.550926486136002,
                     accumulated_factor: 11.08003273981816,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 12, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 487,
                     factor: 0.529044936860178,
                     accumulated_factor: 11.609077676678337,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 01, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 518,
                     factor: 0.5080324730445,
                     accumulated_factor: 12.117110149722837,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 02, 24).unwrap(),
                 },
-                Installment {
+                Invoice {
                     accumulated_days: 546,
                     factor: 0.489771731149302,
                     accumulated_factor: 12.60688188087214,
