@@ -46,7 +46,7 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
     let mut diffs = Vec::with_capacity(installments as usize);
     let mut accumulated_days_v = Vec::with_capacity(installments as usize);
     let mut due_dates = Vec::with_capacity(installments as usize);
-    let mut installments_v = Vec::with_capacity(installments as usize);
+    let mut invoices = Vec::with_capacity(installments as usize);
 
     let mut instalment_amount_result = 0.0;
 
@@ -75,7 +75,7 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
         accumulated_days_v.push(accumulated_days);
 
         instalment_amount_result = installment_amount;
-        installments_v.push(Invoice {
+        invoices.push(Invoice {
             accumulated_days: accumulated_days,
             factor,
             accumulated_factor,
@@ -92,7 +92,7 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
         accumulated_factor,
         last_due_date: due_date,
         due_dates,
-        invoices: installments_v,
+        invoices,
     };
 }
 

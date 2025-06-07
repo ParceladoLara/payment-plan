@@ -65,7 +65,7 @@ test('calculate payment plan test 0', () => {
     preDisbursementAmount: 8799.96,
     paidTotalIOF: 259.92,
     paidContractAmount: 9059.92,
-    installments: [
+    invoices: [
       {
         accumulated_days: 31,
         factor: 0.966292071927668,
@@ -274,7 +274,7 @@ test('calculate payment plan test 1', () => {
     preDisbursementAmount: 8800.03,
     paidTotalIOF: 255.54,
     paidContractAmount: 9055.54,
-    installments: [
+    invoices: [
       {
         accumulated_days: 31,
         factor: 0.977039570089471,

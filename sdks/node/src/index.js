@@ -24,7 +24,7 @@ const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
  */
 
 /**
- * @typedef {Object} Installment
+ * @typedef {Object} Invoice
  * @property {number} accumulatedDays
  * @property {number} factor
  * @property {number} accumulatedFactor
@@ -66,7 +66,7 @@ const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
  * @property {number} preDisbursementAmount
  * @property {number} paidTotalIOF
  * @property {number} paidContractAmount
- * @property {Installment[]} installments
+ * @property {Invoice[]} invoices
  */
 
 /**

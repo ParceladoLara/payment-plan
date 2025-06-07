@@ -2,11 +2,11 @@ use chrono::NaiveTime;
 use core_payment_plan::{Invoice, Params, Response};
 use prost::Message;
 use types::{
-    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, Installment as CliInstallment,
+    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, Invoice as CliInvoice,
     PlanParams, PlanResponse, PlanResponses,
 };
 
-use crate::types::Installments;
+use crate::types::Invoices;
 
 pub mod types {
     include!(concat!(env!("OUT_DIR"), "/cli.types.rs"));
@@ -102,7 +102,7 @@ impl From<Response> for PlanResponse {
             paid_contract_amount: value.paid_contract_amount,
             paid_total_iof: value.paid_total_iof,
             pre_disbursement_amount: value.pre_disbursement_amount,
-            installments: Some(value.invoices.into()),
+            invoices: Some(value.invoices.into()),
         }
     }
 }
@@ -114,14 +114,14 @@ impl From<Vec<Response>> for PlanResponses {
     }
 }
 
-impl From<Invoice> for CliInstallment {
+impl From<Invoice> for CliInvoice {
     fn from(value: Invoice) -> Self {
         let due_date = value
             .due_date
             .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
             .and_utc()
             .timestamp_millis();
-        CliInstallment {
+        CliInvoice {
             accumulated_days: value.accumulated_days,
             accumulated_factor: value.accumulated_factor,
             factor: value.factor,
@@ -130,10 +130,10 @@ impl From<Invoice> for CliInstallment {
     }
 }
 
-impl From<Vec<Invoice>> for Installments {
+impl From<Vec<Invoice>> for Invoices {
     fn from(value: Vec<Invoice>) -> Self {
-        let installments: Vec<CliInstallment> = value.into_iter().map(|i| i.into()).collect();
-        Installments { installments }
+        let invoices: Vec<CliInvoice> = value.into_iter().map(|i| i.into()).collect();
+        Invoices { invoices }
     }
 }
 
