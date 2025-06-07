@@ -193,7 +193,7 @@ jobs:
         run: cd node && npm run build:iterative # for now we are using iterative
       - name: Package the asset
         # This will make a node-pre-gyp package.
-        run: cd node && npx node-pre-gyp package
+        run: cd node && npm run build:iterative && npx node-pre-gyp package
       - name: Upload to Github releases
         # Use bash, even on Windows to make find available
         shell: bash
