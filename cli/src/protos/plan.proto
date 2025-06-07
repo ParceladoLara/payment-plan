@@ -8,7 +8,7 @@ option go_package = "playment_plan/protos";
 message PlanParams {
     double requested_amount = 1;
     int64 first_payment_date_millis = 2;
-    int64 requested_date_millis = 3;
+    int64 disbursement_date_millis = 3;
     uint32 installments = 4;
     uint32 debit_service_percentage = 5;
     double mdr = 6;
@@ -55,6 +55,7 @@ message PlanResponse {
     double pre_disbursement_amount = 33;
     double paid_total_iof = 34;
     double paid_contract_amount = 35;
+    Installments installments = 36;
 }
 
 message PlanResponses {
@@ -80,4 +81,15 @@ message DownPaymentResponse {
 
 message DownPaymentResponses {
     repeated DownPaymentResponse responses = 1;
+}
+
+message Installment {
+    int64 accumulated_days = 1;
+    double factor = 2;
+    double accumulated_factor = 3;
+    int64 due_date_millis = 4;
+}
+
+message Installments {
+    repeated Installment installments = 1;
 }

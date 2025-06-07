@@ -19,10 +19,10 @@ mod util;
 
 #[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]
 pub struct Installment {
-    accumulated_days: i64,
-    factor: f64,
-    accumulated_factor: f64,
-    due_date: chrono::NaiveDate,
+    pub accumulated_days: i64,
+    pub factor: f64,
+    pub accumulated_factor: f64,
+    pub due_date: chrono::NaiveDate,
 }
 
 #[derive(Debug, Default, Clone, Copy, Deserialize)]

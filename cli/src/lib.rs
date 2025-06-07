@@ -1,10 +1,12 @@
 use chrono::NaiveTime;
-use core_payment_plan::{Params, Response};
+use core_payment_plan::{Installment, Params, Response};
 use prost::Message;
 use types::{
-    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, PlanParams, PlanResponse,
-    PlanResponses,
+    DownPaymentParams, DownPaymentResponse, DownPaymentResponses, Installment as CliInstallment,
+    PlanParams, PlanResponse, PlanResponses,
 };
+
+use crate::types::Installments;
 
 pub mod types {
     include!(concat!(env!("OUT_DIR"), "/cli.types.rs"));
@@ -23,7 +25,8 @@ impl TryInto<Params> for PlanParams {
             }
         };
 
-        let disbursement_date = chrono::DateTime::from_timestamp_millis(self.requested_date_millis);
+        let disbursement_date =
+            chrono::DateTime::from_timestamp_millis(self.disbursement_date_millis);
         let disbursement_date = match disbursement_date {
             Some(date) => date.date_naive(),
             None => {
@@ -99,6 +102,7 @@ impl From<Response> for PlanResponse {
             paid_contract_amount: value.paid_contract_amount,
             paid_total_iof: value.paid_total_iof,
             pre_disbursement_amount: value.pre_disbursement_amount,
+            installments: Some(value.installments.into()),
         }
     }
 }
@@ -107,6 +111,29 @@ impl From<Vec<Response>> for PlanResponses {
     fn from(value: Vec<Response>) -> Self {
         let responses = value.into_iter().map(|r| r.into()).collect();
         PlanResponses { responses }
+    }
+}
+
+impl From<Installment> for CliInstallment {
+    fn from(value: Installment) -> Self {
+        let due_date = value
+            .due_date
+            .and_time(NaiveTime::from_hms_opt(3, 0, 0).unwrap())
+            .and_utc()
+            .timestamp_millis();
+        CliInstallment {
+            accumulated_days: value.accumulated_days,
+            accumulated_factor: value.accumulated_factor,
+            factor: value.factor,
+            due_date_millis: due_date,
+        }
+    }
+}
+
+impl From<Vec<Installment>> for Installments {
+    fn from(value: Vec<Installment>) -> Self {
+        let installments: Vec<CliInstallment> = value.into_iter().map(|i| i.into()).collect();
+        Installments { installments }
     }
 }
 
