@@ -200,7 +200,7 @@ jobs:
         # A release need to be created before upload
         run: gh release upload ${{ env.RELEASE_VERSION }} -R ParceladoLara/payment-plan-node-sdk "$(find ./node/build -name *.tar.gz)" --clobber
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 # This job is for musl based linux systems.(not working yet)
 #  nodejs-github-native-musl:
 #    name: musl-branch-${{ matrix.branch }}-x86_64-unknown-linux-musl-${{ matrix.system.os }}
