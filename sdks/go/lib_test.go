@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	payment_plan "github.com/ParceladoLara/payment-plan-go-sdk"
+	payment_plan "github.com/ParceladoLara/payment-plan-go-sdk/v3"
 )
 
 func TestCalculatePaymentPlan(t *testing.T) {

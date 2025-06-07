@@ -3,7 +3,7 @@ package payment_plan
 import (
 	"time"
 
-	"github.com/ParceladoLara/payment-plan-go-sdk/internal/payment_plan_uniffi"
+	"github.com/ParceladoLara/payment-plan-go-sdk/v3/internal/payment_plan_uniffi"
 )
 
 type Invoice = payment_plan_uniffi.Invoice
