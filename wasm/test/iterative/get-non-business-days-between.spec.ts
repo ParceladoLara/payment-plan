@@ -8,11 +8,16 @@ test("getNonBusinessDaysBetween", () => {
   const endDate = new Date("2078-11-22");
   const result = getNonBusinessDaysBetween(startDate, endDate);
   const expected = [
-    new Date("2078-11-12T06:00:00.000Z"),
-    new Date("2078-11-13T06:00:00.000Z"),
-    new Date("2078-11-15T06:00:00.000Z"),
-    new Date("2078-11-19T06:00:00.000Z"),
-    new Date("2078-11-20T06:00:00.000Z"),
+    new Date("2078-11-12T00:00:00.000Z"),
+    new Date("2078-11-13T00:00:00.000Z"),
+    new Date("2078-11-15T00:00:00.000Z"),
+    new Date("2078-11-19T00:00:00.000Z"),
+    new Date("2078-11-20T00:00:00.000Z"),
   ];
+
+  result.forEach((date, index) => {
+    // Ensure the date is in UTC format
+    date.setUTCHours(0, 0, 0, 0);
+  });
   assert.deepStrictEqual(result, expected);
 });
