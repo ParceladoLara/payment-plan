@@ -144,6 +144,26 @@ jobs:
             --title "${{ env.RELEASE_VERSION }}" \
             --notes "Automated release from payment-plan"
 
+  create-go-sdk-release:
+    name: Create Release on payment-plan-go-sdk
+    runs-on: ubuntu-latest
+    needs: deploy-go-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Set release version
+        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
+      - name: Create release on payment-plan-go-sdk
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          gh release create "${{ env.RELEASE_VERSION }}" \
+            --repo ParceladoLara/payment-plan-go-sdk \
+            --title "${{ env.RELEASE_VERSION }}" \
+            --notes "Automated release from payment-plan"
+
   upload-node-sdk-artifacts:
     needs: create-node-sdk-release
     name: Upload Node SDK Artifacts ${{ matrix.node_version }}-${{ matrix.system.target }}-${{ matrix.system.os }}

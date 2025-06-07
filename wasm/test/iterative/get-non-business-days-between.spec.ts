@@ -8,11 +8,11 @@ test("getNonBusinessDaysBetween", () => {
   const endDate = new Date("2078-11-22");
   const result = getNonBusinessDaysBetween(startDate, endDate);
   const expected = [
-    new Date("2078-11-12T03:00:00.000Z"),
-    new Date("2078-11-13T03:00:00.000Z"),
-    new Date("2078-11-15T03:00:00.000Z"),
-    new Date("2078-11-19T03:00:00.000Z"),
-    new Date("2078-11-20T03:00:00.000Z"),
+    new Date("2078-11-12T06:00:00.000Z"),
+    new Date("2078-11-13T06:00:00.000Z"),
+    new Date("2078-11-15T06:00:00.000Z"),
+    new Date("2078-11-19T06:00:00.000Z"),
+    new Date("2078-11-20T06:00:00.000Z"),
   ];
   assert.deepStrictEqual(result, expected);
 });
