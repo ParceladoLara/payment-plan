@@ -63,6 +63,7 @@ build-python-sdk-linux:
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/python/payment_plan/_internal/libpayment_plan_uniffi.so
 
 build-node-sdk:
+	cd node && npm i
 	cd node && npm run build:iterative
 	mkdir -p sdks/node/native
 	cp ./node/index.node sdks/node/native/index.node
