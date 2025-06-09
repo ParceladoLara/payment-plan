@@ -234,7 +234,7 @@ jobs:
         run: cd generators/node && npm i
       - name: Tweak package.json
         # This will update the package version to tag version. So artifacts uploaded to Github release will be named correctly.
-        run: python3 -c "import os; import json; p = json.load(open('./node/package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./node/package.json', 'w'), indent=2, ensure_ascii=False);"
+        run: python3 -c "import os; import json; p = json.load(open('./generators/node/package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./generators/node/package.json', 'w'), indent=2, ensure_ascii=False);"
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -252,7 +252,7 @@ jobs:
         # Use bash, even on Windows to make find available
         shell: bash
         # A release need to be created before upload
-        run: gh release upload ${{ env.RELEASE_VERSION }} -R ParceladoLara/payment-plan-node-sdk "$(find ./node/build -name *.tar.gz)" --clobber
+        run: gh release upload ${{ env.RELEASE_VERSION }} -R ParceladoLara/payment-plan-node-sdk "$(find ./generators/node/build -name *.tar.gz)" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 # This job is for musl based linux systems.(not working yet)
@@ -311,7 +311,7 @@ jobs:
 #
 #      - name: Tweak package.json
 #        # This will update the package version to tag version. So artifacts uploaded to Github release will be named correctly.
-#        run: python3 -c "import os; import json; p = json.load(open('./node/package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./node/package.json', 'w'), indent=2, ensure_ascii=False);"
+#        run: python3 -c "import os; import json; p = json.load(open('./generators/node/package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./generators/node/package.json', 'w'), indent=2, ensure_ascii=False);"
 #
 #      - name: Build native
 #        run: |
@@ -329,6 +329,6 @@ jobs:
 #        # Use bash, even on Windows to make find available
 #        shell: bash
 #        # A release need to be created before upload
-#        run: gh release upload ${{ env.RELEASE_VERSION }} "$(find ./node/build -name *.tar.gz)" --clobber
+#        run: gh release upload ${{ env.RELEASE_VERSION }} "$(find ./generators/node/build -name *.tar.gz)" --clobber
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
