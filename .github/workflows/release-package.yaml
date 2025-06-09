@@ -273,6 +273,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           gh release edit "${{ env.RELEASE_VERSION }}" \
+          --repo ParceladoLara/payment-plan-node-sdk \
           --draft=false
 
 # This job is for musl based linux systems.(not working yet)
