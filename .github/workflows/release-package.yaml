@@ -138,7 +138,7 @@ jobs:
           cd public-repo
           git push origin main --force
 
-  create-node-sdk-release:
+  draft-node-sdk-release:
     name: Create Release on payment-plan-node-sdk
     runs-on: ubuntu-latest
     needs: deploy-node-sdk
@@ -154,6 +154,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           gh release create "${{ env.RELEASE_VERSION }}" \
+            --draft \
             --repo ParceladoLara/payment-plan-node-sdk \
             --title "${{ env.RELEASE_VERSION }}" \
             --notes "Automated release from payment-plan"
@@ -199,7 +200,7 @@ jobs:
             --notes "Automated release from payment-plan"
 
   upload-node-sdk-artifacts:
-    needs: create-node-sdk-release
+    needs: draft-node-sdk-release
     name: Upload Node SDK Artifacts ${{ matrix.node_version }}-${{ matrix.system.target }}-${{ matrix.system.os }}
     runs-on: ${{ matrix.system.os }}
     strategy:
@@ -255,6 +256,25 @@ jobs:
         run: gh release upload ${{ env.RELEASE_VERSION }} -R ParceladoLara/payment-plan-node-sdk "$(find ./generators/node/build -name *.tar.gz)" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+
+  release-node-sdk:
+    name: Release Node SDK
+    runs-on: ubuntu-latest
+    needs: upload-node-sdk-artifacts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Set release version
+        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
+      - name: Create release on payment-plan-node-sdk
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          gh release edit "${{ env.RELEASE_VERSION }}" \
+          --draft=false
+
 # This job is for musl based linux systems.(not working yet)
 #  nodejs-github-native-musl:
 #    name: musl-branch-${{ matrix.branch }}-x86_64-unknown-linux-musl-${{ matrix.system.os }}
