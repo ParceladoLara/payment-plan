@@ -281,7 +281,10 @@ jobs:
       - name: Npm i
         run: |
           cd public-repo
+          mkdir native
+          touch native/index.node
           npm i
+          rm -rf native
           git add .
           git commit -m "Update Node SDK" --allow-empty
           git push origin main --force
