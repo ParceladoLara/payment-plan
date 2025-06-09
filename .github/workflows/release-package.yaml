@@ -231,7 +231,7 @@ jobs:
           node-version: ${{ matrix.node_version }}
           registry-url: "https://registry.npmjs.org"
       - name: Install modules
-        run: cd node && npm i
+        run: cd generators/node && npm i
       - name: Tweak package.json
         # This will update the package version to tag version. So artifacts uploaded to Github release will be named correctly.
         run: python3 -c "import os; import json; p = json.load(open('./node/package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./node/package.json', 'w'), indent=2, ensure_ascii=False);"
@@ -244,10 +244,10 @@ jobs:
           override: true
 
       - name: Build native
-        run: cd node && npm run build:iterative # for now we are using iterative
+        run: cd generators/node && npm run build:iterative # for now we are using iterative
       - name: Package the asset
         # This will make a node-pre-gyp package.
-        run: cd node && npm run build:iterative && npx node-pre-gyp package
+        run: cd generators/node && npm run build:iterative && npx node-pre-gyp package
       - name: Upload to Github releases
         # Use bash, even on Windows to make find available
         shell: bash
@@ -305,7 +305,7 @@ jobs:
 #
 #      - name: Install modules
 #        run: |
-#          cd node
+#          cd generators/node
 #          npm i
 #        shell: alpine.sh --root {0}
 #
@@ -315,13 +315,13 @@ jobs:
 #
 #      - name: Build native
 #        run: |
-#          cd node
+#          cd generators/node
 #          npm run build:iterative
 #        shell: alpine.sh --root {0}
 #
 #      - name: Package the asset
 #        run: |
-#          cd node
+#          cd generators/node
 #          npx node-pre-gyp package
 #        shell: alpine.sh --root {0}
 #
