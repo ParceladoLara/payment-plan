@@ -3,7 +3,7 @@ test:
 	make build-go-sdk
 	make build-python-sdk
 	make build-node-sdk
-	make build-web-sdk
+	make build-wasm-sdk
 	cargo test
 	cd cli && make test
 	cd generators/wasm && npm i && npm run test
@@ -72,7 +72,7 @@ build-node-sdk:
 	cd sdks/node && npm i
 	cd sdks/node && npm run build
 
-build-web-sdk:
+build-wasm-sdk:
 	cd generators/wasm && npm i
 	cd generators/wasm && npm run build:web
 	cp -r ./generators/wasm/pkg/. ./sdks/web/
