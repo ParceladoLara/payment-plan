@@ -268,6 +268,23 @@ jobs:
           ref: ${{ github.event.release.tag_name }}
       - name: Set release version
         run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
+
+      - name: Clone the public repository
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${REPO_TOKEN}@github.com/ParceladoLara/payment-plan-node-sdk.git public-repo
+          cd public-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Npm i
+        run: |
+          cd public-repo
+          npm i
+          git add .
+          git commit -m "Update Node SDK" --allow-empty
+          git push origin main --force
       - name: Create release on payment-plan-node-sdk
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
