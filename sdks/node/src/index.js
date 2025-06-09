@@ -2,7 +2,7 @@ const funcs = require('../native/index.node');
 const __calculatePlan = funcs.calculatePlan;
 const __calculateDownPaymentPlan = funcs.calculateDownPaymentPlan;
 const __nextDisbursementDate = funcs.nextDisbursementDate;
-const __disbursementDataRange = funcs.disbursementDataRange;
+const __disbursementDateRange = funcs.disbursementDateRange;
 const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
 // @ts-check
 
@@ -116,8 +116,8 @@ function nextDisbursementDate(date) {
  * @param {number} days
  * @returns {Date[]}
  */
-function disbursementDataRange(base_date, days) {
-  return __disbursementDataRange(base_date, days);
+function disbursementDateRange(base_date, days) {
+  return __disbursementDateRange(base_date, days);
 }
 
 /**
@@ -133,6 +133,6 @@ module.exports = {
   calculatePlan,
   calculateDownPaymentPlan,
   nextDisbursementDate,
-  disbursementDataRange,
+  disbursementDateRange,
   getNonBusinessDaysBetween,
 };

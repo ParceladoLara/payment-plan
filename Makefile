@@ -68,7 +68,7 @@ build-node-sdk:
 	cd generators/node && npm i
 	cd generators/node && npm run build:iterative
 	mkdir -p sdks/node/native
-	cp ./generators/node/index.node sdks/node/native/index.node
+	cp ./generators/node/native/index.node sdks/node/native/index.node
 	cd sdks/node && npm i
 	cd sdks/node && npm run build
 

@@ -44,7 +44,7 @@ fn next_disbursement_date(mut cx: FunctionContext) -> JsResult<JsDate> {
     Ok(result)
 }
 
-fn disbursement_data_range(mut cx: FunctionContext) -> JsResult<JsArray> {
+fn disbursement_date_range(mut cx: FunctionContext) -> JsResult<JsArray> {
     let js_date: Handle<JsDate> = cx.argument(0)?;
     let date = parser::js_date_to_naive(&mut cx, js_date)?;
     let js_number: Handle<JsValue> = cx.argument(1)?;
@@ -77,7 +77,7 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("calculatePlan", calculate_plan)?;
     cx.export_function("calculateDownPaymentPlan", calculate_down_payment_plan)?;
     cx.export_function("nextDisbursementDate", next_disbursement_date)?;
-    cx.export_function("disbursementDataRange", disbursement_data_range)?;
+    cx.export_function("disbursementDateRange", disbursement_date_range)?;
     cx.export_function("getNonBusinessDaysBetween", get_non_business_days_between)?;
     Ok(())
 }
