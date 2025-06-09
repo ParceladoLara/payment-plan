@@ -186,13 +186,13 @@ pub fn cast_vec_invoice_to_js_array<'a, C: Context<'a>>(
 ) -> NeonResult<Handle<'a, JsArray>> {
     let array = JsArray::new(cx, invoices.len() as usize);
     for (i, invoice) in invoices.into_iter().enumerate() {
-        let obj = cast_installment_to_js_object(cx, invoice)?;
+        let obj = cast_invoice_to_js_object(cx, invoice)?;
         array.set(cx, i as u32, obj)?;
     }
     Ok(array)
 }
 
-pub fn cast_installment_to_js_object<'a, C: Context<'a>>(
+pub fn cast_invoice_to_js_object<'a, C: Context<'a>>(
     cx: &mut C,
     invoice: Invoice,
 ) -> NeonResult<Handle<'a, JsObject>> {
@@ -201,10 +201,10 @@ pub fn cast_installment_to_js_object<'a, C: Context<'a>>(
     let factor = JsNumber::new(cx, invoice.factor as f64);
     let due_date = parser::naive_to_js_date(cx, invoice.due_date)?;
     let accumulated_factor = JsNumber::new(cx, invoice.accumulated_factor as f64);
-    obj.set(cx, "accumulated_days", accumulated_days)?;
+    obj.set(cx, "accumulatedDays", accumulated_days)?;
     obj.set(cx, "factor", factor)?;
-    obj.set(cx, "due_date", due_date)?;
-    obj.set(cx, "accumulated_factor", accumulated_factor)?;
+    obj.set(cx, "dueDate", due_date)?;
+    obj.set(cx, "accumulatedFactor", accumulated_factor)?;
     Ok(obj)
 }
 
