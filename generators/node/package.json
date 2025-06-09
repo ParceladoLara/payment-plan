@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "cross-env FEATURE=$FEATURE cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
-    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE",
+    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE && rm -rf native && mkdir native && mv ./index.node ./native/index.node",
     "build:simple": "cross-env FEATURE=simple npm run build:release",
     "build:iterative": "cross-env FEATURE=iterative npm run build:release"
   },
@@ -43,7 +43,7 @@
   },
   "binary": {
     "module_name": "index",
-    "module_path": ".",
+    "module_path": "./native",
     "host": "https://github.com/ParceladoLara/payment-plan/releases/download/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
     "remote_path": "v{version}"
