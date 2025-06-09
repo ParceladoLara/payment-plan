@@ -9,7 +9,7 @@ name = "payment_plan_uniffi"
 
 [dependencies]
 uniffi = "0.28.3"
-core_payment_plan = { path ="../core" }
+core_payment_plan = { path ="../../core" }
 chrono = { version = "0.4.38", features = ["serde"] }
 
 [features]

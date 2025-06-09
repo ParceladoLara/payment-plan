@@ -10,7 +10,7 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-core_payment_plan = { path ="../core" }
+core_payment_plan = { path ="../../core" }
 neon = "1"
 chrono = { version = "0.4.38" }
 

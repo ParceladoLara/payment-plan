@@ -5,12 +5,11 @@ test:
 	make build-node-sdk
 	cargo test
 	cd cli && make test
-	cd wasm && npm i && npm run test
+	cd generators/wasm && npm i && npm run test
 	cd cli && make test
 	cd sdks/go && go test ./...
 	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 	cd sdks/node && npm test
-	cd cli && make test
 
 
 clean:
@@ -64,9 +63,9 @@ build-python-sdk-linux:
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/python/payment_plan/_internal/libpayment_plan_uniffi.so
 
 build-node-sdk:
-	cd node && npm i
-	cd node && npm run build:iterative
+	cd generators/node && npm i
+	cd generators/node && npm run build:iterative
 	mkdir -p sdks/node/native
-	cp ./node/index.node sdks/node/native/index.node
+	cp ./generators/node/index.node sdks/node/native/index.node
 	cd sdks/node && npm i
 	cd sdks/node && npm run build
