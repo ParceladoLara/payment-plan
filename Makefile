@@ -3,14 +3,14 @@ test:
 	make build-go-sdk
 	make build-python-sdk
 	make build-node-sdk
+	make build-wasm-sdk
 	cargo test
 	cd cli && make test
-	cd wasm && npm i && npm run test
+	cd generators/wasm && npm i && npm run test
 	cd cli && make test
 	cd sdks/go && go test ./...
 	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 	cd sdks/node && npm test
-	cd cli && make test
 
 
 clean:
@@ -22,6 +22,7 @@ clean:
 	rm -rf ./sdks/python/payment_plan/_internal
 	rm -rf ./sdks/node/node_modules
 	rm -rf ./sdks/node/native
+	rm -rf ./sdks/web/pkg
 	mkdir -p ./sdks/go/internal/libs/linux
 	mkdir -p ./sdks/go/internal/libs/windows
 	mkdir -p ./sdks/go/internal/libs/darwin
@@ -64,9 +65,16 @@ build-python-sdk-linux:
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/python/payment_plan/_internal/libpayment_plan_uniffi.so
 
 build-node-sdk:
-	cd node && npm i
-	cd node && npm run build:iterative
+	cd generators/node && npm i
+	cd generators/node && npm run build:iterative
 	mkdir -p sdks/node/native
-	cp ./node/index.node sdks/node/native/index.node
+	cp ./generators/node/index.node sdks/node/native/index.node
 	cd sdks/node && npm i
 	cd sdks/node && npm run build
+
+build-wasm-sdk:
+	cd generators/wasm && npm i
+	cd generators/wasm && npm run build:web
+	cp -r ./generators/wasm/pkg/. ./sdks/web/
+	rm -rf ./sdks/web/.gitignore
+	rm -rf ./sdks/web/package.json

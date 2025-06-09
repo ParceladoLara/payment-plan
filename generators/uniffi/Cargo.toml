@@ -1,0 +1,17 @@
+[package]
+name = "payment_plan_uniffi"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["lib", "cdylib","staticlib"]
+name = "payment_plan_uniffi"
+
+[dependencies]
+uniffi = "0.28.3"
+core_payment_plan = { path ="../../core" }
+chrono = { version = "0.4.38", features = ["serde"] }
+
+[features]
+simple = ["core_payment_plan/simple"]
+iterative = ["core_payment_plan/iterative"]

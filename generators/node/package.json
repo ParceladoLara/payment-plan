@@ -1,0 +1,51 @@
+{
+  "name": "payment-plan-node",
+  "version": "3.0.2",
+  "description": "",
+  "main": "./javascript/src/index.js",
+  "module": "./javascript/src/index.js",
+  "author": "Victor Ribeiro de Lima",
+  "types": "./javascript/types/src/index.d.ts",
+  "license": "",
+  "files": [
+    "javascript/src/index.js",
+    "javascript/types/src/index.d.ts",
+    "javascript/types/src/index.d.ts.map",
+    "native/index.node"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "cross-env FEATURE=$FEATURE cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "build:release": "cross-env FEATURE=$FEATURE npm run build -- --release --features $FEATURE",
+    "build:simple": "cross-env FEATURE=simple npm run build:release",
+    "build:iterative": "cross-env FEATURE=iterative npm run build:release"
+  },
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "2.0.0"
+  },
+  "devDependencies": {
+    "cargo-cp-artifact": "0.1",
+    "cross-env": "^7.0.3"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ParceladoLara/payment-plan.git"
+  },
+  "binary": {
+    "module_name": "index",
+    "module_path": ".",
+    "host": "https://github.com/ParceladoLara/payment-plan/releases/download/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
+    "remote_path": "v{version}"
+  }
+}
