@@ -3,6 +3,7 @@ test:
 	make build-go-sdk
 	make build-python-sdk
 	make build-node-sdk
+	make build-web-sdk
 	cargo test
 	cd cli && make test
 	cd generators/wasm && npm i && npm run test
@@ -21,6 +22,7 @@ clean:
 	rm -rf ./sdks/python/payment_plan/_internal
 	rm -rf ./sdks/node/node_modules
 	rm -rf ./sdks/node/native
+	rm -rf ./sdks/web/pkg
 	mkdir -p ./sdks/go/internal/libs/linux
 	mkdir -p ./sdks/go/internal/libs/windows
 	mkdir -p ./sdks/go/internal/libs/darwin
@@ -69,3 +71,10 @@ build-node-sdk:
 	cp ./generators/node/index.node sdks/node/native/index.node
 	cd sdks/node && npm i
 	cd sdks/node && npm run build
+
+build-web-sdk:
+	cd generators/wasm && npm i
+	cd generators/wasm && npm run build:web
+	cp -r ./generators/wasm/pkg/. ./sdks/web/
+	rm -rf ./sdks/web/.gitignore
+	rm -rf ./sdks/web/package.json
