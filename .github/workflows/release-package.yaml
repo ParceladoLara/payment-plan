@@ -5,26 +5,6 @@ on:
     types: [created]
 
 jobs:
-  publish-web:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: https://npm.pkg.github.com/
-      - name: Publish to GitHub Package Registry
-        run: |
-          cd wasm/lib
-          echo "Publish to GitHub Package Registry"
-          export NODE_AUTH_TOKEN=${{secrets.GITHUB_TOKEN}}
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
   deploy-node-sdk:
     name: Deploy Node SDK
     runs-on: ubuntu-latest
@@ -145,7 +125,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Copy Wasm SDK to the public repository
         run: |
-          cp -r sdks/wasm/* public-repo/
+          cp -r sdks/web/* public-repo/
           cd public-repo
           python3 -c "import os; import json; p = json.load(open('./package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./package.json', 'w'), indent=2, ensure_ascii=False);"
           git add .
