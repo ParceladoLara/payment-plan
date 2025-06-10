@@ -128,6 +128,7 @@ jobs:
           cp -r sdks/web/* public-repo/
           cd public-repo
           python3 -c "import os; import json; p = json.load(open('./package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./package.json', 'w'), indent=2, ensure_ascii=False);"
+          npm i
           git add .
           git commit -m "Update Wasm SDK" --allow-empty
 
