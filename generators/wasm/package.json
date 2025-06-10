@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/node": "22.5.4",
     "glob": "11.0.0",
-    "ts-loader": "9.5.1",
+    "ts-loader": "9.5.2",
     "ts-node": "10.9.2",
     "tsc-alias": "1.8.10",
     "tsconfig-paths": "4.2.0",
