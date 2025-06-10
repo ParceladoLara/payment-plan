@@ -12,7 +12,7 @@
     "test": "node --test './test/*.spec.*'"
   },
   "devDependencies": {
-    "@types/node": "22.5.4",
+    "@types/node": "22.15.31",
     "cross-env": "^7.0.3",
     "i": "0.3.7",
     "ts-loader": "9.5.1",
