@@ -165,7 +165,7 @@ export function nextDisbursementDate(date: Date): Date;
  * @param {number} days
  * @returns {Date[]}
  */
-export function disbursementDataRange(base_date: Date, days: number): Date[];
+export function disbursementDateRange(base_date: Date, days: number): Date[];
 /**
  * @param {Date} start_date
  * @param {Date} end_date
