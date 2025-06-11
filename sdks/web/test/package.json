@@ -1,0 +1,26 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@parcelado_lara/payment-plan-wasm": "file:../pkg",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.53.0",
+    "@types/node": "24.0.0",
+    "@types/react": "19.1.7",
+    "@types/react-dom": "19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "typescript": "5.8.3",
+    "vite": "6.3.5",
+    "vite-plugin-wasm": "^3.4.1"
+  }
+}

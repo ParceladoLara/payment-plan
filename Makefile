@@ -9,8 +9,9 @@ test:
 	cd generators/wasm && npm i && npm run test
 	cd cli && make test
 	cd sdks/go && go test ./...
-	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 	cd sdks/node && npm test
+	cd sdks/web/test && npm i && npm run build && npm test
+	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 
 
 clean:
@@ -23,6 +24,7 @@ clean:
 	rm -rf ./sdks/node/node_modules
 	rm -rf ./sdks/node/native
 	rm -rf ./sdks/web/pkg
+	rm -rf ./sdks/web/node_modules
 	mkdir -p ./sdks/go/internal/libs/linux
 	mkdir -p ./sdks/go/internal/libs/windows
 	mkdir -p ./sdks/go/internal/libs/darwin
@@ -75,6 +77,5 @@ build-node-sdk:
 build-wasm-sdk:
 	cd generators/wasm && npm i
 	cd generators/wasm && npm run build:web
-	cp -r ./generators/wasm/pkg/. ./sdks/web/
-	rm -rf ./sdks/web/.gitignore
-	rm -rf ./sdks/web/package.json
+	cp -r ./generators/wasm/pkg/. ./sdks/web/pkg
+	rm -rf ./sdks/web/pkg/.gitignore

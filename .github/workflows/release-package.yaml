@@ -125,7 +125,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Copy Wasm SDK to the public repository
         run: |
-          cp -r sdks/web/* public-repo/
+          rm sdks/web/pkg/package.json || true
+          cp -r sdks/web/pkg/* public-repo/pkg/
           cd public-repo
           python3 -c "import os; import json; p = json.load(open('./package.json')); p['version'] = os.environ['RELEASE_VERSION']; json.dump(p, open('./package.json', 'w'), indent=2, ensure_ascii=False);"
           npm i
