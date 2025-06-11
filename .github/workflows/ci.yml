@@ -58,7 +58,7 @@ jobs:
           node-version: "22"
 
       - name: Run node tests
-        run: make build-node-sdk && cd sdks/node && npm ci && npm test
+        run: cd sdks/node && npm ci && npm test
 
   run-wasm-tests:
     needs: build-sdks
@@ -69,6 +69,14 @@ jobs:
       - uses: jetli/wasm-pack-action@v0.4.0
         with:
           version: "latest"
+
+      - name: Run wasm tests
+        run: |
+          make build-wasm-sdk
+          cd sdks/wasm/test && \
+          npm i && \
+          npm build && \
+          npm test
 
   run-cli-tests:
     needs: build-sdks
