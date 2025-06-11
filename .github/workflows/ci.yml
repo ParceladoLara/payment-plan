@@ -76,7 +76,6 @@ jobs:
           make build-wasm-sdk
           cd sdks/web/test && \
           npm i && \
-          npm run build && \
           npm test
 
   run-cli-tests:

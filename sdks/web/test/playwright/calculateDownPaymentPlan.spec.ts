@@ -2698,7 +2698,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
     }
   ]
 }`;
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await page.click('button:has-text("Calculate Down Payment Plan")');
     await expect(page.locator("pre")).toContainText(expectedText.trim());
   });

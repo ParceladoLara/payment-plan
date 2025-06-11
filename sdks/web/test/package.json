@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview",
-    "test": "playwright test"
+    "build:vite": "vite build",
+    "build:rsbuild": "rsbuild build -m production",
+    "serve:vite": "vite preview",
+    "serve:rsbuild": "rsbuild preview",
+    "test:vite": "rm -rf dist && playwright test --config playwright.vite.config.ts",
+    "test:rsbuild": "rm -rf dist && playwright test --config playwright.rsbuild.config.ts",
+    "test": "npm run test:vite && npm run test:rsbuild"
   },
   "dependencies": {
     "@parcelado_lara/payment-plan-wasm": "file:../pkg",
@@ -21,6 +25,9 @@
     "@vitejs/plugin-react": "^4.5.2",
     "typescript": "5.8.3",
     "vite": "6.3.5",
-    "vite-plugin-wasm": "^3.4.1"
+    "vite-plugin-wasm": "^3.4.1",
+    "@rsbuild/core": "1.2.19",
+    "@rsbuild/plugin-react": "1.1.1",
+    "@rsbuild/plugin-type-check": "1.2.1"
   }
 }

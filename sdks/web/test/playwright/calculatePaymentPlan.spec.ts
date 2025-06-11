@@ -183,7 +183,7 @@ test.describe("CalculatePaymentPlan page", () => {
     }
   ]
 }`;
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await page.click('button:has-text("Calculate Payment Plan")');
     await expect(page.locator("pre")).toContainText(expectedText.trim());
   });

@@ -10,7 +10,7 @@ test:
 	cd cli && make test
 	cd sdks/go && go test ./...
 	cd sdks/node && npm test
-	cd sdks/web/test && npm i && npm run build && npm test
+	cd sdks/web/test && npm i && npm test
 	cd sdks/python && python3 -m unittest discover -s tests -p "*.py"
 
 

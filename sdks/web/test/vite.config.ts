@@ -11,4 +11,7 @@ export default defineConfig({
     outDir: "dist",
     target: "esnext",
   },
+  preview: {
+    port: 4173,
+  },
 });

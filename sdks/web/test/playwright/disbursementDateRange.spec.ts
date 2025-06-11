@@ -6,7 +6,7 @@ test.describe("DisbursementDateRange page", () => {
   "2078-02-16T03:00:00.000Z",
   "2078-02-22T03:00:00.000Z"
 ]`;
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await page.click('button:has-text("Disbursement Date Range")');
     await expect(page.locator("pre")).toContainText(expectedText.trim());
   });
