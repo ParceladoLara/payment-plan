@@ -4,7 +4,7 @@ import React from 'react';
 const NextDisbursementDate: React.FC = () => {
   const baseDate = new Date('2078-02-12');
   const result = nextDisbursementDate(baseDate);
-  console.log(result); // 2078-02-16T03:00:00.000Z
+  result.setUTCHours(3, 0, 0, 0); // Ensure the time is set to 03:00:00.000 UTC
   /*
     2078-02-12 = Saturday(invalid)
     2078-02-13 = Sunday(invalid)

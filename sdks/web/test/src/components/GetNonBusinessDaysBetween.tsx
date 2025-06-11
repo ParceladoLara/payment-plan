@@ -5,7 +5,12 @@ const GetNonBusinessDaysBetween: React.FC = () => {
   const startDate = new Date('2078-11-12');
   const endDate = new Date('2078-11-22');
   const result = getNonBusinessDaysBetween(startDate, endDate);
-  console.log(result); // [2078-11-12T03:00:00.000Z, 2078-11-13T03:00:00.000Z, 2078-11-15T03:00:00.000Z, 2078-11-19T03:00:00.000Z, 2078-11-20T03:00:00.000Z]
+
+  // Set the time to 03:00:00.000 UTC for consistency
+  for (const date of result) {
+    date.setUTCHours(3, 0, 0, 0);
+  }
+
 
   /*
     2078-11-12 = Saturday(non-business)

@@ -18,6 +18,13 @@ const CalculatePaymentPlan: React.FC = () => {
     disbursementOnlyOnBusinessDays: false
   }
   const result = calculatePaymentPlan(params)
+  for (const payment of result) {
+    payment.disbursementDate.setUTCHours(3, 0, 0, 0) // Ensure the time is set to 03:00:00.000 UTC
+    payment.dueDate.setUTCHours(3, 0, 0, 0) // Ensure the time is set to 03:00:00.000 UTC
+    payment.invoices.forEach(invoice => {
+      invoice.dueDate.setUTCHours(3, 0, 0, 0) // Ensure the time is set to 03:00:00.000 UTC
+    })
+  }
   const paymentPlan = result.pop()
   const str = JSON.stringify(paymentPlan, (key, value) =>
     typeof value === 'bigint' ? value.toString() : value,

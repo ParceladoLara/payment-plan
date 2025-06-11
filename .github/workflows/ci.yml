@@ -58,7 +58,7 @@ jobs:
           node-version: "22"
 
       - name: Run node tests
-        run: cd sdks/node && npm ci && npm test
+        run: make build-node-sdk && cd sdks/node && npm ci && npm test
   run-wasm-tests:
     needs: build-sdks
     runs-on: ubuntu-latest

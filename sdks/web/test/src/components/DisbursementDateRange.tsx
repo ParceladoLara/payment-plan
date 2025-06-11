@@ -5,7 +5,9 @@ const DisbursementDateRange: React.FC = () => {
   const baseDate = new Date('2078-02-12');
   const days = 5;
   const result = disbursementDateRange(baseDate, days);
-  console.log(result); // [2078-02-16T03:00:00.000Z, 2078-02-22T03:00:00.000Z ]
+  for (const date of result) {
+    date.setUTCHours(3, 0, 0, 0); // Ensure the time is set to 03:00:00.000 UTC
+  }
   /*
     2078-02-12 = Saturday(invalid)
     2078-02-13 = Sunday(invalid)

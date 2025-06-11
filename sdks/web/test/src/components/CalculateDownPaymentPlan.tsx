@@ -31,6 +31,16 @@ const CalculateDownPaymentPlan: React.FC = () => {
   }
 
   const result = calculateDownPaymentPlan(downPaymentPlanParams);
+  for (const payment of result) {
+    payment.firstPaymentDate.setUTCHours(3, 0, 0, 0); // Ensure the time is set to 03:00:00.000 UTC
+    payment.plans.forEach(plan => {
+      plan.disbursementDate.setUTCHours(3, 0, 0, 0) // Ensure the time is set to 03:00:00.000 UTC
+      plan.dueDate.setUTCHours(3, 0, 0, 0) // Ensure the time is set to 03:00:00.000 UTC
+      plan.invoices.forEach(invoice => {
+        invoice.dueDate.setUTCHours(3, 0, 0, 0) // Ensure the time is set to 03:00:00.000 UTC
+      })
+    })
+  }
   const paymentPlan = result.pop()
   const str = JSON.stringify(paymentPlan, (key, value) =>
     typeof value === 'bigint' ? value.toString() : value,

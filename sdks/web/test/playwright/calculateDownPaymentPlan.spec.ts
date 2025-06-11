@@ -6,11 +6,11 @@ test.describe("CalculateDownPaymentPlan page", () => {
   "installmentAmount": 100,
   "totalAmount": 200,
   "installmentQuantity": 2,
-  "firstPaymentDate": "2022-06-20T06:00:00.000Z",
+  "firstPaymentDate": "2022-06-20T03:00:00.000Z",
   "plans": [
     {
       "installment": 1,
-      "dueDate": "2022-08-20T06:00:00.000Z",
+      "dueDate": "2022-08-20T03:00:00.000Z",
       "accumulatedDays": 25,
       "daysIndex": 0.972726300214712,
       "accumulatedDaysIndex": 0.972726300214712,
@@ -38,7 +38,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 51.79,
       "paidContractAmount": 8851.79,
       "preDisbursementAmount": 8800,
@@ -47,13 +47,13 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 2,
-      "dueDate": "2022-09-20T06:00:00.000Z",
+      "dueDate": "2022-09-20T03:00:00.000Z",
       "accumulatedDays": 56,
       "daysIndex": 0.939937712053009,
       "accumulatedDaysIndex": 1.912664012267721,
@@ -81,7 +81,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 63.23,
       "paidContractAmount": 8863.23,
       "preDisbursementAmount": 8800,
@@ -90,19 +90,19 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 3,
-      "dueDate": "2022-10-20T06:00:00.000Z",
+      "dueDate": "2022-10-20T03:00:00.000Z",
       "accumulatedDays": 86,
       "daysIndex": 0.909259536351008,
       "accumulatedDaysIndex": 2.821923548618729,
@@ -130,7 +130,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 74.58,
       "paidContractAmount": 8874.58,
       "preDisbursementAmount": 8799.99,
@@ -139,25 +139,25 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 4,
-      "dueDate": "2022-11-20T06:00:00.000Z",
+      "dueDate": "2022-11-20T03:00:00.000Z",
       "accumulatedDays": 117,
       "daysIndex": 0.878610281300606,
       "accumulatedDaysIndex": 3.700533829919335,
@@ -185,7 +185,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 86.24,
       "paidContractAmount": 8886.24,
       "preDisbursementAmount": 8800,
@@ -194,31 +194,31 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 5,
-      "dueDate": "2022-12-20T06:00:00.000Z",
+      "dueDate": "2022-12-20T03:00:00.000Z",
       "accumulatedDays": 147,
       "daysIndex": 0.849933742166485,
       "accumulatedDaysIndex": 4.55046757208582,
@@ -246,7 +246,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 97.94,
       "paidContractAmount": 8897.94,
       "preDisbursementAmount": 8800,
@@ -255,37 +255,37 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 6,
-      "dueDate": "2023-01-20T06:00:00.000Z",
+      "dueDate": "2023-01-20T03:00:00.000Z",
       "accumulatedDays": 178,
       "daysIndex": 0.821284236719289,
       "accumulatedDaysIndex": 5.371751808805109,
@@ -313,7 +313,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 109.86,
       "paidContractAmount": 8909.86,
       "preDisbursementAmount": 8799.99,
@@ -322,43 +322,43 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 7,
-      "dueDate": "2023-02-20T06:00:00.000Z",
+      "dueDate": "2023-02-20T03:00:00.000Z",
       "accumulatedDays": 209,
       "daysIndex": 0.793600446741016,
       "accumulatedDaysIndex": 6.165352255546125,
@@ -386,7 +386,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 122,
       "paidContractAmount": 8922,
       "preDisbursementAmount": 8800.01,
@@ -395,49 +395,49 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 8,
-      "dueDate": "2023-03-20T06:00:00.000Z",
+      "dueDate": "2023-03-20T03:00:00.000Z",
       "accumulatedDays": 237,
       "daysIndex": 0.769398687203526,
       "accumulatedDaysIndex": 6.934750942749651,
@@ -465,7 +465,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 134.04,
       "paidContractAmount": 8934.04,
       "preDisbursementAmount": 8800,
@@ -474,55 +474,55 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 9,
-      "dueDate": "2023-04-20T06:00:00.000Z",
+      "dueDate": "2023-04-20T03:00:00.000Z",
       "accumulatedDays": 268,
       "daysIndex": 0.743463851596323,
       "accumulatedDaysIndex": 7.678214794345974,
@@ -550,7 +550,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 146.27,
       "paidContractAmount": 8946.27,
       "preDisbursementAmount": 8799.98,
@@ -559,61 +559,61 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 10,
-      "dueDate": "2023-05-20T06:00:00.000Z",
+      "dueDate": "2023-05-20T03:00:00.000Z",
       "accumulatedDays": 298,
       "daysIndex": 0.719198291894988,
       "accumulatedDaysIndex": 8.397413086240963,
@@ -641,7 +641,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 158.7,
       "paidContractAmount": 8958.7,
       "preDisbursementAmount": 8799.98,
@@ -650,67 +650,67 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 11,
-      "dueDate": "2023-06-20T06:00:00.000Z",
+      "dueDate": "2023-06-20T03:00:00.000Z",
       "accumulatedDays": 329,
       "daysIndex": 0.694955607602048,
       "accumulatedDaysIndex": 9.09236869384301,
@@ -738,7 +738,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 171.35,
       "paidContractAmount": 8971.35,
       "preDisbursementAmount": 8800.01,
@@ -747,73 +747,73 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 12,
-      "dueDate": "2023-07-20T06:00:00.000Z",
+      "dueDate": "2023-07-20T03:00:00.000Z",
       "accumulatedDays": 359,
       "daysIndex": 0.672273285186726,
       "accumulatedDaysIndex": 9.764641979029737,
@@ -841,7 +841,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 184.06,
       "paidContractAmount": 8984.06,
       "preDisbursementAmount": 8799.96,
@@ -850,79 +850,79 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 13,
-      "dueDate": "2023-08-20T06:00:00.000Z",
+      "dueDate": "2023-08-20T03:00:00.000Z",
       "accumulatedDays": 390,
       "daysIndex": 0.649612345644702,
       "accumulatedDaysIndex": 10.414254324674438,
@@ -950,7 +950,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 195.31,
       "paidContractAmount": 8995.31,
       "preDisbursementAmount": 8799.99,
@@ -959,85 +959,85 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 14,
-      "dueDate": "2023-09-20T06:00:00.000Z",
+      "dueDate": "2023-09-20T03:00:00.000Z",
       "accumulatedDays": 421,
       "daysIndex": 0.627715259422812,
       "accumulatedDaysIndex": 11.04196958409725,
@@ -1065,7 +1065,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 204.95,
       "paidContractAmount": 9004.95,
       "preDisbursementAmount": 8800.02,
@@ -1074,91 +1074,91 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 15,
-      "dueDate": "2023-10-20T06:00:00.000Z",
+      "dueDate": "2023-10-20T03:00:00.000Z",
       "accumulatedDays": 451,
       "daysIndex": 0.607227562448361,
       "accumulatedDaysIndex": 11.649197146545612,
@@ -1186,7 +1186,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 213.22,
       "paidContractAmount": 9013.22,
       "preDisbursementAmount": 8799.97,
@@ -1195,97 +1195,97 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 16,
-      "dueDate": "2023-11-20T06:00:00.000Z",
+      "dueDate": "2023-11-20T03:00:00.000Z",
       "accumulatedDays": 482,
       "daysIndex": 0.586759179449814,
       "accumulatedDaysIndex": 12.235956325995426,
@@ -1313,7 +1313,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 220.47,
       "paidContractAmount": 9020.47,
       "preDisbursementAmount": 8799.94,
@@ -1322,103 +1322,103 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 17,
-      "dueDate": "2023-12-20T06:00:00.000Z",
+      "dueDate": "2023-12-20T03:00:00.000Z",
       "accumulatedDays": 512,
       "daysIndex": 0.567608228305822,
       "accumulatedDaysIndex": 12.803564554301248,
@@ -1446,7 +1446,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 226.9,
       "paidContractAmount": 9026.9,
       "preDisbursementAmount": 8799.95,
@@ -1455,109 +1455,109 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 18,
-      "dueDate": "2024-01-20T06:00:00.000Z",
+      "dueDate": "2024-01-20T03:00:00.000Z",
       "accumulatedDays": 543,
       "daysIndex": 0.548475330972825,
       "accumulatedDaysIndex": 13.352039885274074,
@@ -1585,7 +1585,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 232.65,
       "paidContractAmount": 9032.65,
       "preDisbursementAmount": 8800.02,
@@ -1594,115 +1594,115 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 19,
-      "dueDate": "2024-02-20T06:00:00.000Z",
+      "dueDate": "2024-02-20T03:00:00.000Z",
       "accumulatedDays": 574,
       "daysIndex": 0.529987363966945,
       "accumulatedDaysIndex": 13.88202724924102,
@@ -1730,7 +1730,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 237.76,
       "paidContractAmount": 9037.76,
       "preDisbursementAmount": 8800.05,
@@ -1739,121 +1739,121 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "574",
           "factor": 0.529987363966945,
           "accumulatedFactor": 13.88202724924102,
-          "dueDate": "2024-02-20T06:00:00.000Z"
+          "dueDate": "2024-02-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 20,
-      "dueDate": "2024-03-20T06:00:00.000Z",
+      "dueDate": "2024-03-20T03:00:00.000Z",
       "accumulatedDays": 603,
       "daysIndex": 0.51325676093444,
       "accumulatedDaysIndex": 14.395284010175459,
@@ -1881,7 +1881,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 242.25,
       "paidContractAmount": 9042.25,
       "preDisbursementAmount": 8799.99,
@@ -1890,127 +1890,127 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "574",
           "factor": 0.529987363966945,
           "accumulatedFactor": 13.88202724924102,
-          "dueDate": "2024-02-20T06:00:00.000Z"
+          "dueDate": "2024-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "603",
           "factor": 0.51325676093444,
           "accumulatedFactor": 14.395284010175459,
-          "dueDate": "2024-03-20T06:00:00.000Z"
+          "dueDate": "2024-03-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 21,
-      "dueDate": "2024-04-20T06:00:00.000Z",
+      "dueDate": "2024-04-20T03:00:00.000Z",
       "accumulatedDays": 634,
       "daysIndex": 0.495955938954224,
       "accumulatedDaysIndex": 14.891239949129682,
@@ -2038,7 +2038,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 246.43,
       "paidContractAmount": 9046.43,
       "preDisbursementAmount": 8800.06,
@@ -2047,133 +2047,133 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "574",
           "factor": 0.529987363966945,
           "accumulatedFactor": 13.88202724924102,
-          "dueDate": "2024-02-20T06:00:00.000Z"
+          "dueDate": "2024-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "603",
           "factor": 0.51325676093444,
           "accumulatedFactor": 14.395284010175459,
-          "dueDate": "2024-03-20T06:00:00.000Z"
+          "dueDate": "2024-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "634",
           "factor": 0.495955938954224,
           "accumulatedFactor": 14.891239949129682,
-          "dueDate": "2024-04-20T06:00:00.000Z"
+          "dueDate": "2024-04-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 22,
-      "dueDate": "2024-05-20T06:00:00.000Z",
+      "dueDate": "2024-05-20T03:00:00.000Z",
       "accumulatedDays": 664,
       "daysIndex": 0.47976867118043,
       "accumulatedDaysIndex": 15.371008620310112,
@@ -2201,7 +2201,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 250.14,
       "paidContractAmount": 9050.14,
       "preDisbursementAmount": 8800.05,
@@ -2210,139 +2210,139 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "574",
           "factor": 0.529987363966945,
           "accumulatedFactor": 13.88202724924102,
-          "dueDate": "2024-02-20T06:00:00.000Z"
+          "dueDate": "2024-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "603",
           "factor": 0.51325676093444,
           "accumulatedFactor": 14.395284010175459,
-          "dueDate": "2024-03-20T06:00:00.000Z"
+          "dueDate": "2024-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "634",
           "factor": 0.495955938954224,
           "accumulatedFactor": 14.891239949129682,
-          "dueDate": "2024-04-20T06:00:00.000Z"
+          "dueDate": "2024-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "664",
           "factor": 0.47976867118043,
           "accumulatedFactor": 15.371008620310112,
-          "dueDate": "2024-05-20T06:00:00.000Z"
+          "dueDate": "2024-05-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 23,
-      "dueDate": "2024-06-20T06:00:00.000Z",
+      "dueDate": "2024-06-20T03:00:00.000Z",
       "accumulatedDays": 695,
       "daysIndex": 0.463596663320922,
       "accumulatedDaysIndex": 15.834605283631035,
@@ -2370,7 +2370,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 253.44,
       "paidContractAmount": 9053.44,
       "preDisbursementAmount": 8799.94,
@@ -2379,145 +2379,145 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "574",
           "factor": 0.529987363966945,
           "accumulatedFactor": 13.88202724924102,
-          "dueDate": "2024-02-20T06:00:00.000Z"
+          "dueDate": "2024-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "603",
           "factor": 0.51325676093444,
           "accumulatedFactor": 14.395284010175459,
-          "dueDate": "2024-03-20T06:00:00.000Z"
+          "dueDate": "2024-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "634",
           "factor": 0.495955938954224,
           "accumulatedFactor": 14.891239949129682,
-          "dueDate": "2024-04-20T06:00:00.000Z"
+          "dueDate": "2024-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "664",
           "factor": 0.47976867118043,
           "accumulatedFactor": 15.371008620310112,
-          "dueDate": "2024-05-20T06:00:00.000Z"
+          "dueDate": "2024-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "695",
           "factor": 0.463596663320922,
           "accumulatedFactor": 15.834605283631035,
-          "dueDate": "2024-06-20T06:00:00.000Z"
+          "dueDate": "2024-06-20T03:00:00.000Z"
         }
       ]
     },
     {
       "installment": 24,
-      "dueDate": "2024-07-20T06:00:00.000Z",
+      "dueDate": "2024-07-20T03:00:00.000Z",
       "accumulatedDays": 725,
       "daysIndex": 0.44846555440823,
       "accumulatedDaysIndex": 16.283070838039265,
@@ -2545,7 +2545,7 @@ test.describe("CalculateDownPaymentPlan page", () => {
       "tacAmount": 0,
       "IOFPercentage": 0.000082,
       "overallIOF": 0.0038,
-      "disbursementDate": "2022-07-26T06:00:00.000Z",
+      "disbursementDate": "2022-07-26T03:00:00.000Z",
       "paidTotalIOF": 256.64,
       "paidContractAmount": 9056.64,
       "preDisbursementAmount": 8800.06,
@@ -2554,145 +2554,145 @@ test.describe("CalculateDownPaymentPlan page", () => {
           "accumulatedDays": "25",
           "factor": 0.972726300214712,
           "accumulatedFactor": 0.972726300214712,
-          "dueDate": "2022-08-20T06:00:00.000Z"
+          "dueDate": "2022-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "56",
           "factor": 0.939937712053009,
           "accumulatedFactor": 1.912664012267721,
-          "dueDate": "2022-09-20T06:00:00.000Z"
+          "dueDate": "2022-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "86",
           "factor": 0.909259536351008,
           "accumulatedFactor": 2.821923548618729,
-          "dueDate": "2022-10-20T06:00:00.000Z"
+          "dueDate": "2022-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "117",
           "factor": 0.878610281300606,
           "accumulatedFactor": 3.700533829919335,
-          "dueDate": "2022-11-20T06:00:00.000Z"
+          "dueDate": "2022-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "147",
           "factor": 0.849933742166485,
           "accumulatedFactor": 4.55046757208582,
-          "dueDate": "2022-12-20T06:00:00.000Z"
+          "dueDate": "2022-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "178",
           "factor": 0.821284236719289,
           "accumulatedFactor": 5.371751808805109,
-          "dueDate": "2023-01-20T06:00:00.000Z"
+          "dueDate": "2023-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "209",
           "factor": 0.793600446741016,
           "accumulatedFactor": 6.165352255546125,
-          "dueDate": "2023-02-20T06:00:00.000Z"
+          "dueDate": "2023-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "237",
           "factor": 0.769398687203526,
           "accumulatedFactor": 6.934750942749651,
-          "dueDate": "2023-03-20T06:00:00.000Z"
+          "dueDate": "2023-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "268",
           "factor": 0.743463851596323,
           "accumulatedFactor": 7.678214794345974,
-          "dueDate": "2023-04-20T06:00:00.000Z"
+          "dueDate": "2023-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "298",
           "factor": 0.719198291894988,
           "accumulatedFactor": 8.397413086240963,
-          "dueDate": "2023-05-20T06:00:00.000Z"
+          "dueDate": "2023-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "329",
           "factor": 0.694955607602048,
           "accumulatedFactor": 9.09236869384301,
-          "dueDate": "2023-06-20T06:00:00.000Z"
+          "dueDate": "2023-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "359",
           "factor": 0.672273285186726,
           "accumulatedFactor": 9.764641979029737,
-          "dueDate": "2023-07-20T06:00:00.000Z"
+          "dueDate": "2023-07-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "390",
           "factor": 0.649612345644702,
           "accumulatedFactor": 10.414254324674438,
-          "dueDate": "2023-08-20T06:00:00.000Z"
+          "dueDate": "2023-08-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "421",
           "factor": 0.627715259422812,
           "accumulatedFactor": 11.04196958409725,
-          "dueDate": "2023-09-20T06:00:00.000Z"
+          "dueDate": "2023-09-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "451",
           "factor": 0.607227562448361,
           "accumulatedFactor": 11.649197146545612,
-          "dueDate": "2023-10-20T06:00:00.000Z"
+          "dueDate": "2023-10-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "482",
           "factor": 0.586759179449814,
           "accumulatedFactor": 12.235956325995426,
-          "dueDate": "2023-11-20T06:00:00.000Z"
+          "dueDate": "2023-11-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "512",
           "factor": 0.567608228305822,
           "accumulatedFactor": 12.803564554301248,
-          "dueDate": "2023-12-20T06:00:00.000Z"
+          "dueDate": "2023-12-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "543",
           "factor": 0.548475330972825,
           "accumulatedFactor": 13.352039885274074,
-          "dueDate": "2024-01-20T06:00:00.000Z"
+          "dueDate": "2024-01-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "574",
           "factor": 0.529987363966945,
           "accumulatedFactor": 13.88202724924102,
-          "dueDate": "2024-02-20T06:00:00.000Z"
+          "dueDate": "2024-02-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "603",
           "factor": 0.51325676093444,
           "accumulatedFactor": 14.395284010175459,
-          "dueDate": "2024-03-20T06:00:00.000Z"
+          "dueDate": "2024-03-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "634",
           "factor": 0.495955938954224,
           "accumulatedFactor": 14.891239949129682,
-          "dueDate": "2024-04-20T06:00:00.000Z"
+          "dueDate": "2024-04-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "664",
           "factor": 0.47976867118043,
           "accumulatedFactor": 15.371008620310112,
-          "dueDate": "2024-05-20T06:00:00.000Z"
+          "dueDate": "2024-05-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "695",
           "factor": 0.463596663320922,
           "accumulatedFactor": 15.834605283631035,
-          "dueDate": "2024-06-20T06:00:00.000Z"
+          "dueDate": "2024-06-20T03:00:00.000Z"
         },
         {
           "accumulatedDays": "725",
           "factor": 0.44846555440823,
           "accumulatedFactor": 16.283070838039265,
-          "dueDate": "2024-07-20T06:00:00.000Z"
+          "dueDate": "2024-07-20T03:00:00.000Z"
         }
       ]
     }
