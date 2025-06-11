@@ -60,7 +60,7 @@ jobs:
       - name: Run node tests
         run: make build-node-sdk && \
           cd sdks/node && \
-          npm i && \
+          npm ci && \
           npm test
   run-wasm-tests:
     needs: build-sdks
@@ -77,7 +77,7 @@ jobs:
           make build-wasm-sdk
           cd sdks/web/test && \
           npm i && \
-          npm build && \
+          npm run build && \
           npm test
 
   run-cli-tests:
