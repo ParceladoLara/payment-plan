@@ -212,6 +212,7 @@ jobs:
         node_version:
           - 20
           - 22
+          - 24
         system:
           # apple-darwin is being skipped because the runner is taking too long to start.
           #- os: macos-11
