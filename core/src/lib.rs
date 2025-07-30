@@ -14,7 +14,7 @@ use calc::providers::simple::Simple;
 use calc::providers::iterative::Iterative;
 
 mod calc;
-mod err;
+pub mod err;
 mod util;
 
 #[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]

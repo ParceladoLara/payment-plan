@@ -16,6 +16,20 @@ pub enum Error {
     CalculationError,
 }
 
+impl From<core_payment_plan::err::PaymentPlanError> for Error {
+    fn from(value: core_payment_plan::err::PaymentPlanError) -> Self {
+        match value {
+            core_payment_plan::err::PaymentPlanError::CalculationError(_) => {
+                Error::CalculationError
+            }
+            core_payment_plan::err::PaymentPlanError::XirCalculationError(_) => {
+                Error::CalculationError
+            }
+            _ => Error::InvalidParams,
+        }
+    }
+}
+
 impl Display for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -32,7 +46,7 @@ pub fn calculate_down_payment_plan(
     params: DownPaymentParams,
 ) -> Result<Vec<DownPaymentResponse>, Error> {
     let params: core_payment_plan::DownPaymentParams = params.into();
-    let result = core_payment_plan::calculate_down_payment_plan(params).unwrap();
+    let result = core_payment_plan::calculate_down_payment_plan(params)?;
     let result: Vec<DownPaymentResponse> = result.into_iter().map(|x| x.into()).collect();
     Ok(result)
 }
@@ -40,7 +54,7 @@ pub fn calculate_down_payment_plan(
 #[uniffi::export]
 pub fn calculate_payment_plan(params: Params) -> Result<Vec<Response>, Error> {
     let params: core_payment_plan::Params = params.into();
-    let result = core_payment_plan::calculate_payment_plan(params).unwrap(); //remove unwrap
+    let result = core_payment_plan::calculate_payment_plan(params)?;
     let result: Vec<Response> = result.into_iter().map(|x| x.into()).collect();
     Ok(result)
 }
