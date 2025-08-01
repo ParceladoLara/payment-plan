@@ -6,6 +6,6 @@ bin/test/protos
 node/build
 __pycache__
 get-pip.py
-native
 sdks/web/test/test-results
 sdks/web/test/src/vite-env.d.ts
+vendor/

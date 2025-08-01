@@ -24,15 +24,18 @@ jobs:
         run: rustup target add x86_64-pc-windows-gnu
       - name: Install uniffi-go-bindgen
         run: cargo install uniffi-bindgen-go --git https://github.com/NordSecurity/uniffi-bindgen-go --tag v0.3.0+v0.28.3
+      - name: Install php
+        run: sudo apt-get install -y php php-composer
       - name: build go sdk
         run: make build-go-sdk
       - name: build python sdk
         run: make build-python-sdk
       - name: build node sdk
         run: make build-node-sdk
-
       - name: build wasm sdk
         run: make build-wasm-sdk
+      - name: build php sdk
+        run: make build-php-sdk
 
   run-cargo-tests:
     needs: build-sdks
@@ -146,3 +149,39 @@ jobs:
           python-version: "3.11"
       - name: Run python tests
         run: cd sdks/python && python -m unittest tests/test_payment_plan.py
+
+  run-php-tests:
+    needs: build-sdks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          extensions: mbstring, xml, curl, json, bcmath
+      - name: Install Composer
+        run: composer install --no-interaction --prefer-dist
+      - name: Run PHP tests
+        run: |
+          cd sdks/php
+          composer install --no-interaction --prefer-dist
+          vendor/bin/phpunit --configuration phpunit.xml
+
+  run-php-tests-win:
+    needs: build-sdks
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          extensions: mbstring, xml, curl, json, bcmath
+      - name: Install Composer
+        run: composer install --no-interaction --prefer-dist
+      - name: Run PHP tests
+        run: |
+          cd sdks/php
+          composer install --no-interaction --prefer-dist
+          vendor/bin/phpunit --configuration phpunit.xml
