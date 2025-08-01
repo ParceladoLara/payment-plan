@@ -104,6 +104,38 @@ jobs:
           cd public-repo
           git push origin main --force
 
+  deploy-php-sdk:
+    name: Deploy PHP SDK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Clone the public repository
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${REPO_TOKEN}@github.com/ParceladoLara/payment-plan-php-sdk.git public-repo
+          cd public-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Copy PHP SDK to the public repository
+        run: |
+          cp -r sdks/php/src/* public-repo/src/
+          cp -r sdks/php/composer.json public-repo/
+          cp -r sdks/php/tests public-repo/tests
+          cd public-repo
+          git add .
+          git commit -m "Update PHP SDK" --allow-empty
+
+      - name: Push PHP SDK to public repository
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          cd public-repo
+          git push origin master --force
+
   deploy-wasm-sdk:
     name: Deploy Wasm SDK
     runs-on: ubuntu-latest
@@ -299,6 +331,26 @@ jobs:
           gh release edit "${{ env.RELEASE_VERSION }}" \
           --repo ParceladoLara/payment-plan-node-sdk \
           --draft=false
+
+  create-php-sdk-release:
+    name: Create Release on payment-plan-php-sdk
+    runs-on: ubuntu-latest
+    needs: deploy-php-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Set release version
+        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
+      - name: Create release on payment-plan-php-sdk
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          gh release create "${{ env.RELEASE_VERSION }}" \
+            --repo ParceladoLara/payment-plan-php-sdk \
+            --title "${{ env.RELEASE_VERSION }}" \
+            --notes "Automated release from payment-plan"
 
 # This job is for musl based linux systems.(not working yet)
 #  nodejs-github-native-musl:
