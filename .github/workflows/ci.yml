@@ -25,7 +25,7 @@ jobs:
       - name: Install uniffi-go-bindgen
         run: cargo install uniffi-bindgen-go --git https://github.com/NordSecurity/uniffi-bindgen-go --tag v0.3.0+v0.28.3
       - name: Install php
-        run: sudo apt-get install -y php php-composer
+        run: sudo apt-get install -y php composer
       - name: build go sdk
         run: make build-go-sdk
       - name: build python sdk
