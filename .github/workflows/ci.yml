@@ -48,6 +48,8 @@ jobs:
           make build-wasm-sdk
           cd sdks/web/test && \
           npm i && \
+          npx playwright install && \
+          npx playwright install-deps && \
           npm test
 
   run-cli-tests:
