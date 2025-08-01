@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = ["core", "cli" ,"uniffi-bindgen","generators/node","generators/wasm", "generators/uniffi"]
+members = ["core", "cli" ,"uniffi-bindgen","generators/node","generators/wasm", "generators/uniffi","generators/c_bind"]
 
 
 [profile.release]

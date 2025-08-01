@@ -1,0 +1,21 @@
+[package]
+name = "payment_plan_c_bind"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib","staticlib","rlib"]
+name = "payment_plan_c_bind"
+
+[[bin]]
+name = "generate-headers"
+required-features = ["headers"]  # Do not build unless generating headers.
+
+
+[dependencies]
+safer-ffi = "0.1.13"
+core_payment_plan = { path ="../../core" }
+chrono = { version = "0.4.38" }
+
+[features]
+headers = ["safer-ffi/headers"]
