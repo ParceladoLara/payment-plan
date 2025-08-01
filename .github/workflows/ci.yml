@@ -40,16 +40,13 @@ jobs:
       - uses: jetli/wasm-pack-action@v0.4.0
         with:
           version: "latest"
-      - name: Setup Playwright
-        uses: ./.github/actions/setup-playwright
 
       - name: Run wasm tests
         run: |
           make build-wasm-sdk
           cd sdks/web/test && \
           npm i && \
-          npx playwright install && \
-          npx playwright install-deps && \
+          npx playwright --with-deps --only-shell && \
           npm test
 
   run-cli-tests:
