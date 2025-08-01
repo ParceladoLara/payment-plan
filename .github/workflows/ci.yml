@@ -9,36 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  build-sdks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: jetli/wasm-pack-action@v0.4.0
-        with:
-          version: "latest"
-      - name: Clean up
-        run: make clean
-      - name: Install mingw-w64
-        run: sudo apt-get update && sudo apt-get install -y mingw-w64
-      - name: Install windows target
-        run: rustup target add x86_64-pc-windows-gnu
-      - name: Install uniffi-go-bindgen
-        run: cargo install uniffi-bindgen-go --git https://github.com/NordSecurity/uniffi-bindgen-go --tag v0.3.0+v0.28.3
-      - name: Install php
-        run: sudo apt-get install -y php composer
-      - name: build go sdk
-        run: make build-go-sdk
-      - name: build python sdk
-        run: make build-python-sdk
-      - name: build node sdk
-        run: make build-node-sdk
-      - name: build wasm sdk
-        run: make build-wasm-sdk
-      - name: build php sdk
-        run: make build-php-sdk
-
   run-cargo-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +21,6 @@ jobs:
         run: cargo test
 
   run-node-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -63,7 +33,6 @@ jobs:
       - name: Run node tests
         run: make build-node-sdk && cd sdks/node && npm ci && npm test
   run-wasm-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -82,7 +51,6 @@ jobs:
           npm test
 
   run-cli-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -102,7 +70,6 @@ jobs:
         run: cd cli && make test
 
   run-go-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -113,7 +80,6 @@ jobs:
         run: cd sdks/go && go test -v ./...
 
   run-go-tests-win:
-    needs: build-sdks
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -127,7 +93,6 @@ jobs:
         run: cd sdks/go && go test -v ./...
 
   run-python-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -139,7 +104,6 @@ jobs:
         run: cd sdks/python && python -m unittest tests/test_payment_plan.py
 
   run-python-tests-win:
-    needs: build-sdks
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -151,7 +115,6 @@ jobs:
         run: cd sdks/python && python -m unittest tests/test_payment_plan.py
 
   run-php-tests:
-    needs: build-sdks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -161,15 +124,15 @@ jobs:
           php-version: "8.1"
           extensions: mbstring, xml, curl, json, bcmath
       - name: Install Composer
-        run: composer install --no-interaction --prefer-dist
-      - name: Run PHP tests
         run: |
           cd sdks/php
           composer install --no-interaction --prefer-dist
+      - name: Run PHP tests
+        run: |
+          cd sdks/php
           vendor/bin/phpunit --configuration phpunit.xml
 
   run-php-tests-win:
-    needs: build-sdks
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -179,7 +142,9 @@ jobs:
           php-version: "8.1"
           extensions: mbstring, xml, curl, json, bcmath
       - name: Install Composer
-        run: composer install --no-interaction --prefer-dist
+        run: |
+          cd sdks/php
+          composer install --no-interaction --prefer-dist
       - name: Run PHP tests
         run: |
           cd sdks/php
