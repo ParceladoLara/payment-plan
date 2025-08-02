@@ -24,6 +24,7 @@ struct InnerParams {
     params: Params,
     main_value: f64,
     daily_interest_rate: f64,
+    base_date: chrono::NaiveDate,
 }
 
 /**
@@ -40,6 +41,7 @@ impl PaymentPlan for Iterative {
         &self,
         mut params: Params,
     ) -> Result<Vec<Response>, PaymentPlanError> {
+        let base_date = params.first_payment_date;
         if params.requested_amount <= 0.0 {
             return Err(PaymentPlanError::InvalidRequestedAmount);
         }
@@ -50,6 +52,7 @@ impl PaymentPlan for Iterative {
         if params.disbursement_only_on_business_days {
             //Change the base date to the next business day
             params.disbursement_date = get_next_business_day(params.disbursement_date);
+            params.first_payment_date = get_next_business_day(params.first_payment_date);
         }
 
         let mut response = Vec::with_capacity(params.installments as usize);
@@ -71,6 +74,7 @@ impl PaymentPlan for Iterative {
                 params,
                 main_value,
                 daily_interest_rate,
+                base_date,
             };
 
             let resp = calc(params)?;
