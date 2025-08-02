@@ -21,18 +21,18 @@ pub struct InstallmentData {
     pub invoices: Vec<Invoice>,
 }
 
-pub fn calc(qi_params: &InnerParams) -> InstallmentData {
-    if qi_params.params.disbursement_only_on_business_days {
-        return calc_installments_on_business_days(qi_params);
+pub fn calc(inner_params: &InnerParams) -> InstallmentData {
+    if inner_params.params.disbursement_only_on_business_days {
+        return calc_installments_on_business_days(inner_params);
     } else {
-        return calc_installments(qi_params);
+        return calc_installments(inner_params);
     }
 }
 
-fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
-    let daily_interest_rate = qi_params.daily_interest_rate;
+fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
+    let daily_interest_rate = inner_params.daily_interest_rate;
 
-    let params = qi_params.params;
+    let params = inner_params.params;
 
     let disbursement_date = params.disbursement_date;
     let first_payment_date = params.first_payment_date;
@@ -55,7 +55,7 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
     let base_factor = 1.0 / (1.0 + daily_interest_rate);
 
     for i in 0..installments {
-        let main_value = qi_params.main_value;
+        let main_value = inner_params.main_value;
         if i != 0 {
             last_due_date = due_date;
             due_date = add_months(due_date, 1);
@@ -96,10 +96,10 @@ fn calc_installments(qi_params: &InnerParams) -> InstallmentData {
     };
 }
 
-fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentData {
-    let daily_interest_rate = qi_params.daily_interest_rate;
+fn calc_installments_on_business_days(inner_params: &InnerParams) -> InstallmentData {
+    let daily_interest_rate = inner_params.daily_interest_rate;
 
-    let params = qi_params.params;
+    let params = inner_params.params;
 
     let disbursement_date = params.disbursement_date;
     let first_payment_date = params.first_payment_date;
@@ -107,7 +107,7 @@ fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentDat
 
     let mut last_due_date = disbursement_date;
     let mut due_date = first_payment_date;
-    let base_due_date = due_date;
+    let base_due_date = inner_params.base_date;
     let mut accumulated_days = 0;
     let mut accumulated_business_days = 0;
     let mut accumulated_factor = 0.0;
@@ -125,7 +125,7 @@ fn calc_installments_on_business_days(qi_params: &InnerParams) -> InstallmentDat
 
     let base_factor = 1.0 / (1.0 + daily_interest_rate);
     for i in 0..installments {
-        let main_value = qi_params.main_value;
+        let main_value = inner_params.main_value;
 
         due_date = add_months(base_due_date, i);
         due_date = get_next_business_day(due_date);
@@ -359,6 +359,7 @@ mod test {
             },
             main_value: 7431.0,
             daily_interest_rate: 0.00130821,
+            base_date: first_payment_date,
         };
 
         let data = super::calc(&params);

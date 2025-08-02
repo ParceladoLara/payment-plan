@@ -4,20 +4,20 @@ use core_payment_plan::{
 };
 
 fn main() {
-    let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 04, 05).unwrap();
-    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 05, 3).unwrap();
+    let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 08, 04).unwrap();
+    let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 08, 2).unwrap();
 
     let params = Params {
-        requested_amount: 7800.0,
+        requested_amount: 20001.0,
         first_payment_date,
         disbursement_date: disbursement_date,
-        installments: 4,
+        installments: 1,
         debit_service_percentage: 0,
         mdr: 0.05,
         tac_percentage: 0.0,
         iof_overall: 0.0038,
         iof_percentage: 0.000082,
-        interest_rate: 0.0235,
+        interest_rate: 0.048,
         min_installment_amount: 100.0,
         max_total_amount: 1000000.0,
         disbursement_only_on_business_days: true,

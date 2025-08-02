@@ -11,6 +11,7 @@ pub fn calculate_tec_monthly(
         amount: params.requested_amount,
         date: params.disbursement_date,
     }];
+
     total_effective_cost_xirr.extend(tec_params);
 
     let mut tec_monthly = 0.0;

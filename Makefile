@@ -28,6 +28,7 @@ clean:
 	rm -rf ./sdks/web/node_modules
 	rm -rf ./sdks/php/vendor
 	rm -rf ./sdks/php/src/Internal/native
+	go clean -testcache -cache -modcache
 	mkdir -p ./sdks/php/src/Internal/native
 	mkdir -p ./sdks/go/internal/libs/linux
 	mkdir -p ./sdks/go/internal/libs/windows

@@ -2,18 +2,18 @@ use crate::util::round_decimal_cases;
 
 use super::{installment::InstallmentData, InnerParams};
 
-pub fn calc(qi_params: &InnerParams, data: &InstallmentData) -> f64 {
+pub fn calc(inner_params: &InnerParams, data: &InstallmentData) -> f64 {
     let mut total_iof = 0.0;
-    let params = qi_params.params;
+    let params = inner_params.params;
     let installments = params.installments;
 
     let iof_percentage = params.iof_percentage;
 
     let iof_overall = params.iof_overall;
 
-    let daily_interest_rate = qi_params.daily_interest_rate;
+    let daily_interest_rate = inner_params.daily_interest_rate;
 
-    let main_value = qi_params.main_value;
+    let main_value = inner_params.main_value;
     let mut main_value_l = main_value;
 
     main_value_l = round_decimal_cases(main_value_l, 8);
@@ -88,6 +88,7 @@ mod test {
             },
             main_value: 7431.0,
             daily_interest_rate: 0.00130821,
+            base_date: first_payment_date,
         };
 
         let due_dates = vec![
