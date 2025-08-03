@@ -107,3 +107,12 @@ build-php-sdk:
 	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_c_bind.dll sdks/php/src/Internal/native/libpayment_plan.dll
 	mv ./payment_plan.h ./sdks/php/src/Internal/native/payment_plan.h
 	sed -i '/^#ifdef __cplusplus$$/,/^#endif$$/d; /^#ifdef __cplusplus$$/,/^} \/\* extern \\"C\\" \*\/$$/d' ./sdks/php/src/Internal/native/payment_plan.h
+
+build-c-bind:
+	mkdir -p lara-c-bind
+	cargo run --package payment_plan_c_bind --bin generate-headers --features headers --release
+	cargo build --package payment_plan_c_bind --profile release-unstripped
+	cargo build --package payment_plan_c_bind --profile release-unstripped --target x86_64-pc-windows-gnu
+	mv ./payment_plan.h lara-c-bind/payment_plan.h
+	cp target/release-unstripped/libpayment_plan_c_bind.so lara-c-bind/libpayment_plan.so
+	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_c_bind.dll lara-c-bind/libpayment_plan.dll

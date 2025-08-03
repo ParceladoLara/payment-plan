@@ -1,222 +1,117 @@
-# PAYMENT PLAN
-Calculadora de plano de pagamento de [Parcelado Lara](https://parceladolara.com.br).
-Esse projeto serve de base para o desenvolvimento de SDKs em diferentes linguagens, como NodeJs,WASM Web, Go, PHP, Python.
+# Payment Plan
 
-# Estrutura de pastas
-O projeto é dividido em pacotes, cada um com sua própria funcionalidade. A estrutura de pastas é a seguinte:
+Calculadora de plano de pagamento da [Parcelado Lara](https://parceladolara.com.br).
 
-- `core`: Contém a lógica central do plano de pagamento
-- `node`: Contém o [Neon](https://neon-rs.dev) para o wrapper NodeJs do binário.
-- `cli`: Contém o binário e a especificação protobuf para qualquer comunicação entre o binário e a linguagem que o utiliza.
-- `wasm`: Contém o wasm para o plano de pagamento.
+Este projeto serve como base para o desenvolvimento de SDKs em diferentes linguagens, incluindo Node.js, WASM Web, Go, PHP e Python.
 
-If you want to see more about each package, you can see their individual MD files.
+## Estrutura do Projeto
 
-- [core](docs/core.md)
-- [node](docs/node.md)
-- [cli](docs/cli.md)
-- [wasm](docs/wasm.md)
+O projeto é dividido em pacotes, cada um com sua própria funcionalidade:
 
-And if you have no knowledge of Rust, you can see how rust project are structured [here](docs/rust.md)
+- **`cli`**: Código para a CLI (Command Line Interface) que permite calcular planos de pagamento via terminal *(Deprecated)*
+- **`core`**: Lógica principal do cálculo dos planos de pagamento
+- **`docs`**: Documentação detalhada do projeto
+- **`generators`**: Geradores de código para diferentes linguagens
+- **`sdks`**: SDKs (Software Development Kits) para diferentes linguagens (Node.js, Go, PHP, etc.)
+- **`setup`**: Scripts de configuração para facilitar a execução do projeto
+- **`uniffi-bindgen`**: Binário simples para gerar bindings de Rust para outras linguagens usando [UniFFI](https://github.com/mozilla/uniffi-rs)
 
+## Instalação e Configuração
 
-# How to build
+Para facilitar as configurações necessárias, você pode usar os scripts de setup que instalarão todas as dependências e configurarão o ambiente automaticamente.
 
-To build any of the binaries, you need to have [Rust](https://www.rust-lang.org/tools/install) installed.
+### Setup Automático
 
-## NodeJs
-
-With NodeJs installed, you can build the NodeJs wrapper by running the following commands:
-
+**Arch Linux:**
 ```bash
-cd node
-npm run build:release
+chmod +x setup/arch.sh
+./setup/arch.sh
 ```
 
-This will generate a `index.node` file in the `node` directory.
-
-## CLI
-
-For the CLI, you will need protoc installed.
-
+**Debian/Ubuntu:**
 ```bash
-sudo apt update
-sudo apt install -y protobuf-compiler
+chmod +x setup/debian.sh
+./setup/debian.sh
 ```
 
-Set the variable `PROTOC` on your bashrc or zshrc to the path of the protoc binary.
+### Instalação Manual
 
-```bash
-sudo nano ~/.bashrc
-export PROTOC=/usr/cli/protoc
-source ~/.bashrc
-```
+Caso você esteja em outra distribuição ou sistema operacional, será necessário instalar as seguintes dependências:
 
-Then you can build the CLI binary by running the following commands:
+- [Rust](https://www.rust-lang.org/tools/install) (v1.81.0 ou superior)
+- [PHP](https://www.php.net/downloads) (v8.1 ou superior, com FFI habilitado)
+- [Node.js](https://nodejs.org/en/download/) (v22 ou superior)
+- [Go](https://go.dev/doc/install) (v1.24.1 ou superior)
+- [Python](https://www.python.org/downloads/) (v3.10 ou superior)
+- [wasm-pack](https://rustwasm.github.io/) (v0.13.1)
+- [Protocol Buffers](https://protobuf.dev/) (v3.21.12 ou superior)
+- [protoc-gen-go](https://github.com/protocolbuffers/protobuf-go)
+- Para sistemas Linux: ferramentas para compilação cross-platform (Windows)
 
-```bash
-cargo build --package payment_plan_cli --release
-```
+## Testando o Projeto
 
-This will generate a binary called `payment_plan_cli` in the `target/release` directory.
-
-## WASM
-
-First install [wasm-pack](https://github.com/rustwasm/wasm-pack?tab=readme-ov-file)
-
-```bash
-curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-```
-
-Then you can build the wasm by running the following commands:
-
-```bash
-cd wasm
-wasm-pack build --target web
-```
-
-And then to run the example um can run with a simple server like so:
-
-```bash
-python3 -m http.server --directory example
-```
-
-Then you can open your browser and go to `http://localhost:8000` to see the example.
-
-# Usage
-First create a synlink to the binary in your project.
-
-```bash
-sudo ln -s ~/path/to/your/project/target/release/payment_plan_cli /usr/local/cli/payment_plan_cli
-```
-Now you can call the binary from your project without having to specify the full path.
-
-On docker, you can add the binary to the container by adding the following line to your Dockerfile.
-
-```Dockerfile
-COPY --from=builder /path/to/your/project/cli/payment_plan_cli /usr/local/cli/payment_plan_cli
-```
-
-## NodeJs
-
-Start by coping the `index.node` file to your project.
-
-```bash
-cp node/index.node /path/to/your/project
-```
-
-Then you can use it in your project like so:
-
-```typescript
-import * as funcs from 'path/to/your/project/index.node';
-//you can type the functions to get intellisense
-const { calculatePlan } = funcs as PaymentPlanFunctions;
-
-export { calculatePlan };
-```
-
-typescript will not recognize the .node file so you will need to create a declaration file for it on the root of your project.
-
-```typescript
-//declarations.d.ts
-declare module '*.node' {
-  const content: any;
-  export = content;
-}
-```
-
-and include it in your tsconfig.json
-
-```json
-{
-  "include": ["declarations.d.ts"]
-}
-```
-
-## Go
-Assuming that the synlink has already been created, and/or your Docker image has the line to copy the binary to the cli directory.
-
-You will need the protoc-gen-go plugin to generate the Go code from the protobuf file.
-
-```bash
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-```
-Add the Go binary path to your system's PATH
-
-```bash
-sudo nano ~/.bashrc
-export PATH=$PATH:$(go env GOPATH)/cli
-source ~/.bashrc
-```
-
-Then you can generate the Go code by running the following command:
-
-```bash
-protoc --proto_path=/path/to/payment_plan_cli/cli/src --go_out=. --go_opt=paths=source_relative protos/plan.proto
-```
-
-This will generate a `plan.pb.go` file in the root of your project.
-
-Then you can use the binary in your Go project like so:
-
-```go
-func main() {
-  // Initialize your PlanParams message
-	params := &protos.PlanParams{}
-
-	// Serialize PlanParams to bytes
-	data, err := proto.Marshal(params)
-	if err != nil {
-		log.Fatalf("Failed to serialize PlanParams: %v", err)
-	}
-
-	// Prepare the command you want to execute
-	cmd := exec.Command("payment_plan_cli")
-
-	// Create a bytes buffer to hold the serialized data
-	var in bytes.Buffer
-	var out bytes.Buffer
-	in.Write(data)
-	cmd.Stdin = &in
-	cmd.Stdout = &out
-
-	// Execute the command
-	err = cmd.Run()
-	if err != nil {
-		log.Fatalf("Failed to execute CLI command: %v", err)
-	}
-
-	// Deserialize the response from the command
-	var plan protos.PlanResponses
-	err = proto.Unmarshal(out.Bytes(), &plan)
-	if err != nil {
-		log.Fatalf("Failed to deserialize PlanResponses: %v", err)
-	}
-}
-```
-
-# Testing
-Assuming that you already have the setup for every package, you can run the tests by running the following command on the root of the project:
+Após instalar as dependências, você pode testar o projeto executando o seguinte comando na raiz do projeto:
 
 ```bash
 make test
 ```
 
-# TODO
-Things that need to be done in the future.
+## Compilação por Linguagem
 
-## SDKs
+Cada SDK possui seu próprio comando de compilação no `Makefile`. Para compilar o projeto para uma linguagem específica:
 
-- [x] NodeJs
-- [x] Go
-- [ ] Python
-- [ ] Kotlin
-- [ ] Swift
-- [ ] C#
-- [ ] Ruby
+```bash
+make build-<linguagem>-sdk
+```
 
-## Documentation
-I still need to write a documentation for all the sdks
+Para compilação no Windows:
+```bash
+make build-<linguagem>-sdk-windows
+```
 
-## Tests
-I still need to write tests for the sdks for the BMP feature.
+> **Nota:** Os comandos make assumem que você está executando em um sistema Unix-like.
+
+## Linguagens Não Disponíveis
+
+Caso você esteja integrando com a Lara e não encontrou um SDK na linguagem desejada:
+
+1. **Se a linguagem estiver na lista de TODOs:** Estamos trabalhando nela. Você pode acompanhar o progresso na seção [Roadmap](#roadmap) abaixo.
+
+2. **Se não estiver na lista:** Você pode usar os bindings em C no pacote `generators/c-bind` utilizando o [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) da sua linguagem.
+
+### Usando Bindings C
+
+O SDK de PHP é um exemplo de como fazer essa integração usando FFI para chamar funções do Rust.
+
+Para compilar o projeto para a ABI de C:
+
+```bash
+make build-c-bind
+```
+
+Os arquivos de cabeçalho e bibliotecas estarão disponíveis na pasta `lara-c-bind`.
+
+### ⚠️ Importante sobre FFI
+
+Trabalhar com FFI pode ser complexo. É recomendado ter conhecimento prévio sobre:
+- Como funciona o FFI na linguagem desejada
+- Alocação e liberação de memória
+- Tipos de dados e seu gerenciamento na memória
+
+O uso inadequado do FFI pode causar:
+- Vazamentos de memória
+- Corrupção de memória
+- Outros problemas difíceis de depurar
+
+## Roadmap
+
+### SDKs Disponíveis e Em Desenvolvimento
+
+- [x] **Node.js** - Disponível
+- [x] **Go** - Disponível
+- [x] **Python** - Disponível *(falta publicar no PyPI)*
+- [x] **PHP** - Disponível
+- [x] **WASM Web** - Disponível
+- [ ] **Kotlin** - Em desenvolvimento
+- [ ] **Swift** - Planejado
+- [ ] **C#** - Planejado
