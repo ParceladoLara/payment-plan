@@ -149,7 +149,7 @@ func TestIterativePlan(t *testing.T) {
 	}
 }
 
-func TestBMPDownPayment(t *testing.T) {
+func TestSimpleDownPayment(t *testing.T) {
 	var plan protos.DownPaymentResponses
 
 	err := callBuff(&downPaymentParams, &plan, "-t", "down-payment")

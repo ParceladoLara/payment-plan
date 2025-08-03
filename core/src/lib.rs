@@ -9,7 +9,7 @@ use calc::providers::iterative::Iterative;
 #[cfg(feature = "simple")]
 use calc::providers::simple::Simple;
 
-// Default to BMP if no feature is specified
+// Default to Iterative if no feature is specified
 #[cfg(not(any(feature = "simple", feature = "iterative")))]
 use calc::providers::iterative::Iterative;
 
@@ -125,7 +125,7 @@ const P: Simple = Simple {};
 #[cfg(feature = "iterative")]
 const P: Iterative = Iterative {};
 
-// Default to BMP if no feature is specified
+// Default to Iterative if no feature is specified
 #[cfg(not(any(feature = "simple", feature = "iterative")))]
 const P: Iterative = Iterative {};
 

@@ -184,7 +184,7 @@ mod test {
 
     use crate::{calc::PaymentPlan, Params};
 
-    const BMP: super::Simple = super::Simple {};
+    const SIMPLE: super::Simple = super::Simple {};
 
     #[test]
     fn test_calculate_payment_plan_test_0() {
@@ -224,7 +224,7 @@ mod test {
             interest_rate: 0.0235,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 24);
 
@@ -304,7 +304,7 @@ mod test {
             interest_rate: 0.025,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 18);
 
@@ -384,7 +384,7 @@ mod test {
             interest_rate: 0.0235,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 12);
 
@@ -464,7 +464,7 @@ mod test {
             interest_rate: 0.024,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 9);
 
@@ -544,7 +544,7 @@ mod test {
             interest_rate: 0.0235,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 9);
 
@@ -624,7 +624,7 @@ mod test {
             interest_rate: 0.0349,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 24);
 
@@ -704,7 +704,7 @@ mod test {
             interest_rate: 0.025,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 12);
 
@@ -784,7 +784,7 @@ mod test {
             interest_rate: 0.035,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 6);
 
@@ -864,7 +864,7 @@ mod test {
             interest_rate: 0.028999999999999998,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 24);
 
@@ -944,7 +944,7 @@ mod test {
             interest_rate: 0.0349,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 3);
 
@@ -1024,7 +1024,7 @@ mod test {
             interest_rate: 0.029,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 12);
 
@@ -1104,7 +1104,7 @@ mod test {
             interest_rate: 0.0215,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 4);
 
@@ -1184,7 +1184,7 @@ mod test {
             interest_rate: 0.025,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 10);
 
@@ -1264,7 +1264,7 @@ mod test {
             interest_rate: 0.0215,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 24);
 
@@ -1344,7 +1344,7 @@ mod test {
             interest_rate: 0.0355,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 11);
 
@@ -1424,7 +1424,7 @@ mod test {
             interest_rate: 0.0355,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 12);
 
@@ -1504,7 +1504,7 @@ mod test {
             interest_rate: 0.0355,
         };
 
-        let result = BMP.calculate_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 1);
 
@@ -1584,7 +1584,7 @@ mod test {
             interest_rate: 0.0355,
         };
 
-        let mut result = BMP.calculate_payment_plan(params).unwrap();
+        let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 10);
 
@@ -1672,7 +1672,7 @@ mod test {
             interest_rate: 0.029999999329447746,
         };
 
-        let result = BMP.calculate_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 48);
 
@@ -1719,7 +1719,7 @@ mod test {
 mod down_payment_test {
     use crate::{calc::PaymentPlan, DownPaymentParams, Params};
 
-    const BMP: super::Simple = super::Simple {};
+    const SIMPLE: super::Simple = super::Simple {};
 
     #[allow(deprecated)]
     const PLAN_PARAM: Params = Params {
@@ -1752,7 +1752,7 @@ mod down_payment_test {
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
         };
 
-        let result = BMP.calculate_down_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_down_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 1);
 
@@ -1775,7 +1775,7 @@ mod down_payment_test {
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
         };
 
-        let result = BMP.calculate_down_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_down_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 2);
 
@@ -1818,7 +1818,7 @@ mod down_payment_test {
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
         };
 
-        let result = BMP.calculate_down_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_down_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 3);
 
@@ -1849,7 +1849,7 @@ mod down_payment_test {
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
         };
 
-        let result = BMP.calculate_down_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_down_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 4);
 
@@ -1884,7 +1884,7 @@ mod down_payment_test {
             first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 20).unwrap(),
         };
 
-        let result = BMP.calculate_down_payment_plan(params).unwrap();
+        let result = SIMPLE.calculate_down_payment_plan(params).unwrap();
 
         assert_eq!(result.len(), 4);
 
