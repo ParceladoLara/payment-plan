@@ -5,6 +5,11 @@ set -e
 
 echo "Setting up development environment for Debian/Ubuntu..."
 
+# Define required verions
+REQUIRED_RUST_VERSION="1.81.0"
+REQUIRED_NODE_VERSION="22.0.0"
+REQUIRED_PHP_VERSION="8.1"
+
 # Update system
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -12,9 +17,34 @@ sudo apt-get upgrade -y
 # Install base development tools
 sudo apt-get install -y build-essential git curl wget ca-certificates gnupg lsb-release
 
+# Function to compare version numbers
+version_compare() {
+    local version1=$1
+    local version2=$2
+
+    # Convert versions to comparable format (remove non-numeric suffixes)
+    local v1=$(echo "$version1" | sed 's/[^0-9.].*//')
+    local v2=$(echo "$version2" | sed 's/[^0-9.].*//')
+
+    # Use sort -V for version comparison
+    if [ "$(printf '%s\n' "$v1" "$v2" | sort -V | head -n1)" = "$v2" ]; then
+        return 0  # version1 >= version2
+    else
+        return 1  # version1 < version2
+    fi
+}
+
 # Install Rust
 if command -v rustc &> /dev/null; then
-    echo "Rust is already installed ($(rustc --version))"
+    CURRENT_RUST_VERSION=$(rustc --version | cut -d' ' -f2)
+    if version_compare "$CURRENT_RUST_VERSION" "$REQUIRED_RUST_VERSION"; then
+        echo "Rust is already installed with sufficient version ($(rustc --version))"
+    else
+        echo "Rust version $CURRENT_RUST_VERSION is installed but version $REQUIRED_RUST_VERSION or higher is required"
+        echo "Updating Rust..."
+        rustup update stable
+        echo "Rust updated successfully"
+    fi
 else
     echo "Installing Rust..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -58,13 +88,45 @@ fi
 
 # Install Node.js and npm
 if command -v node &> /dev/null; then
-    echo "Node.js is already installed ($(node --version))"
+    CURRENT_NODE_VERSION=$(node --version | sed 's/^v//')
+    if version_compare "$CURRENT_NODE_VERSION" "$REQUIRED_NODE_VERSION"; then
+        echo "Node.js is already installed with sufficient version ($(node --version))"
+    else
+        echo "Node.js version $CURRENT_NODE_VERSION is installed but version $REQUIRED_NODE_VERSION or higher is required"
+        # Check if nvm is available
+        if [ -f "$HOME/.nvm/nvm.sh" ] || command -v nvm &> /dev/null; then
+            echo "Using nvm to update Node.js..."
+            # Source nvm if it exists
+            [ -f "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
+            nvm install $REQUIRED_NODE_VERSION
+            nvm use $REQUIRED_NODE_VERSION
+            nvm alias default $REQUIRED_NODE_VERSION
+            echo "Node.js updated successfully using nvm"
+        else
+            echo "nvm not found, updating Node.js via package manager..."
+            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            echo "Node.js updated successfully"
+        fi
+    fi
 else
     echo "Installing Node.js and npm..."
-    # Install NodeSource repository
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    echo "Node.js and npm installed successfully"
+    # Check if nvm is available
+    if [ -f "$HOME/.nvm/nvm.sh" ] || command -v nvm &> /dev/null; then
+        echo "Using nvm to install Node.js..."
+        # Source nvm if it exists
+        [ -f "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
+        nvm install $REQUIRED_NODE_VERSION
+        nvm use $REQUIRED_NODE_VERSION
+        nvm alias default $REQUIRED_NODE_VERSION
+        echo "Node.js installed successfully using nvm"
+    else
+        echo "nvm not found, installing Node.js via package manager..."
+        # Install NodeSource repository
+        curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+        echo "Node.js and npm installed successfully"
+    fi
 fi
 
 # Install Python
@@ -78,11 +140,30 @@ fi
 
 # Install PHP and extensions
 if command -v php &> /dev/null; then
-    echo "PHP is already installed ($(php --version | head -n1))"
+    CURRENT_PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+    if version_compare "$CURRENT_PHP_VERSION" "$REQUIRED_PHP_VERSION"; then
+        echo "PHP is already installed with sufficient version ($(php --version | head -n1))"
+    else
+        echo "PHP version $CURRENT_PHP_VERSION is installed but version $REQUIRED_PHP_VERSION or higher is required"
+        echo "Please update your system or manually install PHP $REQUIRED_PHP_VERSION or higher"
+        echo "Current PHP version is insufficient for this project"
+        exit 1
+    fi
 else
     echo "Installing PHP..."
+
+    # Install PHP from default repositories
     sudo apt-get install -y php php-cli php-common php-curl php-json php-mbstring php-xml php-bcmath
-    echo "PHP installed successfully"
+
+    # Check if the installed version meets requirements
+    INSTALLED_PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+    if version_compare "$INSTALLED_PHP_VERSION" "$REQUIRED_PHP_VERSION"; then
+        echo "PHP installed successfully with version $INSTALLED_PHP_VERSION"
+    else
+        echo "Warning: Installed PHP version $INSTALLED_PHP_VERSION is below required version $REQUIRED_PHP_VERSION"
+        echo "Please consider upgrading your system or manually installing a newer PHP version"
+        echo "The project may not work correctly with this PHP version"
+    fi
 fi
 
 # Install and enable FFI extension
@@ -90,16 +171,19 @@ if php -m | grep -q "FFI"; then
     echo "PHP FFI extension is already enabled"
 else
     echo "Installing and enabling PHP FFI extension..."
+    # Install FFI extension from default repositories
     sudo apt-get install -y php-ffi
 
+    # Get the current PHP version being used
+    CURRENT_PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
+
     # Enable FFI extension
-    PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
-    FFI_INI="/etc/php/${PHP_VERSION}/cli/conf.d/20-ffi.ini"
+    FFI_INI="/etc/php/${CURRENT_PHP_VERSION}/cli/conf.d/20-ffi.ini"
 
     if [ -f "$FFI_INI" ]; then
         echo "FFI extension configuration found at $FFI_INI"
     else
-        echo "extension=ffi" | sudo tee /etc/php/${PHP_VERSION}/cli/conf.d/20-ffi.ini
+        echo "extension=ffi" | sudo tee "$FFI_INI"
         echo "FFI extension enabled"
     fi
 fi
@@ -129,40 +213,6 @@ sudo apt-get install -y protobuf-compiler
 # Install Protocol Buffers Go plugin
 if command -v go &> /dev/null; then
     go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-fi
-
-# Install Playwright browser dependencies for Debian/Ubuntu
-if command -v npx &> /dev/null; then
-    echo "Installing Playwright browser dependencies for Debian/Ubuntu..."
-    # Install system dependencies that Playwright needs
-    sudo apt-get install -y \
-        libnss3 \
-        libnspr4 \
-        libatk-bridge2.0-0 \
-        libdrm2 \
-        libxkbcommon0 \
-        libxcomposite1 \
-        libxdamage1 \
-        libxrandr2 \
-        libgbm1 \
-        libxss1 \
-        libgconf-2-4 \
-        libxcursor1 \
-        libxfixes3 \
-        libxi6 \
-        libxtst6 \
-        libasound2 \
-        libpangocairo-1.0-0 \
-        libatk1.0-0 \
-        libcairo-gobject2 \
-        libgtk-3-0 \
-        libgdk-pixbuf2.0-0 \
-        fonts-liberation \
-        xdg-utils \
-        wget
-
-    echo "Installing Playwright browsers..."
-    echo "Playwright setup completed for Debian/Ubuntu"
 fi
 
 # Install cross-compilation tools for Windows

@@ -25,11 +25,6 @@ pub fn calculate_eir_monthly(
     let customer_dsp_ok =
         customer_debit_service_proportion > 0.0 && customer_debit_service_proportion <= 1.0;
 
-    let a = params
-        .first_payment_date
-        .signed_duration_since(params.disbursement_date)
-        .num_days();
-
     let date_ok = params
         .first_payment_date
         .signed_duration_since(params.disbursement_date)

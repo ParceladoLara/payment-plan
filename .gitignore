@@ -9,3 +9,4 @@ get-pip.py
 sdks/web/test/test-results
 sdks/web/test/src/vite-env.d.ts
 vendor/
+lara-c-bind/
