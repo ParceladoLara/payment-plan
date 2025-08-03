@@ -1,12 +1,14 @@
 # PAYMENT PLAN
-This is the Lara Payment Plan, the heart of Lara Credit Proposal System. It is a binary that calculates the payment plan for a given credit proposal.
+Calculadora de plano de pagamento de [Parcelado Lara](https://parceladolara.com.br).
+Esse projeto serve de base para o desenvolvimento de SDKs em diferentes linguagens, como NodeJs,WASM Web, Go, PHP, Python.
 
-# Package Structure
-The package is structured as follows:
-- `core`: Contains the core logic of the payment plan
-- `node`: Contains the [Neon](https://neon-rs.dev) for the NodeJs wrapper of the binary.
-- `cli`: Contains the binary and the protobuf specification for any communication between the binary and the language that uses it.
-- `wasm`: Contains the wasm for the payment plan.
+# Estrutura de pastas
+O projeto é dividido em pacotes, cada um com sua própria funcionalidade. A estrutura de pastas é a seguinte:
+
+- `core`: Contém a lógica central do plano de pagamento
+- `node`: Contém o [Neon](https://neon-rs.dev) para o wrapper NodeJs do binário.
+- `cli`: Contém o binário e a especificação protobuf para qualquer comunicação entre o binário e a linguagem que o utiliza.
+- `wasm`: Contém o wasm para o plano de pagamento.
 
 If you want to see more about each package, you can see their individual MD files.
 

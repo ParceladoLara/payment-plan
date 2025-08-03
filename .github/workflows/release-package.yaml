@@ -124,7 +124,7 @@ jobs:
         run: |
           cp -r sdks/php/src/* public-repo/src/
           cp -r sdks/php/composer.json public-repo/
-          cp -r sdks/php/tests public-repo/tests
+          cp -r sdks/php/tests/* public-repo/tests/
           cd public-repo
           git add .
           git commit -m "Update PHP SDK" --allow-empty
