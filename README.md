@@ -75,7 +75,7 @@ make build-<linguagem>-sdk-windows
 
 Caso você esteja integrando com a Lara e não encontrou um SDK na linguagem desejada:
 
-1. **Se a linguagem estiver na lista de TODOs:** Estamos trabalhando nela. Você pode acompanhar o progresso na seção [Roadmap](#roadmap) abaixo.
+1. **Se a linguagem estiver no ROADMAP:** Estamos trabalhando nela. Você pode acompanhar o progresso na seção [Roadmap](#roadmap) abaixo.
 
 2. **Se não estiver na lista:** Você pode usar os bindings em C no pacote `generators/c-bind` utilizando o [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) da sua linguagem.
 
