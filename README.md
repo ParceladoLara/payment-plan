@@ -66,6 +66,18 @@ Cada SDK possui seu próprio comando de compilação no `Makefile`. Para compila
 make build-<linguagem>-sdk
 ```
 
+**Exemplos:**
+
+```bash
+make build-kotlin-sdk    # Gera bindings Kotlin (requer dependências já instaladas)
+make build-go-sdk        # Compila SDK Go
+make build-python-sdk    # Compila SDK Python
+make build-node-sdk      # Compila SDK Node.js
+make build-php-sdk       # Compila SDK PHP
+```
+
+**💡 Para Kotlin:** Recomendamos usar `cd sdks/kotlin && ./setup.sh` para novos usuários, pois verifica e instala dependências automaticamente.
+
 Para compilação no Windows:
 
 ```bash

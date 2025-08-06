@@ -4,23 +4,32 @@ Este SDK oferece uma interface amigável em Kotlin para o sistema de cálculo de
 
 ## 🚀 Setup Rápido (Recomendado)
 
-**Para novos usuários - tudo em um comando:**
+**Para novos usuários - comando completo:**
+
+```bash
+# Do diretório sdks/kotlin/
+./setup.sh
+```
+
+**OU, se você está no diretório raiz:**
 
 ```bash
 # Do diretório raiz do projeto (payment-plan/)
-make build-kotlin-sdk
-
-# Ou se você está no diretório sdks/kotlin/
-./setup.sh
+make build-kotlin-sdk && cd sdks/kotlin && make build
 ```
 
 **Depois, para testar:**
 
 ```bash
-cd sdks/kotlin
+cd sdks/kotlin  # (se não estiver já)
 make example  # Executa exemplo
 make test     # Executa testes
 ```
+
+💡 **Diferença importante:**
+
+- `./setup.sh` → Verifica dependências (Java/Rust) + compila tudo
+- `make build-kotlin-sdk` → Apenas gera bindings (não verifica dependências)
 
 ## 📋 Pré-requisitos
 
