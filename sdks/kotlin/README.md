@@ -2,93 +2,69 @@
 
 Este SDK oferece uma interface amigável em Kotlin para o sistema de cálculo de planos de pagamento.
 
-## Pré-requisitos
+## 🚀 Setup Rápido (Recomendado)
 
-- **Rust** (para compilar a biblioteca nativa)
-- **JDK 11** ou superior
-- **Gradle 8.4** ou superior (incluído via Gradle Wrapper)
+**Para novos usuários - tudo em um comando:**
 
-**📋 Fluxo de dependências:**
+```bash
+# Do diretório raiz do projeto (payment-plan/)
+make build-kotlin-sdk
+
+# Ou se você está no diretório sdks/kotlin/
+./setup.sh
+```
+
+**Depois, para testar:**
+
+```bash
+cd sdks/kotlin
+make example  # Executa exemplo
+make test     # Executa testes
+```
+
+## 📋 Pré-requisitos
+
+O script `setup.sh` verifica e ajuda a instalar automaticamente:
+
+- **Rust** (1.70.0+) - para compilar a biblioteca nativa
+- **Java JDK** (11+) - para compilar o código Kotlin
+- **Gradle** - incluído via Gradle Wrapper
+
+**� Dica:** Se você não tem essas dependências, o script irá orientar como instalar ou pode tentar instalar automaticamente (Ubuntu/Debian e Arch Linux).
+
+## 🔧 Fluxo de Dependências
 
 1. Rust compila a biblioteca nativa (`libpayment_plan_uniffi.so`)
 2. UniFFI gera os bindings Kotlin automaticamente
 3. O SDK Kotlin usa os bindings para chamar a biblioteca nativa
 
-## Setup Rápido
+**⚠️ IMPORTANTE:** Quando você baixar o código, os bindings Kotlin e bibliotecas nativas não estarão incluídos (são ignorados pelo Git). O script `setup.sh` ou `make build-kotlin-sdk` irão gerar tudo automaticamente.
 
-**⚠️ IMPORTANTE:** Quando você baixar o código, os bindings Kotlin e bibliotecas nativas não estarão incluídos (são ignorados pelo Git). Você precisa gerá-los primeiro.
-
-### Do diretório raiz do projeto (`payment-plan/`):
-
-1. **Compilar a biblioteca Rust:**
-
-   ```bash
-   cargo build --release --package payment_plan_uniffi
-   ```
-
-2. **Gerar bindings e configurar o SDK Kotlin:**
-   ```bash
-   make build-kotlin-sdk
-   ```
-
-### Do diretório do SDK (`sdks/kotlin/`):
-
-3. **Compilar o SDK Kotlin:**
-
-   ```bash
-   make build
-   ```
-
-4. **Executar exemplo:**
-
-   ```bash
-   make example
-   ```
-
-5. **Executar testes:**
-   ```bash
-   make test
-   ```
-
-## Setup Alternativo (Apenas SDK)
-
-Se você quiser trabalhar apenas com o SDK Kotlin:
-
-1. **Gerar os bindings e configurar:**
-
-   ```bash
-   make setup
-   ```
-
-2. **Compilar o projeto:**
-
-   ```bash
-   make build
-   ```
-
-3. **Executar testes:**
-
-   ```bash
-   make test
-   ```
-
-4. **Executar exemplo:**
-   ```bash
-   make example
-   ```
-
-## Setup Manual
-
-### 1. Gerar os bindings UniFFI
-
-Primeiro, certifique-se de que a biblioteca Rust foi compilada:
+## 🛠️ Comandos Úteis
 
 ```bash
-cd ../..
+make help              # Mostrar ajuda
+make setup             # Configurar ambiente e gerar bindings (mesmo que ./setup.sh)
+make build             # Compilar o projeto
+make test              # Executar testes
+make example           # Executar exemplo
+make clean             # Limpar arquivos de build
+make publish           # Publicar o pacote
+make all               # Configurar, compilar e testar tudo
+```
+
+## 📖 Setup Manual (Avançado)
+
+Se você preferir fazer tudo manualmente:
+
+### 1. Compilar dependências Rust
+
+```bash
+# Do diretório raiz (payment-plan/)
 cargo build --release --package payment_plan_uniffi
 ```
 
-Em seguida, gere os bindings Kotlin:
+### 2. Gerar bindings UniFFI
 
 ```bash
 cargo run --bin uniffi-bindgen generate \
@@ -97,34 +73,18 @@ cargo run --bin uniffi-bindgen generate \
   --out-dir sdks/kotlin/_internal
 ```
 
-### 2. Compilar o SDK
+### 3. Compilar o SDK Kotlin
 
 ```bash
 cd sdks/kotlin
-./gradlew compileKotlin jar
+./gradlew build
 ```
 
-**Nota:** Os testes são pulados por padrão pois requerem a biblioteca nativa. Para executar os testes:
+### 4. Executar testes
 
 ```bash
 ./gradlew test -PrunTests
 ```
-
-## Testes
-
-Os testes requerem que a biblioteca nativa esteja disponível. Para executá-los:
-
-1. Certifique-se de que a biblioteca foi compilada:
-
-   ```bash
-   cd ../..
-   cargo build --release --package payment_plan_uniffi
-   ```
-
-2. Execute os testes:
-   ```bash
-   ./gradlew test -PrunTests
-   ```
 
 ## Instalação
 
@@ -263,42 +223,3 @@ Este SDK requer:
 
 - Kotlin JVM 1.9.0+
 - JNA 5.13.0+ (para comunicação com a biblioteca nativa)
-
-## Testes
-
-Execute os testes com:
-
-```bash
-./gradlew test
-```
-
-## Build
-
-Para compilar o projeto:
-
-```bash
-./gradlew build
-```
-
-Para publicar:
-
-```bash
-./gradlew publish
-```
-
-## Comandos Disponíveis
-
-Este projeto inclui um Makefile com comandos úteis:
-
-```bash
-make help              # Mostrar ajuda
-make setup             # Configurar ambiente e gerar bindings
-make build             # Compilar o projeto
-make test              # Executar testes
-make clean             # Limpar arquivos de build
-make example           # Executar exemplo
-make publish           # Publicar o pacote
-make check             # Verificar se bindings foram gerados
-make generate-bindings # Gerar apenas os bindings UniFFI
-make all               # Configurar, compilar e testar tudo
-```
