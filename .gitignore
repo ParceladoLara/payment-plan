@@ -10,3 +10,6 @@ sdks/web/test/test-results
 sdks/web/test/src/vite-env.d.ts
 vendor/
 lara-c-bind/
+
+.gradle
+sdks/kotlin/build/
