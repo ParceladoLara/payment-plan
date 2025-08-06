@@ -4,11 +4,55 @@ Este SDK oferece uma interface amigável em Kotlin para o sistema de cálculo de
 
 ## Pré-requisitos
 
-- JDK 11 ou superior
-- Gradle 8.4 ou superior
-- A biblioteca nativa compilada (`libpayment_plan_uniffi.so`)
+- **Rust** (para compilar a biblioteca nativa)
+- **JDK 11** ou superior
+- **Gradle 8.4** ou superior (incluído via Gradle Wrapper)
+
+**📋 Fluxo de dependências:**
+
+1. Rust compila a biblioteca nativa (`libpayment_plan_uniffi.so`)
+2. UniFFI gera os bindings Kotlin automaticamente
+3. O SDK Kotlin usa os bindings para chamar a biblioteca nativa
 
 ## Setup Rápido
+
+**⚠️ IMPORTANTE:** Quando você baixar o código, os bindings Kotlin e bibliotecas nativas não estarão incluídos (são ignorados pelo Git). Você precisa gerá-los primeiro.
+
+### Do diretório raiz do projeto (`payment-plan/`):
+
+1. **Compilar a biblioteca Rust:**
+
+   ```bash
+   cargo build --release --package payment_plan_uniffi
+   ```
+
+2. **Gerar bindings e configurar o SDK Kotlin:**
+   ```bash
+   make build-kotlin-sdk
+   ```
+
+### Do diretório do SDK (`sdks/kotlin/`):
+
+3. **Compilar o SDK Kotlin:**
+
+   ```bash
+   make build
+   ```
+
+4. **Executar exemplo:**
+
+   ```bash
+   make example
+   ```
+
+5. **Executar testes:**
+   ```bash
+   make test
+   ```
+
+## Setup Alternativo (Apenas SDK)
+
+Se você quiser trabalhar apenas com o SDK Kotlin:
 
 1. **Gerar os bindings e configurar:**
 

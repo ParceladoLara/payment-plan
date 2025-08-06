@@ -8,13 +8,21 @@ echo "=== Payment Plan Kotlin SDK Setup ==="
 # Navegar para o diretório raiz do projeto
 cd "$(dirname "$0")/../.."
 
-echo "1. Gerando bindings UniFFI para Kotlin..."
+echo "1. Verificando se a biblioteca Rust está compilada..."
+if [ ! -f "target/release-unstripped/libpayment_plan_uniffi.so" ]; then
+    echo "Biblioteca não encontrada. Compilando..."
+    cargo build --release --package payment_plan_uniffi
+else
+    echo "Biblioteca encontrada!"
+fi
+
+echo "2. Gerando bindings UniFFI para Kotlin..."
 cargo run --bin uniffi-bindgen generate \
     --library target/release-unstripped/libpayment_plan_uniffi.so \
     --language kotlin \
     --out-dir sdks/kotlin/_internal
 
-echo "2. Verificando se os arquivos foram gerados..."
+echo "3. Verificando se os arquivos foram gerados..."
 if [ ! -f "sdks/kotlin/_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt" ]; then
     echo "Erro: Arquivos Kotlin não foram gerados corretamente"
     echo "Certifique-se de que a biblioteca foi compilada primeiro:"
@@ -22,7 +30,7 @@ if [ ! -f "sdks/kotlin/_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.
     exit 1
 fi
 
-echo "3. Construindo o SDK Kotlin..."
+echo "4. Construindo o SDK Kotlin..."
 cd sdks/kotlin
 
 # Usar o Gradle Wrapper que já está configurado

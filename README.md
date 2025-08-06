@@ -8,7 +8,7 @@ Este projeto serve como base para o desenvolvimento de SDKs em diferentes lingua
 
 O projeto é dividido em pacotes, cada um com sua própria funcionalidade:
 
-- **`cli`**: Código para a CLI (Command Line Interface) que permite calcular planos de pagamento via terminal *(Deprecated)*
+- **`cli`**: Código para a CLI (Command Line Interface) que permite calcular planos de pagamento via terminal _(Deprecated)_
 - **`core`**: Lógica principal do cálculo dos planos de pagamento
 - **`docs`**: Documentação detalhada do projeto
 - **`generators`**: Geradores de código para diferentes linguagens
@@ -23,12 +23,14 @@ Para facilitar as configurações necessárias, você pode usar os scripts de se
 ### Setup Automático
 
 **Arch Linux:**
+
 ```bash
 chmod +x setup/arch.sh
 ./setup/arch.sh
 ```
 
 **Debian/Ubuntu:**
+
 ```bash
 chmod +x setup/debian.sh
 ./setup/debian.sh
@@ -65,6 +67,7 @@ make build-<linguagem>-sdk
 ```
 
 Para compilação no Windows:
+
 ```bash
 make build-<linguagem>-sdk-windows
 ```
@@ -94,11 +97,13 @@ Os arquivos de cabeçalho e bibliotecas estarão disponíveis na pasta `lara-c-b
 ### ⚠️ Importante sobre FFI
 
 Trabalhar com FFI pode ser complexo. É recomendado ter conhecimento prévio sobre:
+
 - Como funciona o FFI na linguagem desejada
 - Alocação e liberação de memória
 - Tipos de dados e seu gerenciamento na memória
 
 O uso inadequado do FFI pode causar:
+
 - Vazamentos de memória
 - Corrupção de memória
 - Outros problemas difíceis de depurar
@@ -109,9 +114,9 @@ O uso inadequado do FFI pode causar:
 
 - [x] **Node.js** - Disponível
 - [x] **Go** - Disponível
-- [x] **Python** - Disponível *(falta publicar no PyPI)*
+- [x] **Python** - Disponível _(falta publicar no PyPI)_
 - [x] **PHP** - Disponível
 - [x] **WASM Web** - Disponível
-- [ ] **Kotlin** - Em desenvolvimento
+- [x] **Kotlin** - Disponível
 - [ ] **Swift** - Planejado
 - [ ] **C#** - Planejado
