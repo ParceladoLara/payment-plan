@@ -23,7 +23,7 @@ typealias DownPaymentResponse = uniffi.payment_plan_uniffi.DownPaymentResponse
 /**
  * PaymentPlan SDK for Kotlin
  * 
- * This SDK provides a user-friendly wrapper around the payment plan calculation engine.
+ * This SDK provides a wrapper around the payment plan calculation engine.
  * It exposes five main methods for calculating payment plans and working with disbursement dates.
  */
 object PaymentPlan {
