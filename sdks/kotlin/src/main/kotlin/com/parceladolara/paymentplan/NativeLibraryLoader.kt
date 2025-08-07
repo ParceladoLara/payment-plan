@@ -1,0 +1,137 @@
+package com.parceladolara.paymentplan
+
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.nio.file.Files
+
+/**
+ * Utility class for loading native libraries from JAR resources.
+ * 
+ * This class handles the extraction and loading of platform-specific native libraries
+ * that are embedded as resources within the JAR file.
+ */
+internal object NativeLibraryLoader {
+    
+    private var isLoaded = false
+    
+    /**
+     * Loads the payment plan native library from JAR resources.
+     * 
+     * The library will be extracted to a temporary directory and then loaded.
+     * This method ensures the library is only loaded once.
+     */
+    @Synchronized
+    fun loadLibrary() {
+        if (isLoaded) {
+            return
+        }
+        
+        val libraryName = getLibraryName()
+        val resourcePath = getResourcePath(libraryName)
+        
+        try {
+            // Try to load from resources first
+            val inputStream = NativeLibraryLoader::class.java.getResourceAsStream(resourcePath)
+            
+            if (inputStream != null) {
+                loadFromResource(inputStream, libraryName)
+            } else {
+                // Fallback: try to load from file system (for development)
+                loadFromFileSystem(libraryName)
+            }
+            
+            isLoaded = true
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to load native library: $libraryName", e)
+        }
+    }
+    
+    /**
+     * Determines the platform-specific library name.
+     */
+    private fun getLibraryName(): String {
+        val osName = System.getProperty("os.name").lowercase()
+        return when {
+            osName.contains("windows") -> "payment_plan_uniffi.dll"
+            osName.contains("linux") -> "libpayment_plan_uniffi.so"
+            osName.contains("mac") || osName.contains("darwin") -> "libpayment_plan_uniffi.dylib"
+            else -> throw UnsupportedOperationException("Unsupported operating system: $osName")
+        }
+    }
+    
+    /**
+     * Determines the resource path based on the platform.
+     */
+    private fun getResourcePath(libraryName: String): String {
+        val osName = System.getProperty("os.name").lowercase()
+        return when {
+            osName.contains("windows") -> "/native/windows/$libraryName"
+            osName.contains("linux") -> "/native/linux/$libraryName"
+            osName.contains("mac") || osName.contains("darwin") -> "/native/macos/$libraryName"
+            else -> throw UnsupportedOperationException("Unsupported operating system: $osName")
+        }
+    }
+    
+    /**
+     * Loads the library from JAR resources by extracting it to a temporary file.
+     */
+    private fun loadFromResource(inputStream: InputStream, libraryName: String) {
+        // Create a temporary file
+        val tempFile = File.createTempFile("payment_plan_uniffi", getLibraryExtension())
+        tempFile.deleteOnExit()
+        
+        // Copy the library from resources to the temporary file
+        inputStream.use { input ->
+            FileOutputStream(tempFile).use { output ->
+                input.copyTo(output)
+            }
+        }
+        
+        // Set executable permissions (important for Unix-like systems)
+        tempFile.setExecutable(true)
+        tempFile.setReadable(true)
+        
+        // Load the library
+        System.load(tempFile.absolutePath)
+        
+        println("Loaded native library from JAR resources: ${tempFile.absolutePath}")
+    }
+    
+    /**
+     * Fallback method to load library from file system (development mode).
+     */
+    private fun loadFromFileSystem(libraryName: String) {
+        // Try to load using JNA's standard mechanism
+        System.setProperty("jna.library.path", 
+            System.getProperty("jna.library.path", "") + 
+            File.pathSeparator + 
+            System.getProperty("user.dir") + "/_internal"
+        )
+        
+        // For development, try loading from _internal directory
+        val devPath = File("_internal/$libraryName")
+        if (devPath.exists()) {
+            System.load(devPath.absolutePath)
+            println("Loaded native library from development path: ${devPath.absolutePath}")
+        } else {
+            // Last resort: try system library loading
+            val baseName = libraryName.replace("lib", "").replace(".so", "").replace(".dll", "").replace(".dylib", "")
+            System.loadLibrary(baseName)
+            println("Loaded native library using system loader: $baseName")
+        }
+    }
+    
+    /**
+     * Gets the appropriate file extension for the current platform.
+     */
+    private fun getLibraryExtension(): String {
+        val osName = System.getProperty("os.name").lowercase()
+        return when {
+            osName.contains("windows") -> ".dll"
+            osName.contains("linux") -> ".so"
+            osName.contains("mac") || osName.contains("darwin") -> ".dylib"
+            else -> ".so"
+        }
+    }
+}

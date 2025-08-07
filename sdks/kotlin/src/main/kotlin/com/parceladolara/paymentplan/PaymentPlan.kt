@@ -28,6 +28,15 @@ typealias DownPaymentResponse = uniffi.payment_plan_uniffi.DownPaymentResponse
  */
 object PaymentPlan {
 
+    init {
+        // Load the native library when the object is first accessed
+        try {
+            NativeLibraryLoader.loadLibrary()
+        } catch (e: Exception) {
+            throw RuntimeException("Failed to initialize PaymentPlan SDK: ${e.message}", e)
+        }
+    }
+
     /**
      * Calculates a payment plan based on the provided parameters.
      * 
