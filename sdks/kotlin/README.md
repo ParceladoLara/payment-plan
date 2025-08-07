@@ -4,42 +4,40 @@ Este SDK oferece uma interface amigável em Kotlin para o sistema de cálculo de
 
 ## 🚀 Setup Rápido (Recomendado)
 
-**Para novos usuários - comando completo:**
+**Para novos usuários - usando setup global:**
 
 ```bash
-# Do diretório sdks/kotlin/
-./setup.sh
+# Do diretório raiz do projeto (payment-plan/)
+# 1. Instalar todas as dependências (incluindo Java)
+./setup/debian.sh    # Para Debian/Ubuntu
+# OU
+./setup/arch.sh      # Para Arch Linux
+
+# 2. Compilar o SDK Kotlin
+make build-kotlin-sdk
 ```
 
-**OU, se você está no diretório raiz:**
+**Para usuários experientes (dependências já instaladas):**
 
 ```bash
 # Do diretório raiz do projeto (payment-plan/)
 make build-kotlin-sdk && cd sdks/kotlin && make build
-```
 
-**Depois, para testar:**
-
-```bash
-cd sdks/kotlin  # (se não estiver já)
+# Depois testar
+cd sdks/kotlin
 make example  # Executa exemplo
 make test     # Executa testes
 ```
 
-💡 **Diferença importante:**
-
-- `./setup.sh` → Verifica dependências (Java/Rust) + compila tudo
-- `make build-kotlin-sdk` → Apenas gera bindings (não verifica dependências)
-
 ## 📋 Pré-requisitos
 
-O script `setup.sh` verifica e ajuda a instalar automaticamente:
+Os scripts de setup global (`./setup/debian.sh` ou `./setup/arch.sh`) instalam automaticamente:
 
-- **Rust** (1.70.0+) - para compilar a biblioteca nativa
+- **Rust** (1.81.0+) - para compilar a biblioteca nativa
 - **Java JDK** (11+) - para compilar o código Kotlin
-- **Gradle** - incluído via Gradle Wrapper
+- **Gradle** - incluído via Gradle Wrapper no projeto
 
-**� Dica:** Se você não tem essas dependências, o script irá orientar como instalar ou pode tentar instalar automaticamente (Ubuntu/Debian e Arch Linux).
+**💡 Dica:** Para outras distribuições Linux ou sistemas operacionais, consulte a seção "Instalação Manual" no README principal do projeto.
 
 ## 🔧 Fluxo de Dependências
 
@@ -47,13 +45,14 @@ O script `setup.sh` verifica e ajuda a instalar automaticamente:
 2. UniFFI gera os bindings Kotlin automaticamente
 3. O SDK Kotlin usa os bindings para chamar a biblioteca nativa
 
-**⚠️ IMPORTANTE:** Quando você baixar o código, os bindings Kotlin e bibliotecas nativas não estarão incluídos (são ignorados pelo Git). O script `setup.sh` ou `make build-kotlin-sdk` irão gerar tudo automaticamente.
+**⚠️ IMPORTANTE:** Os bindings Kotlin e bibliotecas nativas agora estão incluídos no repositório Git. O comando `make build-kotlin-sdk` irá verificar se já existem antes de regenerá-los.
 
 ## 🛠️ Comandos Úteis
 
+**Do diretório `sdks/kotlin/`:**
+
 ```bash
 make help              # Mostrar ajuda
-make setup             # Configurar ambiente e gerar bindings (mesmo que ./setup.sh)
 make build             # Compilar o projeto
 make test              # Executar testes
 make example           # Executar exemplo
@@ -232,3 +231,57 @@ Este SDK requer:
 
 - Kotlin JVM 1.9.0+
 - JNA 5.13.0+ (para comunicação com a biblioteca nativa)
+
+## 🔧 Integração com o Projeto Principal
+
+O SDK Kotlin está **totalmente integrado** ao sistema de build principal do projeto Payment Plan.
+
+### Comandos Disponíveis no Makefile Principal:
+
+```bash
+make build-kotlin-sdk         # Build completo (Linux + Windows)
+make build-kotlin-sdk-linux   # Build apenas Linux
+make build-kotlin-sdk-windows # Build apenas Windows
+make test                     # Inclui testes do Kotlin
+make clean                    # Limpa arquivos do Kotlin
+```
+
+### Características da Integração:
+
+- **Multiplataforma**: Gera bibliotecas para Linux (`.so`) e Windows (`.dll`)
+- **Build inteligente**: Detecta se bindings já existem antes de regenerar
+- **Bindings automáticos**: Gera automaticamente os bindings UniFFI para Kotlin
+- **Testes integrados**: Incluído no comando `make test` principal
+- **Limpeza automática**: Incluído no comando `make clean` principal
+
+## ✨ Características do SDK
+
+- **Interface limpa**: Apenas 5 métodos principais bem documentados
+- **Type aliases**: Para melhor exposição da API
+- **Exemplos completos**: Demonstrando todos os casos de uso
+- **Testes unitários**: Para validação da funcionalidade
+- **Build automatizado**: Makefile e scripts para facilitar uso
+- **Documentação completa**: README com exemplos e instruções
+
+## 📦 Distribuição
+
+O JAR compilado está em `build/libs/payment-plan-kotlin-sdk-1.0.0.jar` e pode ser:
+
+1. **Usado localmente**: Adicionando o JAR como dependência
+2. **Publicado no Maven**: Via `./gradlew publish`
+3. **Distribuído**: Como biblioteca standalone
+
+## ✅ Status do Projeto
+
+- ✅ SDK criado e compilando
+- ✅ Wrapper com 5 métodos principais funcionando
+- ✅ Exemplo completo executando (`make example`)
+- ✅ Testes unitários passando (`make test`)
+- ✅ Documentação completa
+- ✅ Build automatizado e integrado
+- ✅ JAR gerado e funcional
+- ✅ Suporte multiplataforma (Linux/Windows)
+- ✅ Bindings UniFFI gerados automaticamente
+- ✅ Integração completa com projeto principal
+
+O SDK Kotlin está **pronto para uso em produção**!

@@ -20,7 +20,15 @@ O projeto é dividido em pacotes, cada um com sua própria funcionalidade:
 
 Para facilitar as configurações necessárias, você pode usar os scripts de setup que instalarão todas as dependências e configurarão o ambiente automaticamente.
 
-### Setup Automático
+### Setup Automático (Recomendado)
+
+O comando `make install-deps` detecta automaticamente seu sistema operacional e executa o script apropriado:
+
+```bash
+sudo make install-deps
+```
+
+### Setup Manual por Sistema
 
 **Arch Linux:**
 
@@ -41,6 +49,7 @@ chmod +x setup/debian.sh
 Caso você esteja em outra distribuição ou sistema operacional, será necessário instalar as seguintes dependências:
 
 - [Rust](https://www.rust-lang.org/tools/install) (v1.81.0 ou superior)
+- [Java JDK](https://openjdk.org/) (v11 ou superior, para desenvolvimento Kotlin)
 - [PHP](https://www.php.net/downloads) (v8.1 ou superior, com FFI habilitado)
 - [Node.js](https://nodejs.org/en/download/) (v22 ou superior)
 - [Go](https://go.dev/doc/install) (v1.24.1 ou superior)
@@ -69,14 +78,12 @@ make build-<linguagem>-sdk
 **Exemplos:**
 
 ```bash
-make build-kotlin-sdk    # Gera bindings Kotlin (requer dependências já instaladas)
+make build-kotlin-sdk    # Compila SDK Kotlin
 make build-go-sdk        # Compila SDK Go
 make build-python-sdk    # Compila SDK Python
 make build-node-sdk      # Compila SDK Node.js
 make build-php-sdk       # Compila SDK PHP
 ```
-
-**💡 Para Kotlin:** Recomendamos usar `cd sdks/kotlin && ./setup.sh` para novos usuários, pois verifica e instala dependências automaticamente.
 
 Para compilação no Windows:
 

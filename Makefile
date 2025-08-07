@@ -1,3 +1,17 @@
+install-deps:
+	@if [ -f /etc/debian_version ]; then \
+		echo "Detectado sistema Debian/Ubuntu - executando setup/debian.sh"; \
+		sudo bash setup/debian.sh; \
+	elif [ -f /etc/arch-release ]; then \
+		echo "Detectado sistema Arch Linux - executando setup/arch.sh"; \
+		sudo bash setup/arch.sh; \
+	else \
+		echo "Sistema não suportado automaticamente. Execute manualmente:"; \
+		echo "  - Para Debian/Ubuntu: sudo bash setup/debian.sh"; \
+		echo "  - Para Arch Linux: sudo bash setup/arch.sh"; \
+		exit 1; \
+	fi
+
 test:
 	make clean
 	make build-go-sdk
@@ -79,7 +93,12 @@ build-python-sdk-linux:
 build-kotlin-sdk:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
-	cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin --out-dir sdks/kotlin/_internal
+	@if [ ! -f "sdks/kotlin/_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt" ]; then \
+		echo "Generating Kotlin bindings..."; \
+		cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin --out-dir sdks/kotlin/_internal; \
+	else \
+		echo "Kotlin bindings already exist - skipping generation"; \
+	fi
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/_internal/libpayment_plan_uniffi.so
 	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/_internal/payment_plan_uniffi.dll
 

@@ -60,6 +60,29 @@ else
     echo "Python installed successfully"
 fi
 
+# Install Java (OpenJDK) for Kotlin development
+if command -v java &> /dev/null; then
+    JAVA_VERSION=$(java -version 2>&1 | head -n1 | cut -d'"' -f2 | cut -d'.' -f1-2)
+    if [[ "$JAVA_VERSION" == "1.8" ]]; then
+        JAVA_MAJOR=8
+    else
+        JAVA_MAJOR=$(echo "$JAVA_VERSION" | cut -d'.' -f1)
+    fi
+    
+    if [ "$JAVA_MAJOR" -ge 11 ]; then
+        echo "Java is already installed with sufficient version ($(java -version 2>&1 | head -n1))"
+    else
+        echo "Java version $JAVA_VERSION is too old (minimum: Java 11)"
+        echo "Installing OpenJDK 11..."
+        sudo pacman -S --noconfirm jdk11-openjdk
+        echo "OpenJDK 11 installed successfully"
+    fi
+else
+    echo "Installing Java (OpenJDK 11) for Kotlin development..."
+    sudo pacman -S --noconfirm jdk11-openjdk
+    echo "OpenJDK 11 installed successfully"
+fi
+
 # Install PHP and Composer
 if command -v php &> /dev/null; then
     echo "PHP is already installed ($(php --version | head -n1))"
