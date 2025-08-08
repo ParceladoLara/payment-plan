@@ -104,22 +104,18 @@ build-kotlin-sdk:
 	mkdir -p sdks/kotlin/src/main/resources/native/windows
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/src/main/resources/native/linux/libpayment_plan_uniffi.so
 	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/src/main/resources/native/windows/payment_plan_uniffi.dll
-	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/_internal/libpayment_plan_uniffi.so
-	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/_internal/payment_plan_uniffi.dll
 
 build-kotlin-sdk-linux:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
 	cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin --out-dir sdks/kotlin/_internal
 	mkdir -p sdks/kotlin/src/main/resources/native/linux
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/src/main/resources/native/linux/libpayment_plan_uniffi.so
-	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/_internal/libpayment_plan_uniffi.so
 
 build-kotlin-sdk-windows:
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
 	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll --language kotlin --out-dir sdks/kotlin/_internal
 	mkdir -p sdks/kotlin/src/main/resources/native/windows
 	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/src/main/resources/native/windows/payment_plan_uniffi.dll
-	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/_internal/payment_plan_uniffi.dll
 
 build-node-sdk:
 	cd generators/node && npm i
