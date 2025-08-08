@@ -368,6 +368,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Set release version
+        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
+
       - name: Copy Kotlin SDK to the public repository
         run: |
           cp -r sdks/kotlin/src/* public-repo/src/
@@ -375,11 +378,16 @@ jobs:
           cp sdks/kotlin/build.gradle.kts public-repo/
           cp sdks/kotlin/gradle.properties public-repo/ || true
           cp sdks/kotlin/settings.gradle.kts public-repo/
-          cp sdks/kotlin/jitpack.yml public-repo/
-          cp sdks/kotlin/README.md public-repo/
-          cp sdks/kotlin/Makefile public-repo/
           cp -r sdks/kotlin/gradle public-repo/
           cp sdks/kotlin/gradlew public-repo/
+
+      - name: Change build.gradle version
+        run: |
+          cd public-repo
+          sed -i '/group = "com\.parceladolara"/{N;s/group = "com\.parceladolara"\nversion = "1\.0\.0"/group = "com.parceladolara"\nversion = "${{ env.RELEASE_VERSION }}"/}' build.gradle.kts
+
+      - name: Commit changes
+        run: |
           cd public-repo
           git add .
           git commit -m "Update Kotlin SDK" --allow-empty
