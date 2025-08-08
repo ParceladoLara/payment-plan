@@ -99,23 +99,18 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["java"])
             
+            artifactId = "payment-plan-kotlin-sdk"
+            
             pom {
                 name.set("Payment Plan Kotlin SDK")
                 description.set("Kotlin SDK for payment plan calculations")
                 url.set("https://github.com/ParceladoLara/payment-plan")
                 
-                licenses {
-                    license {
-                        name.set("MIT")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                
                 developers {
                     developer {
                         id.set("parceladolara")
                         name.set("Parcelado Lara")
-                        email.set("dev@parceladolara.com")
+                        email.set("it-group@lara.app.br")
                     }
                 }
             }
