@@ -34,8 +34,7 @@ tasks.test {
     // Skip tests by default since they require the native library
     onlyIf { project.hasProperty("runTests") }
     
-    // Set the library path to find the native library
-    systemProperty("jna.library.path", "../../target/release-unstripped")
+    // The NativeLibraryLoader will handle loading libraries from JAR resources or fallback paths
     
     // Show test output
     testLogging {
@@ -45,15 +44,16 @@ tasks.test {
     }
     
     doFirst {
-        val nativeLibPath = file("../../target/release-unstripped/libpayment_plan_uniffi.so")
-        if (!nativeLibPath.exists()) {
-            throw GradleException(
-                "Native library not found at: ${nativeLibPath.absolutePath}\n" +
-                "Please compile the Rust library first:\n" +
-                "  cargo build --release --package payment_plan_uniffi"
-            )
+        // Check if we're in development environment with direct library access
+        val devNativeLibPath = file("../../target/release-unstripped/libpayment_plan_uniffi.so")
+        if (devNativeLibPath.exists()) {
+            // Development environment - use direct library path
+            systemProperty("jna.library.path", "../../target/release-unstripped")
+            println("Running tests using development native library at: ${devNativeLibPath.absolutePath}")
+        } else {
+            // Standalone environment - libraries should be embedded via NativeLibraryLoader
+            println("Running tests using embedded native libraries via NativeLibraryLoader.")
         }
-        println("Running tests. Using native library at: ${nativeLibPath.absolutePath}")
     }
 }
 
@@ -71,13 +71,21 @@ kotlin {
     jvmToolchain(17)
 }
 
-// Task to ensure the uniffi bindings are generated before compilation
+// Task to generate or check uniffi bindings
 tasks.register("generateUniffiBindings") {
-    description = "Generate uniffi bindings for Kotlin"
+    description = "Check uniffi bindings for Kotlin"
     
     doLast {
-        println("Make sure to run the uniffi-bindgen command before building:")
-        println("cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin --out-dir sdks/kotlin/_internal")
+        val bindingsFile = file("_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt")
+        if (!bindingsFile.exists()) {
+            throw GradleException(
+                "UniFFI bindings not found.\n" +
+                "This repository is a standalone copy from the main Payment Plan project:\n" +
+                "https://github.com/ParceladoLara/payment-plan\n" +
+                "For building from source and generating bindings, please refer to the main repository."
+            )
+        }
+        println("✅ UniFFI bindings found and ready.")
     }
 }
 
@@ -92,19 +100,17 @@ tasks.register<JavaExec>("runExample") {
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass.set("com.parceladolara.paymentplan.examples.PaymentPlanExample")
     
-    // Set the library path to find the native library
-    systemProperty("jna.library.path", "../../target/release-unstripped")
-    
     doFirst {
-        val nativeLibPath = file("../../target/release-unstripped/libpayment_plan_uniffi.so")
-        if (!nativeLibPath.exists()) {
-            throw GradleException(
-                "Native library not found at: ${nativeLibPath.absolutePath}\n" +
-                "Please compile the Rust library first:\n" +
-                "  cargo build --release --package payment_plan_uniffi"
-            )
+        // Check if we're in development environment with direct library access
+        val devNativeLibPath = file("../../target/release-unstripped/libpayment_plan_uniffi.so")
+        if (devNativeLibPath.exists()) {
+            // Development environment - use direct library path
+            systemProperty("jna.library.path", "../../target/release-unstripped")
+            println("Running example using development native library at: ${devNativeLibPath.absolutePath}")
+        } else {
+            // Standalone environment - libraries should be embedded via resources
+            println("Running example using embedded native libraries from resources.")
         }
-        println("Using native library at: ${nativeLibPath.absolutePath}")
     }
 }
 
@@ -118,7 +124,7 @@ publishing {
             pom {
                 name.set("Payment Plan Kotlin SDK")
                 description.set("Kotlin SDK for payment plan calculations")
-                url.set("https://github.com/ParceladoLara/payment-plan")
+                url.set("https://github.com/ParceladoLara/payment-plan-kotlin-sdk")
                 
                 developers {
                     developer {

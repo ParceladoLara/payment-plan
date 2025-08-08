@@ -1,4 +1,4 @@
-.PHONY: help build test clean example publish
+.PHONY: help build test clean example publish check
 
 help: ## Mostrar esta mensagem de ajuda
 	@echo "Comandos disponíveis:"
@@ -10,12 +10,11 @@ build: ## Compilar o projeto completo (com testes)
 build-fast: ## Compilar apenas o código (sem testes)
 	./gradlew compileKotlin jar
 
-test: ## Executar testes (requer biblioteca nativa)
+test: ## Executar testes
 	./gradlew clean test -PrunTests
 
 clean: ## Limpar arquivos de build
 	./gradlew clean
-	rm -rf _internal/
 
 example: ## Executar exemplo
 	./gradlew runExample
@@ -25,17 +24,32 @@ publish: ## Publicar no repositório Maven local
 
 check: ## Verificar se os bindings foram gerados
 	@if [ ! -f "_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt" ]; then \
-		echo "❌ Bindings UniFFI não encontrados. Execute 'make build-kotlin-sdk' do diretório raiz do projeto."; \
+		echo "❌ Bindings UniFFI não encontrados."; \
+		echo "Este repositório é independente. Para gerar bindings, veja:"; \
+		echo "https://github.com/ParceladoLara/payment-plan"; \
 		exit 1; \
 	else \
 		echo "✅ Bindings UniFFI encontrados."; \
 	fi
 
-generate-bindings: ## Gerar apenas os bindings UniFFI
-	@echo "Gerando bindings UniFFI..."
-	@cd ../.. && cargo run --bin uniffi-bindgen generate \
-		--library target/release-unstripped/libpayment_plan_uniffi.so \
-		--language kotlin \
-		--out-dir sdks/kotlin/_internal
+status: ## Verificar status do SDK
+	@echo "📦 Payment Plan Kotlin SDK - Status"
+	@echo "-------------------------------------"
+	@./gradlew --version | head -3
+	@echo ""
+	@if [ -f "_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt" ]; then \
+		echo "✅ UniFFI bindings: OK"; \
+	else \
+		echo "❌ UniFFI bindings: Missing"; \
+	fi
+	@if [ -d "src/main/resources/native" ] && [ ! -z "$$(ls -A src/main/resources/native 2>/dev/null)" ]; then \
+		echo "✅ Native libraries: OK"; \
+		echo "   Libraries found: $$(ls src/main/resources/native/ 2>/dev/null | tr '\n' ' ')"; \
+	else \
+		echo "❌ Native libraries: Missing"; \
+	fi
+	@echo ""
+	@echo "📖 This is a standalone repository. For building from source:"
+	@echo "   https://github.com/ParceladoLara/payment-plan"
 
 all: build test ## Compilar e testar tudo

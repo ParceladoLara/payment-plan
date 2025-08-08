@@ -1,97 +1,92 @@
 # Payment Plan Kotlin SDK
 
+> **⚠️ Important Notice**: This repository and the code in it is a carbon copy of the code from [Parcelado Lara Payment Plan](https://github.com/ParceladoLara/payment-plan). For building from source, configuration setup, and contributing, please refer to the main repository.
+
 Este SDK oferece uma interface amigável em Kotlin para o sistema de cálculo de planos de pagamento.
 
-## 🚀 Setup Rápido (Recomendado)
+## � Instalação
 
-**Para novos usuários - usando setup global:**
+### Maven
 
-```bash
-# Do diretório raiz do projeto (payment-plan/)
-# 1. Instalar todas as dependências (incluindo Java)
-./setup/debian.sh    # Para Debian/Ubuntu
-# OU
-./setup/arch.sh      # Para Arch Linux
-
-# 2. Compilar o SDK Kotlin
-make build-kotlin-sdk
+```xml
+<dependency>
+    <groupId>com.parceladolara</groupId>
+    <artifactId>payment-plan-kotlin-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
 ```
 
-**Para usuários experientes (dependências já instaladas):**
+### Gradle (Kotlin DSL)
 
-```bash
-# Do diretório raiz do projeto (payment-plan/)
-make build-kotlin-sdk && cd sdks/kotlin && make build
-
-# Depois testar
-cd sdks/kotlin
-make example  # Executa exemplo
-make test     # Executa testes
+```kotlin
+dependencies {
+    implementation("com.parceladolara:payment-plan-kotlin-sdk:1.0.0")
+}
 ```
 
-## 📋 Pré-requisitos
+### Gradle (Groovy)
 
-Os scripts de setup global (`./setup/debian.sh` ou `./setup/arch.sh`) instalam automaticamente:
-
-- **Rust** (1.81.0+) - para compilar a biblioteca nativa
-- **Java JDK** (17+) - para compilar o código Kotlin
-- **Gradle** - incluído via Gradle Wrapper no projeto
-
-**💡 Dica:** Para outras distribuições Linux ou sistemas operacionais, consulte a seção "Instalação Manual" no README principal do projeto.
-
-## 🔧 Fluxo de Dependências
-
-1. Rust compila a biblioteca nativa (`libpayment_plan_uniffi.so`)
-2. UniFFI gera os bindings Kotlin automaticamente
-3. O SDK Kotlin usa os bindings para chamar a biblioteca nativa
-
-**⚠️ IMPORTANTE:** Os bindings Kotlin e bibliotecas nativas agora estão incluídos no repositório Git. O comando `make build-kotlin-sdk` irá verificar se já existem antes de regenerá-los.
-
-## 🛠️ Comandos Úteis
-
-**Do diretório `sdks/kotlin/`:**
-
-```bash
-make help              # Mostrar ajuda
-make build             # Compilar o projeto
-make test              # Executar testes
-make example           # Executar exemplo
-make clean             # Limpar arquivos de build
-make publish           # Publicar o pacote
-make all               # Configurar, compilar e testar tudo
+```groovy
+dependencies {
+    implementation 'com.parceladolara:payment-plan-kotlin-sdk:1.0.0'
+}
 ```
 
-## 📖 Setup Manual (Avançado)
+## 🚀 Uso Rápido
 
-Se você preferir fazer tudo manualmente:
+```kotlin
+import com.parceladolara.paymentplan.PaymentPlan
+import com.parceladolara.paymentplan.Params
+import java.time.ZonedDateTime
+import java.time.ZoneId
 
-### 1. Compilar dependências Rust
+fun main() {
+    val params = Params(
+        requestedAmount = 1000.0,
+        firstPaymentDate = ZonedDateTime.of(2025, 6, 3, 10, 0, 0, 0, ZoneId.of("UTC")).toInstant(),
+        disbursementDate = ZonedDateTime.of(2025, 5, 3, 10, 0, 0, 0, ZoneId.of("UTC")).toInstant(),
+        installments = 3u,
+        debitServicePercentage = 350u,
+        mdr = 0.035,
+        tacPercentage = 0.01,
+        iofOverall = 0.0038,
+        iofPercentage = 0.0,
+        interestRate = 0.02,
+        minInstallmentAmount = 50.0,
+        maxTotalAmount = 2000.0,
+        disbursementOnlyOnBusinessDays = false
+    )
 
-```bash
-# Do diretório raiz (payment-plan/)
-cargo build --release --package payment_plan_uniffi
+    val result = PaymentPlan.calculatePaymentPlan(params)
+
+    result.forEach { installment ->
+        println("Parcela ${installment.installment}: R$ ${installment.installmentAmount}")
+        println("  Vencimento: ${installment.dueDate}")
+        println("  Total: R$ ${installment.totalAmount}")
+    }
+}
 ```
 
-### 2. Gerar bindings UniFFI
+## 🧪 Desenvolvimento Local
+
+Para desenvolver e testar o SDK localmente:
 
 ```bash
-cargo run --bin uniffi-bindgen generate \
-  --library target/release-unstripped/libpayment_plan_uniffi.so \
-  --language kotlin \
-  --out-dir sdks/kotlin/_internal
-```
+# 1. Clone o repositório
+git clone https://github.com/ParceladoLara/payment-plan-kotlin-sdk.git
+cd payment-plan-kotlin-sdk
 
-### 3. Compilar o SDK Kotlin
+# 2. Verificar status
+make status
 
-```bash
-cd sdks/kotlin
-./gradlew build
-```
+# 3. Compilar
+make build
 
-### 4. Executar testes
+# 4. Executar exemplo
+make example
 
-```bash
-./gradlew test -PrunTests
+# 5. Executar testes
+make test
 ```
 
 ## Instalação
@@ -203,85 +198,61 @@ val nonBusinessDays = PaymentPlan.getNonBusinessDaysBetween(startDate, endDate)
 println("Dias não úteis: $nonBusinessDays")
 ```
 
-## Métodos Principais
+## 🛠️ Comandos Disponíveis
 
-### `calculatePaymentPlan(params: Params): List<Response>`
+```bash
+make help              # Mostrar ajuda
+make status            # Verificar status do SDK
+make build             # Compilar o projeto
+make test              # Executar testes
+make example           # Executar exemplo
+make clean             # Limpar arquivos de build
+make publish           # Publicar no repositório Maven local
+make all               # Compilar e testar tudo
+```
+
+## 📚 API
+
+### Métodos Principais
+
+#### `calculatePaymentPlan(params: Params): List<Response>`
 
 Calcula um plano de pagamento baseado nos parâmetros fornecidos.
 
-### `calculateDownPaymentPlan(params: DownPaymentParams): List<DownPaymentResponse>`
+#### `calculateDownPaymentPlan(params: DownPaymentParams): List<DownPaymentResponse>`
 
-Calcula um plano de pagamento com entrada baseado nos parâmetros fornecidos.
+Calcula um plano de pagamento com entrada.
 
-### `nextDisbursementDate(baseDate: Instant): Instant`
+#### `nextDisbursementDate(baseDate: Instant): Instant`
 
-Calcula a próxima data de desembolso baseada na data fornecida. Assume que desembolsos só ocorrem em dias úteis.
+Calcula a próxima data de desembolso (apenas dias úteis).
 
-### `disbursementDateRange(baseDate: Instant, days: UInt): Pair<Instant, Instant>`
+#### `disbursementDateRange(baseDate: Instant, days: UInt): Pair<Instant, Instant>`
 
-Calcula um intervalo de datas de desembolso baseado na data base e número de dias úteis.
+Calcula um intervalo de datas de desembolso.
 
-### `getNonBusinessDaysBetween(startDate: Instant, endDate: Instant): List<Instant>`
+#### `getNonBusinessDaysBetween(startDate: Instant, endDate: Instant): List<Instant>`
 
-Retorna uma lista de dias não úteis entre as datas fornecidas (ambas inclusivas).
+Retorna dias não úteis entre as datas fornecidas.
 
-## Dependências
+## 🔧 Requisitos
 
-Este SDK requer:
+- **Java JDK 17+**
+- **Kotlin JVM 1.9.0+**
+- **JNA 5.13.0+** (incluído automaticamente)
 
-- Kotlin JVM 1.9.0+
-- JNA 5.13.0+ (para comunicação com a biblioteca nativa)
+## � Para Desenvolvimento
 
-## 🔧 Integração com o Projeto Principal
+> **Para contribuições, build from source, e configuração completa, consulte o repositório principal:**  
+> **[https://github.com/ParceladoLara/payment-plan](https://github.com/ParceladoLara/payment-plan)**
 
-O SDK Kotlin está **totalmente integrado** ao sistema de build principal do projeto Payment Plan.
+Este repositório contém apenas o SDK Kotlin pré-compilado e pronto para uso.
 
-### Comandos Disponíveis no Makefile Principal:
+## � Licença
 
-```bash
-make build-kotlin-sdk         # Build completo (Linux + Windows)
-make build-kotlin-sdk-linux   # Build apenas Linux
-make build-kotlin-sdk-windows # Build apenas Windows
-make test                     # Inclui testes do Kotlin
-make clean                    # Limpa arquivos do Kotlin
-```
+Este projeto está licenciado sob os mesmos termos do projeto principal Payment Plan.
 
-### Características da Integração:
+## 🤝 Suporte
 
-- **Multiplataforma**: Gera bibliotecas para Linux (`.so`) e Windows (`.dll`)
-- **Build inteligente**: Detecta se bindings já existem antes de regenerar
-- **Bindings automáticos**: Gera automaticamente os bindings UniFFI para Kotlin
-- **Testes integrados**: Incluído no comando `make test` principal
-- **Limpeza automática**: Incluído no comando `make clean` principal
-
-## ✨ Características do SDK
-
-- **Interface limpa**: Apenas 5 métodos principais bem documentados
-- **Type aliases**: Para melhor exposição da API
-- **Exemplos completos**: Demonstrando todos os casos de uso
-- **Testes unitários**: Para validação da funcionalidade
-- **Build automatizado**: Makefile e scripts para facilitar uso
-- **Documentação completa**: README com exemplos e instruções
-
-## 📦 Distribuição
-
-O JAR compilado está em `build/libs/payment-plan-kotlin-sdk-1.0.0.jar` e pode ser:
-
-1. **Usado localmente**: Adicionando o JAR como dependência
-2. **Publicado no Maven**: Via `./gradlew publish`
-3. **Distribuído**: Como biblioteca standalone
-
-## ✅ Status do Projeto
-
-- ✅ SDK criado e compilando
-- ✅ Wrapper com 5 métodos principais funcionando
-- ✅ Exemplo completo executando (`make example`)
-- ✅ Testes unitários passando (`make test`)
-- ✅ Documentação completa
-- ✅ Build automatizado e integrado
-- ✅ JAR gerado e funcional
-- ✅ Suporte multiplataforma (Linux/Windows)
-- ✅ Bindings UniFFI gerados automaticamente
-- ✅ Integração completa com projeto principal
-
-O SDK Kotlin está **pronto para uso em produção**!
+Para suporte técnico, issues, e contribuições, utilize o repositório principal:
+[https://github.com/ParceladoLara/payment-plan](https://github.com/ParceladoLara/payment-plan)
