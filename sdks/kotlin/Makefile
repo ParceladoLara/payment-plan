@@ -4,11 +4,14 @@ help: ## Mostrar esta mensagem de ajuda
 	@echo "Comandos disponíveis:"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-build: ## Compilar o projeto
+build: ## Compilar o projeto completo (com testes)
+	./gradlew build
+
+build-fast: ## Compilar apenas o código (sem testes)
 	./gradlew compileKotlin jar
 
 test: ## Executar testes (requer biblioteca nativa)
-	./gradlew test -PrunTests
+	./gradlew clean test -PrunTests
 
 clean: ## Limpar arquivos de build
 	./gradlew clean
@@ -17,8 +20,8 @@ clean: ## Limpar arquivos de build
 example: ## Executar exemplo
 	./gradlew runExample
 
-publish: ## Publicar o pacote
-	./gradlew publish
+publish: ## Publicar no repositório Maven local
+	./gradlew publishToMavenLocal
 
 check: ## Verificar se os bindings foram gerados
 	@if [ ! -f "_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt" ]; then \
