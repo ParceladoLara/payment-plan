@@ -10,6 +10,8 @@ import java.nio.file.Files
  * 
  * This class handles the extraction and loading of platform-specific native libraries
  * that are embedded as resources within the JAR file.
+ * 
+ * Supported platforms: Windows and Linux
  */
 internal object NativeLibraryLoader {
     
@@ -35,7 +37,7 @@ internal object NativeLibraryLoader {
             val inputStream = NativeLibraryLoader::class.java.getResourceAsStream(resourcePath)
             
             if (inputStream != null) {
-                loadFromResource(inputStream, libraryName)
+                loadFromResource(inputStream)
             } else {
                 // Fallback: try to load from file system (for development)
                 loadFromFileSystem(libraryName)
@@ -55,8 +57,7 @@ internal object NativeLibraryLoader {
         return when {
             osName.contains("windows") -> "payment_plan_uniffi.dll"
             osName.contains("linux") -> "libpayment_plan_uniffi.so"
-            osName.contains("mac") || osName.contains("darwin") -> "libpayment_plan_uniffi.dylib"
-            else -> throw UnsupportedOperationException("Unsupported operating system: $osName")
+            else -> throw UnsupportedOperationException("Unsupported operating system: $osName. Only Windows and Linux are supported.")
         }
     }
     
@@ -68,15 +69,14 @@ internal object NativeLibraryLoader {
         return when {
             osName.contains("windows") -> "/native/windows/$libraryName"
             osName.contains("linux") -> "/native/linux/$libraryName"
-            osName.contains("mac") || osName.contains("darwin") -> "/native/macos/$libraryName"
-            else -> throw UnsupportedOperationException("Unsupported operating system: $osName")
+            else -> throw UnsupportedOperationException("Unsupported operating system: $osName. Only Windows and Linux are supported.")
         }
     }
     
     /**
      * Loads the library from JAR resources by extracting it to a temporary file.
      */
-    private fun loadFromResource(inputStream: InputStream, libraryName: String) {
+    private fun loadFromResource(inputStream: InputStream) {
         // Create a temporary file
         val tempFile = File.createTempFile("payment_plan_uniffi", getLibraryExtension())
         tempFile.deleteOnExit()
@@ -116,7 +116,7 @@ internal object NativeLibraryLoader {
             println("Loaded native library from development path: ${devPath.absolutePath}")
         } else {
             // Last resort: try system library loading
-            val baseName = libraryName.replace("lib", "").replace(".so", "").replace(".dll", "").replace(".dylib", "")
+            val baseName = libraryName.replace("lib", "").replace(".so", "").replace(".dll", "")
             System.loadLibrary(baseName)
             println("Loaded native library using system loader: $baseName")
         }
@@ -130,8 +130,7 @@ internal object NativeLibraryLoader {
         return when {
             osName.contains("windows") -> ".dll"
             osName.contains("linux") -> ".so"
-            osName.contains("mac") || osName.contains("darwin") -> ".dylib"
-            else -> ".so"
+            else -> throw UnsupportedOperationException("Unsupported operating system: $osName. Only Windows and Linux are supported.")
         }
     }
 }
