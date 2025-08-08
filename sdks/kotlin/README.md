@@ -2,37 +2,56 @@
 
 > **⚠️ Important Notice**: This repository and the code in it is a carbon copy of the code from [Parcelado Lara Payment Plan](https://github.com/ParceladoLara/payment-plan). For building from source, configuration setup, and contributing, please refer to the main repository.
 
-Este SDK oferece uma interface amigável em Kotlin para o sistema de cálculo de planos de pagamento.
+This SDK provides a friendly Kotlin interface for the payment plan calculation system.
 
-## � Instalação
+## 📦 Installation
+
+Add the JitPack repository and dependency to your project:
 
 ### Maven
 
 ```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
 <dependency>
-    <groupId>com.parceladolara</groupId>
+    <groupId>com.github.parceladolara</groupId>
     <artifactId>payment-plan-kotlin-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>v1.0.0</version>
 </dependency>
 ```
 
 ### Gradle (Kotlin DSL)
 
 ```kotlin
+repositories {
+    maven { url = uri("https://jitpack.io") }
+}
+
 dependencies {
-    implementation("com.parceladolara:payment-plan-kotlin-sdk:1.0.0")
+    implementation("com.github.parceladolara:payment-plan-kotlin-sdk:v1.0.0")
 }
 ```
 
 ### Gradle (Groovy)
 
 ```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
-    implementation 'com.parceladolara:payment-plan-kotlin-sdk:1.0.0'
+    implementation 'com.github.parceladolara:payment-plan-kotlin-sdk:v1.0.0'
 }
 ```
 
-## 🚀 Uso Rápido
+> **📋 Note**: Always use the latest version available on [JitPack](https://jitpack.io/#parceladolara/payment-plan-kotlin-sdk). Versions follow the `v1.x.x` pattern.
+
+## 🚀 Quick Start
 
 ```kotlin
 import com.parceladolara.paymentplan.PaymentPlan
@@ -60,40 +79,40 @@ fun main() {
     val result = PaymentPlan.calculatePaymentPlan(params)
 
     result.forEach { installment ->
-        println("Parcela ${installment.installment}: R$ ${installment.installmentAmount}")
-        println("  Vencimento: ${installment.dueDate}")
-        println("  Total: R$ ${installment.totalAmount}")
+        println("Installment ${installment.installment}: $${installment.installmentAmount}")
+        println("  Due Date: ${installment.dueDate}")
+        println("  Total: $${installment.totalAmount}")
     }
 }
 ```
 
-## 🧪 Desenvolvimento Local
+## 🧪 Local Development
 
-Para desenvolver e testar o SDK localmente:
+To develop and test the SDK locally:
 
 ```bash
-# 1. Clone o repositório
+# 1. Clone the repository
 git clone https://github.com/ParceladoLara/payment-plan-kotlin-sdk.git
 cd payment-plan-kotlin-sdk
 
-# 2. Verificar status
+# 2. Check status
 make status
 
-# 3. Compilar
+# 3. Build
 make build
 
-# 4. Executar exemplo
+# 4. Run example
 make example
 
-# 5. Executar testes
+# 5. Run tests
 make test
 ```
 
-## Instalação
+## Local Installation (Alternative)
 
-### Usando o JAR local
+### Using Local JAR
 
-Após compilar, você pode usar o JAR gerado em `build/libs/`:
+After building, you can use the generated JAR in `build/libs/`:
 
 ```kotlin
 dependencies {
@@ -102,15 +121,15 @@ dependencies {
 }
 ```
 
-### Publicação Maven
+### Maven Local Publishing
 
-Para publicar no repositório Maven local:
+To publish to local Maven repository:
 
 ```bash
 ./gradlew publishToMavenLocal
 ```
 
-Então adicione a dependência:
+Then add the dependency:
 
 ```kotlin
 dependencies {
@@ -118,9 +137,9 @@ dependencies {
 }
 ```
 
-## Uso
+## Usage
 
-### Importação
+### Import
 
 ```kotlin
 import com.parceladolara.paymentplan.PaymentPlan
@@ -128,7 +147,7 @@ import com.parceladolara.paymentplan.Params
 import com.parceladolara.paymentplan.DownPaymentParams
 ```
 
-### Calculando um Plano de Pagamento
+### Calculating a Payment Plan
 
 ```kotlin
 import java.time.Instant
@@ -152,16 +171,16 @@ val params = Params(
 
 val paymentPlan = PaymentPlan.calculatePaymentPlan(params)
 for (response in paymentPlan) {
-    println("Valor da parcela: ${response.installmentAmount}")
+    println("Installment amount: ${response.installmentAmount}")
     println("Total: ${response.totalAmount}")
-    // ... outros campos
+    // ... other fields
 }
 ```
 
-### Calculando um Plano de Pagamento com Entrada
+### Calculating a Down Payment Plan
 
 ```kotlin
-val baseParams = Params(/* ... parâmetros base ... */)
+val baseParams = Params(/* ... base parameters ... */)
 
 val downPaymentParams = DownPaymentParams(
     params = baseParams,
@@ -174,85 +193,95 @@ val downPaymentParams = DownPaymentParams(
 val downPaymentPlan = PaymentPlan.calculateDownPaymentPlan(downPaymentParams)
 ```
 
-### Calculando a Próxima Data de Desembolso
+### Calculating Next Disbursement Date
 
 ```kotlin
 val nextDate = PaymentPlan.nextDisbursementDate(Instant.now())
-println("Próxima data de desembolso: $nextDate")
+println("Next disbursement date: $nextDate")
 ```
 
-### Calculando um Intervalo de Datas de Desembolso
+### Calculating Disbursement Date Range
 
 ```kotlin
 val (startDate, endDate) = PaymentPlan.disbursementDateRange(Instant.now(), 5u)
-println("Período: $startDate até $endDate")
+println("Period: $startDate to $endDate")
 ```
 
-### Obtendo Dias Não Úteis em um Período
+### Getting Non-Business Days in a Period
 
 ```kotlin
 val startDate = Instant.now()
 val endDate = startDate.plus(30, ChronoUnit.DAYS)
 val nonBusinessDays = PaymentPlan.getNonBusinessDaysBetween(startDate, endDate)
 
-println("Dias não úteis: $nonBusinessDays")
+println("Non-business days: $nonBusinessDays")
 ```
 
-## 🛠️ Comandos Disponíveis
+## 🛠️ Available Commands
 
 ```bash
-make help              # Mostrar ajuda
-make status            # Verificar status do SDK
-make build             # Compilar o projeto
-make test              # Executar testes
-make example           # Executar exemplo
-make clean             # Limpar arquivos de build
-make publish           # Publicar no repositório Maven local
-make all               # Compilar e testar tudo
+make help              # Show help
+make status            # Check SDK status
+make build             # Build the project
+make test              # Run tests
+make example           # Run example
+make clean             # Clean build files
+make publish           # Publish to local Maven repository
+make all               # Build and test everything
 ```
 
 ## 📚 API
 
-### Métodos Principais
+### Main Methods
 
 #### `calculatePaymentPlan(params: Params): List<Response>`
 
-Calcula um plano de pagamento baseado nos parâmetros fornecidos.
+Calculates a payment plan based on provided parameters.
 
 #### `calculateDownPaymentPlan(params: DownPaymentParams): List<DownPaymentResponse>`
 
-Calcula um plano de pagamento com entrada.
+Calculates a payment plan with down payment.
 
 #### `nextDisbursementDate(baseDate: Instant): Instant`
 
-Calcula a próxima data de desembolso (apenas dias úteis).
+Calculates the next disbursement date (business days only).
 
 #### `disbursementDateRange(baseDate: Instant, days: UInt): Pair<Instant, Instant>`
 
-Calcula um intervalo de datas de desembolso.
+Calculates a disbursement date range.
 
 #### `getNonBusinessDaysBetween(startDate: Instant, endDate: Instant): List<Instant>`
 
-Retorna dias não úteis entre as datas fornecidas.
+Returns non-business days between the provided dates.
 
-## 🔧 Requisitos
+## 🔧 Requirements
 
 - **Java JDK 17+**
 - **Kotlin JVM 1.9.0+**
-- **JNA 5.13.0+** (incluído automaticamente)
+- **JNA 5.13.0+** (included automatically)
 
-## � Para Desenvolvimento
+## ⚡ Compatibility
 
-> **Para contribuições, build from source, e configuração completa, consulte o repositório principal:**  
+This SDK is compatible with:
+
+- **JVM**: Java 17+, Kotlin 1.9.0+
+- **Android**: API Level 21+ (Android 5.0)
+- **Systems**: Linux, macOS, Windows
+
+Native libraries are automatically included and loaded by UniFFI.
+
+## 🌍 For Development
+
+> **For contributions, building from source, and complete configuration, consult the main repository:**  
 > **[https://github.com/ParceladoLara/payment-plan](https://github.com/ParceladoLara/payment-plan)**
 
-Este repositório contém apenas o SDK Kotlin pré-compilado e pronto para uso.
+This repository contains only the pre-compiled and ready-to-use Kotlin SDK.
 
-## � Licença
+## 📄 License
 
-Este projeto está licenciado sob os mesmos termos do projeto principal Payment Plan.
+This project is licensed under the same terms as the main Payment Plan project.
 
-## 🤝 Suporte
+## 🤝 Support
 
-Para suporte técnico, issues, e contribuições, utilize o repositório principal:
+For technical support, issues, and contributions, use the main repository:
 [https://github.com/ParceladoLara/payment-plan](https://github.com/ParceladoLara/payment-plan)

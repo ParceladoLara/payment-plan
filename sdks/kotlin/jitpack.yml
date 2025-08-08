@@ -1,0 +1,8 @@
+jdk:
+  - openjdk17
+before_install:
+  - echo "Setting up JitPack build environment"
+  - export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false"
+install:
+  - echo "Installing dependencies"
+  - ./gradlew build -x test --no-daemon --stacktrace
