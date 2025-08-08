@@ -12,16 +12,21 @@ import java.nio.file.Files
  * that are embedded as resources within the JAR file.
  * 
  * Supported platforms: Windows and Linux
+ * 
+ * This loader integrates with UniFFI by setting the appropriate system property
+ * that UniFFI uses to locate the native library.
  */
 internal object NativeLibraryLoader {
     
     private var isLoaded = false
+    private var libraryPath: String? = null
     
     /**
      * Loads the payment plan native library from JAR resources.
      * 
      * The library will be extracted to a temporary directory and then loaded.
-     * This method ensures the library is only loaded once.
+     * This method ensures the library is only loaded once and sets the system
+     * property that UniFFI uses to locate the library.
      */
     @Synchronized
     fun loadLibrary() {
@@ -33,17 +38,18 @@ internal object NativeLibraryLoader {
         val resourcePath = getResourcePath(libraryName)
         
         try {
-            // Try to load from resources first
-            val inputStream = NativeLibraryLoader::class.java.getResourceAsStream(resourcePath)
+            // Try to load from JAR resources first
+            val resourcePath = getResourcePath(libraryName)
+            val inputStream = javaClass.getResourceAsStream(resourcePath)
             
             if (inputStream != null) {
-                loadFromResource(inputStream)
+                val libraryPath = loadFromResource(inputStream)
+                // Set system property to help UniFFI find the library
+                System.setProperty("uniffi.component.payment_plan_uniffi.libraryOverride", libraryPath)
             } else {
-                // Fallback: try to load from file system (for development)
+                // Fallback to file system loading (development mode)
                 loadFromFileSystem(libraryName)
             }
-            
-            isLoaded = true
         } catch (e: Exception) {
             throw RuntimeException("Failed to load native library: $libraryName", e)
         }
@@ -76,7 +82,7 @@ internal object NativeLibraryLoader {
     /**
      * Loads the library from JAR resources by extracting it to a temporary file.
      */
-    private fun loadFromResource(inputStream: InputStream) {
+    private fun loadFromResource(inputStream: InputStream): String {
         // Create a temporary file
         val tempFile = File.createTempFile("payment_plan_uniffi", getLibraryExtension())
         tempFile.deleteOnExit()
@@ -96,6 +102,9 @@ internal object NativeLibraryLoader {
         System.load(tempFile.absolutePath)
         
         println("Loaded native library from JAR resources: ${tempFile.absolutePath}")
+        
+        // Return the path for UniFFI integration
+        return tempFile.absolutePath
     }
     
     /**
