@@ -37,6 +37,13 @@ tasks.test {
     // Set the library path to find the native library
     systemProperty("jna.library.path", "../../target/release-unstripped")
     
+    // Show test output
+    testLogging {
+        events("passed", "skipped", "failed", "standardOut", "standardError")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        showStandardStreams = false
+    }
+    
     doFirst {
         val nativeLibPath = file("../../target/release-unstripped/libpayment_plan_uniffi.so")
         if (!nativeLibPath.exists()) {
