@@ -8,7 +8,7 @@ Este projeto serve como base para o desenvolvimento de SDKs em diferentes lingua
 
 O projeto é dividido em pacotes, cada um com sua própria funcionalidade:
 
-- **`cli`**: Código para a CLI (Command Line Interface) que permite calcular planos de pagamento via terminal *(Deprecated)*
+- **`cli`**: Código para a CLI (Command Line Interface) que permite calcular planos de pagamento via terminal _(Deprecated)_
 - **`core`**: Lógica principal do cálculo dos planos de pagamento
 - **`docs`**: Documentação detalhada do projeto
 - **`generators`**: Geradores de código para diferentes linguagens
@@ -20,15 +20,25 @@ O projeto é dividido em pacotes, cada um com sua própria funcionalidade:
 
 Para facilitar as configurações necessárias, você pode usar os scripts de setup que instalarão todas as dependências e configurarão o ambiente automaticamente.
 
-### Setup Automático
+### Setup Automático (Recomendado)
+
+O comando `make install-deps` detecta automaticamente seu sistema operacional e executa o script apropriado:
+
+```bash
+sudo make install-deps
+```
+
+### Setup Manual por Sistema
 
 **Arch Linux:**
+
 ```bash
 chmod +x setup/arch.sh
 ./setup/arch.sh
 ```
 
 **Debian/Ubuntu:**
+
 ```bash
 chmod +x setup/debian.sh
 ./setup/debian.sh
@@ -39,6 +49,7 @@ chmod +x setup/debian.sh
 Caso você esteja em outra distribuição ou sistema operacional, será necessário instalar as seguintes dependências:
 
 - [Rust](https://www.rust-lang.org/tools/install) (v1.81.0 ou superior)
+- [Java JDK](https://openjdk.org/) (v17 ou superior, para desenvolvimento Kotlin)
 - [PHP](https://www.php.net/downloads) (v8.1 ou superior, com FFI habilitado)
 - [Node.js](https://nodejs.org/en/download/) (v22 ou superior)
 - [Go](https://go.dev/doc/install) (v1.24.1 ou superior)
@@ -64,7 +75,18 @@ Cada SDK possui seu próprio comando de compilação no `Makefile`. Para compila
 make build-<linguagem>-sdk
 ```
 
+**Exemplos:**
+
+```bash
+make build-kotlin-sdk    # Compila SDK Kotlin
+make build-go-sdk        # Compila SDK Go
+make build-python-sdk    # Compila SDK Python
+make build-node-sdk      # Compila SDK Node.js
+make build-php-sdk       # Compila SDK PHP
+```
+
 Para compilação no Windows:
+
 ```bash
 make build-<linguagem>-sdk-windows
 ```
@@ -94,11 +116,13 @@ Os arquivos de cabeçalho e bibliotecas estarão disponíveis na pasta `lara-c-b
 ### ⚠️ Importante sobre FFI
 
 Trabalhar com FFI pode ser complexo. É recomendado ter conhecimento prévio sobre:
+
 - Como funciona o FFI na linguagem desejada
 - Alocação e liberação de memória
 - Tipos de dados e seu gerenciamento na memória
 
 O uso inadequado do FFI pode causar:
+
 - Vazamentos de memória
 - Corrupção de memória
 - Outros problemas difíceis de depurar
@@ -109,9 +133,9 @@ O uso inadequado do FFI pode causar:
 
 - [x] **Node.js** - Disponível
 - [x] **Go** - Disponível
-- [x] **Python** - Disponível *(falta publicar no PyPI)*
+- [x] **Python** - Disponível _(falta publicar no PyPI)_
 - [x] **PHP** - Disponível
 - [x] **WASM Web** - Disponível
-- [ ] **Kotlin** - Em desenvolvimento
+- [x] **Kotlin** - Disponível
 - [ ] **Swift** - Planejado
 - [ ] **C#** - Planejado
