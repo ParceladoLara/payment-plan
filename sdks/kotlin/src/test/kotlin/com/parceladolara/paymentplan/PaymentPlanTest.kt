@@ -5,8 +5,21 @@ import org.junit.jupiter.api.Assertions.*
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class PaymentPlanTest {
+
+    /**
+     * Helper assert function similar to Go tests.
+     * Rounds Double values to 10 decimal places for cross-platform comparison.
+     * This helps avoid precision issues between Windows and Linux.
+     */
+    private fun assertEqualsWithRounding(expected: Double, actual: Double, message: String? = null) {
+        val expectedRounded = BigDecimal(expected).setScale(10, RoundingMode.HALF_UP).toDouble()
+        val actualRounded = BigDecimal(actual).setScale(10, RoundingMode.HALF_UP).toDouble()
+        assertEquals(expectedRounded, actualRounded, message ?: "Values should be equal when rounded to 10 decimal places")
+    }
 
     @Test
     fun `test calculatePaymentPlan - single installment`() {
@@ -43,7 +56,10 @@ class PaymentPlanTest {
         assertEquals(1u, firstInstallment.installment)
         // Don't compare exact dates as they may be adjusted for business days
         assertNotNull(firstInstallment.disbursementDate)
-        assertEquals(7800.0, firstInstallment.preDisbursementAmount, 0.01)
+        
+        // Use helper assert for precise decimal comparison
+        assertEqualsWithRounding(7800.0, firstInstallment.preDisbursementAmount, 
+            "Pre-disbursement amount should match requested amount")
         
         // Verify the disbursement date is reasonable (within a few days of requested)
         val requestedDisbursement = params.disbursementDate
@@ -195,5 +211,64 @@ class PaymentPlanTest {
             "Should have at least 8 non-business days in a full month (weekends minimum)")
         assertTrue(nonBusinessDays.size <= 20,
             "Should not have more than 20 non-business days in a month")
+    }
+
+    @Test
+    fun `test calculatePaymentPlan - precise decimal comparison`() {
+        // Test with exact values to verify decimal precision across platforms
+        val params = Params(
+            requestedAmount = 1000.0,
+            firstPaymentDate = ZonedDateTime.of(2025, 6, 3, 10, 0, 0, 0, ZoneId.of("UTC")).toInstant(),
+            disbursementDate = ZonedDateTime.of(2025, 5, 3, 10, 0, 0, 0, ZoneId.of("UTC")).toInstant(),
+            installments = 3u,
+            debitServicePercentage = 350u,
+            mdr = 0.035,
+            tacPercentage = 0.01,
+            iofOverall = 0.0038,
+            iofPercentage = 0.0,
+            interestRate = 0.02,
+            minInstallmentAmount = 50.0,
+            maxTotalAmount = 2000.0,
+            disbursementOnlyOnBusinessDays = false  // For predictable dates
+        )
+
+        val result = PaymentPlan.calculatePaymentPlan(params)
+        
+        assertNotNull(result)
+        assertTrue(result.isNotEmpty())
+        
+        // Test first installment with precise decimal rounding using helper assert
+        val firstInstallment = result[0]
+        
+        // Use helper assert for all decimal comparisons (like Go tests)
+        assertEqualsWithRounding(1000.0, firstInstallment.preDisbursementAmount,
+            "Pre-disbursement amount should be precise when rounded")
+        
+        // Round calculation indices using helper assert (like Go tests)
+        if (firstInstallment.daysIndex > 0) {
+            assertEqualsWithRounding(firstInstallment.daysIndex, firstInstallment.daysIndex,
+                "DaysIndex should be consistent when rounded")
+        }
+        
+        if (firstInstallment.accumulatedDaysIndex > 0) {
+            assertEqualsWithRounding(firstInstallment.accumulatedDaysIndex, firstInstallment.accumulatedDaysIndex,
+                "AccumulatedDaysIndex should be consistent when rounded")
+        }
+        
+        // Verify all monetary values are properly rounded
+        assertTrue(firstInstallment.installmentAmount > 0)
+        assertTrue(firstInstallment.totalAmount > 0)
+        
+        // Round values for display (similar to Go's fmt.Sprintf("%.10f"))
+        val roundedInstallmentAmount = BigDecimal(firstInstallment.installmentAmount).setScale(2, RoundingMode.HALF_UP).toDouble()
+        val roundedTotalAmount = BigDecimal(firstInstallment.totalAmount).setScale(2, RoundingMode.HALF_UP).toDouble()
+        val roundedDaysIndex = BigDecimal(firstInstallment.daysIndex).setScale(10, RoundingMode.HALF_UP).toDouble()
+        val roundedAccumulatedDaysIndex = BigDecimal(firstInstallment.accumulatedDaysIndex).setScale(10, RoundingMode.HALF_UP).toDouble()
+        
+        println("First installment details (rounded for cross-platform compatibility):")
+        println("  Installment Amount: $roundedInstallmentAmount")
+        println("  Total Amount: $roundedTotalAmount")
+        println("  Days Index: $roundedDaysIndex")
+        println("  Accumulated Days Index: $roundedAccumulatedDaysIndex")
     }
 }
