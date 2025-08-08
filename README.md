@@ -49,7 +49,7 @@ chmod +x setup/debian.sh
 Caso você esteja em outra distribuição ou sistema operacional, será necessário instalar as seguintes dependências:
 
 - [Rust](https://www.rust-lang.org/tools/install) (v1.81.0 ou superior)
-- [Java JDK](https://openjdk.org/) (v11 ou superior, para desenvolvimento Kotlin)
+- [Java JDK](https://openjdk.org/) (v17 ou superior, para desenvolvimento Kotlin)
 - [PHP](https://www.php.net/downloads) (v8.1 ou superior, com FFI habilitado)
 - [Node.js](https://nodejs.org/en/download/) (v22 ou superior)
 - [Go](https://go.dev/doc/install) (v1.24.1 ou superior)

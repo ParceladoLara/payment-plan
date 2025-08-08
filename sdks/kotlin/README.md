@@ -34,7 +34,7 @@ make test     # Executa testes
 Os scripts de setup global (`./setup/debian.sh` ou `./setup/arch.sh`) instalam automaticamente:
 
 - **Rust** (1.81.0+) - para compilar a biblioteca nativa
-- **Java JDK** (11+) - para compilar o código Kotlin
+- **Java JDK** (17+) - para compilar o código Kotlin
 - **Gradle** - incluído via Gradle Wrapper no projeto
 
 **💡 Dica:** Para outras distribuições Linux ou sistemas operacionais, consulte a seção "Instalação Manual" no README principal do projeto.

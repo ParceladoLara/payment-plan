@@ -147,18 +147,18 @@ if command -v java &> /dev/null; then
         JAVA_MAJOR=$(echo "$JAVA_VERSION" | cut -d'.' -f1)
     fi
     
-    if [ "$JAVA_MAJOR" -ge 11 ]; then
+    if [ "$JAVA_MAJOR" -ge 17 ]; then
         echo "Java is already installed with sufficient version ($(java -version 2>&1 | head -n1))"
     else
-        echo "Java version $JAVA_VERSION is too old (minimum: Java 11)"
-        echo "Installing OpenJDK 11..."
-        sudo apt-get install -y openjdk-11-jdk
-        echo "OpenJDK 11 installed successfully"
+        echo "Java version $JAVA_VERSION is too old (minimum: Java 17)"
+        echo "Installing OpenJDK 17..."
+        sudo apt-get install -y openjdk-17-jdk
+        echo "OpenJDK 17 installed successfully"
     fi
 else
-    echo "Installing Java (OpenJDK 11) for Kotlin development..."
-    sudo apt-get install -y openjdk-11-jdk
-    echo "OpenJDK 11 installed successfully"
+    echo "Installing Java (OpenJDK 17) for Kotlin development..."
+    sudo apt-get install -y openjdk-17-jdk
+    echo "OpenJDK 17 installed successfully"
 fi
 
 # Install PHP and extensions
