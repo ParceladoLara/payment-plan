@@ -3,7 +3,7 @@ use std::time::SystemTime;
 use chrono::{DateTime, Utc};
 
 #[derive(uniffi::Record)]
-pub struct Params {
+pub struct InternalParams {
     pub requested_amount: f64,
     pub first_payment_date: SystemTime,
     pub disbursement_date: SystemTime,
@@ -19,7 +19,7 @@ pub struct Params {
     pub disbursement_only_on_business_days: bool,
 }
 
-impl Into<core_payment_plan::Params> for Params {
+impl Into<core_payment_plan::Params> for InternalParams {
     fn into(self) -> core_payment_plan::Params {
         let disbursement_date: DateTime<Utc> = self.disbursement_date.into();
         let first_payment_date: DateTime<Utc> = self.first_payment_date.into();
@@ -46,15 +46,15 @@ impl Into<core_payment_plan::Params> for Params {
 }
 
 #[derive(uniffi::Record)]
-pub struct DownPaymentParams {
-    pub params: Params,                 // The params for the actual payment plan
-    pub requested_amount: f64,          // The requested amount for the down payment(ex: 1000.0)
+pub struct InternalDownPaymentParams {
+    pub params: InternalParams,      // The params for the actual payment plan
+    pub requested_amount: f64,       // The requested amount for the down payment(ex: 1000.0)
     pub min_installment_amount: f64, // The minium installment value for the down payment (ex: 100.0)
     pub first_payment_date: SystemTime, // The first payment date for the down payment
     pub installments: u32,           // The max number of installments for the down payment (ex: 12)
 }
 
-impl Into<core_payment_plan::DownPaymentParams> for DownPaymentParams {
+impl Into<core_payment_plan::DownPaymentParams> for InternalDownPaymentParams {
     fn into(self) -> core_payment_plan::DownPaymentParams {
         let first_payment_date: DateTime<Utc> = self.first_payment_date.into();
         let first_payment_date = first_payment_date.date_naive();

@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import List, Tuple
 from ._internal.payment_plan_uniffi import (
-    DownPaymentParams,
-    DownPaymentResponse,
-    Params,
-    Response,
-    Invoice,
+    InternalDownPaymentParams as DownPaymentParams,
+    InternalDownPaymentResponse as DownPaymentResponse,
+    InternalParams as Params,
+    InternalResponse as Response,
+    InternalInvoice as Invoice,
     calculate_down_payment_plan,
     calculate_payment_plan,
     next_disbursement_date as _next_disbursement_date,
@@ -13,6 +13,7 @@ from ._internal.payment_plan_uniffi import (
     get_non_business_days_between as _get_non_business_days_between,
     get_non_business_days_between,
 )
+
 
 def next_disbursement_date(base_date: datetime) -> datetime:
     """
@@ -31,7 +32,10 @@ def next_disbursement_date(base_date: datetime) -> datetime:
     """
     return _next_disbursement_date(base_date)
 
-def disbursement_date_range(base_date: datetime, days: int) -> Tuple[datetime, datetime]:
+
+def disbursement_date_range(
+    base_date: datetime, days: int
+) -> Tuple[datetime, datetime]:
     """
     Calculates and returns (start, end) disbursement dates based on the given base date and number of days.
 
@@ -59,7 +63,10 @@ def disbursement_date_range(base_date: datetime, days: int) -> Tuple[datetime, d
     result = _disbursement_date_range(base_date, days)
     return result[0], result[1]
 
-def get_non_business_days_between(start_date: datetime, end_date: datetime) -> List[datetime]:
+
+def get_non_business_days_between(
+    start_date: datetime, end_date: datetime
+) -> List[datetime]:
     """
     Returns a list of non-business days between the given start and end dates.
 
@@ -76,6 +83,7 @@ def get_non_business_days_between(start_date: datetime, end_date: datetime) -> L
     """
     result = _get_non_business_days_between(start_date, end_date)
     return result
+
 
 __all__ = [
     "DownPaymentParams",

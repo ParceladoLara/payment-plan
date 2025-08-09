@@ -25,7 +25,7 @@ test:
 	cd generators/wasm && npm i && npm run test
 	cd cli && make test
 	cd sdks/go && go test ./...
-	cd sdks/kotlin && make test
+	cd sdks/kotlin && ./gradlew clean test -PrunTests
 	cd sdks/node && npm test
 	cd sdks/web/test && npm i && npx playwright install && npm test
 	cd sdks/php && composer install && composer test
@@ -38,7 +38,7 @@ clean:
 	rm -rf ./sdks/go/internal/libs/windows
 	rm -rf ./sdks/go/internal/libs/darwin
 	rm -rf ./sdks/python/payment_plan/_internal
-	rm -rf ./sdks/kotlin/_internal
+	rm -rf ./sdks/kotlin/src/main/kotlin/com/parceladolara/paymentplan/internal/payment_plan_uniffi.kt
 	rm -rf ./sdks/kotlin/build
 	rm -rf ./sdks/kotlin/.gradle
 	rm -rf ./sdks/kotlin/src/main/resources/native
@@ -94,12 +94,8 @@ build-python-sdk-linux:
 build-kotlin-sdk:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
-	@if [ ! -f "sdks/kotlin/_internal/uniffi/payment_plan_uniffi/payment_plan_uniffi.kt" ]; then \
-		echo "Generating Kotlin bindings..."; \
-		cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin --out-dir sdks/kotlin/_internal; \
-	else \
-		echo "Kotlin bindings already exist - skipping generation"; \
-	fi
+	cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin  --config ./uniffi.toml --out-dir sdks/kotlin/src/main/kotlin
+	sed -i 's/\bpublic\b/internal/g; s/\bdata class\b/internal data class/g; s/\bfun `/internal fun `/g' ./sdks/kotlin/src/main/kotlin/com/parceladolara/paymentplan/internal/payment_plan_uniffi.kt
 	mkdir -p sdks/kotlin/src/main/resources/native/linux
 	mkdir -p sdks/kotlin/src/main/resources/native/windows
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/src/main/resources/native/linux/libpayment_plan_uniffi.so
@@ -107,13 +103,14 @@ build-kotlin-sdk:
 
 build-kotlin-sdk-linux:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
-	cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin --out-dir sdks/kotlin/_internal
+	cargo run --bin uniffi-bindgen generate --library target/release-unstripped/libpayment_plan_uniffi.so --language kotlin  --config ./uniffi.toml --out-dir sdks/kotlin/src/main/kotlin
+	sed -i 's/\bpublic\b/internal/g; s/\bdata class\b/internal data class/g; s/\bfun `/internal fun `/g' ./sdks/kotlin/src/main/kotlin/com/parceladolara/paymentplan/internal/payment_plan_uniffi.kt
 	mkdir -p sdks/kotlin/src/main/resources/native/linux
 	cp target/release-unstripped/libpayment_plan_uniffi.so sdks/kotlin/src/main/resources/native/linux/libpayment_plan_uniffi.so
 
 build-kotlin-sdk-windows:
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
-	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll --language kotlin --out-dir sdks/kotlin/_internal
+	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll --language kotlin --out-dir sdks/kotlin/src/main/kotlin
 	mkdir -p sdks/kotlin/src/main/resources/native/windows
 	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/src/main/resources/native/windows/payment_plan_uniffi.dll
 

@@ -149,3 +149,27 @@ jobs:
           cd sdks/php
           composer install --no-interaction --prefer-dist
           composer test
+
+  run-kotlin-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "jetbrains"
+          java-version: "17"
+      - name: Run Kotlin tests
+        run: cd sdks/kotlin && ./gradlew test
+
+  run-kotlin-tests-win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "jetbrains"
+          java-version: "17"
+      - name: Run Kotlin tests
+        run: cd sdks/kotlin && ./gradlew test

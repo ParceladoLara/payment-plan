@@ -3,14 +3,14 @@ use std::time::SystemTime;
 use chrono::{DateTime, NaiveDateTime, Utc};
 
 #[derive(uniffi::Record)]
-pub struct Invoice {
+pub struct InternalInvoice {
     pub accumulated_days: i64,
     pub factor: f64,
     pub accumulated_factor: f64,
     pub due_date: SystemTime,
 }
 
-impl From<core_payment_plan::Invoice> for Invoice {
+impl From<core_payment_plan::Invoice> for InternalInvoice {
     fn from(value: core_payment_plan::Invoice) -> Self {
         let due_date: NaiveDateTime = value.due_date.into();
         let due_date: DateTime<Utc> = DateTime::from_naive_utc_and_offset(due_date, Utc);
@@ -28,7 +28,7 @@ impl From<core_payment_plan::Invoice> for Invoice {
 }
 
 #[derive(uniffi::Record)]
-pub struct Response {
+pub struct InternalResponse {
     pub installment: u32,
     pub due_date: SystemTime,
     pub disbursement_date: SystemTime,
@@ -62,10 +62,10 @@ pub struct Response {
     pub pre_disbursement_amount: f64,
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
-    pub invoices: Vec<Invoice>,
+    pub invoices: Vec<InternalInvoice>,
 }
 
-impl From<core_payment_plan::Response> for Response {
+impl From<core_payment_plan::Response> for InternalResponse {
     fn from(value: core_payment_plan::Response) -> Self {
         let disbursement_date: NaiveDateTime = value.disbursement_date.into();
         let due_date: NaiveDateTime = value.due_date.into();
@@ -121,15 +121,15 @@ impl From<core_payment_plan::Response> for Response {
 }
 
 #[derive(uniffi::Record)]
-pub struct DownPaymentResponse {
+pub struct InternalDownPaymentResponse {
     pub installment_amount: f64, // The installment amount for the down payment
     pub total_amount: f64,       // The total amount for the down payment
     pub installment_quantity: u32, // The number of installments for the down payment
     pub first_payment_date: SystemTime, // The first payment date for the down payment
-    pub plans: Vec<Response>,    // The payment plans available for the down payment
+    pub plans: Vec<InternalResponse>, // The payment plans available for the down payment
 }
 
-impl From<core_payment_plan::DownPaymentResponse> for DownPaymentResponse {
+impl From<core_payment_plan::DownPaymentResponse> for InternalDownPaymentResponse {
     fn from(value: core_payment_plan::DownPaymentResponse) -> Self {
         let first_payment_date: NaiveDateTime = value.first_payment_date.into();
         let first_payment_date: DateTime<Utc> =
