@@ -6,11 +6,11 @@ import (
 	"github.com/ParceladoLara/payment-plan-go-sdk/v3/internal/payment_plan_uniffi"
 )
 
-type Invoice = payment_plan_uniffi.Invoice
-type Params = payment_plan_uniffi.Params
-type Response = payment_plan_uniffi.Response
-type DownPaymentParams = payment_plan_uniffi.DownPaymentParams
-type DownPaymentResponse = payment_plan_uniffi.DownPaymentResponse
+type Invoice = payment_plan_uniffi.InternalInvoice
+type Params = payment_plan_uniffi.InternalParams
+type Response = payment_plan_uniffi.InternalResponse
+type DownPaymentParams = payment_plan_uniffi.InternalDownPaymentParams
+type DownPaymentResponse = payment_plan_uniffi.InternalDownPaymentResponse
 
 func CalculatePaymentPlan(params Params) ([]Response, error) {
 	response, err := payment_plan_uniffi.CalculatePaymentPlan(params)

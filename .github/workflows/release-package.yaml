@@ -374,7 +374,6 @@ jobs:
       - name: Copy Kotlin SDK to the public repository
         run: |
           cp -r sdks/kotlin/src/* public-repo/src/
-          cp -r sdks/kotlin/_internal/* public-repo/_internal/
           cp sdks/kotlin/build.gradle.kts public-repo/
           cp sdks/kotlin/gradle.properties public-repo/ || true
           cp sdks/kotlin/settings.gradle.kts public-repo/

@@ -354,7 +354,7 @@ func uniffiCheckChecksums() {
 		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
 			return C.uniffi_payment_plan_uniffi_checksum_func_calculate_down_payment_plan()
 		})
-		if checksum != 327 {
+		if checksum != 17012 {
 			// If this happens try cleaning and rebuilding your project
 			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_calculate_down_payment_plan: UniFFI API checksum mismatch")
 		}
@@ -363,7 +363,7 @@ func uniffiCheckChecksums() {
 		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
 			return C.uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan()
 		})
-		if checksum != 58298 {
+		if checksum != 32631 {
 			// If this happens try cleaning and rebuilding your project
 			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan: UniFFI API checksum mismatch")
 		}
@@ -614,33 +614,33 @@ type FfiDestroyerTimestamp struct{}
 
 func (FfiDestroyerTimestamp) Destroy(_ time.Time) {}
 
-type DownPaymentParams struct {
-	Params               Params
+type InternalDownPaymentParams struct {
+	Params               InternalParams
 	RequestedAmount      float64
 	MinInstallmentAmount float64
 	FirstPaymentDate     time.Time
 	Installments         uint32
 }
 
-func (r *DownPaymentParams) Destroy() {
-	FfiDestroyerParams{}.Destroy(r.Params)
+func (r *InternalDownPaymentParams) Destroy() {
+	FfiDestroyerInternalParams{}.Destroy(r.Params)
 	FfiDestroyerFloat64{}.Destroy(r.RequestedAmount)
 	FfiDestroyerFloat64{}.Destroy(r.MinInstallmentAmount)
 	FfiDestroyerTimestamp{}.Destroy(r.FirstPaymentDate)
 	FfiDestroyerUint32{}.Destroy(r.Installments)
 }
 
-type FfiConverterDownPaymentParams struct{}
+type FfiConverterInternalDownPaymentParams struct{}
 
-var FfiConverterDownPaymentParamsINSTANCE = FfiConverterDownPaymentParams{}
+var FfiConverterInternalDownPaymentParamsINSTANCE = FfiConverterInternalDownPaymentParams{}
 
-func (c FfiConverterDownPaymentParams) Lift(rb RustBufferI) DownPaymentParams {
-	return LiftFromRustBuffer[DownPaymentParams](c, rb)
+func (c FfiConverterInternalDownPaymentParams) Lift(rb RustBufferI) InternalDownPaymentParams {
+	return LiftFromRustBuffer[InternalDownPaymentParams](c, rb)
 }
 
-func (c FfiConverterDownPaymentParams) Read(reader io.Reader) DownPaymentParams {
-	return DownPaymentParams{
-		FfiConverterParamsINSTANCE.Read(reader),
+func (c FfiConverterInternalDownPaymentParams) Read(reader io.Reader) InternalDownPaymentParams {
+	return InternalDownPaymentParams{
+		FfiConverterInternalParamsINSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
@@ -648,100 +648,100 @@ func (c FfiConverterDownPaymentParams) Read(reader io.Reader) DownPaymentParams 
 	}
 }
 
-func (c FfiConverterDownPaymentParams) Lower(value DownPaymentParams) C.RustBuffer {
-	return LowerIntoRustBuffer[DownPaymentParams](c, value)
+func (c FfiConverterInternalDownPaymentParams) Lower(value InternalDownPaymentParams) C.RustBuffer {
+	return LowerIntoRustBuffer[InternalDownPaymentParams](c, value)
 }
 
-func (c FfiConverterDownPaymentParams) Write(writer io.Writer, value DownPaymentParams) {
-	FfiConverterParamsINSTANCE.Write(writer, value.Params)
+func (c FfiConverterInternalDownPaymentParams) Write(writer io.Writer, value InternalDownPaymentParams) {
+	FfiConverterInternalParamsINSTANCE.Write(writer, value.Params)
 	FfiConverterFloat64INSTANCE.Write(writer, value.RequestedAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.MinInstallmentAmount)
 	FfiConverterTimestampINSTANCE.Write(writer, value.FirstPaymentDate)
 	FfiConverterUint32INSTANCE.Write(writer, value.Installments)
 }
 
-type FfiDestroyerDownPaymentParams struct{}
+type FfiDestroyerInternalDownPaymentParams struct{}
 
-func (_ FfiDestroyerDownPaymentParams) Destroy(value DownPaymentParams) {
+func (_ FfiDestroyerInternalDownPaymentParams) Destroy(value InternalDownPaymentParams) {
 	value.Destroy()
 }
 
-type DownPaymentResponse struct {
+type InternalDownPaymentResponse struct {
 	InstallmentAmount   float64
 	TotalAmount         float64
 	InstallmentQuantity uint32
 	FirstPaymentDate    time.Time
-	Plans               []Response
+	Plans               []InternalResponse
 }
 
-func (r *DownPaymentResponse) Destroy() {
+func (r *InternalDownPaymentResponse) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.InstallmentAmount)
 	FfiDestroyerFloat64{}.Destroy(r.TotalAmount)
 	FfiDestroyerUint32{}.Destroy(r.InstallmentQuantity)
 	FfiDestroyerTimestamp{}.Destroy(r.FirstPaymentDate)
-	FfiDestroyerSequenceResponse{}.Destroy(r.Plans)
+	FfiDestroyerSequenceInternalResponse{}.Destroy(r.Plans)
 }
 
-type FfiConverterDownPaymentResponse struct{}
+type FfiConverterInternalDownPaymentResponse struct{}
 
-var FfiConverterDownPaymentResponseINSTANCE = FfiConverterDownPaymentResponse{}
+var FfiConverterInternalDownPaymentResponseINSTANCE = FfiConverterInternalDownPaymentResponse{}
 
-func (c FfiConverterDownPaymentResponse) Lift(rb RustBufferI) DownPaymentResponse {
-	return LiftFromRustBuffer[DownPaymentResponse](c, rb)
+func (c FfiConverterInternalDownPaymentResponse) Lift(rb RustBufferI) InternalDownPaymentResponse {
+	return LiftFromRustBuffer[InternalDownPaymentResponse](c, rb)
 }
 
-func (c FfiConverterDownPaymentResponse) Read(reader io.Reader) DownPaymentResponse {
-	return DownPaymentResponse{
+func (c FfiConverterInternalDownPaymentResponse) Read(reader io.Reader) InternalDownPaymentResponse {
+	return InternalDownPaymentResponse{
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterUint32INSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
-		FfiConverterSequenceResponseINSTANCE.Read(reader),
+		FfiConverterSequenceInternalResponseINSTANCE.Read(reader),
 	}
 }
 
-func (c FfiConverterDownPaymentResponse) Lower(value DownPaymentResponse) C.RustBuffer {
-	return LowerIntoRustBuffer[DownPaymentResponse](c, value)
+func (c FfiConverterInternalDownPaymentResponse) Lower(value InternalDownPaymentResponse) C.RustBuffer {
+	return LowerIntoRustBuffer[InternalDownPaymentResponse](c, value)
 }
 
-func (c FfiConverterDownPaymentResponse) Write(writer io.Writer, value DownPaymentResponse) {
+func (c FfiConverterInternalDownPaymentResponse) Write(writer io.Writer, value InternalDownPaymentResponse) {
 	FfiConverterFloat64INSTANCE.Write(writer, value.InstallmentAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.TotalAmount)
 	FfiConverterUint32INSTANCE.Write(writer, value.InstallmentQuantity)
 	FfiConverterTimestampINSTANCE.Write(writer, value.FirstPaymentDate)
-	FfiConverterSequenceResponseINSTANCE.Write(writer, value.Plans)
+	FfiConverterSequenceInternalResponseINSTANCE.Write(writer, value.Plans)
 }
 
-type FfiDestroyerDownPaymentResponse struct{}
+type FfiDestroyerInternalDownPaymentResponse struct{}
 
-func (_ FfiDestroyerDownPaymentResponse) Destroy(value DownPaymentResponse) {
+func (_ FfiDestroyerInternalDownPaymentResponse) Destroy(value InternalDownPaymentResponse) {
 	value.Destroy()
 }
 
-type Invoice struct {
+type InternalInvoice struct {
 	AccumulatedDays   int64
 	Factor            float64
 	AccumulatedFactor float64
 	DueDate           time.Time
 }
 
-func (r *Invoice) Destroy() {
+func (r *InternalInvoice) Destroy() {
 	FfiDestroyerInt64{}.Destroy(r.AccumulatedDays)
 	FfiDestroyerFloat64{}.Destroy(r.Factor)
 	FfiDestroyerFloat64{}.Destroy(r.AccumulatedFactor)
 	FfiDestroyerTimestamp{}.Destroy(r.DueDate)
 }
 
-type FfiConverterInvoice struct{}
+type FfiConverterInternalInvoice struct{}
 
-var FfiConverterInvoiceINSTANCE = FfiConverterInvoice{}
+var FfiConverterInternalInvoiceINSTANCE = FfiConverterInternalInvoice{}
 
-func (c FfiConverterInvoice) Lift(rb RustBufferI) Invoice {
-	return LiftFromRustBuffer[Invoice](c, rb)
+func (c FfiConverterInternalInvoice) Lift(rb RustBufferI) InternalInvoice {
+	return LiftFromRustBuffer[InternalInvoice](c, rb)
 }
 
-func (c FfiConverterInvoice) Read(reader io.Reader) Invoice {
-	return Invoice{
+func (c FfiConverterInternalInvoice) Read(reader io.Reader) InternalInvoice {
+	return InternalInvoice{
 		FfiConverterInt64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
@@ -749,24 +749,24 @@ func (c FfiConverterInvoice) Read(reader io.Reader) Invoice {
 	}
 }
 
-func (c FfiConverterInvoice) Lower(value Invoice) C.RustBuffer {
-	return LowerIntoRustBuffer[Invoice](c, value)
+func (c FfiConverterInternalInvoice) Lower(value InternalInvoice) C.RustBuffer {
+	return LowerIntoRustBuffer[InternalInvoice](c, value)
 }
 
-func (c FfiConverterInvoice) Write(writer io.Writer, value Invoice) {
+func (c FfiConverterInternalInvoice) Write(writer io.Writer, value InternalInvoice) {
 	FfiConverterInt64INSTANCE.Write(writer, value.AccumulatedDays)
 	FfiConverterFloat64INSTANCE.Write(writer, value.Factor)
 	FfiConverterFloat64INSTANCE.Write(writer, value.AccumulatedFactor)
 	FfiConverterTimestampINSTANCE.Write(writer, value.DueDate)
 }
 
-type FfiDestroyerInvoice struct{}
+type FfiDestroyerInternalInvoice struct{}
 
-func (_ FfiDestroyerInvoice) Destroy(value Invoice) {
+func (_ FfiDestroyerInternalInvoice) Destroy(value InternalInvoice) {
 	value.Destroy()
 }
 
-type Params struct {
+type InternalParams struct {
 	RequestedAmount                float64
 	FirstPaymentDate               time.Time
 	DisbursementDate               time.Time
@@ -782,7 +782,7 @@ type Params struct {
 	DisbursementOnlyOnBusinessDays bool
 }
 
-func (r *Params) Destroy() {
+func (r *InternalParams) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.RequestedAmount)
 	FfiDestroyerTimestamp{}.Destroy(r.FirstPaymentDate)
 	FfiDestroyerTimestamp{}.Destroy(r.DisbursementDate)
@@ -798,16 +798,16 @@ func (r *Params) Destroy() {
 	FfiDestroyerBool{}.Destroy(r.DisbursementOnlyOnBusinessDays)
 }
 
-type FfiConverterParams struct{}
+type FfiConverterInternalParams struct{}
 
-var FfiConverterParamsINSTANCE = FfiConverterParams{}
+var FfiConverterInternalParamsINSTANCE = FfiConverterInternalParams{}
 
-func (c FfiConverterParams) Lift(rb RustBufferI) Params {
-	return LiftFromRustBuffer[Params](c, rb)
+func (c FfiConverterInternalParams) Lift(rb RustBufferI) InternalParams {
+	return LiftFromRustBuffer[InternalParams](c, rb)
 }
 
-func (c FfiConverterParams) Read(reader io.Reader) Params {
-	return Params{
+func (c FfiConverterInternalParams) Read(reader io.Reader) InternalParams {
+	return InternalParams{
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
@@ -824,11 +824,11 @@ func (c FfiConverterParams) Read(reader io.Reader) Params {
 	}
 }
 
-func (c FfiConverterParams) Lower(value Params) C.RustBuffer {
-	return LowerIntoRustBuffer[Params](c, value)
+func (c FfiConverterInternalParams) Lower(value InternalParams) C.RustBuffer {
+	return LowerIntoRustBuffer[InternalParams](c, value)
 }
 
-func (c FfiConverterParams) Write(writer io.Writer, value Params) {
+func (c FfiConverterInternalParams) Write(writer io.Writer, value InternalParams) {
 	FfiConverterFloat64INSTANCE.Write(writer, value.RequestedAmount)
 	FfiConverterTimestampINSTANCE.Write(writer, value.FirstPaymentDate)
 	FfiConverterTimestampINSTANCE.Write(writer, value.DisbursementDate)
@@ -844,13 +844,13 @@ func (c FfiConverterParams) Write(writer io.Writer, value Params) {
 	FfiConverterBoolINSTANCE.Write(writer, value.DisbursementOnlyOnBusinessDays)
 }
 
-type FfiDestroyerParams struct{}
+type FfiDestroyerInternalParams struct{}
 
-func (_ FfiDestroyerParams) Destroy(value Params) {
+func (_ FfiDestroyerInternalParams) Destroy(value InternalParams) {
 	value.Destroy()
 }
 
-type Response struct {
+type InternalResponse struct {
 	Installment                              uint32
 	DueDate                                  time.Time
 	DisbursementDate                         time.Time
@@ -884,10 +884,10 @@ type Response struct {
 	PreDisbursementAmount                    float64
 	PaidTotalIof                             float64
 	PaidContractAmount                       float64
-	Invoices                                 []Invoice
+	Invoices                                 []InternalInvoice
 }
 
-func (r *Response) Destroy() {
+func (r *InternalResponse) Destroy() {
 	FfiDestroyerUint32{}.Destroy(r.Installment)
 	FfiDestroyerTimestamp{}.Destroy(r.DueDate)
 	FfiDestroyerTimestamp{}.Destroy(r.DisbursementDate)
@@ -921,19 +921,19 @@ func (r *Response) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.PreDisbursementAmount)
 	FfiDestroyerFloat64{}.Destroy(r.PaidTotalIof)
 	FfiDestroyerFloat64{}.Destroy(r.PaidContractAmount)
-	FfiDestroyerSequenceInvoice{}.Destroy(r.Invoices)
+	FfiDestroyerSequenceInternalInvoice{}.Destroy(r.Invoices)
 }
 
-type FfiConverterResponse struct{}
+type FfiConverterInternalResponse struct{}
 
-var FfiConverterResponseINSTANCE = FfiConverterResponse{}
+var FfiConverterInternalResponseINSTANCE = FfiConverterInternalResponse{}
 
-func (c FfiConverterResponse) Lift(rb RustBufferI) Response {
-	return LiftFromRustBuffer[Response](c, rb)
+func (c FfiConverterInternalResponse) Lift(rb RustBufferI) InternalResponse {
+	return LiftFromRustBuffer[InternalResponse](c, rb)
 }
 
-func (c FfiConverterResponse) Read(reader io.Reader) Response {
-	return Response{
+func (c FfiConverterInternalResponse) Read(reader io.Reader) InternalResponse {
+	return InternalResponse{
 		FfiConverterUint32INSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
@@ -967,15 +967,15 @@ func (c FfiConverterResponse) Read(reader io.Reader) Response {
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
-		FfiConverterSequenceInvoiceINSTANCE.Read(reader),
+		FfiConverterSequenceInternalInvoiceINSTANCE.Read(reader),
 	}
 }
 
-func (c FfiConverterResponse) Lower(value Response) C.RustBuffer {
-	return LowerIntoRustBuffer[Response](c, value)
+func (c FfiConverterInternalResponse) Lower(value InternalResponse) C.RustBuffer {
+	return LowerIntoRustBuffer[InternalResponse](c, value)
 }
 
-func (c FfiConverterResponse) Write(writer io.Writer, value Response) {
+func (c FfiConverterInternalResponse) Write(writer io.Writer, value InternalResponse) {
 	FfiConverterUint32INSTANCE.Write(writer, value.Installment)
 	FfiConverterTimestampINSTANCE.Write(writer, value.DueDate)
 	FfiConverterTimestampINSTANCE.Write(writer, value.DisbursementDate)
@@ -1009,12 +1009,12 @@ func (c FfiConverterResponse) Write(writer io.Writer, value Response) {
 	FfiConverterFloat64INSTANCE.Write(writer, value.PreDisbursementAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.PaidTotalIof)
 	FfiConverterFloat64INSTANCE.Write(writer, value.PaidContractAmount)
-	FfiConverterSequenceInvoiceINSTANCE.Write(writer, value.Invoices)
+	FfiConverterSequenceInternalInvoiceINSTANCE.Write(writer, value.Invoices)
 }
 
-type FfiDestroyerResponse struct{}
+type FfiDestroyerInternalResponse struct{}
 
-func (_ FfiDestroyerResponse) Destroy(value Response) {
+func (_ FfiDestroyerInternalResponse) Destroy(value InternalResponse) {
 	value.Destroy()
 }
 
@@ -1175,160 +1175,160 @@ func (FfiDestroyerSequenceTimestamp) Destroy(sequence []time.Time) {
 	}
 }
 
-type FfiConverterSequenceDownPaymentResponse struct{}
+type FfiConverterSequenceInternalDownPaymentResponse struct{}
 
-var FfiConverterSequenceDownPaymentResponseINSTANCE = FfiConverterSequenceDownPaymentResponse{}
+var FfiConverterSequenceInternalDownPaymentResponseINSTANCE = FfiConverterSequenceInternalDownPaymentResponse{}
 
-func (c FfiConverterSequenceDownPaymentResponse) Lift(rb RustBufferI) []DownPaymentResponse {
-	return LiftFromRustBuffer[[]DownPaymentResponse](c, rb)
+func (c FfiConverterSequenceInternalDownPaymentResponse) Lift(rb RustBufferI) []InternalDownPaymentResponse {
+	return LiftFromRustBuffer[[]InternalDownPaymentResponse](c, rb)
 }
 
-func (c FfiConverterSequenceDownPaymentResponse) Read(reader io.Reader) []DownPaymentResponse {
+func (c FfiConverterSequenceInternalDownPaymentResponse) Read(reader io.Reader) []InternalDownPaymentResponse {
 	length := readInt32(reader)
 	if length == 0 {
 		return nil
 	}
-	result := make([]DownPaymentResponse, 0, length)
+	result := make([]InternalDownPaymentResponse, 0, length)
 	for i := int32(0); i < length; i++ {
-		result = append(result, FfiConverterDownPaymentResponseINSTANCE.Read(reader))
+		result = append(result, FfiConverterInternalDownPaymentResponseINSTANCE.Read(reader))
 	}
 	return result
 }
 
-func (c FfiConverterSequenceDownPaymentResponse) Lower(value []DownPaymentResponse) C.RustBuffer {
-	return LowerIntoRustBuffer[[]DownPaymentResponse](c, value)
+func (c FfiConverterSequenceInternalDownPaymentResponse) Lower(value []InternalDownPaymentResponse) C.RustBuffer {
+	return LowerIntoRustBuffer[[]InternalDownPaymentResponse](c, value)
 }
 
-func (c FfiConverterSequenceDownPaymentResponse) Write(writer io.Writer, value []DownPaymentResponse) {
+func (c FfiConverterSequenceInternalDownPaymentResponse) Write(writer io.Writer, value []InternalDownPaymentResponse) {
 	if len(value) > math.MaxInt32 {
-		panic("[]DownPaymentResponse is too large to fit into Int32")
+		panic("[]InternalDownPaymentResponse is too large to fit into Int32")
 	}
 
 	writeInt32(writer, int32(len(value)))
 	for _, item := range value {
-		FfiConverterDownPaymentResponseINSTANCE.Write(writer, item)
+		FfiConverterInternalDownPaymentResponseINSTANCE.Write(writer, item)
 	}
 }
 
-type FfiDestroyerSequenceDownPaymentResponse struct{}
+type FfiDestroyerSequenceInternalDownPaymentResponse struct{}
 
-func (FfiDestroyerSequenceDownPaymentResponse) Destroy(sequence []DownPaymentResponse) {
+func (FfiDestroyerSequenceInternalDownPaymentResponse) Destroy(sequence []InternalDownPaymentResponse) {
 	for _, value := range sequence {
-		FfiDestroyerDownPaymentResponse{}.Destroy(value)
+		FfiDestroyerInternalDownPaymentResponse{}.Destroy(value)
 	}
 }
 
-type FfiConverterSequenceInvoice struct{}
+type FfiConverterSequenceInternalInvoice struct{}
 
-var FfiConverterSequenceInvoiceINSTANCE = FfiConverterSequenceInvoice{}
+var FfiConverterSequenceInternalInvoiceINSTANCE = FfiConverterSequenceInternalInvoice{}
 
-func (c FfiConverterSequenceInvoice) Lift(rb RustBufferI) []Invoice {
-	return LiftFromRustBuffer[[]Invoice](c, rb)
+func (c FfiConverterSequenceInternalInvoice) Lift(rb RustBufferI) []InternalInvoice {
+	return LiftFromRustBuffer[[]InternalInvoice](c, rb)
 }
 
-func (c FfiConverterSequenceInvoice) Read(reader io.Reader) []Invoice {
+func (c FfiConverterSequenceInternalInvoice) Read(reader io.Reader) []InternalInvoice {
 	length := readInt32(reader)
 	if length == 0 {
 		return nil
 	}
-	result := make([]Invoice, 0, length)
+	result := make([]InternalInvoice, 0, length)
 	for i := int32(0); i < length; i++ {
-		result = append(result, FfiConverterInvoiceINSTANCE.Read(reader))
+		result = append(result, FfiConverterInternalInvoiceINSTANCE.Read(reader))
 	}
 	return result
 }
 
-func (c FfiConverterSequenceInvoice) Lower(value []Invoice) C.RustBuffer {
-	return LowerIntoRustBuffer[[]Invoice](c, value)
+func (c FfiConverterSequenceInternalInvoice) Lower(value []InternalInvoice) C.RustBuffer {
+	return LowerIntoRustBuffer[[]InternalInvoice](c, value)
 }
 
-func (c FfiConverterSequenceInvoice) Write(writer io.Writer, value []Invoice) {
+func (c FfiConverterSequenceInternalInvoice) Write(writer io.Writer, value []InternalInvoice) {
 	if len(value) > math.MaxInt32 {
-		panic("[]Invoice is too large to fit into Int32")
+		panic("[]InternalInvoice is too large to fit into Int32")
 	}
 
 	writeInt32(writer, int32(len(value)))
 	for _, item := range value {
-		FfiConverterInvoiceINSTANCE.Write(writer, item)
+		FfiConverterInternalInvoiceINSTANCE.Write(writer, item)
 	}
 }
 
-type FfiDestroyerSequenceInvoice struct{}
+type FfiDestroyerSequenceInternalInvoice struct{}
 
-func (FfiDestroyerSequenceInvoice) Destroy(sequence []Invoice) {
+func (FfiDestroyerSequenceInternalInvoice) Destroy(sequence []InternalInvoice) {
 	for _, value := range sequence {
-		FfiDestroyerInvoice{}.Destroy(value)
+		FfiDestroyerInternalInvoice{}.Destroy(value)
 	}
 }
 
-type FfiConverterSequenceResponse struct{}
+type FfiConverterSequenceInternalResponse struct{}
 
-var FfiConverterSequenceResponseINSTANCE = FfiConverterSequenceResponse{}
+var FfiConverterSequenceInternalResponseINSTANCE = FfiConverterSequenceInternalResponse{}
 
-func (c FfiConverterSequenceResponse) Lift(rb RustBufferI) []Response {
-	return LiftFromRustBuffer[[]Response](c, rb)
+func (c FfiConverterSequenceInternalResponse) Lift(rb RustBufferI) []InternalResponse {
+	return LiftFromRustBuffer[[]InternalResponse](c, rb)
 }
 
-func (c FfiConverterSequenceResponse) Read(reader io.Reader) []Response {
+func (c FfiConverterSequenceInternalResponse) Read(reader io.Reader) []InternalResponse {
 	length := readInt32(reader)
 	if length == 0 {
 		return nil
 	}
-	result := make([]Response, 0, length)
+	result := make([]InternalResponse, 0, length)
 	for i := int32(0); i < length; i++ {
-		result = append(result, FfiConverterResponseINSTANCE.Read(reader))
+		result = append(result, FfiConverterInternalResponseINSTANCE.Read(reader))
 	}
 	return result
 }
 
-func (c FfiConverterSequenceResponse) Lower(value []Response) C.RustBuffer {
-	return LowerIntoRustBuffer[[]Response](c, value)
+func (c FfiConverterSequenceInternalResponse) Lower(value []InternalResponse) C.RustBuffer {
+	return LowerIntoRustBuffer[[]InternalResponse](c, value)
 }
 
-func (c FfiConverterSequenceResponse) Write(writer io.Writer, value []Response) {
+func (c FfiConverterSequenceInternalResponse) Write(writer io.Writer, value []InternalResponse) {
 	if len(value) > math.MaxInt32 {
-		panic("[]Response is too large to fit into Int32")
+		panic("[]InternalResponse is too large to fit into Int32")
 	}
 
 	writeInt32(writer, int32(len(value)))
 	for _, item := range value {
-		FfiConverterResponseINSTANCE.Write(writer, item)
+		FfiConverterInternalResponseINSTANCE.Write(writer, item)
 	}
 }
 
-type FfiDestroyerSequenceResponse struct{}
+type FfiDestroyerSequenceInternalResponse struct{}
 
-func (FfiDestroyerSequenceResponse) Destroy(sequence []Response) {
+func (FfiDestroyerSequenceInternalResponse) Destroy(sequence []InternalResponse) {
 	for _, value := range sequence {
-		FfiDestroyerResponse{}.Destroy(value)
+		FfiDestroyerInternalResponse{}.Destroy(value)
 	}
 }
 
-func CalculateDownPaymentPlan(params DownPaymentParams) ([]DownPaymentResponse, error) {
+func CalculateDownPaymentPlan(params InternalDownPaymentParams) ([]InternalDownPaymentResponse, error) {
 	_uniffiRV, _uniffiErr := rustCallWithError[Error](FfiConverterError{}, func(_uniffiStatus *C.RustCallStatus) RustBufferI {
 		return GoRustBuffer{
-			inner: C.uniffi_payment_plan_uniffi_fn_func_calculate_down_payment_plan(FfiConverterDownPaymentParamsINSTANCE.Lower(params), _uniffiStatus),
+			inner: C.uniffi_payment_plan_uniffi_fn_func_calculate_down_payment_plan(FfiConverterInternalDownPaymentParamsINSTANCE.Lower(params), _uniffiStatus),
 		}
 	})
 	if _uniffiErr != nil {
-		var _uniffiDefaultValue []DownPaymentResponse
+		var _uniffiDefaultValue []InternalDownPaymentResponse
 		return _uniffiDefaultValue, _uniffiErr
 	} else {
-		return FfiConverterSequenceDownPaymentResponseINSTANCE.Lift(_uniffiRV), nil
+		return FfiConverterSequenceInternalDownPaymentResponseINSTANCE.Lift(_uniffiRV), nil
 	}
 }
 
-func CalculatePaymentPlan(params Params) ([]Response, error) {
+func CalculatePaymentPlan(params InternalParams) ([]InternalResponse, error) {
 	_uniffiRV, _uniffiErr := rustCallWithError[Error](FfiConverterError{}, func(_uniffiStatus *C.RustCallStatus) RustBufferI {
 		return GoRustBuffer{
-			inner: C.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan(FfiConverterParamsINSTANCE.Lower(params), _uniffiStatus),
+			inner: C.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan(FfiConverterInternalParamsINSTANCE.Lower(params), _uniffiStatus),
 		}
 	})
 	if _uniffiErr != nil {
-		var _uniffiDefaultValue []Response
+		var _uniffiDefaultValue []InternalResponse
 		return _uniffiDefaultValue, _uniffiErr
 	} else {
-		return FfiConverterSequenceResponseINSTANCE.Lift(_uniffiRV), nil
+		return FfiConverterSequenceInternalResponseINSTANCE.Lift(_uniffiRV), nil
 	}
 }
 

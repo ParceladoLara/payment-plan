@@ -460,9 +460,9 @@ def _uniffi_check_contract_api_version(lib):
         raise InternalError("UniFFI contract version mismatch: try cleaning and rebuilding your project")
 
 def _uniffi_check_api_checksums(lib):
-    if lib.uniffi_payment_plan_uniffi_checksum_func_calculate_down_payment_plan() != 327:
+    if lib.uniffi_payment_plan_uniffi_checksum_func_calculate_down_payment_plan() != 17012:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
-    if lib.uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan() != 58298:
+    if lib.uniffi_payment_plan_uniffi_checksum_func_calculate_payment_plan() != 32631:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range() != 5651:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
@@ -1035,13 +1035,13 @@ class _UniffiConverterTimestamp(_UniffiConverterRustBuffer):
         buf.write_u32(nanoseconds)
 
 
-class DownPaymentParams:
-    params: "Params"
+class InternalDownPaymentParams:
+    params: "InternalParams"
     requested_amount: "float"
     min_installment_amount: "float"
     first_payment_date: "Timestamp"
     installments: "int"
-    def __init__(self, *, params: "Params", requested_amount: "float", min_installment_amount: "float", first_payment_date: "Timestamp", installments: "int"):
+    def __init__(self, *, params: "InternalParams", requested_amount: "float", min_installment_amount: "float", first_payment_date: "Timestamp", installments: "int"):
         self.params = params
         self.requested_amount = requested_amount
         self.min_installment_amount = min_installment_amount
@@ -1049,7 +1049,7 @@ class DownPaymentParams:
         self.installments = installments
 
     def __str__(self):
-        return "DownPaymentParams(params={}, requested_amount={}, min_installment_amount={}, first_payment_date={}, installments={})".format(self.params, self.requested_amount, self.min_installment_amount, self.first_payment_date, self.installments)
+        return "InternalDownPaymentParams(params={}, requested_amount={}, min_installment_amount={}, first_payment_date={}, installments={})".format(self.params, self.requested_amount, self.min_installment_amount, self.first_payment_date, self.installments)
 
     def __eq__(self, other):
         if self.params != other.params:
@@ -1064,11 +1064,11 @@ class DownPaymentParams:
             return False
         return True
 
-class _UniffiConverterTypeDownPaymentParams(_UniffiConverterRustBuffer):
+class _UniffiConverterTypeInternalDownPaymentParams(_UniffiConverterRustBuffer):
     @staticmethod
     def read(buf):
-        return DownPaymentParams(
-            params=_UniffiConverterTypeParams.read(buf),
+        return InternalDownPaymentParams(
+            params=_UniffiConverterTypeInternalParams.read(buf),
             requested_amount=_UniffiConverterDouble.read(buf),
             min_installment_amount=_UniffiConverterDouble.read(buf),
             first_payment_date=_UniffiConverterTimestamp.read(buf),
@@ -1077,7 +1077,7 @@ class _UniffiConverterTypeDownPaymentParams(_UniffiConverterRustBuffer):
 
     @staticmethod
     def check_lower(value):
-        _UniffiConverterTypeParams.check_lower(value.params)
+        _UniffiConverterTypeInternalParams.check_lower(value.params)
         _UniffiConverterDouble.check_lower(value.requested_amount)
         _UniffiConverterDouble.check_lower(value.min_installment_amount)
         _UniffiConverterTimestamp.check_lower(value.first_payment_date)
@@ -1085,20 +1085,20 @@ class _UniffiConverterTypeDownPaymentParams(_UniffiConverterRustBuffer):
 
     @staticmethod
     def write(value, buf):
-        _UniffiConverterTypeParams.write(value.params, buf)
+        _UniffiConverterTypeInternalParams.write(value.params, buf)
         _UniffiConverterDouble.write(value.requested_amount, buf)
         _UniffiConverterDouble.write(value.min_installment_amount, buf)
         _UniffiConverterTimestamp.write(value.first_payment_date, buf)
         _UniffiConverterUInt32.write(value.installments, buf)
 
 
-class DownPaymentResponse:
+class InternalDownPaymentResponse:
     installment_amount: "float"
     total_amount: "float"
     installment_quantity: "int"
     first_payment_date: "Timestamp"
-    plans: "typing.List[Response]"
-    def __init__(self, *, installment_amount: "float", total_amount: "float", installment_quantity: "int", first_payment_date: "Timestamp", plans: "typing.List[Response]"):
+    plans: "typing.List[InternalResponse]"
+    def __init__(self, *, installment_amount: "float", total_amount: "float", installment_quantity: "int", first_payment_date: "Timestamp", plans: "typing.List[InternalResponse]"):
         self.installment_amount = installment_amount
         self.total_amount = total_amount
         self.installment_quantity = installment_quantity
@@ -1106,7 +1106,7 @@ class DownPaymentResponse:
         self.plans = plans
 
     def __str__(self):
-        return "DownPaymentResponse(installment_amount={}, total_amount={}, installment_quantity={}, first_payment_date={}, plans={})".format(self.installment_amount, self.total_amount, self.installment_quantity, self.first_payment_date, self.plans)
+        return "InternalDownPaymentResponse(installment_amount={}, total_amount={}, installment_quantity={}, first_payment_date={}, plans={})".format(self.installment_amount, self.total_amount, self.installment_quantity, self.first_payment_date, self.plans)
 
     def __eq__(self, other):
         if self.installment_amount != other.installment_amount:
@@ -1121,15 +1121,15 @@ class DownPaymentResponse:
             return False
         return True
 
-class _UniffiConverterTypeDownPaymentResponse(_UniffiConverterRustBuffer):
+class _UniffiConverterTypeInternalDownPaymentResponse(_UniffiConverterRustBuffer):
     @staticmethod
     def read(buf):
-        return DownPaymentResponse(
+        return InternalDownPaymentResponse(
             installment_amount=_UniffiConverterDouble.read(buf),
             total_amount=_UniffiConverterDouble.read(buf),
             installment_quantity=_UniffiConverterUInt32.read(buf),
             first_payment_date=_UniffiConverterTimestamp.read(buf),
-            plans=_UniffiConverterSequenceTypeResponse.read(buf),
+            plans=_UniffiConverterSequenceTypeInternalResponse.read(buf),
         )
 
     @staticmethod
@@ -1138,7 +1138,7 @@ class _UniffiConverterTypeDownPaymentResponse(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.check_lower(value.total_amount)
         _UniffiConverterUInt32.check_lower(value.installment_quantity)
         _UniffiConverterTimestamp.check_lower(value.first_payment_date)
-        _UniffiConverterSequenceTypeResponse.check_lower(value.plans)
+        _UniffiConverterSequenceTypeInternalResponse.check_lower(value.plans)
 
     @staticmethod
     def write(value, buf):
@@ -1146,10 +1146,10 @@ class _UniffiConverterTypeDownPaymentResponse(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.write(value.total_amount, buf)
         _UniffiConverterUInt32.write(value.installment_quantity, buf)
         _UniffiConverterTimestamp.write(value.first_payment_date, buf)
-        _UniffiConverterSequenceTypeResponse.write(value.plans, buf)
+        _UniffiConverterSequenceTypeInternalResponse.write(value.plans, buf)
 
 
-class Invoice:
+class InternalInvoice:
     accumulated_days: "int"
     factor: "float"
     accumulated_factor: "float"
@@ -1161,7 +1161,7 @@ class Invoice:
         self.due_date = due_date
 
     def __str__(self):
-        return "Invoice(accumulated_days={}, factor={}, accumulated_factor={}, due_date={})".format(self.accumulated_days, self.factor, self.accumulated_factor, self.due_date)
+        return "InternalInvoice(accumulated_days={}, factor={}, accumulated_factor={}, due_date={})".format(self.accumulated_days, self.factor, self.accumulated_factor, self.due_date)
 
     def __eq__(self, other):
         if self.accumulated_days != other.accumulated_days:
@@ -1174,10 +1174,10 @@ class Invoice:
             return False
         return True
 
-class _UniffiConverterTypeInvoice(_UniffiConverterRustBuffer):
+class _UniffiConverterTypeInternalInvoice(_UniffiConverterRustBuffer):
     @staticmethod
     def read(buf):
-        return Invoice(
+        return InternalInvoice(
             accumulated_days=_UniffiConverterInt64.read(buf),
             factor=_UniffiConverterDouble.read(buf),
             accumulated_factor=_UniffiConverterDouble.read(buf),
@@ -1199,7 +1199,7 @@ class _UniffiConverterTypeInvoice(_UniffiConverterRustBuffer):
         _UniffiConverterTimestamp.write(value.due_date, buf)
 
 
-class Params:
+class InternalParams:
     requested_amount: "float"
     first_payment_date: "Timestamp"
     disbursement_date: "Timestamp"
@@ -1229,7 +1229,7 @@ class Params:
         self.disbursement_only_on_business_days = disbursement_only_on_business_days
 
     def __str__(self):
-        return "Params(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days)
+        return "InternalParams(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days)
 
     def __eq__(self, other):
         if self.requested_amount != other.requested_amount:
@@ -1260,10 +1260,10 @@ class Params:
             return False
         return True
 
-class _UniffiConverterTypeParams(_UniffiConverterRustBuffer):
+class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
     @staticmethod
     def read(buf):
-        return Params(
+        return InternalParams(
             requested_amount=_UniffiConverterDouble.read(buf),
             first_payment_date=_UniffiConverterTimestamp.read(buf),
             disbursement_date=_UniffiConverterTimestamp.read(buf),
@@ -1312,7 +1312,7 @@ class _UniffiConverterTypeParams(_UniffiConverterRustBuffer):
         _UniffiConverterBool.write(value.disbursement_only_on_business_days, buf)
 
 
-class Response:
+class InternalResponse:
     installment: "int"
     due_date: "Timestamp"
     disbursement_date: "Timestamp"
@@ -1346,8 +1346,8 @@ class Response:
     pre_disbursement_amount: "float"
     paid_total_iof: "float"
     paid_contract_amount: "float"
-    invoices: "typing.List[Invoice]"
-    def __init__(self, *, installment: "int", due_date: "Timestamp", disbursement_date: "Timestamp", accumulated_days: "int", days_index: "float", accumulated_days_index: "float", interest_rate: "float", installment_amount: "float", installment_amount_without_tac: "float", total_amount: "float", debit_service: "float", customer_debit_service_amount: "float", customer_amount: "float", calculation_basis_for_effective_interest_rate: "float", merchant_debit_service_amount: "float", merchant_total_amount: "float", settled_to_merchant: "float", mdr_amount: "float", effective_interest_rate: "float", total_effective_cost: "float", eir_yearly: "float", tec_yearly: "float", eir_monthly: "float", tec_monthly: "float", total_iof: "float", contract_amount: "float", contract_amount_without_tac: "float", tac_amount: "float", iof_percentage: "float", overall_iof: "float", pre_disbursement_amount: "float", paid_total_iof: "float", paid_contract_amount: "float", invoices: "typing.List[Invoice]"):
+    invoices: "typing.List[InternalInvoice]"
+    def __init__(self, *, installment: "int", due_date: "Timestamp", disbursement_date: "Timestamp", accumulated_days: "int", days_index: "float", accumulated_days_index: "float", interest_rate: "float", installment_amount: "float", installment_amount_without_tac: "float", total_amount: "float", debit_service: "float", customer_debit_service_amount: "float", customer_amount: "float", calculation_basis_for_effective_interest_rate: "float", merchant_debit_service_amount: "float", merchant_total_amount: "float", settled_to_merchant: "float", mdr_amount: "float", effective_interest_rate: "float", total_effective_cost: "float", eir_yearly: "float", tec_yearly: "float", eir_monthly: "float", tec_monthly: "float", total_iof: "float", contract_amount: "float", contract_amount_without_tac: "float", tac_amount: "float", iof_percentage: "float", overall_iof: "float", pre_disbursement_amount: "float", paid_total_iof: "float", paid_contract_amount: "float", invoices: "typing.List[InternalInvoice]"):
         self.installment = installment
         self.due_date = due_date
         self.disbursement_date = disbursement_date
@@ -1384,7 +1384,7 @@ class Response:
         self.invoices = invoices
 
     def __str__(self):
-        return "Response(installment={}, due_date={}, disbursement_date={}, accumulated_days={}, days_index={}, accumulated_days_index={}, interest_rate={}, installment_amount={}, installment_amount_without_tac={}, total_amount={}, debit_service={}, customer_debit_service_amount={}, customer_amount={}, calculation_basis_for_effective_interest_rate={}, merchant_debit_service_amount={}, merchant_total_amount={}, settled_to_merchant={}, mdr_amount={}, effective_interest_rate={}, total_effective_cost={}, eir_yearly={}, tec_yearly={}, eir_monthly={}, tec_monthly={}, total_iof={}, contract_amount={}, contract_amount_without_tac={}, tac_amount={}, iof_percentage={}, overall_iof={}, pre_disbursement_amount={}, paid_total_iof={}, paid_contract_amount={}, invoices={})".format(self.installment, self.due_date, self.disbursement_date, self.accumulated_days, self.days_index, self.accumulated_days_index, self.interest_rate, self.installment_amount, self.installment_amount_without_tac, self.total_amount, self.debit_service, self.customer_debit_service_amount, self.customer_amount, self.calculation_basis_for_effective_interest_rate, self.merchant_debit_service_amount, self.merchant_total_amount, self.settled_to_merchant, self.mdr_amount, self.effective_interest_rate, self.total_effective_cost, self.eir_yearly, self.tec_yearly, self.eir_monthly, self.tec_monthly, self.total_iof, self.contract_amount, self.contract_amount_without_tac, self.tac_amount, self.iof_percentage, self.overall_iof, self.pre_disbursement_amount, self.paid_total_iof, self.paid_contract_amount, self.invoices)
+        return "InternalResponse(installment={}, due_date={}, disbursement_date={}, accumulated_days={}, days_index={}, accumulated_days_index={}, interest_rate={}, installment_amount={}, installment_amount_without_tac={}, total_amount={}, debit_service={}, customer_debit_service_amount={}, customer_amount={}, calculation_basis_for_effective_interest_rate={}, merchant_debit_service_amount={}, merchant_total_amount={}, settled_to_merchant={}, mdr_amount={}, effective_interest_rate={}, total_effective_cost={}, eir_yearly={}, tec_yearly={}, eir_monthly={}, tec_monthly={}, total_iof={}, contract_amount={}, contract_amount_without_tac={}, tac_amount={}, iof_percentage={}, overall_iof={}, pre_disbursement_amount={}, paid_total_iof={}, paid_contract_amount={}, invoices={})".format(self.installment, self.due_date, self.disbursement_date, self.accumulated_days, self.days_index, self.accumulated_days_index, self.interest_rate, self.installment_amount, self.installment_amount_without_tac, self.total_amount, self.debit_service, self.customer_debit_service_amount, self.customer_amount, self.calculation_basis_for_effective_interest_rate, self.merchant_debit_service_amount, self.merchant_total_amount, self.settled_to_merchant, self.mdr_amount, self.effective_interest_rate, self.total_effective_cost, self.eir_yearly, self.tec_yearly, self.eir_monthly, self.tec_monthly, self.total_iof, self.contract_amount, self.contract_amount_without_tac, self.tac_amount, self.iof_percentage, self.overall_iof, self.pre_disbursement_amount, self.paid_total_iof, self.paid_contract_amount, self.invoices)
 
     def __eq__(self, other):
         if self.installment != other.installment:
@@ -1457,10 +1457,10 @@ class Response:
             return False
         return True
 
-class _UniffiConverterTypeResponse(_UniffiConverterRustBuffer):
+class _UniffiConverterTypeInternalResponse(_UniffiConverterRustBuffer):
     @staticmethod
     def read(buf):
-        return Response(
+        return InternalResponse(
             installment=_UniffiConverterUInt32.read(buf),
             due_date=_UniffiConverterTimestamp.read(buf),
             disbursement_date=_UniffiConverterTimestamp.read(buf),
@@ -1494,7 +1494,7 @@ class _UniffiConverterTypeResponse(_UniffiConverterRustBuffer):
             pre_disbursement_amount=_UniffiConverterDouble.read(buf),
             paid_total_iof=_UniffiConverterDouble.read(buf),
             paid_contract_amount=_UniffiConverterDouble.read(buf),
-            invoices=_UniffiConverterSequenceTypeInvoice.read(buf),
+            invoices=_UniffiConverterSequenceTypeInternalInvoice.read(buf),
         )
 
     @staticmethod
@@ -1532,7 +1532,7 @@ class _UniffiConverterTypeResponse(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.check_lower(value.pre_disbursement_amount)
         _UniffiConverterDouble.check_lower(value.paid_total_iof)
         _UniffiConverterDouble.check_lower(value.paid_contract_amount)
-        _UniffiConverterSequenceTypeInvoice.check_lower(value.invoices)
+        _UniffiConverterSequenceTypeInternalInvoice.check_lower(value.invoices)
 
     @staticmethod
     def write(value, buf):
@@ -1569,7 +1569,7 @@ class _UniffiConverterTypeResponse(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.write(value.pre_disbursement_amount, buf)
         _UniffiConverterDouble.write(value.paid_total_iof, buf)
         _UniffiConverterDouble.write(value.paid_contract_amount, buf)
-        _UniffiConverterSequenceTypeInvoice.write(value.invoices, buf)
+        _UniffiConverterSequenceTypeInternalInvoice.write(value.invoices, buf)
 
 
 # Error
@@ -1656,18 +1656,18 @@ class _UniffiConverterSequenceTimestamp(_UniffiConverterRustBuffer):
 
 
 
-class _UniffiConverterSequenceTypeDownPaymentResponse(_UniffiConverterRustBuffer):
+class _UniffiConverterSequenceTypeInternalDownPaymentResponse(_UniffiConverterRustBuffer):
     @classmethod
     def check_lower(cls, value):
         for item in value:
-            _UniffiConverterTypeDownPaymentResponse.check_lower(item)
+            _UniffiConverterTypeInternalDownPaymentResponse.check_lower(item)
 
     @classmethod
     def write(cls, value, buf):
         items = len(value)
         buf.write_i32(items)
         for item in value:
-            _UniffiConverterTypeDownPaymentResponse.write(item, buf)
+            _UniffiConverterTypeInternalDownPaymentResponse.write(item, buf)
 
     @classmethod
     def read(cls, buf):
@@ -1676,23 +1676,23 @@ class _UniffiConverterSequenceTypeDownPaymentResponse(_UniffiConverterRustBuffer
             raise InternalError("Unexpected negative sequence length")
 
         return [
-            _UniffiConverterTypeDownPaymentResponse.read(buf) for i in range(count)
+            _UniffiConverterTypeInternalDownPaymentResponse.read(buf) for i in range(count)
         ]
 
 
 
-class _UniffiConverterSequenceTypeInvoice(_UniffiConverterRustBuffer):
+class _UniffiConverterSequenceTypeInternalInvoice(_UniffiConverterRustBuffer):
     @classmethod
     def check_lower(cls, value):
         for item in value:
-            _UniffiConverterTypeInvoice.check_lower(item)
+            _UniffiConverterTypeInternalInvoice.check_lower(item)
 
     @classmethod
     def write(cls, value, buf):
         items = len(value)
         buf.write_i32(items)
         for item in value:
-            _UniffiConverterTypeInvoice.write(item, buf)
+            _UniffiConverterTypeInternalInvoice.write(item, buf)
 
     @classmethod
     def read(cls, buf):
@@ -1701,23 +1701,23 @@ class _UniffiConverterSequenceTypeInvoice(_UniffiConverterRustBuffer):
             raise InternalError("Unexpected negative sequence length")
 
         return [
-            _UniffiConverterTypeInvoice.read(buf) for i in range(count)
+            _UniffiConverterTypeInternalInvoice.read(buf) for i in range(count)
         ]
 
 
 
-class _UniffiConverterSequenceTypeResponse(_UniffiConverterRustBuffer):
+class _UniffiConverterSequenceTypeInternalResponse(_UniffiConverterRustBuffer):
     @classmethod
     def check_lower(cls, value):
         for item in value:
-            _UniffiConverterTypeResponse.check_lower(item)
+            _UniffiConverterTypeInternalResponse.check_lower(item)
 
     @classmethod
     def write(cls, value, buf):
         items = len(value)
         buf.write_i32(items)
         for item in value:
-            _UniffiConverterTypeResponse.write(item, buf)
+            _UniffiConverterTypeInternalResponse.write(item, buf)
 
     @classmethod
     def read(cls, buf):
@@ -1726,23 +1726,23 @@ class _UniffiConverterSequenceTypeResponse(_UniffiConverterRustBuffer):
             raise InternalError("Unexpected negative sequence length")
 
         return [
-            _UniffiConverterTypeResponse.read(buf) for i in range(count)
+            _UniffiConverterTypeInternalResponse.read(buf) for i in range(count)
         ]
 
 # Async support
 
-def calculate_down_payment_plan(params: "DownPaymentParams") -> "typing.List[DownPaymentResponse]":
-    _UniffiConverterTypeDownPaymentParams.check_lower(params)
+def calculate_down_payment_plan(params: "InternalDownPaymentParams") -> "typing.List[InternalDownPaymentResponse]":
+    _UniffiConverterTypeInternalDownPaymentParams.check_lower(params)
     
-    return _UniffiConverterSequenceTypeDownPaymentResponse.lift(_uniffi_rust_call_with_error(_UniffiConverterTypeError,_UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_down_payment_plan,
-        _UniffiConverterTypeDownPaymentParams.lower(params)))
+    return _UniffiConverterSequenceTypeInternalDownPaymentResponse.lift(_uniffi_rust_call_with_error(_UniffiConverterTypeError,_UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_down_payment_plan,
+        _UniffiConverterTypeInternalDownPaymentParams.lower(params)))
 
 
-def calculate_payment_plan(params: "Params") -> "typing.List[Response]":
-    _UniffiConverterTypeParams.check_lower(params)
+def calculate_payment_plan(params: "InternalParams") -> "typing.List[InternalResponse]":
+    _UniffiConverterTypeInternalParams.check_lower(params)
     
-    return _UniffiConverterSequenceTypeResponse.lift(_uniffi_rust_call_with_error(_UniffiConverterTypeError,_UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan,
-        _UniffiConverterTypeParams.lower(params)))
+    return _UniffiConverterSequenceTypeInternalResponse.lift(_uniffi_rust_call_with_error(_UniffiConverterTypeError,_UniffiLib.uniffi_payment_plan_uniffi_fn_func_calculate_payment_plan,
+        _UniffiConverterTypeInternalParams.lower(params)))
 
 
 def disbursement_date_range(base_date: "Timestamp",days: "int") -> "typing.List[Timestamp]":
@@ -1775,11 +1775,11 @@ def next_disbursement_date(base_date: "Timestamp") -> "Timestamp":
 __all__ = [
     "InternalError",
     "Error",
-    "DownPaymentParams",
-    "DownPaymentResponse",
-    "Invoice",
-    "Params",
-    "Response",
+    "InternalDownPaymentParams",
+    "InternalDownPaymentResponse",
+    "InternalInvoice",
+    "InternalParams",
+    "InternalResponse",
     "calculate_down_payment_plan",
     "calculate_payment_plan",
     "disbursement_date_range",
