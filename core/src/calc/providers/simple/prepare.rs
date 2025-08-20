@@ -38,6 +38,8 @@ pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
             accumulated_days,
             factor: days_index,
             accumulated_factor: accumulated_days_index,
+            debit_service: 0.0,
+            main_iof_tac: 0.0,
             due_date,
         };
 

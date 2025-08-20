@@ -126,6 +126,8 @@ impl From<Invoice> for CliInvoice {
             accumulated_factor: value.accumulated_factor,
             factor: value.factor,
             due_date_millis: due_date,
+            debit_service: value.debit_service,
+            main_iof_tac: value.main_iof_tac,
         }
     }
 }

@@ -89,6 +89,12 @@ typedef struct Invoice {
     double accumulated_factor;
 
     /** <No documentation available> */
+    double main_iof_tac;
+
+    /** <No documentation available> */
+    double debit_service;
+
+    /** <No documentation available> */
     int64_t due_date_ms;
 } Invoice_t;
 

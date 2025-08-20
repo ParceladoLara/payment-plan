@@ -1256,6 +1256,8 @@ internal data class InternalInvoice (
     var `accumulatedDays`: kotlin.Long, 
     var `factor`: kotlin.Double, 
     var `accumulatedFactor`: kotlin.Double, 
+    var `mainIofTac`: kotlin.Double, 
+    var `debitService`: kotlin.Double, 
     var `dueDate`: java.time.Instant
 ) {
     
@@ -1271,6 +1273,8 @@ internal object FfiConverterTypeInternalInvoice: FfiConverterRustBuffer<Internal
             FfiConverterLong.read(buf),
             FfiConverterDouble.read(buf),
             FfiConverterDouble.read(buf),
+            FfiConverterDouble.read(buf),
+            FfiConverterDouble.read(buf),
             FfiConverterTimestamp.read(buf),
         )
     }
@@ -1279,6 +1283,8 @@ internal object FfiConverterTypeInternalInvoice: FfiConverterRustBuffer<Internal
             FfiConverterLong.allocationSize(value.`accumulatedDays`) +
             FfiConverterDouble.allocationSize(value.`factor`) +
             FfiConverterDouble.allocationSize(value.`accumulatedFactor`) +
+            FfiConverterDouble.allocationSize(value.`mainIofTac`) +
+            FfiConverterDouble.allocationSize(value.`debitService`) +
             FfiConverterTimestamp.allocationSize(value.`dueDate`)
     )
 
@@ -1286,6 +1292,8 @@ internal object FfiConverterTypeInternalInvoice: FfiConverterRustBuffer<Internal
             FfiConverterLong.write(value.`accumulatedDays`, buf)
             FfiConverterDouble.write(value.`factor`, buf)
             FfiConverterDouble.write(value.`accumulatedFactor`, buf)
+            FfiConverterDouble.write(value.`mainIofTac`, buf)
+            FfiConverterDouble.write(value.`debitService`, buf)
             FfiConverterTimestamp.write(value.`dueDate`, buf)
     }
 }

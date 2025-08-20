@@ -201,10 +201,15 @@ pub fn cast_invoice_to_js_object<'a, C: Context<'a>>(
     let factor = JsNumber::new(cx, invoice.factor as f64);
     let due_date = parser::naive_to_js_date(cx, invoice.due_date)?;
     let accumulated_factor = JsNumber::new(cx, invoice.accumulated_factor as f64);
+    let main_iof_tac = JsNumber::new(cx, invoice.main_iof_tac as f64);
+    let debit_service = JsNumber::new(cx, invoice.debit_service as f64);
     obj.set(cx, "accumulatedDays", accumulated_days)?;
     obj.set(cx, "factor", factor)?;
     obj.set(cx, "dueDate", due_date)?;
     obj.set(cx, "accumulatedFactor", accumulated_factor)?;
+    obj.set(cx, "mainIOFTAC", main_iof_tac)?;
+    obj.set(cx, "debitService", debit_service)?;
+
     Ok(obj)
 }
 

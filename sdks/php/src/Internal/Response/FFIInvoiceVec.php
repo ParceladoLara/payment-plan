@@ -34,6 +34,8 @@ class FFIInvoiceVec
       $invoice->accumulatedDays = $cInvoice->accumulated_days;
       $invoice->factor = $cInvoice->factor;
       $invoice->accumulatedFactor = $cInvoice->accumulated_factor;
+      $invoice->mainIofTac = $cInvoice->main_iof_tac;
+      $invoice->debitService = $cInvoice->debit_service;
       $invoice->dueDate = new \DateTimeImmutable('@' . $cInvoice->due_date_ms / 1000);
       $invoices[] = $invoice;
     }

@@ -17,6 +17,8 @@ export type Invoice = {
     accumulatedDays: number;
     factor: number;
     accumulatedFactor: number;
+    mainIOFTAC: number;
+    debitService: number;
     dueDate: Date;
 };
 export type PaymentPlanResponse = {
@@ -90,6 +92,8 @@ export type DownPaymentPlanResponse = {
  * @property {number} accumulatedDays
  * @property {number} factor
  * @property {number} accumulatedFactor
+ * @property {number} mainIOFTAC
+ * @property {number} debitService
  * @property {Date} dueDate
  */
 /**

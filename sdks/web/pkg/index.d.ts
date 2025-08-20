@@ -33,6 +33,8 @@ export interface Invoice {
     accumulatedDays: number;
     factor: number;
     accumulatedFactor: number;
+    mainIOFTAC: number;
+    debitService: number;
     dueDate: Date;
 }
 

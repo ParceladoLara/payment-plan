@@ -65,6 +65,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=184.42424,
+                        main_iof_tac=7812.37576,
                     ),
                 ],
             ),
@@ -112,6 +114,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=184.64678500000002,
+                        main_iof_tac=3865.073215,
                     ),
                     Invoice(
                         accumulated_days=57,
@@ -120,6 +124,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=93.81756444750002,
+                        main_iof_tac=3955.9024355525,
                     ),
                 ],
             ),
@@ -167,6 +173,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=184.87661500000002,
+                        main_iof_tac=2549.563385,
                     ),
                     Invoice(
                         accumulated_days=57,
@@ -175,6 +183,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=124.96187545250001,
+                        main_iof_tac=2609.4781245475,
                     ),
                     Invoice(
                         accumulated_days=87,
@@ -183,6 +193,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 7, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=63.639139525633766,
+                        main_iof_tac=2670.8008604743663,
                     ),
                 ],
             ),
@@ -230,6 +242,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=185.11795999999998,
+                        main_iof_tac=1892.61204,
                     ),
                     Invoice(
                         accumulated_days=57,
@@ -238,6 +252,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=140.64157706,
+                        main_iof_tac=1937.08842294,
                     ),
                     Invoice(
                         accumulated_days=87,
@@ -246,6 +262,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 7, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=95.11999912091,
+                        main_iof_tac=1982.61000087909,
                     ),
                     Invoice(
                         accumulated_days=119,
@@ -254,6 +272,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         due_date=datetime(
                             2025, 8, 4, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
                         ),
+                        debit_service=48.52866410025138,
+                        main_iof_tac=2029.2013358997485,
                     ),
                 ],
             ),
@@ -501,6 +521,18 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                     inv_e.due_date,
                     f"Installment {i + 1}, Invoice {j + 1}: DueDate mismatch",
                 )
+                self.assertAlmostEqual(
+                    inv_r.debit_service,
+                    inv_e.debit_service,
+                    places=10,
+                    msg=f"Installment {i + 1}, Invoice {j + 1}: DebitService mismatch",
+                )
+                self.assertAlmostEqual(
+                    inv_r.main_iof_tac,
+                    inv_e.main_iof_tac,
+                    places=10,
+                    msg=f"Installment {i + 1}, Invoice {j + 1}: MainIofTac mismatch",
+                )
 
     def test_disbursement_date_range(self):
         base_date = datetime(2025, 4, 3, tzinfo=timezone.utc)
@@ -643,6 +675,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.37841500000002,
+                                main_iof_tac=7810.441585,
                             ),
                         ],
                     ),
@@ -698,6 +732,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.608715,
+                                main_iof_tac=3864.2712850000003,
                             ),
                             Invoice(
                                 accumulated_days=55,
@@ -712,6 +748,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=93.79833980249998,
+                                main_iof_tac=3955.0816601975002,
                             ),
                         ],
                     ),
@@ -767,6 +805,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.851235,
+                                main_iof_tac=2550.198765,
                             ),
                             Invoice(
                                 accumulated_days=55,
@@ -781,6 +821,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=124.92156402250001,
+                                main_iof_tac=2610.1284359775,
                             ),
                             Invoice(
                                 accumulated_days=87,
@@ -795,6 +837,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=63.58354577702875,
+                                main_iof_tac=2671.4664542229716,
                             ),
                         ],
                     ),
@@ -850,6 +894,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=185.090935,
+                                main_iof_tac=1893.449065,
                             ),
                             Invoice(
                                 accumulated_days=55,
@@ -864,6 +910,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=140.59488197250002,
+                                main_iof_tac=1937.9451180275,
                             ),
                             Invoice(
                                 accumulated_days=87,
@@ -878,6 +926,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=95.05317169885376,
+                                main_iof_tac=1983.4868283011463,
                             ),
                             Invoice(
                                 accumulated_days=117,
@@ -892,6 +942,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=48.44123123377681,
+                                main_iof_tac=2030.0987687662232,
                             ),
                         ],
                     ),
@@ -957,6 +1009,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.363375,
+                                main_iof_tac=7809.806625,
                             ),
                         ],
                     ),
@@ -1012,6 +1066,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.60848000000001,
+                                main_iof_tac=3866.4815200000003,
                             ),
                             Invoice(
                                 accumulated_days=56,
@@ -1026,6 +1082,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=93.74616428,
+                                main_iof_tac=3957.3438357200002,
                             ),
                         ],
                     ),
@@ -1081,6 +1139,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.846065,
+                                main_iof_tac=2552.1239349999996,
                             ),
                             Invoice(
                                 accumulated_days=56,
@@ -1095,6 +1155,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=124.8711525275,
+                                main_iof_tac=2612.0988474725,
                             ),
                             Invoice(
                                 accumulated_days=86,
@@ -1109,6 +1171,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=63.48682961189626,
+                                main_iof_tac=2673.4831703881036,
                             ),
                         ],
                     ),
@@ -1164,6 +1228,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=185.083415,
+                                main_iof_tac=1895.0765849999998,
                             ),
                             Invoice(
                                 accumulated_days=56,
@@ -1178,6 +1244,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=140.5491152525,
+                                main_iof_tac=1939.6108847474998,
                             ),
                             Invoice(
                                 accumulated_days=86,
@@ -1192,6 +1260,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=94.96825946093377,
+                                main_iof_tac=1985.1917405390661,
                             ),
                             Invoice(
                                 accumulated_days=116,
@@ -1206,6 +1276,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=48.31625355826572,
+                                main_iof_tac=2031.843746441734,
                             ),
                         ],
                     ),
@@ -1271,6 +1343,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.393925,
+                                main_iof_tac=7819.946075,
                             ),
                         ],
                     ),
@@ -1326,6 +1400,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.62399,
+                                main_iof_tac=3871.29601,
                             ),
                             Invoice(
                                 accumulated_days=56,
@@ -1340,6 +1416,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=93.648533765,
+                                main_iof_tac=3962.271466235,
                             ),
                         ],
                     ),
@@ -1395,6 +1473,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.85664,
+                                main_iof_tac=2555.30336,
                             ),
                             Invoice(
                                 accumulated_days=56,
@@ -1409,6 +1489,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=124.80701103999999,
+                                main_iof_tac=2615.35298896,
                             ),
                             Invoice(
                                 accumulated_days=86,
@@ -1423,6 +1505,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=63.346215799439996,
+                                main_iof_tac=2676.81378420056,
                             ),
                         ],
                     ),
@@ -1478,6 +1562,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=185.09587,
+                                main_iof_tac=1896.95413,
                             ),
                             Invoice(
                                 accumulated_days=56,
@@ -1492,6 +1578,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=140.517447945,
+                                main_iof_tac=1941.5325520550002,
                             ),
                             Invoice(
                                 accumulated_days=86,
@@ -1506,6 +1594,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=94.89143297170749,
+                                main_iof_tac=1987.1585670282927,
                             ),
                             Invoice(
                                 accumulated_days=117,
@@ -1520,6 +1610,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=48.193206646542606,
+                                main_iof_tac=2033.8567933534575,
                             ),
                         ],
                     ),
@@ -1585,6 +1677,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.34810000000002,
+                                main_iof_tac=7809.1519,
                             ),
                         ],
                     ),
@@ -1640,6 +1734,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.578165,
+                                main_iof_tac=3865.851835,
                             ),
                             Invoice(
                                 accumulated_days=53,
@@ -1654,6 +1750,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=93.7306468775,
+                                main_iof_tac=3956.6993531225,
                             ),
                         ],
                     ),
@@ -1709,6 +1807,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=184.81575,
+                                main_iof_tac=2550.7242499999998,
                             ),
                             Invoice(
                                 accumulated_days=53,
@@ -1723,6 +1823,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=124.87373012500002,
+                                main_iof_tac=2610.666269875,
                             ),
                             Invoice(
                                 accumulated_days=84,
@@ -1737,6 +1839,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=63.52307278293751,
+                                main_iof_tac=2672.0169272170624,
                             ),
                         ],
                     ),
@@ -1792,6 +1896,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=185.053335,
+                                main_iof_tac=1893.096665,
                             ),
                             Invoice(
                                 accumulated_days=53,
@@ -1806,6 +1912,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=140.56556337249998,
+                                main_iof_tac=1937.5844366275,
                             ),
                             Invoice(
                                 accumulated_days=84,
@@ -1820,6 +1928,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=95.03232911175374,
+                                main_iof_tac=1983.1176708882463,
                             ),
                             Invoice(
                                 accumulated_days=114,
@@ -1834,6 +1944,8 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                                     0,
                                     tzinfo=timezone(timedelta(hours=-3)),
                                 ),
+                                debit_service=48.42906384587995,
+                                main_iof_tac=2029.7209361541202,
                             ),
                         ],
                     ),
@@ -2101,6 +2213,18 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         ri.due_date,
                         ei.due_date,
                         f"Installment {i + 1}, Invoice {j + 1}: DueDate mismatch",
+                    )
+                    self.assertAlmostEqual(
+                        ri.debit_service,
+                        ei.debit_service,
+                        places=10,
+                        msg=f"Installment {i + 1}, Invoice {j + 1}: DebitService mismatch",
+                    )
+                    self.assertAlmostEqual(
+                        ri.main_iof_tac,
+                        ei.main_iof_tac,
+                        places=10,
+                        msg=f"Installment {i + 1}, Invoice {j + 1}: MainIofTac mismatch",
                     )
 
 

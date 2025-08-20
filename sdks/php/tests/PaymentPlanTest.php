@@ -209,10 +209,10 @@ class PaymentPlanTest extends TestCase
     $this->assertIsArray($result);
     $this->assertNotEmpty($result);
     $this->assertIsObject($result[0]);
-    $this->assertEquals($expected1, $result[0]);
-    $this->assertEquals($expected2, $result[1]);
-    $this->assertEquals($expected3, $result[2]);
-    $this->assertEquals($expected4, $result[3]);
+    $this->helpAssert($expected1, $result[0]);
+    $this->helpAssert($expected2, $result[1]);
+    $this->helpAssert($expected3, $result[2]);
+    $this->helpAssert($expected4, $result[3]);
   }
 
 
@@ -1004,10 +1004,10 @@ class PaymentPlanTest extends TestCase
     $this->assertNotEmpty($resp);
     $this->assertEquals(4, count($resp));
     $this->assertIsObject($resp[0]);
-    $this->assertEquals($expectedDownPayment1, $resp[0]);
-    $this->assertEquals($expectedDownPayment2, $resp[1]);
-    $this->assertEquals($expectedDownPayment3, $resp[2]);
-    $this->assertEquals($expectedDownPayment4, $resp[3]);
+    $this->helpAssertDownPayment($resp[0], $expectedDownPayment1);
+    $this->helpAssertDownPayment($resp[1], $expectedDownPayment2);
+    $this->helpAssertDownPayment($resp[2], $expectedDownPayment3);
+    $this->helpAssertDownPayment($resp[3], $expectedDownPayment4);
   }
 
 
@@ -1071,5 +1071,63 @@ class PaymentPlanTest extends TestCase
       $this->assertInstanceOf(DateTimeImmutable::class, $day);
     }
     $this->assertEquals($expectedNonBusinessDays, $nonBusinessDays);
+  }
+
+  public function helpAssertDownPayment(DownPaymentResponse $r, DownPaymentResponse $e): void
+  {
+    $this->assertEquals($e->installmentAmount, $r->installmentAmount);
+    $this->assertEquals($e->totalAmount, $r->totalAmount);
+    $this->assertEquals($e->installmentQuantity, $r->installmentQuantity);
+    $this->assertEquals($e->firstPaymentDate, $r->firstPaymentDate);
+    $this->assertIsArray($r->plans);
+    $this->assertCount(count($e->plans), $r->plans);
+    foreach ($e->plans as $i => $plan) {
+      $this->helpAssert($r->plans[$i], $plan);
+    }
+  }
+
+  public function helpAssert(Response $r, Response $e): void
+  {
+    $this->assertEquals($e->installment, $r->installment);
+    $this->assertEquals($e->dueDate, $r->dueDate);
+    $this->assertEquals($e->disbursementDate, $r->disbursementDate);
+    $this->assertEquals($e->accumulatedDays, $r->accumulatedDays);
+    $this->assertEquals(round($e->daysIndex, 10), round($r->daysIndex, 10));
+    $this->assertEquals(round($e->accumulatedDaysIndex, 10), round($r->accumulatedDaysIndex, 10));
+    $this->assertEquals($e->interestRate, $r->interestRate);
+    $this->assertEquals($e->installmentAmount, $r->installmentAmount);
+    $this->assertEquals($e->installmentAmountWithoutTac, $r->installmentAmountWithoutTac);
+    $this->assertEquals($e->totalAmount, $r->totalAmount);
+    $this->assertEquals($e->debitService, $r->debitService);
+    $this->assertEquals($e->customerDebitServiceAmount, $r->customerDebitServiceAmount);
+    $this->assertEquals($e->customerAmount, $r->customerAmount);
+    $this->assertEquals($e->calculationBasisForEffectiveInterestRate, $r->calculationBasisForEffectiveInterestRate);
+    $this->assertEquals($e->merchantDebitServiceAmount, $r->merchantDebitServiceAmount);
+    $this->assertEquals($e->merchantTotalAmount, $r->merchantTotalAmount);
+    $this->assertEquals($e->settledToMerchant, $r->settledToMerchant);
+    $this->assertEquals($e->mdrAmount, $r->mdrAmount);
+    $this->assertEquals($e->effectiveInterestRate, $r->effectiveInterestRate);
+    $this->assertEquals($e->totalEffectiveCost, $r->totalEffectiveCost);
+    $this->assertEquals($e->eirYearly, $r->eirYearly);
+    $this->assertEquals($e->tecYearly, $r->tecYearly);
+    $this->assertEquals($e->eirMonthly, $r->eirMonthly);
+    $this->assertEquals($e->tecMonthly, $r->tecMonthly);
+    $this->assertEquals($e->totalIof, $r->totalIof);
+    $this->assertEquals($e->contractAmount, $r->contractAmount);
+    $this->assertEquals($e->contractAmountWithoutTac, $r->contractAmountWithoutTac);
+    $this->assertEquals($e->tacAmount, $r->tacAmount);
+    $this->assertEquals($e->iofPercentage, $r->iofPercentage);
+    $this->assertEquals($e->overallIof, $r->overallIof);
+    $this->assertEquals($e->preDisbursementAmount, $r->preDisbursementAmount);
+    $this->assertEquals($e->paidTotalIof, $r->paidTotalIof);
+    $this->assertEquals($e->paidContractAmount, $r->paidContractAmount);
+    $this->assertIsArray($r->invoices);
+    $this->assertCount(count($e->invoices), $r->invoices);
+    foreach ($e->invoices as $i => $invoice) {
+      $this->assertEquals($invoice->accumulatedDays, $r->invoices[$i]->accumulatedDays);
+      $this->assertEquals($invoice->dueDate, $r->invoices[$i]->dueDate);
+      $this->assertEquals(round($invoice->factor, 10), round($r->invoices[$i]->factor, 10));
+      $this->assertEquals(round($invoice->accumulatedFactor, 10), round($r->invoices[$i]->accumulatedFactor, 10));
+    }
   }
 }

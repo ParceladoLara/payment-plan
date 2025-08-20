@@ -88,6 +88,8 @@ message Invoice {
     double factor = 2;
     double accumulated_factor = 3;
     int64 due_date_millis = 4;
+    double main_iof_tac = 5;
+    double debit_service = 6;
 }
 
 message Invoices {

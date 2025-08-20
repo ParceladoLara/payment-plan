@@ -10,6 +10,9 @@ pub struct Invoice {
     pub accumulated_days: i64,
     pub factor: f64,
     pub accumulated_factor: f64,
+    #[serde(rename = "mainIOFTAC")]
+    pub main_iof_tac: f64,
+    pub debit_service: f64,
     pub due_date: Date,
 }
 
@@ -19,6 +22,8 @@ impl From<core_payment_plan::Invoice> for Invoice {
             accumulated_days: value.accumulated_days,
             factor: value.factor,
             accumulated_factor: value.accumulated_factor,
+            main_iof_tac: value.main_iof_tac,
+            debit_service: value.debit_service,
             due_date: value.due_date.into(),
         }
     }
@@ -38,6 +43,8 @@ impl Into<js_sys::Object> for Invoice {
             &"accumulatedFactor".into(),
             &self.accumulated_factor.into(),
         );
+        let _ = js_sys::Reflect::set(&obj, &"mainIOFTAC".into(), &self.main_iof_tac.into());
+        let _ = js_sys::Reflect::set(&obj, &"debitService".into(), &self.debit_service.into());
         let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &self.due_date.into());
         obj
     }

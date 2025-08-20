@@ -9,5 +9,7 @@ class Invoice
   public int $accumulatedDays;
   public float $factor;
   public float $accumulatedFactor;
+  public float $mainIofTac;
+  public float $debitService;
   public \DateTimeImmutable $dueDate;
 }

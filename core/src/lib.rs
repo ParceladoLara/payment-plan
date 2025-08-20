@@ -22,6 +22,8 @@ pub struct Invoice {
     pub accumulated_days: i64,
     pub factor: f64,
     pub accumulated_factor: f64,
+    pub main_iof_tac: f64,
+    pub debit_service: f64,
     pub due_date: chrono::NaiveDate,
 }
 

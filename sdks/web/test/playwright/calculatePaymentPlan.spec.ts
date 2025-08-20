@@ -2,183 +2,233 @@ import { test, expect } from "@playwright/test";
 
 test.describe("CalculatePaymentPlan page", () => {
   test("should render message", async ({ page }) => {
-    const expectedText = `{
+    const expectedText = `
+
+{
   "installment": 24,
   "dueDate": "2024-03-18T03:00:00.000Z",
   "accumulatedDays": 731,
-  "daysIndex": 0.445499118983074,
-  "accumulatedDaysIndex": 16.17294462287348,
+  "daysIndex": 0.561985770761778,
+  "accumulatedDaysIndex": 18.014166849381613,
   "interestRate": 0.0235,
-  "installmentAmount": 560.19,
+  "installmentAmount": 502.69,
   "installmentAmountWithoutTAC": 0,
-  "totalAmount": 13444.56,
-  "debitService": 4384.599999999999,
-  "customerDebitServiceAmount": 4384.599999999999,
-  "customerAmount": 560.19,
-  "calculationBasisForEffectiveInterestRate": 549.3583333333332,
+  "totalAmount": 12064.56,
+  "debitService": 3009.0499999999993,
+  "customerDebitServiceAmount": 3009.0499999999993,
+  "customerAmount": 502.69,
+  "calculationBasisForEffectiveInterestRate": 492.04375,
   "merchantDebitServiceAmount": 0,
   "merchantTotalAmount": 440,
   "settledToMerchant": 8360,
   "mdrAmount": 440,
-  "effectiveInterestRate": 0.0342,
-  "totalEffectiveCost": 0.037,
-  "eirYearly": 0.497399,
-  "tecYearly": 0.546272,
-  "eirMonthly": 0.0342,
-  "tecMonthly": 0.037,
-  "totalIOF": 259.96,
-  "contractAmount": 9059.96,
+  "effectiveInterestRate": 0.0242,
+  "totalEffectiveCost": 0.0268,
+  "eirYearly": 0.332954,
+  "tecYearly": 0.373929,
+  "eirMonthly": 0.0242,
+  "tecMonthly": 0.0268,
+  "totalIOF": 255.51,
+  "contractAmount": 9055.51,
   "contractAmountWithoutTAC": 0,
   "tacAmount": 0,
   "IOFPercentage": 0.000082,
   "overallIOF": 0.0038,
   "disbursementDate": "2022-03-18T03:00:00.000Z",
-  "paidTotalIOF": 259.92,
-  "paidContractAmount": 9059.92,
-  "preDisbursementAmount": 8799.96,
+  "paidTotalIOF": 255.54,
+  "paidContractAmount": 9055.54,
+  "preDisbursementAmount": 8800.03,
   "invoices": [
     {
       "accumulatedDays": "31",
-      "factor": 0.966292071927668,
-      "accumulatedFactor": 0.966292071927668,
+      "factor": 0.977039570089471,
+      "accumulatedFactor": 0.977039570089471,
+      "mainIOFTAC": 289.885515,
+      "debitService": 212.804485,
       "dueDate": "2022-04-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "61",
-      "factor": 0.93475372892694,
-      "accumulatedFactor": 1.9010458008546078,
+      "factor": 0.953551014026522,
+      "accumulatedFactor": 1.930590584115993,
+      "mainIOFTAC": 296.69782460249996,
+      "debitService": 205.9921753975,
       "dueDate": "2022-05-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "92",
-      "factor": 0.903245117466927,
-      "accumulatedFactor": 2.8042909183215348,
-      "dueDate": "2022-06-18T03:00:00.000Z"
+      "accumulatedDays": "94",
+      "factor": 0.929598336717808,
+      "accumulatedFactor": 2.860188920833801,
+      "mainIOFTAC": 303.6702234806587,
+      "debitService": 199.01977651934126,
+      "dueDate": "2022-06-20T03:00:00.000Z"
     },
     {
       "accumulatedDays": "122",
-      "factor": 0.873764533742819,
-      "accumulatedFactor": 3.6780554520643536,
+      "factor": 0.909259536351008,
+      "accumulatedFactor": 3.7694484571848093,
+      "mainIOFTAC": 310.8064737324542,
+      "debitService": 191.8835262675458,
       "dueDate": "2022-07-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "153",
-      "factor": 0.844311741687262,
-      "accumulatedFactor": 4.522367193751616,
+      "factor": 0.886419436614634,
+      "accumulatedFactor": 4.655867893799443,
+      "mainIOFTAC": 318.11042586516686,
+      "debitService": 184.57957413483314,
       "dueDate": "2022-08-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "184",
-      "factor": 0.815851742227842,
-      "accumulatedFactor": 5.338218935979458,
-      "dueDate": "2022-09-18T03:00:00.000Z"
+      "accumulatedDays": "185",
+      "factor": 0.86510943723528,
+      "accumulatedFactor": 5.520977331034723,
+      "mainIOFTAC": 325.5860208729983,
+      "debitService": 177.1039791270017,
+      "dueDate": "2022-09-19T03:00:00.000Z"
     },
     {
       "accumulatedDays": "214",
-      "factor": 0.789223548918967,
-      "accumulatedFactor": 6.127442484898425,
+      "factor": 0.845246152636702,
+      "accumulatedFactor": 6.366223483671425,
+      "mainIOFTAC": 333.23729236351375,
+      "debitService": 169.45270763648625,
       "dueDate": "2022-10-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "245",
-      "factor": 0.762620458299016,
-      "accumulatedFactor": 6.8900629431974405,
+      "factor": 0.8240140339113,
+      "accumulatedFactor": 7.190237517582725,
+      "mainIOFTAC": 341.0683687340563,
+      "debitService": 161.62163126594368,
       "dueDate": "2022-11-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "275",
-      "factor": 0.737729655308957,
-      "accumulatedFactor": 7.627792598506398,
-      "dueDate": "2022-12-18T03:00:00.000Z"
+      "accumulatedDays": "276",
+      "factor": 0.805094317440387,
+      "accumulatedFactor": 7.995331835023112,
+      "mainIOFTAC": 349.0834753993066,
+      "debitService": 153.60652460069335,
+      "dueDate": "2022-12-19T03:00:00.000Z"
     },
     {
       "accumulatedDays": "306",
-      "factor": 0.712862317150977,
-      "accumulatedFactor": 8.340654915657375,
+      "factor": 0.785739417608204,
+      "accumulatedFactor": 8.781071252631316,
+      "mainIOFTAC": 357.2869370711903,
+      "debitService": 145.40306292880965,
       "dueDate": "2023-01-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "337",
-      "factor": 0.688833205438976,
-      "accumulatedFactor": 9.029488121096351,
-      "dueDate": "2023-02-18T03:00:00.000Z"
+      "accumulatedDays": "339",
+      "factor": 0.766002075356075,
+      "accumulatedFactor": 9.547073327987391,
+      "mainIOFTAC": 365.68318009236333,
+      "debitService": 137.00681990763667,
+      "dueDate": "2023-02-20T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "365",
-      "factor": 0.667826443575456,
-      "accumulatedFactor": 9.697314564671807,
-      "dueDate": "2023-03-18T03:00:00.000Z"
+      "accumulatedDays": "367",
+      "factor": 0.749242618420912,
+      "accumulatedFactor": 10.296315946408303,
+      "mainIOFTAC": 374.2767348245339,
+      "debitService": 128.4132651754661,
+      "dueDate": "2023-03-20T03:00:00.000Z"
     },
     {
       "accumulatedDays": "396",
-      "factor": 0.645315397850613,
-      "accumulatedFactor": 10.34262996252242,
+      "factor": 0.732039685794677,
+      "accumulatedFactor": 11.02835563220298,
+      "mainIOFTAC": 383.0722380929104,
+      "debitService": 119.61776190708956,
       "dueDate": "2023-04-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "426",
-      "factor": 0.624253258408174,
-      "accumulatedFactor": 10.966883220930594,
+      "factor": 0.714441058547147,
+      "accumulatedFactor": 11.742796690750126,
+      "mainIOFTAC": 392.0744356880938,
+      "debitService": 110.61556431190618,
       "dueDate": "2023-05-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "457",
-      "factor": 0.603210974474832,
-      "accumulatedFactor": 11.570094195405426,
-      "dueDate": "2023-06-18T03:00:00.000Z"
+      "accumulatedDays": "458",
+      "factor": 0.697265511751411,
+      "accumulatedFactor": 12.440062202501537,
+      "mainIOFTAC": 401.288184926764,
+      "debitService": 101.40181507323597,
+      "dueDate": "2023-06-19T03:00:00.000Z"
     },
     {
       "accumulatedDays": "487",
-      "factor": 0.583523061091833,
-      "accumulatedFactor": 12.15361725649726,
+      "factor": 0.681255995839813,
+      "accumulatedFactor": 13.12131819834135,
+      "mainIOFTAC": 410.718457272543,
+      "debitService": 91.971542727457,
       "dueDate": "2023-07-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "518",
-      "factor": 0.563853707720002,
-      "accumulatedFactor": 12.717470964217261,
+      "factor": 0.664143219708338,
+      "accumulatedFactor": 13.785461418049687,
+      "mainIOFTAC": 420.37034101844773,
+      "debitService": 82.31965898155225,
       "dueDate": "2023-08-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "549",
-      "factor": 0.544847367496859,
-      "accumulatedFactor": 13.26231833171412,
+      "factor": 0.648894205861671,
+      "accumulatedFactor": 14.434355623911358,
+      "mainIOFTAC": 430.2490440323813,
+      "debitService": 72.44095596761873,
       "dueDate": "2023-09-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "579",
-      "factor": 0.527064355860553,
-      "accumulatedFactor": 13.789382687574673,
+      "factor": 0.633294440611724,
+      "accumulatedFactor": 15.067650064523082,
+      "mainIOFTAC": 440.35989656714224,
+      "debitService": 62.330103432857776,
       "dueDate": "2023-10-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "610",
-      "factor": 0.509298108463716,
-      "accumulatedFactor": 14.298680796038388,
-      "dueDate": "2023-11-18T03:00:00.000Z"
+      "accumulatedDays": "612",
+      "factor": 0.61738643238328,
+      "accumulatedFactor": 15.685036496906362,
+      "mainIOFTAC": 450.70835413647006,
+      "debitService": 51.981645863529934,
+      "dueDate": "2023-11-20T03:00:00.000Z"
     },
     {
       "accumulatedDays": "640",
-      "factor": 0.492675372025128,
-      "accumulatedFactor": 14.791356168063515,
+      "factor": 0.603878556022668,
+      "accumulatedFactor": 16.28891505292903,
+      "mainIOFTAC": 461.3000004586771,
+      "debitService": 41.38999954132289,
       "dueDate": "2023-12-18T03:00:00.000Z"
     },
     {
       "accumulatedDays": "671",
-      "factor": 0.476068306021895,
-      "accumulatedFactor": 15.267424474085411,
+      "factor": 0.588709458645293,
+      "accumulatedFactor": 16.877624511574325,
+      "mainIOFTAC": 472.140550469456,
+      "debitService": 30.549449530543978,
       "dueDate": "2024-01-18T03:00:00.000Z"
     },
     {
-      "accumulatedDays": "702",
-      "factor": 0.460021029804993,
-      "accumulatedFactor": 15.727445503890404,
-      "dueDate": "2024-02-18T03:00:00.000Z"
+      "accumulatedDays": "703",
+      "factor": 0.574556567045507,
+      "accumulatedFactor": 17.452181078619834,
+      "mainIOFTAC": 483.2358534054882,
+      "debitService": 19.45414659451176,
+      "dueDate": "2024-02-19T03:00:00.000Z"
     },
     {
       "accumulatedDays": "731",
-      "factor": 0.445499118983074,
-      "accumulatedFactor": 16.17294462287348,
+      "factor": 0.561985770761778,
+      "accumulatedFactor": 18.014166849381613,
+      "mainIOFTAC": 494.5918959605172,
+      "debitService": 8.098104039482786,
       "dueDate": "2024-03-18T03:00:00.000Z"
     }
   ]

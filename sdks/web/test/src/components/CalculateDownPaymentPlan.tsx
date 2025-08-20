@@ -19,7 +19,7 @@ const CalculateDownPaymentPlan: React.FC = () => {
     iofOverall: 0.0038,
     iofPercentage: 0.000082,
     interestRate: 0.0235,
-    disbursementOnlyOnBusinessDays: false,
+    disbursementOnlyOnBusinessDays: true,
   }
 
   const downPaymentPlanParams = {
