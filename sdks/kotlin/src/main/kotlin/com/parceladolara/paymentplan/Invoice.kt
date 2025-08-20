@@ -7,6 +7,8 @@ data class Invoice(
         val accumulatedDays: Long,
         val factor: Double,
         val accumulatedFactor: Double,
+        val mainIofTac: Double,
+        val debitService: Double,
         val dueDate: Instant
 ) {
   companion object {
@@ -17,6 +19,8 @@ data class Invoice(
               accumulatedDays = internal.accumulatedDays,
               factor = internal.factor,
               accumulatedFactor = internal.accumulatedFactor,
+              mainIofTac = internal.mainIofTac,
+              debitService = internal.debitService,
               dueDate = internal.dueDate
       )
     }
@@ -27,6 +31,8 @@ data class Invoice(
             accumulatedDays = this.accumulatedDays,
             factor = this.factor,
             accumulatedFactor = this.accumulatedFactor,
+            mainIofTac = this.mainIofTac,
+            debitService = this.debitService,
             dueDate = this.dueDate
     )
   }

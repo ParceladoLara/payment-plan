@@ -7,6 +7,8 @@ pub struct InternalInvoice {
     pub accumulated_days: i64,
     pub factor: f64,
     pub accumulated_factor: f64,
+    pub main_iof_tac: f64,
+    pub debit_service: f64,
     pub due_date: SystemTime,
 }
 
@@ -22,6 +24,8 @@ impl From<core_payment_plan::Invoice> for InternalInvoice {
             accumulated_days: value.accumulated_days,
             factor: value.factor,
             accumulated_factor: value.accumulated_factor,
+            main_iof_tac: value.main_iof_tac,
+            debit_service: value.debit_service,
             due_date,
         }
     }

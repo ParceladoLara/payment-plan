@@ -715,6 +715,8 @@ type Invoice struct {
 	Factor            float64                `protobuf:"fixed64,2,opt,name=factor,proto3" json:"factor,omitempty"`
 	AccumulatedFactor float64                `protobuf:"fixed64,3,opt,name=accumulated_factor,json=accumulatedFactor,proto3" json:"accumulated_factor,omitempty"`
 	DueDateMillis     int64                  `protobuf:"varint,4,opt,name=due_date_millis,json=dueDateMillis,proto3" json:"due_date_millis,omitempty"`
+	MainIofTac        float64                `protobuf:"fixed64,5,opt,name=main_iof_tac,json=mainIofTac,proto3" json:"main_iof_tac,omitempty"`
+	DebitService      float64                `protobuf:"fixed64,6,opt,name=debit_service,json=debitService,proto3" json:"debit_service,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -773,6 +775,20 @@ func (x *Invoice) GetAccumulatedFactor() float64 {
 func (x *Invoice) GetDueDateMillis() int64 {
 	if x != nil {
 		return x.DueDateMillis
+	}
+	return 0
+}
+
+func (x *Invoice) GetMainIofTac() float64 {
+	if x != nil {
+		return x.MainIofTac
+	}
+	return 0
+}
+
+func (x *Invoice) GetDebitService() float64 {
+	if x != nil {
+		return x.DebitService
 	}
 	return 0
 }
@@ -902,12 +918,15 @@ const file_protos_plan_proto_rawDesc = "" +
 	"\x19first_payment_date_millis\x18\x04 \x01(\x03R\x16firstPaymentDateMillis\x12.\n" +
 	"\x05plans\x18\x05 \x01(\v2\x18.cli.types.PlanResponsesR\x05plans\"T\n" +
 	"\x14DownPaymentResponses\x12<\n" +
-	"\tresponses\x18\x01 \x03(\v2\x1e.cli.types.DownPaymentResponseR\tresponses\"\xa3\x01\n" +
+	"\tresponses\x18\x01 \x03(\v2\x1e.cli.types.DownPaymentResponseR\tresponses\"\xea\x01\n" +
 	"\aInvoice\x12)\n" +
 	"\x10accumulated_days\x18\x01 \x01(\x03R\x0faccumulatedDays\x12\x16\n" +
 	"\x06factor\x18\x02 \x01(\x01R\x06factor\x12-\n" +
 	"\x12accumulated_factor\x18\x03 \x01(\x01R\x11accumulatedFactor\x12&\n" +
-	"\x0fdue_date_millis\x18\x04 \x01(\x03R\rdueDateMillis\":\n" +
+	"\x0fdue_date_millis\x18\x04 \x01(\x03R\rdueDateMillis\x12 \n" +
+	"\fmain_iof_tac\x18\x05 \x01(\x01R\n" +
+	"mainIofTac\x12#\n" +
+	"\rdebit_service\x18\x06 \x01(\x01R\fdebitService\":\n" +
 	"\bInvoices\x12.\n" +
 	"\binvoices\x18\x01 \x03(\v2\x12.cli.types.InvoiceR\binvoicesB\x16Z\x14playment_plan/protosb\x06proto3"
 

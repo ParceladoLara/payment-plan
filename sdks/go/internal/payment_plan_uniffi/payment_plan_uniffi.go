@@ -722,6 +722,8 @@ type InternalInvoice struct {
 	AccumulatedDays   int64
 	Factor            float64
 	AccumulatedFactor float64
+	MainIofTac        float64
+	DebitService      float64
 	DueDate           time.Time
 }
 
@@ -729,6 +731,8 @@ func (r *InternalInvoice) Destroy() {
 	FfiDestroyerInt64{}.Destroy(r.AccumulatedDays)
 	FfiDestroyerFloat64{}.Destroy(r.Factor)
 	FfiDestroyerFloat64{}.Destroy(r.AccumulatedFactor)
+	FfiDestroyerFloat64{}.Destroy(r.MainIofTac)
+	FfiDestroyerFloat64{}.Destroy(r.DebitService)
 	FfiDestroyerTimestamp{}.Destroy(r.DueDate)
 }
 
@@ -745,6 +749,8 @@ func (c FfiConverterInternalInvoice) Read(reader io.Reader) InternalInvoice {
 		FfiConverterInt64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
+		FfiConverterFloat64INSTANCE.Read(reader),
+		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
 	}
 }
@@ -757,6 +763,8 @@ func (c FfiConverterInternalInvoice) Write(writer io.Writer, value InternalInvoi
 	FfiConverterInt64INSTANCE.Write(writer, value.AccumulatedDays)
 	FfiConverterFloat64INSTANCE.Write(writer, value.Factor)
 	FfiConverterFloat64INSTANCE.Write(writer, value.AccumulatedFactor)
+	FfiConverterFloat64INSTANCE.Write(writer, value.MainIofTac)
+	FfiConverterFloat64INSTANCE.Write(writer, value.DebitService)
 	FfiConverterTimestampINSTANCE.Write(writer, value.DueDate)
 }
 

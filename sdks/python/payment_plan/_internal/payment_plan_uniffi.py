@@ -1153,15 +1153,19 @@ class InternalInvoice:
     accumulated_days: "int"
     factor: "float"
     accumulated_factor: "float"
+    main_iof_tac: "float"
+    debit_service: "float"
     due_date: "Timestamp"
-    def __init__(self, *, accumulated_days: "int", factor: "float", accumulated_factor: "float", due_date: "Timestamp"):
+    def __init__(self, *, accumulated_days: "int", factor: "float", accumulated_factor: "float", main_iof_tac: "float", debit_service: "float", due_date: "Timestamp"):
         self.accumulated_days = accumulated_days
         self.factor = factor
         self.accumulated_factor = accumulated_factor
+        self.main_iof_tac = main_iof_tac
+        self.debit_service = debit_service
         self.due_date = due_date
 
     def __str__(self):
-        return "InternalInvoice(accumulated_days={}, factor={}, accumulated_factor={}, due_date={})".format(self.accumulated_days, self.factor, self.accumulated_factor, self.due_date)
+        return "InternalInvoice(accumulated_days={}, factor={}, accumulated_factor={}, main_iof_tac={}, debit_service={}, due_date={})".format(self.accumulated_days, self.factor, self.accumulated_factor, self.main_iof_tac, self.debit_service, self.due_date)
 
     def __eq__(self, other):
         if self.accumulated_days != other.accumulated_days:
@@ -1169,6 +1173,10 @@ class InternalInvoice:
         if self.factor != other.factor:
             return False
         if self.accumulated_factor != other.accumulated_factor:
+            return False
+        if self.main_iof_tac != other.main_iof_tac:
+            return False
+        if self.debit_service != other.debit_service:
             return False
         if self.due_date != other.due_date:
             return False
@@ -1181,6 +1189,8 @@ class _UniffiConverterTypeInternalInvoice(_UniffiConverterRustBuffer):
             accumulated_days=_UniffiConverterInt64.read(buf),
             factor=_UniffiConverterDouble.read(buf),
             accumulated_factor=_UniffiConverterDouble.read(buf),
+            main_iof_tac=_UniffiConverterDouble.read(buf),
+            debit_service=_UniffiConverterDouble.read(buf),
             due_date=_UniffiConverterTimestamp.read(buf),
         )
 
@@ -1189,6 +1199,8 @@ class _UniffiConverterTypeInternalInvoice(_UniffiConverterRustBuffer):
         _UniffiConverterInt64.check_lower(value.accumulated_days)
         _UniffiConverterDouble.check_lower(value.factor)
         _UniffiConverterDouble.check_lower(value.accumulated_factor)
+        _UniffiConverterDouble.check_lower(value.main_iof_tac)
+        _UniffiConverterDouble.check_lower(value.debit_service)
         _UniffiConverterTimestamp.check_lower(value.due_date)
 
     @staticmethod
@@ -1196,6 +1208,8 @@ class _UniffiConverterTypeInternalInvoice(_UniffiConverterRustBuffer):
         _UniffiConverterInt64.write(value.accumulated_days, buf)
         _UniffiConverterDouble.write(value.factor, buf)
         _UniffiConverterDouble.write(value.accumulated_factor, buf)
+        _UniffiConverterDouble.write(value.main_iof_tac, buf)
+        _UniffiConverterDouble.write(value.debit_service, buf)
         _UniffiConverterTimestamp.write(value.due_date, buf)
 
 

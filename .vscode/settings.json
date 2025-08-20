@@ -2,10 +2,11 @@
   "cSpell.words": [
     "bindgen",
     "chrono",
+    "IOFTAC",
+    "iterative",
     "powf",
     "protobuf",
     "PROTOC",
-    "iterative",
     "serde",
     "struct",
     "structs",

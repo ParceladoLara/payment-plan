@@ -21,6 +21,23 @@ pub struct InstallmentData {
     pub invoices: Vec<Invoice>,
 }
 
+pub fn insert_price_table_on_invoices(
+    invoices: &mut Vec<Invoice>,
+    contract_amount: f64,
+    installment_amount: f64,
+    interest_rate: f64,
+) {
+    let mut amortization_amount = contract_amount;
+
+    for i in invoices {
+        let debit_service = interest_rate * amortization_amount;
+        let main_iof_tac = installment_amount - debit_service;
+        i.main_iof_tac = main_iof_tac;
+        i.debit_service = debit_service;
+        amortization_amount -= main_iof_tac;
+    }
+}
+
 pub fn calc(inner_params: &InnerParams) -> InstallmentData {
     if inner_params.params.disbursement_only_on_business_days {
         return calc_installments_on_business_days(inner_params);
@@ -31,6 +48,7 @@ pub fn calc(inner_params: &InnerParams) -> InstallmentData {
 
 fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
     let daily_interest_rate = inner_params.daily_interest_rate;
+    let main_value = inner_params.main_value;
 
     let params = inner_params.params;
 
@@ -48,14 +66,11 @@ fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
     let mut due_dates = Vec::with_capacity(installments as usize);
     let mut invoices = Vec::with_capacity(installments as usize);
 
-    let mut instalment_amount_result = 0.0;
-
     let mut factor = 0.0;
 
     let base_factor = 1.0 / (1.0 + daily_interest_rate);
 
     for i in 0..installments {
-        let main_value = inner_params.main_value;
         if i != 0 {
             last_due_date = due_date;
             due_date = add_months(due_date, 1);
@@ -70,24 +85,29 @@ fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
         factor = round_decimal_cases(factor, 15);
 
         accumulated_factor += factor;
-        let installment_amount = main_value / accumulated_factor;
-        let installment_amount = round_decimal_cases(installment_amount, 2);
+
         accumulated_days_v.push(accumulated_days);
 
-        instalment_amount_result = installment_amount;
         invoices.push(Invoice {
             accumulated_days: accumulated_days,
             factor,
             accumulated_factor,
+            main_iof_tac: 0.0,
+            debit_service: 0.0,
             due_date,
         });
     }
+
+    let installment_amount = main_value / accumulated_factor;
+    let installment_amount = round_decimal_cases(installment_amount, 2);
+    let amount = installment_amount;
+
     return InstallmentData {
         business_diffs: diffs.clone(),
         accumulated_business_days: accumulated_days_v.clone(),
         accumulated_days: accumulated_days_v,
         diffs,
-        amount: instalment_amount_result,
+        amount,
         factor,
         accumulated_factor,
         last_due_date: due_date,
@@ -100,6 +120,7 @@ fn calc_installments_on_business_days(inner_params: &InnerParams) -> Installment
     let daily_interest_rate = inner_params.daily_interest_rate;
 
     let params = inner_params.params;
+    let main_value = inner_params.main_value;
 
     let disbursement_date = params.disbursement_date;
     let first_payment_date = params.first_payment_date;
@@ -119,14 +140,10 @@ fn calc_installments_on_business_days(inner_params: &InnerParams) -> Installment
     let mut due_dates = Vec::with_capacity(installments as usize);
     let mut invoices = Vec::with_capacity(installments as usize);
 
-    let mut instalment_amount_result = 0.0;
-
     let mut factor = 0.0;
 
     let base_factor = 1.0 / (1.0 + daily_interest_rate);
     for i in 0..installments {
-        let main_value = inner_params.main_value;
-
         due_date = add_months(base_due_date, i);
         due_date = get_next_business_day(due_date);
 
@@ -145,27 +162,31 @@ fn calc_installments_on_business_days(inner_params: &InnerParams) -> Installment
         factor = round_decimal_cases(factor, 15);
 
         accumulated_factor += factor;
-        let installment_amount = main_value / accumulated_factor;
-        let installment_amount = round_decimal_cases(installment_amount, 2);
         accumulated_days_v.push(accumulated_days);
         accumulated_business_days_v.push(accumulated_business_days);
 
-        instalment_amount_result = installment_amount;
         invoices.push(Invoice {
             accumulated_days,
             factor,
             accumulated_factor,
+            main_iof_tac: 0.0,
+            debit_service: 0.0,
             due_date,
         });
 
         last_due_date = due_date;
     }
+
+    let installment_amount = main_value / accumulated_factor;
+    let installment_amount = round_decimal_cases(installment_amount, 2);
+    let amount = installment_amount;
+
     return InstallmentData {
         accumulated_days: accumulated_days_v,
         diffs,
         accumulated_business_days: accumulated_business_days_v,
         business_diffs,
-        amount: instalment_amount_result,
+        amount,
         factor,
         accumulated_factor,
         last_due_date: due_date,
@@ -231,108 +252,144 @@ mod test {
                     accumulated_days: 30,
                     factor: 0.961538521141742,
                     accumulated_factor: 0.961538521141742,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 61,
                     factor: 0.923348394036885,
                     accumulated_factor: 1.884886915178627,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 91,
                     factor: 0.887835049300829,
                     accumulated_factor: 2.772721964479456,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2024, 12, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 122,
                     factor: 0.852572256770495,
                     accumulated_factor: 3.625294221249951,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 01, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 153,
                     factor: 0.818710022303302,
                     accumulated_factor: 4.444004243553253,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 02, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 181,
                     factor: 0.789282272705526,
                     accumulated_factor: 5.2332865162587785,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 03, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 212,
                     factor: 0.757933772719854,
                     accumulated_factor: 5.991220288978632,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 04, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 242,
                     factor: 0.72878251894443,
                     accumulated_factor: 6.720002807923063,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 05, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 273,
                     factor: 0.699836931827195,
                     accumulated_factor: 7.419839739750258,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 06, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 303,
                     factor: 0.672920168469495,
                     accumulated_factor: 8.092759908219753,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 07, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 334,
                     factor: 0.646193307090341,
                     accumulated_factor: 8.738953215310094,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 08, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 365,
                     factor: 0.620527975967898,
                     accumulated_factor: 9.359481191277991,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 09, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 395,
                     factor: 0.596661552339251,
                     accumulated_factor: 9.956142743617242,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 10, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 426,
                     factor: 0.572963510064917,
                     accumulated_factor: 10.529106253682158,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 11, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 456,
                     factor: 0.550926486136002,
                     accumulated_factor: 11.08003273981816,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2025, 12, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 487,
                     factor: 0.529044936860178,
                     accumulated_factor: 11.609077676678337,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 01, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 518,
                     factor: 0.5080324730445,
                     accumulated_factor: 12.117110149722837,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 02, 24).unwrap(),
                 },
                 Invoice {
                     accumulated_days: 546,
                     factor: 0.489771731149302,
                     accumulated_factor: 12.60688188087214,
+                    main_iof_tac: 0.0,
+                    debit_service: 0.0,
                     due_date: chrono::NaiveDate::from_ymd_opt(2026, 03, 24).unwrap(),
                 },
             ],

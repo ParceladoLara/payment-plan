@@ -28,6 +28,8 @@ const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
  * @property {number} accumulatedDays
  * @property {number} factor
  * @property {number} accumulatedFactor
+ * @property {number} mainIOFTAC
+ * @property {number} debitService
  * @property {Date} dueDate
  */
 

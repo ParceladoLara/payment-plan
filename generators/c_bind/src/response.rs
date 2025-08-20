@@ -8,6 +8,8 @@ pub struct Invoice {
     pub accumulated_days: i64,
     pub factor: f64,
     pub accumulated_factor: f64,
+    pub main_iof_tac: f64,
+    pub debit_service: f64,
     pub due_date_ms: i64,
 }
 
@@ -22,6 +24,8 @@ impl From<core_payment_plan::Invoice> for Invoice {
             accumulated_days: value.accumulated_days,
             factor: value.factor,
             accumulated_factor: value.accumulated_factor,
+            debit_service: value.debit_service,
+            main_iof_tac: value.main_iof_tac,
             due_date_ms: due_date,
         }
     }
