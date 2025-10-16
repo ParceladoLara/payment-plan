@@ -2,6 +2,7 @@ use chrono::Datelike;
 use core_payment_plan::{
     calculate_down_payment_plan, calculate_payment_plan, DownPaymentParams, Params,
 };
+use rust_decimal::dec;
 
 fn main() {
     let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 10, 23).unwrap();
@@ -9,18 +10,18 @@ fn main() {
     let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 11, 23).unwrap();
 
     let params = Params {
-        requested_amount: 12853.43,
+        requested_amount: dec!(12853.43),
         first_payment_date,
         disbursement_date: disbursement_date,
         installments: 48,
         debit_service_percentage: 0,
-        mdr: 0.05,
-        tac_percentage: 0.0,
-        iof_overall: 0.0038,
-        iof_percentage: 0.000082,
-        interest_rate: 0.035,
-        min_installment_amount: 100.0,
-        max_total_amount: 1000000.0,
+        mdr: dec!(0.05),
+        tac_percentage: dec!(0.0),
+        iof_overall: dec!(0.0038),
+        iof_percentage: dec!(0.000082),
+        interest_rate: dec!(0.035),
+        min_installment_amount: dec!(100.0),
+        max_total_amount: dec!(1000000.0),
         disbursement_only_on_business_days: true,
     };
 
@@ -28,8 +29,8 @@ fn main() {
         params,
         first_payment_date,
         installments: 4,
-        min_installment_amount: 100.0,
-        requested_amount: 1000.0,
+        min_installment_amount: dec!(100.0),
+        requested_amount: dec!(1000.0),
     };
 
     let result = calculate_payment_plan(params).unwrap().pop().unwrap();

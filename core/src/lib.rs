@@ -2,6 +2,7 @@ use std::fmt::Display;
 
 use calc::PaymentPlan;
 use err::PaymentPlanError;
+use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "iterative")]
@@ -20,27 +21,27 @@ mod util;
 #[derive(Debug, Default, Clone, Copy, Deserialize, PartialEq, Serialize)]
 pub struct Invoice {
     pub accumulated_days: i64,
-    pub factor: f64,
-    pub accumulated_factor: f64,
-    pub main_iof_tac: f64,
-    pub debit_service: f64,
+    pub factor: Decimal,
+    pub accumulated_factor: Decimal,
+    pub main_iof_tac: Decimal,
+    pub debit_service: Decimal,
     pub due_date: chrono::NaiveDate,
 }
 
 #[derive(Debug, Default, Clone, Copy, Deserialize)]
 pub struct Params {
-    pub requested_amount: f64,
+    pub requested_amount: Decimal,
     pub first_payment_date: chrono::NaiveDate,
     pub disbursement_date: chrono::NaiveDate,
     pub installments: u32,
     pub debit_service_percentage: u16, // 0-100
-    pub mdr: f64,                      // 0.0-1.0
-    pub tac_percentage: f64,           // 0.0-1.0
-    pub iof_overall: f64,              // 0.0-1.0
-    pub iof_percentage: f64,           // 0.0-1.0
-    pub interest_rate: f64,            // 0.0-1.0
-    pub min_installment_amount: f64,
-    pub max_total_amount: f64,
+    pub mdr: Decimal,                  // 0.0-1.0
+    pub tac_percentage: Decimal,       // 0.0-1.0
+    pub iof_overall: Decimal,          // 0.0-1.0
+    pub iof_percentage: Decimal,       // 0.0-1.0
+    pub interest_rate: Decimal,        // 0.0-1.0
+    pub min_installment_amount: Decimal,
+    pub max_total_amount: Decimal,
     pub disbursement_only_on_business_days: bool,
 }
 
@@ -71,55 +72,55 @@ pub struct Response {
     pub due_date: chrono::NaiveDate,
     pub disbursement_date: chrono::NaiveDate,
     pub accumulated_days: i64,
-    pub days_index: f64,
-    pub accumulated_days_index: f64,
-    pub interest_rate: f64,
-    pub installment_amount: f64,
-    pub installment_amount_without_tac: f64,
-    pub total_amount: f64,
-    pub debit_service: f64,
-    pub customer_debit_service_amount: f64,
-    pub customer_amount: f64,
-    pub calculation_basis_for_effective_interest_rate: f64,
-    pub merchant_debit_service_amount: f64,
-    pub merchant_total_amount: f64,
-    pub settled_to_merchant: f64,
-    pub mdr_amount: f64,
-    pub effective_interest_rate: f64,
-    pub total_effective_cost: f64,
-    pub eir_yearly: f64,
-    pub tec_yearly: f64,
-    pub eir_monthly: f64,
-    pub tec_monthly: f64,
-    pub total_iof: f64,
-    pub contract_amount: f64,
-    pub contract_amount_without_tac: f64,
-    pub tac_amount: f64,
-    pub iof_percentage: f64,
-    pub overall_iof: f64,
-    pub pre_disbursement_amount: f64,
-    pub paid_total_iof: f64,
-    pub paid_contract_amount: f64,
+    pub days_index: Decimal,
+    pub accumulated_days_index: Decimal,
+    pub interest_rate: Decimal,
+    pub installment_amount: Decimal,
+    pub installment_amount_without_tac: Decimal,
+    pub total_amount: Decimal,
+    pub debit_service: Decimal,
+    pub customer_debit_service_amount: Decimal,
+    pub customer_amount: Decimal,
+    pub calculation_basis_for_effective_interest_rate: Decimal,
+    pub merchant_debit_service_amount: Decimal,
+    pub merchant_total_amount: Decimal,
+    pub settled_to_merchant: Decimal,
+    pub mdr_amount: Decimal,
+    pub effective_interest_rate: Decimal,
+    pub total_effective_cost: Decimal,
+    pub eir_yearly: Decimal,
+    pub tec_yearly: Decimal,
+    pub eir_monthly: Decimal,
+    pub tec_monthly: Decimal,
+    pub total_iof: Decimal,
+    pub contract_amount: Decimal,
+    pub contract_amount_without_tac: Decimal,
+    pub tac_amount: Decimal,
+    pub iof_percentage: Decimal,
+    pub overall_iof: Decimal,
+    pub pre_disbursement_amount: Decimal,
+    pub paid_total_iof: Decimal,
+    pub paid_contract_amount: Decimal,
     pub invoices: Vec<Invoice>,
 }
 
 #[derive(Debug, Deserialize, Clone, Copy)]
 pub struct DownPaymentParams {
-    pub params: Params,              // The params for the actual payment plan
-    pub requested_amount: f64,       // The requested amount for the down payment(ex: 1000.0)
-    pub min_installment_amount: f64, // The minium installment value for the down payment (ex: 100.0)
+    pub params: Params,                  // The params for the actual payment plan
+    pub requested_amount: Decimal,       // The requested amount for the down payment(ex: 1000.0)
+    pub min_installment_amount: Decimal, // The minium installment value for the down payment (ex: 100.0)
     pub first_payment_date: chrono::NaiveDate, // The first payment date for the down payment
-    pub installments: u32,           // The max number of installments for the down payment (ex: 12)
+    pub installments: u32, // The max number of installments for the down payment (ex: 12)
 }
 
 //This struct can't derive Copy because it contains a Vec that is not known at compile time
 #[derive(Debug, Serialize, Clone)]
 pub struct DownPaymentResponse {
-    pub installment_amount: f64, // The installment amount for the down payment
-    pub total_amount: f64,       // The total amount for the down payment
-    pub installment_quantity: u32, // The number of installments for the down payment
+    pub installment_amount: Decimal, // The installment amount for the down payment
+    pub total_amount: Decimal,       // The total amount for the down payment
+    pub installment_quantity: u32,   // The number of installments for the down payment
     pub first_payment_date: chrono::NaiveDate, // The first payment date for the down payment
-    pub plans: Vec<Response>,    // The payment plans available for the down payment
+    pub plans: Vec<Response>,        // The payment plans available for the down payment
 }
 
 #[cfg(feature = "simple")]

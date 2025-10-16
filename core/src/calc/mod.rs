@@ -3,6 +3,7 @@ use crate::{
     util::{add_days, add_months},
     DownPaymentParams, DownPaymentResponse, Params, Response,
 };
+use rust_decimal::Decimal;
 
 mod inner_xirr;
 pub mod providers;
@@ -29,7 +30,7 @@ pub trait PaymentPlan {
         &self,
         params: DownPaymentParams,
     ) -> Result<Vec<DownPaymentResponse>, PaymentPlanError> {
-        if params.requested_amount <= 0.0 {
+        if params.requested_amount <= Decimal::ZERO {
             return Err(PaymentPlanError::InvalidRequestedAmount);
         }
         if params.installments == 0 {
@@ -49,9 +50,10 @@ pub trait PaymentPlan {
         let mut contract_first_payment_date = add_months(down_payment_first_payment_date, 1);
 
         for i in 1..=params.installments {
+            let installment = Decimal::from(i);
             base_params.first_payment_date = contract_first_payment_date;
             base_params.disbursement_date = contract_start_date;
-            let installment_amount = down_payment_amount / i as f64;
+            let installment_amount = down_payment_amount / installment;
 
             if installment_amount < min_installment_amount && i != 1 {
                 break;

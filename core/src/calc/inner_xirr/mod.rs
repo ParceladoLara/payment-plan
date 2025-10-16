@@ -1,4 +1,5 @@
 use chrono::NaiveDate;
+use rust_decimal::{prelude::ToPrimitive, Decimal};
 use xirr::Payment;
 
 pub mod eir;
@@ -7,24 +8,24 @@ pub mod tec;
 pub fn prepare_xirr_params(
     installments: u32,
     due_dates: &Vec<NaiveDate>,
-    calculation_basis_for_eir: f64,
-    customer_amount: f64,
+    calculation_basis_for_eir: Decimal,
+    customer_amount: Decimal,
 ) -> (Vec<Payment>, Vec<Payment>) {
     let mut eir_params = Vec::new();
     let mut tec_params = Vec::new();
 
-    let eir_amount = -1.0 * calculation_basis_for_eir;
-    let tec_amount = -1.0 * customer_amount;
+    let eir_amount = -Decimal::ONE * calculation_basis_for_eir;
+    let tec_amount = -Decimal::ONE * customer_amount;
 
     for i in 0..installments {
         let date = due_dates[i as usize];
 
         eir_params.push(Payment {
-            amount: eir_amount,
+            amount: eir_amount.to_f64().unwrap(),
             date,
         });
         tec_params.push(Payment {
-            amount: tec_amount,
+            amount: tec_amount.to_f64().unwrap(),
             date,
         });
     }
@@ -35,6 +36,7 @@ pub fn prepare_xirr_params(
 #[cfg(test)]
 mod test {
     use chrono::NaiveDate;
+    use rust_decimal::dec;
 
     use crate::calc::inner_xirr::prepare_xirr_params;
 
@@ -52,8 +54,8 @@ mod test {
         ];
 
         let installments = 1;
-        let calculation_basis_for_effective_interest_rate = 3005.610014640465;
-        let customer_amount = 3024.0190557363553;
+        let calculation_basis_for_effective_interest_rate = dec!(3005.610014640465);
+        let customer_amount = dec!(3024.0190557363553);
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
@@ -78,8 +80,8 @@ mod test {
         );
 
         let installments = 2;
-        let calculation_basis_for_effective_interest_rate = 1528.9066354183226;
-        let customer_amount = 1539.8988271991445;
+        let calculation_basis_for_effective_interest_rate = dec!(1528.9066354183226);
+        let customer_amount = dec!(1539.8988271991445);
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
@@ -103,8 +105,8 @@ mod test {
         }
 
         let installments = 3;
-        let calculation_basis_for_effective_interest_rate = 1037.298256951948;
-        let customer_amount = 1045.8446791163315;
+        let calculation_basis_for_effective_interest_rate = dec!(1037.298256951948);
+        let customer_amount = dec!(1045.8446791163315);
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
@@ -128,8 +130,8 @@ mod test {
         }
 
         let installments = 4;
-        let calculation_basis_for_effective_interest_rate = 791.5362879492445;
-        let customer_amount = 798.8498495930802;
+        let calculation_basis_for_effective_interest_rate = dec!(791.5362879492445);
+        let customer_amount = dec!(798.8498495930802);
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
@@ -153,8 +155,8 @@ mod test {
         }
 
         let installments = 5;
-        let calculation_basis_for_effective_interest_rate = 644.3191099311389;
-        let customer_amount = 650.8993291092211;
+        let calculation_basis_for_effective_interest_rate = dec!(644.3191099311389);
+        let customer_amount = dec!(650.8993291092211);
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,
@@ -178,8 +180,8 @@ mod test {
         }
 
         let installments = 6;
-        let calculation_basis_for_effective_interest_rate = 546.3383247758576;
-        let customer_amount = 552.4322553512001;
+        let calculation_basis_for_effective_interest_rate = dec!(546.3383247758576);
+        let customer_amount = dec!(552.4322553512001);
 
         let (eir_params, tec_params) = prepare_xirr_params(
             installments,

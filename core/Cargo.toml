@@ -11,6 +11,7 @@ path = "src/lib.rs"
 xirr = "0.2.3"
 chrono = { version = "0.4.38", features = ["serde"] }
 serde = { version = "1.0.203", features = ["serde_derive"] }
+rust_decimal = { version = "1.39.0", features = ["macros", "maths"] }
 
 [features]
 simple = []

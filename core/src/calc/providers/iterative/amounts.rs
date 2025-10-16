@@ -1,23 +1,25 @@
+use rust_decimal::Decimal;
+
 use crate::Params;
 
 #[derive(Debug, PartialEq)]
 pub struct AmountsResponse {
-    pub debit_service: f64,
-    pub customer_debit_service_amount: f64,
-    pub customer_amount: f64,
-    pub calculation_basis_for_effective_interest_rate: f64,
-    pub mdr_amount: f64,
-    pub merchant_debit_service_amount: f64,
-    pub merchant_total_amount: f64,
-    pub settled_to_merchant: f64,
+    pub debit_service: Decimal,
+    pub customer_debit_service_amount: Decimal,
+    pub customer_amount: Decimal,
+    pub calculation_basis_for_effective_interest_rate: Decimal,
+    pub mdr_amount: Decimal,
+    pub merchant_debit_service_amount: Decimal,
+    pub merchant_total_amount: Decimal,
+    pub settled_to_merchant: Decimal,
 }
 
 pub fn calc(
     params: Params,
-    installments: f64,
-    customer_debit_service_proportion: f64,
-    total_iof: f64,
-    total_amount: f64,
+    installments: Decimal,
+    customer_debit_service_proportion: Decimal,
+    total_iof: Decimal,
+    total_amount: Decimal,
 ) -> AmountsResponse {
     let debit_service_percentage = params.debit_service_percentage;
     // TOTAL FINANCIADO NA PLANILHA BPM
@@ -39,7 +41,7 @@ pub fn calc(
     let mdr_amount = requested_amount * params.mdr;
 
     let merchant_debit_service_amount =
-        (debit_service + tac_amount) * debit_service_percentage as f64;
+        (debit_service + tac_amount) * Decimal::from(debit_service_percentage);
 
     let merchant_total_amount = merchant_debit_service_amount + mdr_amount;
 
@@ -59,19 +61,21 @@ pub fn calc(
 
 #[cfg(test)]
 mod test {
+    use rust_decimal::{dec, Decimal};
+
     use crate::{calc::providers::iterative::amounts::AmountsResponse, Params};
 
     #[test]
     fn test_calc() {
         let expected = AmountsResponse {
-            debit_service: 3264.9940111656333,
-            customer_debit_service_amount: 3264.9940111656333,
-            customer_amount: 605.4000559686463,
-            calculation_basis_for_effective_interest_rate: 594.2218895092018,
-            mdr_amount: 371.55,
-            merchant_debit_service_amount: 0.0,
-            merchant_total_amount: 371.55,
-            settled_to_merchant: 7059.45,
+            debit_service: dec!(3264.9940111656333),
+            customer_debit_service_amount: dec!(3264.9940111656333),
+            customer_amount: dec!(605.4000559686463),
+            calculation_basis_for_effective_interest_rate: dec!(594.2218895092018),
+            mdr_amount: dec!(371.55),
+            merchant_debit_service_amount: Decimal::ZERO,
+            merchant_total_amount: dec!(371.55),
+            settled_to_merchant: dec!(7059.45),
         };
 
         let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
@@ -80,27 +84,27 @@ mod test {
 
         let params = Params {
             disbursement_only_on_business_days: false,
-            requested_amount: 7431.0,
+            requested_amount: dec!(7431.0),
             first_payment_date,
             disbursement_date: disbursement_date,
             installments: 18,
             debit_service_percentage: 0,
-            mdr: 0.05,
-            tac_percentage: 0.0,
-            iof_overall: 0.0038,
-            iof_percentage: 0.03,
-            interest_rate: 0.04,
-            min_installment_amount: 100.0,
-            max_total_amount: f64::MAX,
+            mdr: dec!(0.05),
+            tac_percentage: Decimal::ZERO,
+            iof_overall: dec!(0.0038),
+            iof_percentage: dec!(0.03),
+            interest_rate: dec!(0.04),
+            min_installment_amount: dec!(100.0),
+            max_total_amount: Decimal::MAX,
         };
         let installments = 18;
-        let debit_service_proportion = 1.0;
-        let iof = 201.20699627;
-        let total_amount = 10897.201007435633;
+        let debit_service_proportion = Decimal::ONE;
+        let iof = dec!(201.20699627);
+        let total_amount = dec!(10897.201007435633);
 
         let amounts = super::calc(
             params,
-            installments as f64,
+            installments.into(),
             debit_service_proportion,
             iof,
             total_amount,

@@ -4,6 +4,7 @@
     "chrono",
     "IOFTAC",
     "iterative",
+    "powd",
     "powf",
     "protobuf",
     "PROTOC",
