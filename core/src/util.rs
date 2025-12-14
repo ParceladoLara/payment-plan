@@ -724,10 +724,11 @@ pub fn is_business_day(date: chrono::NaiveDate) -> bool {
 }
 
 pub fn add_months(date: chrono::NaiveDate, months: u32) -> chrono::NaiveDate {
-    let mut due_date = date;
-    for _ in 0..months {
-        due_date = due_date.checked_add_months(Months::new(1)).unwrap();
+    if months == 0 {
+        return date;
     }
+    let mut due_date = date;
+    due_date = due_date.checked_add_months(Months::new(months)).unwrap();
     return due_date;
 }
 
