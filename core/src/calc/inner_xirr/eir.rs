@@ -1,10 +1,11 @@
+use chrono::NaiveDate;
 use xirr::{compute, Payment};
 
 use crate::{err::PaymentPlanError, Params};
 
 pub fn calculate_eir_monthly(
     params: Params,
-    eir_params: Vec<Payment>,
+    eir_params: Vec<Payment<NaiveDate>>,
     customer_debit_service_proportion: f64,
     calculation_basis_for_effective_interest_rate: f64,
 ) -> Result<f64, PaymentPlanError> {
@@ -39,7 +40,7 @@ pub fn calculate_eir_monthly(
                 eir_monthly = eir_monthly.powf(calculation_basis_for_effective_interest_rate) - 1.0;
             }
             Err(_) => {
-                let converged_eir_params: Vec<Payment> = effective_interest_rate_xirr
+                let converged_eir_params: Vec<Payment<NaiveDate>> = effective_interest_rate_xirr
                     .iter()
                     .map(|eir| Payment {
                         amount: -1.0 * eir.amount,
