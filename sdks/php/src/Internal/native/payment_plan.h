@@ -17,18 +17,6 @@
 
 #include <stdbool.h>
 
-/** \brief
- *  Simplified for lighter documentation, but the actual impls
- *  range from `Tuple1` up to `Tuple6`.
- */
-typedef struct Tuple2_bool_uint32 {
-    /** <No documentation available> */
-    bool _0;
-
-    /** <No documentation available> */
-    uint32_t _1;
-} Tuple2_bool_uint32_t;
-
 /** <No documentation available> */
 typedef struct Params {
     /** <No documentation available> */
@@ -71,7 +59,7 @@ typedef struct Params {
     bool disbursement_only_on_business_days;
 
     /** <No documentation available> */
-    Tuple2_bool_uint32_t min_installments;
+    uint32_t min_installments;
 } Params_t;
 
 /** <No documentation available> */

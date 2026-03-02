@@ -215,6 +215,171 @@ class PaymentPlanTest extends TestCase
     $this->helpAssert($expected4, $result[3]);
   }
 
+  public function testCalculateReturnsArrayOfResponsesWithMinInstallments(): void
+  {
+
+    $expectedInvoice1 = new Invoice();
+    $expectedInvoice1->accumulatedDays = 28;
+    $expectedInvoice1->factor = 0.981371965896169;
+    $expectedInvoice1->accumulatedFactor = 0.981371965896169;
+    $expectedInvoice1->dueDate = new DateTimeImmutable('2025-05-05');
+
+    $expectedInvoice2 = new Invoice();
+    $expectedInvoice2->accumulatedDays = 57;
+    $expectedInvoice2->factor = 0.958839243657051;
+    $expectedInvoice2->accumulatedFactor = 1.94021120955322;
+    $expectedInvoice2->dueDate = new DateTimeImmutable('2025-06-03');
+
+    $expectedInvoice3 = new Invoice();
+    $expectedInvoice3->accumulatedDays = 87;
+    $expectedInvoice3->factor = 0.936823882407599;
+    $expectedInvoice3->accumulatedFactor = 2.8770350919608187;
+    $expectedInvoice3->dueDate = new DateTimeImmutable('2025-07-03');
+
+    $expectedInvoice4 = new Invoice();
+    $expectedInvoice4->accumulatedDays = 119;
+    $expectedInvoice4->factor = 0.914302133077605;
+    $expectedInvoice4->accumulatedFactor = 3.791337225038424;
+    $expectedInvoice4->dueDate = new DateTimeImmutable('2025-08-04');
+
+    $expected2 = new Response();
+    $expected2->installment = 2;
+    $expected2->dueDate = new DateTimeImmutable('2025-06-03');
+    $expected2->disbursementDate = new DateTimeImmutable('2025-04-07');
+    $expected2->accumulatedDays = 57;
+    $expected2->daysIndex = 0.958839243657051;
+    $expected2->accumulatedDaysIndex = 1.94021120955322;
+    $expected2->interestRate = 0.0235;
+    $expected2->installmentAmount = 4049.72;
+    $expected2->installmentAmountWithoutTac = 0.0;
+    $expected2->totalAmount = 8099.44;
+    $expected2->debitService = 242.1299999999996;
+    $expected2->customerDebitServiceAmount = 242.1299999999996;
+    $expected2->customerAmount = 4049.72;
+    $expected2->calculationBasisForEffectiveInterestRate = 4021.0649999999996;
+    $expected2->merchantDebitServiceAmount = 0.0;
+    $expected2->merchantTotalAmount = 390.0;
+    $expected2->settledToMerchant = 7410.0;
+    $expected2->mdrAmount = 390.0;
+    $expected2->effectiveInterestRate = 0.022;
+    $expected2->totalEffectiveCost = 0.0274;
+    $expected2->eirYearly = 0.298378;
+    $expected2->tecYearly = 0.382981;
+    $expected2->eirMonthly = 0.022;
+    $expected2->tecMonthly = 0.0274;
+    $expected2->totalIof = 57.31;
+    $expected2->contractAmount = 7857.31;
+    $expected2->contractAmountWithoutTac = 0.0;
+    $expected2->tacAmount = 0.0;
+    $expected2->iofPercentage = 8.2e-5;
+    $expected2->overallIof = 0.0038;
+    $expected2->preDisbursementAmount = 7800.0;
+    $expected2->paidTotalIof = 57.31;
+    $expected2->paidContractAmount = 7857.31;
+    $expected2->invoices = [$expectedInvoice1, $expectedInvoice2];
+
+    $expected3 = new Response();
+    $expected3->installment = 3;
+    $expected3->dueDate = new DateTimeImmutable('2025-07-03');
+    $expected3->disbursementDate = new DateTimeImmutable('2025-04-07');
+    $expected3->accumulatedDays = 87;
+    $expected3->daysIndex = 0.936823882407599;
+    $expected3->accumulatedDaysIndex = 2.8770350919608187;
+    $expected3->interestRate = 0.0235;
+    $expected3->installmentAmount = 2734.44;
+    $expected3->installmentAmountWithoutTac = 0.0;
+    $expected3->totalAmount = 8203.32;
+    $expected3->debitService = 336.2299999999997;
+    $expected3->customerDebitServiceAmount = 336.2299999999997;
+    $expected3->customerAmount = 2734.44;
+    $expected3->calculationBasisForEffectiveInterestRate = 2712.0766666666664;
+    $expected3->merchantDebitServiceAmount = 0.0;
+    $expected3->merchantTotalAmount = 390.0;
+    $expected3->settledToMerchant = 7410.0;
+    $expected3->mdrAmount = 390.0;
+    $expected3->effectiveInterestRate = 0.0225;
+    $expected3->totalEffectiveCost = 0.0272;
+    $expected3->eirYearly = 0.306592;
+    $expected3->tecYearly = 0.380434;
+    $expected3->eirMonthly = 0.0225;
+    $expected3->tecMonthly = 0.0272;
+    $expected3->totalIof = 67.09;
+    $expected3->contractAmount = 7867.09;
+    $expected3->contractAmountWithoutTac = 0.0;
+    $expected3->tacAmount = 0.0;
+    $expected3->iofPercentage = 8.2e-5;
+    $expected3->overallIof = 0.0038;
+    $expected3->preDisbursementAmount = 7799.99;
+    $expected3->paidTotalIof = 67.08;
+    $expected3->paidContractAmount = 7867.08;
+    $expected3->invoices = [$expectedInvoice1, $expectedInvoice2, $expectedInvoice3];
+
+    $expected4 = new Response();
+    $expected4->installment = 4;
+    $expected4->dueDate = new DateTimeImmutable('2025-08-04');
+    $expected4->disbursementDate = new DateTimeImmutable('2025-04-07');
+    $expected4->accumulatedDays = 119;
+    $expected4->daysIndex = 0.914302133077605;
+    $expected4->accumulatedDaysIndex = 3.791337225038424;
+    $expected4->interestRate = 0.0235;
+    $expected4->installmentAmount = 2077.73;
+    $expected4->installmentAmountWithoutTac = 0.0;
+    $expected4->totalAmount = 8310.92;
+    $expected4->debitService = 433.56000000000006;
+    $expected4->customerDebitServiceAmount = 433.56000000000006;
+    $expected4->customerAmount = 2077.73;
+    $expected4->calculationBasisForEffectiveInterestRate = 2058.39;
+    $expected4->merchantDebitServiceAmount = 0.0;
+    $expected4->merchantTotalAmount = 390.0;
+    $expected4->settledToMerchant = 7410.0;
+    $expected4->mdrAmount = 390.0;
+    $expected4->effectiveInterestRate = 0.0228;
+    $expected4->totalEffectiveCost = 0.0271;
+    $expected4->eirYearly = 0.310455;
+    $expected4->tecYearly = 0.377876;
+    $expected4->eirMonthly = 0.0228;
+    $expected4->tecMonthly = 0.0271;
+    $expected4->totalIof = 77.36;
+    $expected4->contractAmount = 7877.36;
+    $expected4->contractAmountWithoutTac = 0.0;
+    $expected4->tacAmount = 0.0;
+    $expected4->iofPercentage = 8.2e-5;
+    $expected4->overallIof = 0.0038;
+    $expected4->preDisbursementAmount = 7800.02;
+    $expected4->paidTotalIof = 77.38;
+    $expected4->paidContractAmount = 7877.38;
+    $expected4->invoices = [$expectedInvoice1, $expectedInvoice2, $expectedInvoice3, $expectedInvoice4];
+
+
+
+    $params = new Params(
+      7800.0, // requested_amount
+      new DateTimeImmutable('2025-05-03 05:00:00'), // first_payment_date
+      new DateTimeImmutable('2025-04-05 05:00:00'), // disbursementDate
+      4,     // installments
+      0,      // debitService_percentage
+      0.05,   // mdr
+      0.0,    // tac_percentage
+      0.0038, // iof_overall
+      0.000082, // iofPercentage
+      0.0235, // interestRate
+      100.0,   // min_installmentAmount
+      1000000, // max_totalAmount
+      true,    // disbursement_only_on_business_days
+      2, //min_installments
+    );
+
+    $result = PaymentPlan::calculate($params);
+
+    $this->assertIsArray($result);
+    $this->assertNotEmpty($result);
+    $this->assertCount(3, $result); //The 1 installment result should be removed because of the min_installments parameter
+    $this->assertIsObject($result[0]);
+    $this->helpAssert($expected2, $result[0]);
+    $this->helpAssert($expected3, $result[1]);
+    $this->helpAssert($expected4, $result[2]);
+  }
+
 
   public function testCalculateDownPaymentReturnsArrayOfResponses(): void
   {

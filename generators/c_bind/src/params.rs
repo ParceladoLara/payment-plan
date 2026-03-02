@@ -1,5 +1,4 @@
 use ::safer_ffi::prelude::*;
-use safer_ffi::option::TaggedOption;
 
 use chrono::{DateTime, Utc};
 
@@ -19,7 +18,20 @@ pub struct Params {
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
     pub disbursement_only_on_business_days: bool,
-    pub min_installments: TaggedOption<u32>,
+    /*
+    I will not be using Option<u32> because is not part of the "safer-ffi" crate.
+    The create was a TaggedOption<T> with is the version of Option<T> for "safer-ffi", this works fine on the Rust side,
+    but on the C side it generates the following struct:
+        typedef struct Tuple2_bool_uint32
+        {
+            bool _0;
+            uint32_t _1;
+        } Tuple2_bool_uint32_t;
+    Where bool is if the value is Some or None and uint32_t is the value itself, this makes sense for pointers of complex types, but for simple types like u32 it becomes a bit cumbersome to use.
+    So instead of using Option<u32> I will use a u32 where 0 means None and any other value means Some(value), this way on the C side it will be just a uint32_t which is much easier to use.
+    And of course anyone using the ABI can make the parameter optional on their side
+     */
+    pub min_installments: u32,
 }
 
 impl Into<core_payment_plan::Params> for Params {
@@ -33,6 +45,12 @@ impl Into<core_payment_plan::Params> for Params {
 
         let disbursement_date = disbursement_date.date_naive();
         let first_payment_date = first_payment_date.date_naive();
+
+        let min_installments = if self.min_installments == 0 {
+            None
+        } else {
+            Some(self.min_installments)
+        };
 
         core_payment_plan::Params {
             requested_amount: self.requested_amount,
@@ -48,7 +66,7 @@ impl Into<core_payment_plan::Params> for Params {
             min_installment_amount: self.min_installment_amount,
             max_total_amount: self.max_total_amount,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
-            min_installments: self.min_installments.into(),
+            min_installments,
         }
     }
 }

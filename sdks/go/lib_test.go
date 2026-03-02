@@ -1,12 +1,14 @@
 package payment_plan_test
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"testing"
 	"time"
 
 	payment_plan "github.com/ParceladoLara/payment-plan-go-sdk/v3"
+	"github.com/ParceladoLara/payment-plan-go-sdk/v3/internal/payment_plan_uniffi"
 )
 
 func TestCalculatePaymentPlan(t *testing.T) {
@@ -273,6 +275,296 @@ func TestCalculatePaymentPlan(t *testing.T) {
 
 	}
 
+}
+
+func TestCalculatePaymentPlanWithMinInstallment(t *testing.T) {
+
+	disbursementDate := time.Date(2025, 04, 7, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60))
+
+	expected := []payment_plan.Response{
+		{
+			Installment:                              2,
+			DueDate:                                  time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+			DisbursementDate:                         disbursementDate,
+			AccumulatedDays:                          57,
+			DaysIndex:                                0.958839243657051,
+			AccumulatedDaysIndex:                     1.94021120955322,
+			InterestRate:                             0.0235,
+			InstallmentAmount:                        4049.72,
+			InstallmentAmountWithoutTac:              0.0,
+			TotalAmount:                              8099.44,
+			DebitService:                             242.1299999999996,
+			CustomerDebitServiceAmount:               242.1299999999996,
+			CustomerAmount:                           4049.72,
+			CalculationBasisForEffectiveInterestRate: 4021.0649999999996,
+			MerchantDebitServiceAmount:               0.0,
+			MerchantTotalAmount:                      390.0,
+			SettledToMerchant:                        7410.0,
+			MdrAmount:                                390.0,
+			EffectiveInterestRate:                    0.022,
+			TotalEffectiveCost:                       0.0274,
+			EirYearly:                                0.298378,
+			TecYearly:                                0.382981,
+			EirMonthly:                               0.022,
+			TecMonthly:                               0.0274,
+			TotalIof:                                 57.31,
+			ContractAmount:                           7857.31,
+			ContractAmountWithoutTac:                 0.0,
+			TacAmount:                                0.0,
+			IofPercentage:                            8.2e-5,
+			OverallIof:                               0.0038,
+			PreDisbursementAmount:                    7800.0,
+			PaidTotalIof:                             57.31,
+			PaidContractAmount:                       7857.31,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        3865.07321499999989100615493953,
+					DebitService:      184.64678500000002259184839204,
+				},
+				{
+					AccumulatedDays:   57,
+					Factor:            0.958839243657051,
+					AccumulatedFactor: 1.94021120955322,
+					DueDate:           time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        3955.9024355524998100008815527,
+					DebitService:      93.8175644475000183319934876636,
+				},
+			},
+		},
+		{
+			Installment:                              3,
+			DueDate:                                  time.Date(2025, 07, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+			DisbursementDate:                         disbursementDate,
+			AccumulatedDays:                          87,
+			DaysIndex:                                0.936823882407599,
+			AccumulatedDaysIndex:                     2.8770350919608187,
+			InterestRate:                             0.0235,
+			InstallmentAmount:                        2734.44,
+			InstallmentAmountWithoutTac:              0.0,
+			TotalAmount:                              8203.32,
+			DebitService:                             336.2299999999997,
+			CustomerDebitServiceAmount:               336.2299999999997,
+			CustomerAmount:                           2734.44,
+			CalculationBasisForEffectiveInterestRate: 2712.0766666666664,
+			MerchantDebitServiceAmount:               0.0,
+			MerchantTotalAmount:                      390.0,
+			SettledToMerchant:                        7410.0,
+			MdrAmount:                                390.0,
+			EffectiveInterestRate:                    0.0225,
+			TotalEffectiveCost:                       0.0272,
+			EirYearly:                                0.306592,
+			TecYearly:                                0.380434,
+			EirMonthly:                               0.0225,
+			TecMonthly:                               0.0272,
+			TotalIof:                                 67.09,
+			ContractAmount:                           7867.09,
+			ContractAmountWithoutTac:                 0.0,
+			TacAmount:                                0.0,
+			IofPercentage:                            8.2e-5,
+			OverallIof:                               0.0038,
+			PreDisbursementAmount:                    7799.99,
+			PaidTotalIof:                             67.08,
+			PaidContractAmount:                       7867.08,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        2549.56338499999992563971318305,
+					DebitService:      184.876615000000015243131201714,
+				},
+				{
+					AccumulatedDays:   57,
+					Factor:            0.958839243657051,
+					AccumulatedFactor: 1.94021120955322,
+					DueDate:           time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        2609.47812454750010147108696401,
+					DebitService:      124.961875452500009942014003173,
+				},
+				{
+					AccumulatedDays:   87,
+					Factor:            0.936823882407599,
+					AccumulatedFactor: 2.8770350919608187,
+					DueDate:           time.Date(2025, 07, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        2670.80086047436634544283151627,
+					DebitService:      63.6391395256337659702694509178,
+				},
+			},
+		},
+		{
+
+			Installment:                              4,
+			DueDate:                                  time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+			DisbursementDate:                         disbursementDate,
+			AccumulatedDays:                          119,
+			DaysIndex:                                0.914302133077605,
+			AccumulatedDaysIndex:                     3.791337225038424,
+			InterestRate:                             0.0235,
+			InstallmentAmount:                        2077.73,
+			InstallmentAmountWithoutTac:              0.0,
+			TotalAmount:                              8310.92,
+			DebitService:                             433.56000000000006,
+			CustomerDebitServiceAmount:               433.56000000000006,
+			CustomerAmount:                           2077.73,
+			CalculationBasisForEffectiveInterestRate: 2058.39,
+			MerchantDebitServiceAmount:               0.0,
+			MerchantTotalAmount:                      390.0,
+			SettledToMerchant:                        7410.0,
+			MdrAmount:                                390.0,
+			EffectiveInterestRate:                    0.0228,
+			TotalEffectiveCost:                       0.0271,
+			EirYearly:                                0.310455,
+			TecYearly:                                0.377876,
+			EirMonthly:                               0.0228,
+			TecMonthly:                               0.0271,
+			TotalIof:                                 77.36,
+			ContractAmount:                           7877.36,
+			ContractAmountWithoutTac:                 0.0,
+			TacAmount:                                0.0,
+			IofPercentage:                            8.2e-5,
+			OverallIof:                               0.0038,
+			PreDisbursementAmount:                    7800.02,
+			PaidTotalIof:                             77.38,
+			PaidContractAmount:                       7877.38,
+			Invoices: []payment_plan.Invoice{
+				{
+					AccumulatedDays:   28,
+					Factor:            0.981371965896169,
+					AccumulatedFactor: 0.981371965896169,
+					DueDate:           time.Date(2025, 05, 5, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        1892.61203999999997904524207115,
+					DebitService:      185.117959999999982301233103499,
+				},
+				{
+					AccumulatedDays:   57,
+					Factor:            0.958839243657051,
+					AccumulatedFactor: 1.94021120955322,
+					DueDate:           time.Date(2025, 06, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        1937.0884229400001004250952974,
+					DebitService:      140.641577060000003029927029274,
+				},
+				{
+					AccumulatedDays:   87,
+					Factor:            0.936823882407599,
+					AccumulatedFactor: 2.8770350919608187,
+					DueDate:           time.Date(2025, 07, 3, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        1982.61000087908996647456660867,
+					DebitService:      95.1199991209099948719085659832,
+				},
+				{
+					AccumulatedDays:   119,
+					Factor:            0.914302133077605,
+					AccumulatedFactor: 3.791337225038424,
+					DueDate:           time.Date(2025, 8, 4, 7, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+					MainIofTac:        2029.20133589974852839077357203,
+					DebitService:      48.5286641002513832177100994159,
+				},
+			},
+		},
+	}
+
+	params := payment_plan.Params{
+		RequestedAmount:                7800,
+		FirstPaymentDate:               time.Date(2025, 05, 3, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		DisbursementDate:               time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		Installments:                   4,
+		DebitServicePercentage:         0,
+		Mdr:                            0.05,
+		TacPercentage:                  0,
+		IofOverall:                     0.0038,
+		IofPercentage:                  0.000082,
+		InterestRate:                   0.0235,
+		MinInstallmentAmount:           100,
+		MaxTotalAmount:                 1000000,
+		DisbursementOnlyOnBusinessDays: true,
+		MinInstallments:                &[]uint32{2}[0],
+	}
+
+	resp, err := payment_plan.CalculatePaymentPlan(params)
+
+	if err != nil {
+		t.Fatalf("Error calculating payment plan: %v", err)
+	}
+
+	for i, r := range resp {
+		e := expected[i]
+		helperAssert(r, e, i, t)
+
+	}
+
+}
+
+func TestCalculatePaymentPlanMinInstallmentGreaterThanInstallments(t *testing.T) {
+
+	params := payment_plan.Params{
+		RequestedAmount:                7800,
+		FirstPaymentDate:               time.Date(2025, 05, 3, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		DisbursementDate:               time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		Installments:                   4,
+		DebitServicePercentage:         0,
+		Mdr:                            0.05,
+		TacPercentage:                  0,
+		IofOverall:                     0.0038,
+		IofPercentage:                  0.000082,
+		InterestRate:                   0.0235,
+		MinInstallmentAmount:           100,
+		MaxTotalAmount:                 1000000,
+		DisbursementOnlyOnBusinessDays: true,
+		MinInstallments:                &[]uint32{5}[0],
+	}
+
+	resp, err := payment_plan.CalculatePaymentPlan(params)
+
+	if err == nil {
+		t.Fatalf("Expected error when min installments is greater than installments, but got nil")
+	}
+
+	if !errors.Is(err, payment_plan_uniffi.ErrErrorInvalidParams) {
+		t.Fatalf("Expected error of type ErrErrorInvalidParams, but got %v", err)
+	}
+
+	if resp != nil {
+		t.Fatalf("Expected nil response when min installments is greater than installments, but got %v", resp)
+	}
+}
+
+func TestCalculatePaymentPlanMinInstallmentIsZero(t *testing.T) {
+
+	params := payment_plan.Params{
+		RequestedAmount:                7800,
+		FirstPaymentDate:               time.Date(2025, 05, 3, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		DisbursementDate:               time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+		Installments:                   4,
+		DebitServicePercentage:         0,
+		Mdr:                            0.05,
+		TacPercentage:                  0,
+		IofOverall:                     0.0038,
+		IofPercentage:                  0.000082,
+		InterestRate:                   0.0235,
+		MinInstallmentAmount:           0,
+		MaxTotalAmount:                 1000000,
+		DisbursementOnlyOnBusinessDays: true,
+		MinInstallments:                &[]uint32{0}[0],
+	}
+
+	resp, err := payment_plan.CalculatePaymentPlan(params)
+
+	if err == nil {
+		t.Fatalf("Expected error when min installments is greater than installments, but got nil")
+	}
+
+	if !errors.Is(err, payment_plan_uniffi.ErrErrorInvalidParams) {
+		t.Fatalf("Expected error of type ErrErrorInvalidParams, but got %v", err)
+	}
+
+	if resp != nil {
+		t.Fatalf("Expected nil response when min installments is greater than installments, but got %v", resp)
+	}
 }
 
 func TestCalculateDownPaymentPlan(t *testing.T) {
