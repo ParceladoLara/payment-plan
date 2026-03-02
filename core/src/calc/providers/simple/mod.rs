@@ -222,6 +222,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0235,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -302,6 +303,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.025,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -382,6 +384,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0235,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -462,6 +465,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.024,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -542,6 +546,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0235,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -622,6 +627,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0349,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -702,6 +708,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.025,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -782,6 +789,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -862,6 +870,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.028999999999999998,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -942,6 +951,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0349,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1022,6 +1032,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.029,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1102,6 +1113,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0215,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1182,6 +1194,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.025,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1262,6 +1275,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0215,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1342,6 +1356,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0355,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1422,6 +1437,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0355,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1502,6 +1518,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0355,
+            min_installments: None,
         };
 
         let result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1582,6 +1599,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0355,
+            min_installments: None,
         };
 
         let mut result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1670,6 +1688,7 @@ mod test {
             iof_overall: 0.003800000064074993,
             iof_percentage: 0.029999999329447746,
             interest_rate: 0.029999999329447746,
+            min_installments: None,
         };
 
         let result = SIMPLE.calculate_payment_plan(params).unwrap();
@@ -1736,6 +1755,7 @@ mod down_payment_test {
         iof_overall: 0.0038,
         iof_percentage: 0.03,
         interest_rate: 0.0355,
+        min_installments: None,
     };
 
     #[test]

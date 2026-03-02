@@ -56,6 +56,14 @@ pub fn cast_js_object_to_param(
         None => false,
     };
 
+    let min_installments = match obj.get_opt(cx, "minInstallments")? {
+        Some(value) => {
+            let num = any_to_number(cx, value)? as u32;
+            Some(num)
+        }
+        None => None,
+    };
+
     Ok(Params {
         max_total_amount,
         min_installment_amount,
@@ -70,6 +78,7 @@ pub fn cast_js_object_to_param(
         iof_percentage,
         interest_rate,
         disbursement_only_on_business_days,
+        min_installments,
     })
 }
 

@@ -51,6 +51,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.025,
+            min_installments: None,
         };
 
         let aux_accumulated_days = vec![31];
@@ -118,6 +119,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let aux_accumulated_days = vec![31];

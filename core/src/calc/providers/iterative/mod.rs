@@ -42,6 +42,7 @@ impl PaymentPlan for Iterative {
         mut params: Params,
     ) -> Result<Vec<Response>, PaymentPlanError> {
         let base_date = params.first_payment_date;
+        let min_installments = params.min_installments.unwrap_or(1);
         if params.requested_amount <= 0.0 {
             return Err(PaymentPlanError::InvalidRequestedAmount);
         }
@@ -68,7 +69,7 @@ impl PaymentPlan for Iterative {
         let daily_interest_rate = round_decimal_cases(daily_interest_rate, 10);
         let main_value = params.requested_amount;
 
-        for i in 1..=params.installments {
+        for i in min_installments..=params.installments {
             params.installments = i;
             let params = InnerParams {
                 params,
@@ -352,6 +353,7 @@ mod test {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let iterative = Iterative;
@@ -807,6 +809,7 @@ mod test {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let iterative = Iterative;
@@ -836,6 +839,7 @@ mod test {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let iterative = Iterative;
@@ -868,6 +872,7 @@ mod test {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let iterative = Iterative;
@@ -957,6 +962,7 @@ mod test {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let iterative = Iterative;
@@ -1094,6 +1100,7 @@ mod test {
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
             interest_rate: 0.0449,
+            min_installments: None,
         };
 
         let iterative = Iterative;

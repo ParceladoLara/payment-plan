@@ -85,6 +85,7 @@ mod test {
                 interest_rate: 0.04,
                 min_installment_amount: 100.0,
                 max_total_amount: f64::MAX,
+                min_installments: None,
             },
             main_value: 7431.0,
             daily_interest_rate: 0.00130821,

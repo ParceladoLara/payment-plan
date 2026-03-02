@@ -297,6 +297,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
             min_installment_amount=100,
             max_total_amount=1000000,
             disbursement_only_on_business_days=True,
+            min_installments=None,
         )
 
         resp = calculate_payment_plan(params)
@@ -1971,6 +1972,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
             min_installment_amount=100,
             max_total_amount=1000000,
             disbursement_only_on_business_days=True,
+            min_installments=None,
         )
 
         down_payment_params = DownPaymentParams(

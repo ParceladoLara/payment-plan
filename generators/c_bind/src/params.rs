@@ -1,4 +1,5 @@
 use ::safer_ffi::prelude::*;
+use safer_ffi::option::TaggedOption;
 
 use chrono::{DateTime, Utc};
 
@@ -18,6 +19,7 @@ pub struct Params {
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
     pub disbursement_only_on_business_days: bool,
+    pub min_installments: TaggedOption<u32>,
 }
 
 impl Into<core_payment_plan::Params> for Params {
@@ -46,6 +48,7 @@ impl Into<core_payment_plan::Params> for Params {
             min_installment_amount: self.min_installment_amount,
             max_total_amount: self.max_total_amount,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
+            min_installments: self.min_installments.into(),
         }
     }
 }

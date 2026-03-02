@@ -16,7 +16,8 @@ data class Params(
         val interestRate: Double,
         val minInstallmentAmount: Double,
         val maxTotalAmount: Double,
-        val disbursementOnlyOnBusinessDays: Boolean
+        val disbursementOnlyOnBusinessDays: Boolean,
+        val minInstallments: UInt? = null
 ) {
   /**
    * Builder class for Java interoperability. Provides a fluent API for constructing Params objects.
@@ -35,6 +36,7 @@ data class Params(
     private var minInstallmentAmount: Double = 0.0
     private var maxTotalAmount: Double = 0.0
     private var disbursementOnlyOnBusinessDays: Boolean = true
+    private var minInstallments: UInt? = null
 
     fun requestedAmount(requestedAmount: Double) = apply { this.requestedAmount = requestedAmount }
     fun firstPaymentDate(firstPaymentDate: Instant) = apply {
@@ -63,6 +65,7 @@ data class Params(
     fun disbursementOnlyOnBusinessDays(disbursementOnlyOnBusinessDays: Boolean) = apply {
       this.disbursementOnlyOnBusinessDays = disbursementOnlyOnBusinessDays
     }
+    fun minInstallments(minInstallments: UInt?) = apply { this.minInstallments = minInstallments }
 
     fun build(): Params {
       return Params(
@@ -78,7 +81,8 @@ data class Params(
               interestRate = interestRate,
               minInstallmentAmount = minInstallmentAmount,
               maxTotalAmount = maxTotalAmount,
-              disbursementOnlyOnBusinessDays = disbursementOnlyOnBusinessDays
+              disbursementOnlyOnBusinessDays = disbursementOnlyOnBusinessDays,
+              minInstallments = minInstallments
       )
     }
   }
@@ -108,7 +112,8 @@ data class Params(
               interestRate = internal.interestRate,
               minInstallmentAmount = internal.minInstallmentAmount,
               maxTotalAmount = internal.maxTotalAmount,
-              disbursementOnlyOnBusinessDays = internal.disbursementOnlyOnBusinessDays
+              disbursementOnlyOnBusinessDays = internal.disbursementOnlyOnBusinessDays,
+              minInstallments = internal.minInstallments
       )
     }
   }
@@ -127,7 +132,8 @@ data class Params(
             interestRate = this.interestRate,
             minInstallmentAmount = this.minInstallmentAmount,
             maxTotalAmount = this.maxTotalAmount,
-            disbursementOnlyOnBusinessDays = this.disbursementOnlyOnBusinessDays
+            disbursementOnlyOnBusinessDays = this.disbursementOnlyOnBusinessDays,
+            minInstallments = this.minInstallments
     )
   }
 }

@@ -1227,7 +1227,8 @@ class InternalParams:
     min_installment_amount: "float"
     max_total_amount: "float"
     disbursement_only_on_business_days: "bool"
-    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool"):
+    min_installments: "typing.Optional[int]"
+    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool", min_installments: "typing.Optional[int]"):
         self.requested_amount = requested_amount
         self.first_payment_date = first_payment_date
         self.disbursement_date = disbursement_date
@@ -1241,9 +1242,10 @@ class InternalParams:
         self.min_installment_amount = min_installment_amount
         self.max_total_amount = max_total_amount
         self.disbursement_only_on_business_days = disbursement_only_on_business_days
+        self.min_installments = min_installments
 
     def __str__(self):
-        return "InternalParams(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days)
+        return "InternalParams(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={}, min_installments={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days, self.min_installments)
 
     def __eq__(self, other):
         if self.requested_amount != other.requested_amount:
@@ -1272,6 +1274,8 @@ class InternalParams:
             return False
         if self.disbursement_only_on_business_days != other.disbursement_only_on_business_days:
             return False
+        if self.min_installments != other.min_installments:
+            return False
         return True
 
 class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
@@ -1291,6 +1295,7 @@ class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
             min_installment_amount=_UniffiConverterDouble.read(buf),
             max_total_amount=_UniffiConverterDouble.read(buf),
             disbursement_only_on_business_days=_UniffiConverterBool.read(buf),
+            min_installments=_UniffiConverterOptionalUInt32.read(buf),
         )
 
     @staticmethod
@@ -1308,6 +1313,7 @@ class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.check_lower(value.min_installment_amount)
         _UniffiConverterDouble.check_lower(value.max_total_amount)
         _UniffiConverterBool.check_lower(value.disbursement_only_on_business_days)
+        _UniffiConverterOptionalUInt32.check_lower(value.min_installments)
 
     @staticmethod
     def write(value, buf):
@@ -1324,6 +1330,7 @@ class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.write(value.min_installment_amount, buf)
         _UniffiConverterDouble.write(value.max_total_amount, buf)
         _UniffiConverterBool.write(value.disbursement_only_on_business_days, buf)
+        _UniffiConverterOptionalUInt32.write(value.min_installments, buf)
 
 
 class InternalResponse:
@@ -1642,6 +1649,33 @@ class _UniffiConverterTypeError(_UniffiConverterRustBuffer):
             buf.write_i32(1)
         if isinstance(value, Error.CalculationError):
             buf.write_i32(2)
+
+
+
+class _UniffiConverterOptionalUInt32(_UniffiConverterRustBuffer):
+    @classmethod
+    def check_lower(cls, value):
+        if value is not None:
+            _UniffiConverterUInt32.check_lower(value)
+
+    @classmethod
+    def write(cls, value, buf):
+        if value is None:
+            buf.write_u8(0)
+            return
+
+        buf.write_u8(1)
+        _UniffiConverterUInt32.write(value, buf)
+
+    @classmethod
+    def read(cls, buf):
+        flag = buf.read_u8()
+        if flag == 0:
+            return None
+        elif flag == 1:
+            return _UniffiConverterUInt32.read(buf)
+        else:
+            raise InternalError("Unexpected flag byte for optional type")
 
 
 

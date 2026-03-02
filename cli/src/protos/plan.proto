@@ -19,6 +19,7 @@ message PlanParams {
     double min_installment_amount = 11;
     double max_total_amount = 12;
     bool disbursement_only_on_business_days = 13;
+    optional uint32 min_installments = 14;
 }
 
 message PlanResponse {

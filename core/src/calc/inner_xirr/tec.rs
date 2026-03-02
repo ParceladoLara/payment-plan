@@ -76,6 +76,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let tec_params = vec![Payment {

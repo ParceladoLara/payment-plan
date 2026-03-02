@@ -1313,7 +1313,8 @@ internal data class InternalParams (
     var `interestRate`: kotlin.Double, 
     var `minInstallmentAmount`: kotlin.Double, 
     var `maxTotalAmount`: kotlin.Double, 
-    var `disbursementOnlyOnBusinessDays`: kotlin.Boolean
+    var `disbursementOnlyOnBusinessDays`: kotlin.Boolean, 
+    var `minInstallments`: kotlin.UInt?
 ) {
     
     companion object
@@ -1338,6 +1339,7 @@ internal object FfiConverterTypeInternalParams: FfiConverterRustBuffer<InternalP
             FfiConverterDouble.read(buf),
             FfiConverterDouble.read(buf),
             FfiConverterBoolean.read(buf),
+            FfiConverterOptionalUInt.read(buf),
         )
     }
 
@@ -1354,7 +1356,8 @@ internal object FfiConverterTypeInternalParams: FfiConverterRustBuffer<InternalP
             FfiConverterDouble.allocationSize(value.`interestRate`) +
             FfiConverterDouble.allocationSize(value.`minInstallmentAmount`) +
             FfiConverterDouble.allocationSize(value.`maxTotalAmount`) +
-            FfiConverterBoolean.allocationSize(value.`disbursementOnlyOnBusinessDays`)
+            FfiConverterBoolean.allocationSize(value.`disbursementOnlyOnBusinessDays`) +
+            FfiConverterOptionalUInt.allocationSize(value.`minInstallments`)
     )
 
     override fun write(value: InternalParams, buf: ByteBuffer) {
@@ -1371,6 +1374,7 @@ internal object FfiConverterTypeInternalParams: FfiConverterRustBuffer<InternalP
             FfiConverterDouble.write(value.`minInstallmentAmount`, buf)
             FfiConverterDouble.write(value.`maxTotalAmount`, buf)
             FfiConverterBoolean.write(value.`disbursementOnlyOnBusinessDays`, buf)
+            FfiConverterOptionalUInt.write(value.`minInstallments`, buf)
     }
 }
 
@@ -1600,6 +1604,38 @@ internal object FfiConverterTypeError : FfiConverterRustBuffer<Exception> {
         }.let { /* this makes the `when` an expression, which ensures it is exhaustive */ }
     }
 
+}
+
+
+
+
+/**
+ * @suppress
+ */
+internal object FfiConverterOptionalUInt: FfiConverterRustBuffer<kotlin.UInt?> {
+    override fun read(buf: ByteBuffer): kotlin.UInt? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterUInt.read(buf)
+    }
+
+    override fun allocationSize(value: kotlin.UInt?): ULong {
+        if (value == null) {
+            return 1UL
+        } else {
+            return 1UL + FfiConverterUInt.allocationSize(value)
+        }
+    }
+
+    override fun write(value: kotlin.UInt?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterUInt.write(value, buf)
+        }
+    }
 }
 
 

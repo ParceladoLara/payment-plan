@@ -19,6 +19,7 @@ export interface Params {
     minInstallmentAmount: number;
     maxTotalAmount: number;
     disbursementOnlyOnBusinessDays: boolean;
+    minInstallments?: number;
 }
 
 export interface DownPaymentParams {
