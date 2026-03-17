@@ -72,12 +72,19 @@ else
     # Remove any existing Go installation
     sudo rm -rf /usr/local/go
 
-    # Download and install latest Go
-    GO_VERSION=$(curl -s https://api.github.com/repos/golang/go/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+    # Download and install latest stable Go
+    GO_VERSION=$(curl -fsSL "https://go.dev/VERSION?m=text" | head -n1)
     GO_VERSION=${GO_VERSION#go}
-    wget https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz
-    sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
-    rm go${GO_VERSION}.linux-amd64.tar.gz
+
+    if [ -z "$GO_VERSION" ]; then
+        echo "Failed to resolve latest Go version"
+        exit 1
+    fi
+
+    GO_TARBALL="go${GO_VERSION}.linux-amd64.tar.gz"
+    wget "https://go.dev/dl/${GO_TARBALL}"
+    sudo tar -C /usr/local -xzf "$GO_TARBALL"
+    rm "$GO_TARBALL"
 
     # Add Go to PATH
     echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
@@ -146,7 +153,7 @@ if command -v java &> /dev/null; then
     else
         JAVA_MAJOR=$(echo "$JAVA_VERSION" | cut -d'.' -f1)
     fi
-    
+
     if [ "$JAVA_MAJOR" -ge 17 ]; then
         echo "Java is already installed with sufficient version ($(java -version 2>&1 | head -n1))"
     else

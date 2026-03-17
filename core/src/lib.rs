@@ -42,6 +42,7 @@ pub struct Params {
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
     pub disbursement_only_on_business_days: bool,
+    pub min_installments: Option<u32>,
 }
 
 impl Display for Params {

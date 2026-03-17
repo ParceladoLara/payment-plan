@@ -1,10 +1,11 @@
+use chrono::NaiveDate;
 use xirr::{compute, Payment};
 
 use crate::{err::PaymentPlanError, Params};
 
 pub fn calculate_tec_monthly(
     params: Params,
-    tec_params: Vec<Payment>,
+    tec_params: Vec<Payment<NaiveDate>>,
     calculation_basis_for_effective_interest_rate: f64,
 ) -> Result<f64, PaymentPlanError> {
     let mut total_effective_cost_xirr = vec![Payment {
@@ -33,7 +34,7 @@ pub fn calculate_tec_monthly(
             tec_monthly = tec_monthly.powf(calculation_basis_for_effective_interest_rate) - 1.0;
         }
         Err(_) => {
-            let converged_tec_params: Vec<Payment> = total_effective_cost_xirr
+            let converged_tec_params: Vec<Payment<NaiveDate>> = total_effective_cost_xirr
                 .iter()
                 .map(|tec| Payment {
                     amount: -1.0 * tec.amount,
@@ -75,6 +76,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let tec_params = vec![Payment {

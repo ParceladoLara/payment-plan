@@ -297,6 +297,478 @@ class TestPaymentPlanUtilities(unittest.TestCase):
             min_installment_amount=100,
             max_total_amount=1000000,
             disbursement_only_on_business_days=True,
+            min_installments=None,
+        )
+
+        resp = calculate_payment_plan(params)
+
+        self.assertEqual(
+            len(resp), len(expected), "Response length does not match expected length"
+        )
+
+        for i, (r, e) in enumerate(zip(resp, expected)):
+            self.assertEqual(
+                r.installment,
+                e.installment,
+                f"Installment {i + 1}: Installment mismatch",
+            )
+            self.assertEqual(
+                r.due_date, e.due_date, f"Installment {i + 1}: DueDate mismatch"
+            )
+            self.assertEqual(
+                r.disbursement_date,
+                e.disbursement_date,
+                f"Installment {i + 1}: DisbursementDate mismatch",
+            )
+            self.assertEqual(
+                r.accumulated_days,
+                e.accumulated_days,
+                f"Installment {i + 1}: AccumulatedDays mismatch",
+            )
+            self.assertAlmostEqual(
+                r.days_index,
+                e.days_index,
+                places=6,
+                msg=f"Installment {i + 1}: DaysIndex mismatch",
+            )
+            self.assertAlmostEqual(
+                r.accumulated_days_index,
+                e.accumulated_days_index,
+                places=6,
+                msg=f"Installment {i + 1}: AccumulatedDaysIndex mismatch",
+            )
+            self.assertAlmostEqual(
+                r.interest_rate,
+                e.interest_rate,
+                places=6,
+                msg=f"Installment {i + 1}: InterestRate mismatch",
+            )
+            self.assertAlmostEqual(
+                r.installment_amount,
+                e.installment_amount,
+                places=2,
+                msg=f"Installment {i + 1}: InstallmentAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.installment_amount_without_tac,
+                e.installment_amount_without_tac,
+                places=2,
+                msg=f"Installment {i + 1}: InstallmentAmountWithoutTac mismatch",
+            )
+            self.assertAlmostEqual(
+                r.total_amount,
+                e.total_amount,
+                places=2,
+                msg=f"Installment {i + 1}: TotalAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.debit_service,
+                e.debit_service,
+                places=2,
+                msg=f"Installment {i + 1}: DebitService mismatch",
+            )
+            self.assertAlmostEqual(
+                r.customer_debit_service_amount,
+                e.customer_debit_service_amount,
+                places=2,
+                msg=f"Installment {i + 1}: CustomerDebitServiceAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.customer_amount,
+                e.customer_amount,
+                places=2,
+                msg=f"Installment {i + 1}: CustomerAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.calculation_basis_for_effective_interest_rate,
+                e.calculation_basis_for_effective_interest_rate,
+                places=2,
+                msg=f"Installment {i + 1}: CalculationBasisForEffectiveInterestRate mismatch",
+            )
+            self.assertAlmostEqual(
+                r.merchant_debit_service_amount,
+                e.merchant_debit_service_amount,
+                places=2,
+                msg=f"Installment {i + 1}: MerchantDebitServiceAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.merchant_total_amount,
+                e.merchant_total_amount,
+                places=2,
+                msg=f"Installment {i + 1}: MerchantTotalAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.settled_to_merchant,
+                e.settled_to_merchant,
+                places=2,
+                msg=f"Installment {i + 1}: SettledToMerchant mismatch",
+            )
+            self.assertAlmostEqual(
+                r.mdr_amount,
+                e.mdr_amount,
+                places=2,
+                msg=f"Installment {i + 1}: MdrAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.effective_interest_rate,
+                e.effective_interest_rate,
+                places=6,
+                msg=f"Installment {i + 1}: EffectiveInterestRate mismatch",
+            )
+            self.assertAlmostEqual(
+                r.total_effective_cost,
+                e.total_effective_cost,
+                places=6,
+                msg=f"Installment {i + 1}: TotalEffectiveCost mismatch",
+            )
+            self.assertAlmostEqual(
+                r.eir_yearly,
+                e.eir_yearly,
+                places=6,
+                msg=f"Installment {i + 1}: EirYearly mismatch",
+            )
+            self.assertAlmostEqual(
+                r.tec_yearly,
+                e.tec_yearly,
+                places=6,
+                msg=f"Installment {i + 1}: TecYearly mismatch",
+            )
+            self.assertAlmostEqual(
+                r.eir_monthly,
+                e.eir_monthly,
+                places=6,
+                msg=f"Installment {i + 1}: EirMonthly mismatch",
+            )
+            self.assertAlmostEqual(
+                r.tec_monthly,
+                e.tec_monthly,
+                places=6,
+                msg=f"Installment {i + 1}: TecMonthly mismatch",
+            )
+            self.assertAlmostEqual(
+                r.total_iof,
+                e.total_iof,
+                places=2,
+                msg=f"Installment {i + 1}: TotalIof mismatch",
+            )
+            self.assertAlmostEqual(
+                r.contract_amount,
+                e.contract_amount,
+                places=2,
+                msg=f"Installment {i + 1}: ContractAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.contract_amount_without_tac,
+                e.contract_amount_without_tac,
+                places=2,
+                msg=f"Installment {i + 1}: ContractAmountWithoutTac mismatch",
+            )
+            self.assertAlmostEqual(
+                r.tac_amount,
+                e.tac_amount,
+                places=2,
+                msg=f"Installment {i + 1}: TacAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.iof_percentage,
+                e.iof_percentage,
+                places=6,
+                msg=f"Installment {i + 1}: IofPercentage mismatch",
+            )
+            self.assertAlmostEqual(
+                r.overall_iof,
+                e.overall_iof,
+                places=6,
+                msg=f"Installment {i + 1}: OverallIof mismatch",
+            )
+            self.assertAlmostEqual(
+                r.pre_disbursement_amount,
+                e.pre_disbursement_amount,
+                places=2,
+                msg=f"Installment {i + 1}: PreDisbursementAmount mismatch",
+            )
+            self.assertAlmostEqual(
+                r.paid_total_iof,
+                e.paid_total_iof,
+                places=2,
+                msg=f"Installment {i + 1}: PaidTotalIof mismatch",
+            )
+            self.assertAlmostEqual(
+                r.paid_contract_amount,
+                e.paid_contract_amount,
+                places=2,
+                msg=f"Installment {i + 1}: PaidContractAmount mismatch",
+            )
+            for j, (inv_r, inv_e) in enumerate(zip(r.invoices, e.invoices)):
+                self.assertEqual(
+                    inv_r.accumulated_days,
+                    inv_e.accumulated_days,
+                    f"Installment {i + 1}, Invoice {j + 1}: AccumulatedDays mismatch",
+                )
+                self.assertAlmostEqual(
+                    inv_r.accumulated_factor,
+                    inv_e.accumulated_factor,
+                    places=6,
+                    msg=f"Installment {i + 1}, Invoice {j + 1}: AccumulatedFactor mismatch",
+                )
+                self.assertAlmostEqual(
+                    inv_r.factor,
+                    inv_e.factor,
+                    places=6,
+                    msg=f"Installment {i + 1}, Invoice {j + 1}: Factor mismatch",
+                )
+                self.assertEqual(
+                    inv_r.due_date,
+                    inv_e.due_date,
+                    f"Installment {i + 1}, Invoice {j + 1}: DueDate mismatch",
+                )
+                self.assertAlmostEqual(
+                    inv_r.debit_service,
+                    inv_e.debit_service,
+                    places=10,
+                    msg=f"Installment {i + 1}, Invoice {j + 1}: DebitService mismatch",
+                )
+                self.assertAlmostEqual(
+                    inv_r.main_iof_tac,
+                    inv_e.main_iof_tac,
+                    places=10,
+                    msg=f"Installment {i + 1}, Invoice {j + 1}: MainIofTac mismatch",
+                )
+
+    def test_calculate_payment_plan_with_min_installments(self):
+        disbursement_date = datetime(
+            2025, 4, 7, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+        )
+
+        expected = [
+            Response(
+                installment=2,
+                due_date=datetime(
+                    2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                disbursement_date=disbursement_date,
+                accumulated_days=57,
+                days_index=0.958839243657051,
+                accumulated_days_index=1.94021120955322,
+                interest_rate=0.0235,
+                installment_amount=4049.72,
+                installment_amount_without_tac=0.0,
+                total_amount=8099.44,
+                debit_service=242.1299999999996,
+                customer_debit_service_amount=242.1299999999996,
+                customer_amount=4049.72,
+                calculation_basis_for_effective_interest_rate=4021.0649999999996,
+                merchant_debit_service_amount=0.0,
+                merchant_total_amount=390.0,
+                settled_to_merchant=7410.0,
+                mdr_amount=390.0,
+                effective_interest_rate=0.022,
+                total_effective_cost=0.0274,
+                eir_yearly=0.298378,
+                tec_yearly=0.382981,
+                eir_monthly=0.022,
+                tec_monthly=0.0274,
+                total_iof=57.31,
+                contract_amount=7857.31,
+                contract_amount_without_tac=0.0,
+                tac_amount=0.0,
+                iof_percentage=8.2e-5,
+                overall_iof=0.0038,
+                pre_disbursement_amount=7800.0,
+                paid_total_iof=57.31,
+                paid_contract_amount=7857.31,
+                invoices=[
+                    Invoice(
+                        accumulated_days=28,
+                        accumulated_factor=0.981371965896169,
+                        factor=0.981371965896169,
+                        due_date=datetime(
+                            2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=184.64678500000002,
+                        main_iof_tac=3865.073215,
+                    ),
+                    Invoice(
+                        accumulated_days=57,
+                        accumulated_factor=1.94021120955322,
+                        factor=0.958839243657051,
+                        due_date=datetime(
+                            2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=93.81756444750002,
+                        main_iof_tac=3955.9024355525,
+                    ),
+                ],
+            ),
+            Response(
+                installment=3,
+                due_date=datetime(
+                    2025, 7, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                disbursement_date=disbursement_date,
+                accumulated_days=87,
+                days_index=0.936823882407599,
+                accumulated_days_index=2.8770350919608187,
+                interest_rate=0.0235,
+                installment_amount=2734.44,
+                installment_amount_without_tac=0.0,
+                total_amount=8203.32,
+                debit_service=336.2299999999997,
+                customer_debit_service_amount=336.2299999999997,
+                customer_amount=2734.44,
+                calculation_basis_for_effective_interest_rate=2712.0766666666664,
+                merchant_debit_service_amount=0.0,
+                merchant_total_amount=390.0,
+                settled_to_merchant=7410.0,
+                mdr_amount=390.0,
+                effective_interest_rate=0.0225,
+                total_effective_cost=0.0272,
+                eir_yearly=0.306592,
+                tec_yearly=0.380434,
+                eir_monthly=0.0225,
+                tec_monthly=0.0272,
+                total_iof=67.09,
+                contract_amount=7867.09,
+                contract_amount_without_tac=0.0,
+                tac_amount=0.0,
+                iof_percentage=8.2e-5,
+                overall_iof=0.0038,
+                pre_disbursement_amount=7799.99,
+                paid_total_iof=67.08,
+                paid_contract_amount=7867.08,
+                invoices=[
+                    Invoice(
+                        accumulated_days=28,
+                        accumulated_factor=0.981371965896169,
+                        factor=0.981371965896169,
+                        due_date=datetime(
+                            2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=184.87661500000002,
+                        main_iof_tac=2549.563385,
+                    ),
+                    Invoice(
+                        accumulated_days=57,
+                        accumulated_factor=1.94021120955322,
+                        factor=0.958839243657051,
+                        due_date=datetime(
+                            2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=124.96187545250001,
+                        main_iof_tac=2609.4781245475,
+                    ),
+                    Invoice(
+                        accumulated_days=87,
+                        accumulated_factor=2.8770350919608187,
+                        factor=0.936823882407599,
+                        due_date=datetime(
+                            2025, 7, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=63.639139525633766,
+                        main_iof_tac=2670.8008604743663,
+                    ),
+                ],
+            ),
+            Response(
+                installment=4,
+                due_date=datetime(
+                    2025, 8, 4, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                disbursement_date=disbursement_date,
+                accumulated_days=119,
+                days_index=0.914302133077605,
+                accumulated_days_index=3.791337225038424,
+                interest_rate=0.0235,
+                installment_amount=2077.73,
+                installment_amount_without_tac=0.0,
+                total_amount=8310.92,
+                debit_service=433.56000000000006,
+                customer_debit_service_amount=433.56000000000006,
+                customer_amount=2077.73,
+                calculation_basis_for_effective_interest_rate=2058.39,
+                merchant_debit_service_amount=0.0,
+                merchant_total_amount=390.0,
+                settled_to_merchant=7410.0,
+                mdr_amount=390.0,
+                effective_interest_rate=0.0228,
+                total_effective_cost=0.0271,
+                eir_yearly=0.310455,
+                tec_yearly=0.377876,
+                eir_monthly=0.0228,
+                tec_monthly=0.0271,
+                total_iof=77.36,
+                contract_amount=7877.36,
+                contract_amount_without_tac=0.0,
+                tac_amount=0.0,
+                iof_percentage=8.2e-5,
+                overall_iof=0.0038,
+                pre_disbursement_amount=7800.02,
+                paid_total_iof=77.38,
+                paid_contract_amount=7877.38,
+                invoices=[
+                    Invoice(
+                        accumulated_days=28,
+                        accumulated_factor=0.981371965896169,
+                        factor=0.981371965896169,
+                        due_date=datetime(
+                            2025, 5, 5, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=185.11795999999998,
+                        main_iof_tac=1892.61204,
+                    ),
+                    Invoice(
+                        accumulated_days=57,
+                        accumulated_factor=1.94021120955322,
+                        factor=0.958839243657051,
+                        due_date=datetime(
+                            2025, 6, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=140.64157706,
+                        main_iof_tac=1937.08842294,
+                    ),
+                    Invoice(
+                        accumulated_days=87,
+                        accumulated_factor=2.8770350919608187,
+                        factor=0.936823882407599,
+                        due_date=datetime(
+                            2025, 7, 3, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=95.11999912091,
+                        main_iof_tac=1982.61000087909,
+                    ),
+                    Invoice(
+                        accumulated_days=119,
+                        accumulated_factor=3.791337225038424,
+                        factor=0.914302133077605,
+                        due_date=datetime(
+                            2025, 8, 4, 7, 0, 0, tzinfo=timezone(timedelta(hours=-3))
+                        ),
+                        debit_service=48.52866410025138,
+                        main_iof_tac=2029.2013358997485,
+                    ),
+                ],
+            ),
+        ]
+
+        params = Params(
+            requested_amount=7800,
+            first_payment_date=datetime(
+                2025, 5, 3, tzinfo=timezone(timedelta(hours=-3))
+            ),
+            disbursement_date=datetime(
+                2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))
+            ),
+            installments=4,
+            debit_service_percentage=0,
+            mdr=0.05,
+            tac_percentage=0,
+            iof_overall=0.0038,
+            iof_percentage=0.000082,
+            interest_rate=0.0235,
+            min_installment_amount=100,
+            max_total_amount=1000000,
+            disbursement_only_on_business_days=True,
+            min_installments=2,
         )
 
         resp = calculate_payment_plan(params)
@@ -1971,6 +2443,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
             min_installment_amount=100,
             max_total_amount=1000000,
             disbursement_only_on_business_days=True,
+            min_installments=None,
         )
 
         down_payment_params = DownPaymentParams(

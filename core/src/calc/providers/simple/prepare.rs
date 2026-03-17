@@ -88,6 +88,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0235,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -141,6 +142,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.025,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -194,6 +196,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0235,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -247,6 +250,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.024,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -300,6 +304,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0235,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -353,6 +358,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.0349,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -406,6 +412,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.025,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);
@@ -460,6 +467,7 @@ mod test {
             iof_overall: 0.0038,
             iof_percentage: 0.03,
             interest_rate: 0.035,
+            min_installments: None,
         };
 
         let prepared_calculations = prepare_calculation(params);

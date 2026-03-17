@@ -788,6 +788,7 @@ type InternalParams struct {
 	MinInstallmentAmount           float64
 	MaxTotalAmount                 float64
 	DisbursementOnlyOnBusinessDays bool
+	MinInstallments                *uint32
 }
 
 func (r *InternalParams) Destroy() {
@@ -804,6 +805,7 @@ func (r *InternalParams) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.MinInstallmentAmount)
 	FfiDestroyerFloat64{}.Destroy(r.MaxTotalAmount)
 	FfiDestroyerBool{}.Destroy(r.DisbursementOnlyOnBusinessDays)
+	FfiDestroyerOptionalUint32{}.Destroy(r.MinInstallments)
 }
 
 type FfiConverterInternalParams struct{}
@@ -829,6 +831,7 @@ func (c FfiConverterInternalParams) Read(reader io.Reader) InternalParams {
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterBoolINSTANCE.Read(reader),
+		FfiConverterOptionalUint32INSTANCE.Read(reader),
 	}
 }
 
@@ -850,6 +853,7 @@ func (c FfiConverterInternalParams) Write(writer io.Writer, value InternalParams
 	FfiConverterFloat64INSTANCE.Write(writer, value.MinInstallmentAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.MaxTotalAmount)
 	FfiConverterBoolINSTANCE.Write(writer, value.DisbursementOnlyOnBusinessDays)
+	FfiConverterOptionalUint32INSTANCE.Write(writer, value.MinInstallments)
 }
 
 type FfiDestroyerInternalParams struct{}
@@ -1137,6 +1141,43 @@ func (_ FfiDestroyerError) Destroy(value *Error) {
 	default:
 		_ = variantValue
 		panic(fmt.Sprintf("invalid error value `%v` in FfiDestroyerError.Destroy", value))
+	}
+}
+
+type FfiConverterOptionalUint32 struct{}
+
+var FfiConverterOptionalUint32INSTANCE = FfiConverterOptionalUint32{}
+
+func (c FfiConverterOptionalUint32) Lift(rb RustBufferI) *uint32 {
+	return LiftFromRustBuffer[*uint32](c, rb)
+}
+
+func (_ FfiConverterOptionalUint32) Read(reader io.Reader) *uint32 {
+	if readInt8(reader) == 0 {
+		return nil
+	}
+	temp := FfiConverterUint32INSTANCE.Read(reader)
+	return &temp
+}
+
+func (c FfiConverterOptionalUint32) Lower(value *uint32) C.RustBuffer {
+	return LowerIntoRustBuffer[*uint32](c, value)
+}
+
+func (_ FfiConverterOptionalUint32) Write(writer io.Writer, value *uint32) {
+	if value == nil {
+		writeInt8(writer, 0)
+	} else {
+		writeInt8(writer, 1)
+		FfiConverterUint32INSTANCE.Write(writer, *value)
+	}
+}
+
+type FfiDestroyerOptionalUint32 struct{}
+
+func (_ FfiDestroyerOptionalUint32) Destroy(value *uint32) {
+	if value != nil {
+		FfiDestroyerUint32{}.Destroy(*value)
 	}
 }
 

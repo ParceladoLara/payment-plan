@@ -21,6 +21,7 @@ const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
  * @property {number} [minInstallmentAmount]
  * @property {number} [maxTotalAmount]
  * @property {boolean} [disbursementOnlyOnBusinessDays]
+ * @property {number} [minInstallments]
  */
 
 /**

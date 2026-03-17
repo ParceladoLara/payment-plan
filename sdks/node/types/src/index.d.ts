@@ -12,6 +12,7 @@ export type PaymentPlanParams = {
     minInstallmentAmount?: number;
     maxTotalAmount?: number;
     disbursementOnlyOnBusinessDays?: boolean;
+    minInstallments?: number;
 };
 export type Invoice = {
     accumulatedDays: number;
@@ -86,6 +87,7 @@ export type DownPaymentPlanResponse = {
  * @property {number} [minInstallmentAmount]
  * @property {number} [maxTotalAmount]
  * @property {boolean} [disbursementOnlyOnBusinessDays]
+ * @property {number} [minInstallments]
  */
 /**
  * @typedef {Object} Invoice

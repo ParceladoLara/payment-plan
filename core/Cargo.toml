@@ -8,7 +8,7 @@ name = "core_payment_plan"
 path = "src/lib.rs"
 
 [dependencies]
-xirr = "0.2.3"
+xirr = { version = "0.3.2", features = ["chrono"] }
 chrono = { version = "0.4.38", features = ["serde"] }
 serde = { version = "1.0.203", features = ["serde_derive"] }
 

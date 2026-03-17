@@ -22,6 +22,7 @@ fn main() {
         min_installment_amount: 100.0,
         max_total_amount: 1000000.0,
         disbursement_only_on_business_days: true,
+        min_installments: None,
     };
 
     let down_payment_params = DownPaymentParams {
