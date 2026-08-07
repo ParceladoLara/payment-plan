@@ -1,6 +1,6 @@
 {
   "name": "payment-plan-node",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "",
   "main": "./javascript/src/index.js",
   "module": "./javascript/src/index.js",

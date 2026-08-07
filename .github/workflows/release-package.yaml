@@ -108,11 +108,15 @@ jobs:
         run: |
           cd public-repo
           sed -i -E "s/^([[:space:]]*version[[:space:]]*=[[:space:]]*)[\"'][^\"']+[\"']/\1\"${{ env.RELEASE_VERSION }}\"/" setup.py
+          git add setup.py
+          git commit -m "Update version in setup.py" --allow-empty
 
       - name: Change version in pyproject.toml
         run: |
           cd public-repo
           sed -i -E "s/^version[[:space:]]*=[[:space:]]*\"[^\"]+\"/version = \"${{ env.RELEASE_VERSION }}\"/" pyproject.toml
+          git add pyproject.toml
+          git commit -m "Update version in pyproject.toml" --allow-empty
 
       - name: Push Python SDK to public repository
         env:
