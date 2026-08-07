@@ -22,6 +22,8 @@ pub struct Params {
     pub min_installment_amount: f64,
     pub max_total_amount: f64,
     pub disbursement_only_on_business_days: bool,
+    #[tsify(optional)]
+    pub min_installments: Option<u32>,
 }
 
 impl TryInto<core_payment_plan::Params> for Params {
@@ -42,6 +44,7 @@ impl TryInto<core_payment_plan::Params> for Params {
             min_installment_amount: self.min_installment_amount,
             max_total_amount: self.max_total_amount,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
+            min_installments: self.min_installments,
         })
     }
 }

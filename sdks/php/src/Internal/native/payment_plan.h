@@ -57,6 +57,9 @@ typedef struct Params {
 
     /** <No documentation available> */
     bool disbursement_only_on_business_days;
+
+    /** <No documentation available> */
+    uint32_t min_installments;
 } Params_t;
 
 /** <No documentation available> */

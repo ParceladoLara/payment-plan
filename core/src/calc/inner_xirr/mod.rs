@@ -9,7 +9,7 @@ pub fn prepare_xirr_params(
     due_dates: &Vec<NaiveDate>,
     calculation_basis_for_eir: f64,
     customer_amount: f64,
-) -> (Vec<Payment>, Vec<Payment>) {
+) -> (Vec<Payment<NaiveDate>>, Vec<Payment<NaiveDate>>) {
     let mut eir_params = Vec::new();
     let mut tec_params = Vec::new();
 

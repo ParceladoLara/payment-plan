@@ -48,6 +48,7 @@ impl TryInto<Params> for PlanParams {
             first_payment_date,
             disbursement_date: disbursement_date,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
+            min_installments: self.min_installments,
         };
         return Ok(params);
     }

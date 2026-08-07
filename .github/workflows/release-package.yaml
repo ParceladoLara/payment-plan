@@ -82,6 +82,11 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Set release version
+        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
 
       - name: Clone the public repository
         env:
@@ -92,12 +97,26 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Copy Go SDK to the public repository
+      - name: Copy Python SDK to the public repository
         run: |
           cp -r sdks/python/* public-repo/
           cd public-repo
           git add .
           git commit -m "Update Python SDK" --allow-empty
+
+      - name: Change version in setup.py
+        run: |
+          cd public-repo
+          sed -i -E "s/^([[:space:]]*version[[:space:]]*=[[:space:]]*)[\"'][^\"']+[\"']/\1\"${{ env.RELEASE_VERSION }}\"/" setup.py
+          git add setup.py
+          git commit -m "Update version in setup.py" --allow-empty
+
+      - name: Change version in pyproject.toml
+        run: |
+          cd public-repo
+          sed -i -E "s/^version[[:space:]]*=[[:space:]]*\"[^\"]+\"/version = \"${{ env.RELEASE_VERSION }}\"/" pyproject.toml
+          git add pyproject.toml
+          git commit -m "Update version in pyproject.toml" --allow-empty
 
       - name: Push Python SDK to public repository
         env:
@@ -105,6 +124,26 @@ jobs:
         run: |
           cd public-repo
           git push origin main --force
+
+  create-python-sdk-release:
+    name: Create Release on payment-plan-python-sdk
+    runs-on: ubuntu-latest
+    needs: deploy-python-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Set release version
+        run: python3 -c "import os; tag = os.environ['GITHUB_REF'].split('/')[-1]; f = open(os.environ['GITHUB_ENV'], 'a'); f.write('RELEASE_VERSION='+tag); f.close();"
+      - name: Create release on payment-plan-python-sdk
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: |
+          gh release create "${{ env.RELEASE_VERSION }}" \
+            --repo ParceladoLara/payment-plan-python-sdk \
+            --title "${{ env.RELEASE_VERSION }}" \
+            --notes "Automated release from payment-plan"
 
   deploy-php-sdk:
     name: Deploy PHP SDK
@@ -420,6 +459,8 @@ jobs:
             --repo ParceladoLara/payment-plan-kotlin-sdk \
             --title "${{ env.RELEASE_VERSION }}" \
             --notes "Automated release from payment-plan"
+
+
 
 # This job is for musl based linux systems.(not working yet)
 #  nodejs-github-native-musl:
