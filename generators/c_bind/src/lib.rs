@@ -151,6 +151,25 @@ pub fn get_non_business_days_between(
     PaymentPlanResult::Success
 }
 
+/// Check if a given date is a business day.
+/// # Arguments
+/// * `date` - The date to check, represented as a timestamp in milliseconds.
+/// * `result` - A mutable pointer to a boolean where the result will be stored.
+/// # Returns
+/// * `PaymentPlanResult::Success` if the operation was successful.
+/// * `PaymentPlanResult::InvalidParams` if the provided date is invalid.
+/// # Safety: The caller must provide a valid pointer for the result.
+#[ffi_export]
+pub fn is_business_day(date: i64, result: &mut bool) -> PaymentPlanResult {
+    let date: DateTime<Utc> = match chrono::DateTime::from_timestamp_millis(date) {
+        Some(date) => date,
+        None => return PaymentPlanResult::InvalidParams,
+    };
+    let date = date.date_naive();
+    *result = core_payment_plan::is_business_day(date);
+    PaymentPlanResult::Success
+}
+
 /// Free the response vector allocated by the FFI functions.
 #[ffi_export]
 fn free_response_vec(value: repr_c::Vec<Response>) {

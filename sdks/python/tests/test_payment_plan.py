@@ -11,6 +11,7 @@ from payment_plan import (
     DownPaymentParams,
     DownPaymentResponse,
     Invoice,
+    is_business_day,
 )
 
 
@@ -2699,6 +2700,22 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         places=10,
                         msg=f"Installment {i + 1}, Invoice {j + 1}: MainIofTac mismatch",
                     )
+
+    def test_is_business_day(self):
+        from datetime import datetime, timezone, timedelta
+        business_day = datetime(
+                        2026, 10, 5, tzinfo=timezone(timedelta(hours=-3))
+                    )
+        weekend_day = datetime(
+                        2026, 10, 4, tzinfo=timezone(timedelta(hours=-3))
+                    )
+
+        holiday = datetime(
+                        2026, 12, 25, tzinfo=timezone(timedelta(hours=-3))
+                    )
+        self.assertTrue(is_business_day(business_day))
+        self.assertFalse(is_business_day(weekend_day))
+        self.assertFalse(is_business_day(holiday))
 
 
 if __name__ == "__main__":

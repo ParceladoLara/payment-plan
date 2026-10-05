@@ -4,6 +4,7 @@ const __calculateDownPaymentPlan = funcs.calculateDownPaymentPlan;
 const __nextDisbursementDate = funcs.nextDisbursementDate;
 const __disbursementDateRange = funcs.disbursementDateRange;
 const __getNonBusinessDaysBetween = funcs.getNonBusinessDaysBetween;
+const __isBusinessDay = funcs.isBusinessDay;
 // @ts-check
 
 /**
@@ -132,10 +133,19 @@ function getNonBusinessDaysBetween(start_date, end_date) {
   return __getNonBusinessDaysBetween(start_date, end_date);
 }
 
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
+function isBusinessDay(date) {
+  return __isBusinessDay(date);
+}
+
 module.exports = {
   calculatePlan,
   calculateDownPaymentPlan,
   nextDisbursementDate,
   disbursementDateRange,
   getNonBusinessDaysBetween,
+  isBusinessDay,
 };

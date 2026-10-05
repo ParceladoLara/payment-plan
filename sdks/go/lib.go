@@ -67,3 +67,8 @@ func DisbursementDateRange(baseDate time.Time, days uint32) (time.Time, time.Tim
 func GetNonBusinessDaysBetween(startDate time.Time, endDate time.Time) []time.Time {
 	return payment_plan_uniffi.GetNonBusinessDaysBetween(startDate, endDate)
 }
+
+// IsBusinessDay checks if the given date is a business day.
+func IsBusinessDay(date time.Time) bool {
+	return payment_plan_uniffi.IsBusinessDay(date)
+}

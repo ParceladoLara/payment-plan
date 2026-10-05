@@ -12,6 +12,7 @@ from ._internal.payment_plan_uniffi import (
     disbursement_date_range as _disbursement_date_range,
     get_non_business_days_between as _get_non_business_days_between,
     get_non_business_days_between,
+    is_business_day as _is_business_day,
 )
 
 
@@ -84,6 +85,18 @@ def get_non_business_days_between(
     result = _get_non_business_days_between(start_date, end_date)
     return result
 
+def is_business_day(date: datetime) -> bool:
+    """
+    Checks if the given date is a business day.
+
+    Args:
+        date (datetime): The date to check.
+
+    Returns:
+        bool: True if the date is a business day, False otherwise.
+    """
+    return _is_business_day(date)
+
 
 __all__ = [
     "DownPaymentParams",
@@ -96,4 +109,5 @@ __all__ = [
     "next_disbursement_date",
     "disbursement_date_range",
     "get_non_business_days_between",
+    "is_business_day",
 ]

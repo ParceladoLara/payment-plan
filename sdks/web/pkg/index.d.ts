@@ -1,33 +1,26 @@
 /* tslint:disable */
 /* eslint-disable */
 export function calculateDownPaymentPlan(p: DownPaymentParams): Array<DownPaymentResponse>;
-export function calculatePaymentPlan(p: Params): Array<PaymentPlanResponse>;
-export function getNonBusinessDaysBetween(start_date: Date, end_date: Date): Array<Date>;
 export function nextDisbursementDate(base_date: Date): Date;
+export function calculatePaymentPlan(p: Params): Array<PaymentPlanResponse>;
 export function disbursementDateRange(base_date: Date, days: number): Array<Date>;
-export interface Params {
-    requestedAmount: number;
-    firstPaymentDate: Date;
-    disbursementDate: Date;
-    installments: number;
-    debitServicePercentage: number;
-    mdr: number;
-    tacPercentage: number;
-    iofOverall: number;
-    iofPercentage: number;
-    interestRate: number;
-    minInstallmentAmount: number;
-    maxTotalAmount: number;
-    disbursementOnlyOnBusinessDays: boolean;
-    minInstallments?: number;
+export function getNonBusinessDaysBetween(start_date: Date, end_date: Date): Array<Date>;
+export function isBusinessDay(date: Date): boolean;
+export interface Invoice {
+    accumulatedDays: number;
+    factor: number;
+    accumulatedFactor: number;
+    mainIOFTAC: number;
+    debitService: number;
+    dueDate: Date;
 }
 
-export interface DownPaymentParams {
-    params: Params;
-    requestedAmount: number;
-    minInstallmentAmount: number;
+export interface DownPaymentResponse {
+    installmentAmount: number;
+    totalAmount: number;
+    installmentQuantity: number;
     firstPaymentDate: Date;
-    installments: number;
+    plans: PaymentPlanResponse[];
 }
 
 export interface PaymentPlanResponse {
@@ -67,20 +60,28 @@ export interface PaymentPlanResponse {
     invoices: Invoice[];
 }
 
-export interface Invoice {
-    accumulatedDays: number;
-    factor: number;
-    accumulatedFactor: number;
-    mainIOFTAC: number;
-    debitService: number;
-    dueDate: Date;
+export interface Params {
+    requestedAmount: number;
+    firstPaymentDate: Date;
+    disbursementDate: Date;
+    installments: number;
+    debitServicePercentage: number;
+    mdr: number;
+    tacPercentage: number;
+    iofOverall: number;
+    iofPercentage: number;
+    interestRate: number;
+    minInstallmentAmount: number;
+    maxTotalAmount: number;
+    disbursementOnlyOnBusinessDays: boolean;
+    minInstallments?: number;
 }
 
-export interface DownPaymentResponse {
-    installmentAmount: number;
-    totalAmount: number;
-    installmentQuantity: number;
+export interface DownPaymentParams {
+    params: Params;
+    requestedAmount: number;
+    minInstallmentAmount: number;
     firstPaymentDate: Date;
-    plans: PaymentPlanResponse[];
+    installments: number;
 }
 

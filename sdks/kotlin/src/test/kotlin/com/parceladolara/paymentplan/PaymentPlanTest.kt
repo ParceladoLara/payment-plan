@@ -476,4 +476,24 @@ class PaymentPlanTest {
                 println("  Days Index: $roundedDaysIndex")
                 println("  Accumulated Days Index: $roundedAccumulatedDaysIndex")
         }
+
+        @Test
+        fun testIsBusinessDay() {
+                val businessDay = Instant.parse("2026-10-05T00:00:00Z")
+                val nonBusinessDay = Instant.parse("2025-04-05T00:00:00Z")
+                val holiday = Instant.parse("2026-12-25T00:00:00Z")
+
+                assertTrue(
+                        PaymentPlan.isBusinessDay(businessDay),
+                        "Expected $businessDay to be a business day"
+                )
+                assertFalse(
+                        PaymentPlan.isBusinessDay(nonBusinessDay),
+                        "Expected $nonBusinessDay to be a non-business day"
+                )
+                assertFalse(
+                        PaymentPlan.isBusinessDay(holiday),
+                        "Expected $holiday to be a non-business day"
+                )
+        }
 }

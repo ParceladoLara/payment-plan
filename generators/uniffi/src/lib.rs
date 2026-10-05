@@ -122,4 +122,11 @@ pub fn get_non_business_days_between(
     resp
 }
 
+#[uniffi::export]
+pub fn is_business_day(date: SystemTime) -> bool {
+    let date: DateTime<Utc> = date.into();
+    let date = date.date_naive();
+    core_payment_plan::is_business_day(date)
+}
+
 uniffi::setup_scaffolding!();

@@ -260,4 +260,29 @@ class FFIPaymentPlan
 
     return $arr;
   }
+
+  /**
+   * Checks if a given date is a business day using FFI.
+   *
+   * @param int $date Unix timestamp in milliseconds.
+   * @return bool True if the date is a business day, false otherwise.
+   *
+   * @throws \RuntimeException if the FFI call fails.
+   * @throws \RuntimeException if the shared library or header file is missing.
+   * @throws \RuntimeException if the OS is unsupported.
+   */
+  public static function isBusinessDay(int $date): bool
+  {
+    $ffi = self::getFFI();
+
+    //boolean pointer for the result
+    $result = $ffi->new('bool');
+    $status = $ffi->is_business_day($date, \FFI::addr($result));
+
+    if ($status !== 0) {
+      throw new \RuntimeException("FFI is_business_day failed with code $status");
+    }
+
+    return (bool) $result->cdata;
+  }
 }

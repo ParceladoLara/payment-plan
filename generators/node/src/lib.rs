@@ -72,6 +72,12 @@ fn get_non_business_days_between(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(js_array)
 }
 
+fn is_business_day(mut cx: FunctionContext) -> JsResult<JsBoolean> {
+    let js_date: Handle<JsDate> = cx.argument(0)?;
+    let date = parser::js_date_to_naive(&mut cx, js_date)?;
+    let result = core_payment_plan::is_business_day(date);
+    Ok(cx.boolean(result))
+}
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("calculatePlan", calculate_plan)?;
@@ -79,5 +85,6 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("nextDisbursementDate", next_disbursement_date)?;
     cx.export_function("disbursementDateRange", disbursement_date_range)?;
     cx.export_function("getNonBusinessDaysBetween", get_non_business_days_between)?;
+    cx.export_function("isBusinessDay", is_business_day)?;
     Ok(())
 }
