@@ -264,7 +264,7 @@ class FFIPaymentPlan
   /**
    * Checks if a given date is a business day using FFI.
    *
-   * @param int $date Date in Unix timestamp format.
+   * @param int $date Unix timestamp in milliseconds.
    * @return bool True if the date is a business day, false otherwise.
    *
    * @throws \RuntimeException if the FFI call fails.
