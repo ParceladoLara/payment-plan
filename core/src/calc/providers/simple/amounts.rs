@@ -1,6 +1,7 @@
 use crate::Params;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct AmountsResponse {
     pub contract_amount: f64,
     pub contract_amount_without_tac: f64,
@@ -17,6 +18,7 @@ pub struct AmountsResponse {
     pub settled_to_merchant: f64,
 }
 
+#[allow(dead_code)]
 pub fn calculate_amounts(
     params: Params,
     accumulated_days_index: f64,

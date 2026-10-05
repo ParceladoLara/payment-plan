@@ -1,5 +1,6 @@
 use crate::Params;
 
+#[allow(dead_code)]
 pub fn calculate_iof(params: Params, accumulated_days: Vec<i64>, installments: f64) -> f64 {
     let requested_amount = params.requested_amount;
     let tac_amount = params.tac_percentage;

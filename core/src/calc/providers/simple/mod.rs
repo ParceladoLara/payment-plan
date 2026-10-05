@@ -15,8 +15,10 @@ mod amounts;
 mod iof;
 mod prepare;
 
+#[allow(dead_code)]
 const CALCULATION_BASIS_FOR_EFFECTIVE_INTEREST_RATE: f64 = 0.0821917808219178;
 
+#[allow(dead_code)]
 /**
  * This is a simpler implementation of the payment plan calculation.
  * It estimates the iof final iof value based on the overall iof percentage
@@ -36,6 +38,7 @@ impl PaymentPlan for Simple {
     }
 }
 
+#[allow(dead_code)]
 fn calculate(
     params: Params,
     prepared_calculations: Vec<PreparedCalculation>,

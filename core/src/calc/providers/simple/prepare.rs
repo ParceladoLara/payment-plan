@@ -1,5 +1,6 @@
 use crate::{util::add_months, Invoice, Params};
 
+#[allow(dead_code)]
 #[derive(Debug, Clone, Copy)]
 pub struct PreparedCalculation {
     pub installment: u32,
@@ -10,6 +11,7 @@ pub struct PreparedCalculation {
     pub invoice: Invoice,
 }
 
+#[allow(dead_code)]
 pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
     let disbursement_date = params.disbursement_date;
     let mut prepared_calculations: Vec<PreparedCalculation> = Vec::new();
