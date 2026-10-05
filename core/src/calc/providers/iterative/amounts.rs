@@ -45,7 +45,7 @@ pub fn calc(
 
     let settled_to_merchant = requested_amount - merchant_total_amount;
 
-    return AmountsResponse {
+    AmountsResponse {
         debit_service,
         customer_debit_service_amount,
         customer_amount,
@@ -54,7 +54,7 @@ pub fn calc(
         merchant_debit_service_amount,
         merchant_total_amount,
         settled_to_merchant,
-    };
+    }
 }
 
 #[cfg(test)]
@@ -82,7 +82,7 @@ mod test {
             disbursement_only_on_business_days: false,
             requested_amount: 7431.0,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 18,
             debit_service_percentage: 0,
             mdr: 0.05,

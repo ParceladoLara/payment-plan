@@ -55,7 +55,7 @@ pub fn prepare_calculation(params: Params) -> Vec<PreparedCalculation> {
         });
     }
 
-    return prepared_calculations;
+    prepared_calculations
 }
 
 #[cfg(test)]
@@ -277,7 +277,7 @@ mod test {
         );
         assert!(prepared_calculations[3].accumulated_days == 122);
         assert!(prepared_calculations[3].days_index == 0.9080578343022551); //908057834302255
-        assert!(prepared_calculations[3].accumulated_days_index == 3.7681276282380630); //3.7681276282380627
+        assert!(prepared_calculations[3].accumulated_days_index == 3.768_127_628_238_063); //3.7681276282380627
 
         //index 8
         assert!(prepared_calculations[8].installment == 9);

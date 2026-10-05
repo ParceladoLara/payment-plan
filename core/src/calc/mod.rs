@@ -72,6 +72,6 @@ pub trait PaymentPlan {
             contract_first_payment_date = add_months(contract_first_payment_date, 1);
         }
 
-        return Ok(resp);
+        Ok(resp)
     }
 }

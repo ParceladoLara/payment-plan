@@ -37,7 +37,7 @@ pub fn calculate_tec_monthly(
             let converged_tec_params: Vec<Payment<NaiveDate>> = total_effective_cost_xirr
                 .iter()
                 .map(|tec| Payment {
-                    amount: -1.0 * tec.amount,
+                    amount: -tec.amount,
                     date: tec.date,
                 })
                 .collect();
@@ -51,7 +51,7 @@ pub fn calculate_tec_monthly(
     if tec_monthly.is_nan() {
         return Err(PaymentPlanError::XirCalculationError(params));
     }
-    return Ok(tec_monthly);
+    Ok(tec_monthly)
 }
 
 #[cfg(test)]

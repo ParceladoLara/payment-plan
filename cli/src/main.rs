@@ -23,13 +23,13 @@ fn main() -> ExitCode {
     std::io::stdin().read_to_end(&mut buf).unwrap();
     let c_type = args.calc_type;
 
-    let code = match c_type {
+    
+
+    match c_type {
         CalcType::Normal => calc(buf),
         CalcType::DownPayment => down_calc(buf),
         CalcType::NextDisbursementDate => next_disbursement_date(buf),
-    };
-
-    return code;
+    }
 }
 
 fn calc(buf: Vec<u8>) -> ExitCode {
@@ -62,7 +62,7 @@ fn calc(buf: Vec<u8>) -> ExitCode {
     //Write the response to stdout
     std::io::stdout().write_all(&response).unwrap();
 
-    return ExitCode::SUCCESS;
+    ExitCode::SUCCESS
 }
 
 fn down_calc(buf: Vec<u8>) -> ExitCode {
@@ -95,7 +95,7 @@ fn down_calc(buf: Vec<u8>) -> ExitCode {
     //Write the response to stdout
     std::io::stdout().write_all(&response).unwrap();
 
-    return ExitCode::SUCCESS;
+    ExitCode::SUCCESS
 }
 
 fn next_disbursement_date(buf: Vec<u8>) -> ExitCode {

@@ -40,9 +40,9 @@ pub fn insert_price_table_on_invoices(
 
 pub fn calc(inner_params: &InnerParams) -> InstallmentData {
     if inner_params.params.disbursement_only_on_business_days {
-        return calc_installments_on_business_days(inner_params);
+        calc_installments_on_business_days(inner_params)
     } else {
-        return calc_installments(inner_params);
+        calc_installments(inner_params)
     }
 }
 
@@ -89,7 +89,7 @@ fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
         accumulated_days_v.push(accumulated_days);
 
         invoices.push(Invoice {
-            accumulated_days: accumulated_days,
+            accumulated_days,
             factor,
             accumulated_factor,
             main_iof_tac: 0.0,
@@ -102,7 +102,7 @@ fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
     let installment_amount = round_decimal_cases(installment_amount, 2);
     let amount = installment_amount;
 
-    return InstallmentData {
+    InstallmentData {
         business_diffs: diffs.clone(),
         accumulated_business_days: accumulated_days_v.clone(),
         accumulated_days: accumulated_days_v,
@@ -113,7 +113,7 @@ fn calc_installments(inner_params: &InnerParams) -> InstallmentData {
         last_due_date: due_date,
         due_dates,
         invoices,
-    };
+    }
 }
 
 fn calc_installments_on_business_days(inner_params: &InnerParams) -> InstallmentData {
@@ -181,7 +181,7 @@ fn calc_installments_on_business_days(inner_params: &InnerParams) -> Installment
     let installment_amount = round_decimal_cases(installment_amount, 2);
     let amount = installment_amount;
 
-    return InstallmentData {
+    InstallmentData {
         accumulated_days: accumulated_days_v,
         diffs,
         accumulated_business_days: accumulated_business_days_v,
@@ -192,7 +192,7 @@ fn calc_installments_on_business_days(inner_params: &InnerParams) -> Installment
         last_due_date: due_date,
         due_dates,
         invoices,
-    };
+    }
 }
 
 #[cfg(test)]
@@ -403,7 +403,7 @@ mod test {
                 disbursement_only_on_business_days: false,
                 requested_amount: 7431.0,
                 first_payment_date,
-                disbursement_date: disbursement_date,
+                disbursement_date,
                 installments: 18,
                 debit_service_percentage: 0,
                 mdr: 0.05,

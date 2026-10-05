@@ -43,7 +43,7 @@ pub fn calculate_eir_monthly(
                 let converged_eir_params: Vec<Payment<NaiveDate>> = effective_interest_rate_xirr
                     .iter()
                     .map(|eir| Payment {
-                        amount: -1.0 * eir.amount,
+                        amount: -eir.amount,
                         date: eir.date,
                     })
                     .collect();
@@ -57,7 +57,7 @@ pub fn calculate_eir_monthly(
     if eir_monthly.is_nan() {
         return Err(PaymentPlanError::XirCalculationError(params));
     }
-    return Ok(eir_monthly);
+    Ok(eir_monthly)
 }
 
 #[cfg(test)]

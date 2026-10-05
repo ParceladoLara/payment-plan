@@ -20,16 +20,16 @@ pub fn calculate_iof(params: Params, accumulated_days: Vec<i64>, installments: f
         .into_iter()
         .map(|days| {
             if days > 364 {
-                return installment_amount_without_interest * iof_percentage;
+                installment_amount_without_interest * iof_percentage
             } else {
-                return days as f64 * installment_amount_without_interest * daily_iof;
+                days as f64 * installment_amount_without_interest * daily_iof
             }
         })
         .collect();
 
     let installment_iof: f64 = iof_calculation.iter().sum();
 
-    return contract_iof + installment_iof;
+    contract_iof + installment_iof
 }
 
 #[cfg(test)]

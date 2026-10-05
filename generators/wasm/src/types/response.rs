@@ -29,23 +29,23 @@ impl From<core_payment_plan::Invoice> for Invoice {
     }
 }
 
-impl Into<js_sys::Object> for Invoice {
-    fn into(self) -> js_sys::Object {
+impl From<Invoice> for js_sys::Object {
+    fn from(val: Invoice) -> Self {
         let obj = js_sys::Object::new();
         let _ = js_sys::Reflect::set(
             &obj,
             &"accumulatedDays".into(),
-            &self.accumulated_days.into(),
+            &val.accumulated_days.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"factor".into(), &self.factor.into());
+        let _ = js_sys::Reflect::set(&obj, &"factor".into(), &val.factor.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"accumulatedFactor".into(),
-            &self.accumulated_factor.into(),
+            &val.accumulated_factor.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"mainIOFTAC".into(), &self.main_iof_tac.into());
-        let _ = js_sys::Reflect::set(&obj, &"debitService".into(), &self.debit_service.into());
-        let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &self.due_date.into());
+        let _ = js_sys::Reflect::set(&obj, &"mainIOFTAC".into(), &val.main_iof_tac.into());
+        let _ = js_sys::Reflect::set(&obj, &"debitService".into(), &val.debit_service.into());
+        let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &val.due_date.into());
         obj
     }
 }
@@ -140,105 +140,105 @@ impl From<core_payment_plan::Response> for PaymentPlanResponse {
     }
 }
 
-impl Into<js_sys::Object> for PaymentPlanResponse {
-    fn into(self) -> js_sys::Object {
+impl From<PaymentPlanResponse> for js_sys::Object {
+    fn from(val: PaymentPlanResponse) -> Self {
         let obj = js_sys::Object::new();
-        let _ = js_sys::Reflect::set(&obj, &"installment".into(), &self.installment.into());
-        let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &self.due_date.into());
+        let _ = js_sys::Reflect::set(&obj, &"installment".into(), &val.installment.into());
+        let _ = js_sys::Reflect::set(&obj, &"dueDate".into(), &val.due_date.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"accumulatedDays".into(),
-            &self.accumulated_days.into(),
+            &val.accumulated_days.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"daysIndex".into(), &self.days_index.into());
+        let _ = js_sys::Reflect::set(&obj, &"daysIndex".into(), &val.days_index.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"accumulatedDaysIndex".into(),
-            &self.accumulated_days_index.into(),
+            &val.accumulated_days_index.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"interestRate".into(), &self.interest_rate.into());
+        let _ = js_sys::Reflect::set(&obj, &"interestRate".into(), &val.interest_rate.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"installmentAmount".into(),
-            &self.installment_amount.into(),
+            &val.installment_amount.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"installmentAmountWithoutTAC".into(),
-            &self.installment_amount_without_tac.into(),
+            &val.installment_amount_without_tac.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"totalAmount".into(), &self.total_amount.into());
-        let _ = js_sys::Reflect::set(&obj, &"debitService".into(), &self.debit_service.into());
+        let _ = js_sys::Reflect::set(&obj, &"totalAmount".into(), &val.total_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"debitService".into(), &val.debit_service.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"customerDebitServiceAmount".into(),
-            &self.customer_debit_service_amount.into(),
+            &val.customer_debit_service_amount.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"customerAmount".into(), &self.customer_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"customerAmount".into(), &val.customer_amount.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"calculationBasisForEffectiveInterestRate".into(),
-            &self.calculation_basis_for_effective_interest_rate.into(),
+            &val.calculation_basis_for_effective_interest_rate.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"merchantDebitServiceAmount".into(),
-            &self.merchant_debit_service_amount.into(),
+            &val.merchant_debit_service_amount.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"merchantTotalAmount".into(),
-            &self.merchant_total_amount.into(),
+            &val.merchant_total_amount.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"settledToMerchant".into(),
-            &self.settled_to_merchant.into(),
+            &val.settled_to_merchant.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"mdrAmount".into(), &self.mdr_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"mdrAmount".into(), &val.mdr_amount.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"effectiveInterestRate".into(),
-            &self.effective_interest_rate.into(),
+            &val.effective_interest_rate.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"totalEffectiveCost".into(),
-            &self.total_effective_cost.into(),
+            &val.total_effective_cost.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"eirYearly".into(), &self.eir_yearly.into());
-        let _ = js_sys::Reflect::set(&obj, &"tecYearly".into(), &self.tec_yearly.into());
-        let _ = js_sys::Reflect::set(&obj, &"eirMonthly".into(), &self.eir_monthly.into());
-        let _ = js_sys::Reflect::set(&obj, &"tecMonthly".into(), &self.tec_monthly.into());
-        let _ = js_sys::Reflect::set(&obj, &"totalIOF".into(), &self.total_iof.into());
-        let _ = js_sys::Reflect::set(&obj, &"contractAmount".into(), &self.contract_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"eirYearly".into(), &val.eir_yearly.into());
+        let _ = js_sys::Reflect::set(&obj, &"tecYearly".into(), &val.tec_yearly.into());
+        let _ = js_sys::Reflect::set(&obj, &"eirMonthly".into(), &val.eir_monthly.into());
+        let _ = js_sys::Reflect::set(&obj, &"tecMonthly".into(), &val.tec_monthly.into());
+        let _ = js_sys::Reflect::set(&obj, &"totalIOF".into(), &val.total_iof.into());
+        let _ = js_sys::Reflect::set(&obj, &"contractAmount".into(), &val.contract_amount.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"contractAmountWithoutTAC".into(),
-            &self.contract_amount_without_tac.into(),
+            &val.contract_amount_without_tac.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"tacAmount".into(), &self.tac_amount.into());
-        let _ = js_sys::Reflect::set(&obj, &"IOFPercentage".into(), &self.iof_percentage.into());
-        let _ = js_sys::Reflect::set(&obj, &"overallIOF".into(), &self.overall_iof.into());
+        let _ = js_sys::Reflect::set(&obj, &"tacAmount".into(), &val.tac_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"IOFPercentage".into(), &val.iof_percentage.into());
+        let _ = js_sys::Reflect::set(&obj, &"overallIOF".into(), &val.overall_iof.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"disbursementDate".into(),
-            &self.disbursement_date.into(),
+            &val.disbursement_date.into(),
         );
 
-        let _ = js_sys::Reflect::set(&obj, &"paidTotalIOF".into(), &self.paid_total_iof.into());
+        let _ = js_sys::Reflect::set(&obj, &"paidTotalIOF".into(), &val.paid_total_iof.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"paidContractAmount".into(),
-            &self.paid_contract_amount.into(),
+            &val.paid_contract_amount.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"preDisbursementAmount".into(),
-            &self.pre_disbursement_amount.into(),
+            &val.pre_disbursement_amount.into(),
         );
-        let array = js_sys::Array::new_with_length(self.invoices.len() as u32);
-        for (i, invoice) in self.invoices.into_iter().enumerate() {
+        let array = js_sys::Array::new_with_length(val.invoices.len() as u32);
+        for (i, invoice) in val.invoices.into_iter().enumerate() {
             let js_invoice: js_sys::Object = invoice.into();
             let _ = js_sys::Reflect::set(&array, &i.into(), &js_invoice.into());
         }
@@ -247,9 +247,9 @@ impl Into<js_sys::Object> for PaymentPlanResponse {
     }
 }
 
-impl Into<JsValue> for PaymentPlanResponse {
-    fn into(self) -> JsValue {
-        let obj: js_sys::Object = self.into();
+impl From<PaymentPlanResponse> for JsValue {
+    fn from(val: PaymentPlanResponse) -> Self {
+        let obj: js_sys::Object = val.into();
         obj.into()
     }
 }
@@ -264,28 +264,28 @@ pub struct DownPaymentResponse {
     pub plans: Vec<PaymentPlanResponse>,
 }
 
-impl Into<js_sys::Object> for DownPaymentResponse {
-    fn into(self) -> js_sys::Object {
+impl From<DownPaymentResponse> for js_sys::Object {
+    fn from(val: DownPaymentResponse) -> Self {
         let obj = js_sys::Object::new();
         let _ = js_sys::Reflect::set(
             &obj,
             &"installmentAmount".into(),
-            &self.installment_amount.into(),
+            &val.installment_amount.into(),
         );
-        let _ = js_sys::Reflect::set(&obj, &"totalAmount".into(), &self.total_amount.into());
+        let _ = js_sys::Reflect::set(&obj, &"totalAmount".into(), &val.total_amount.into());
         let _ = js_sys::Reflect::set(
             &obj,
             &"installmentQuantity".into(),
-            &self.installment_quantity.into(),
+            &val.installment_quantity.into(),
         );
         let _ = js_sys::Reflect::set(
             &obj,
             &"firstPaymentDate".into(),
-            &self.first_payment_date.into(),
+            &val.first_payment_date.into(),
         );
 
-        let array = js_sys::Array::new_with_length(self.plans.len() as u32);
-        for (i, plan) in self.plans.into_iter().enumerate() {
+        let array = js_sys::Array::new_with_length(val.plans.len() as u32);
+        for (i, plan) in val.plans.into_iter().enumerate() {
             let js_plan: js_sys::Object = plan.into();
             let _ = js_sys::Reflect::set(&array, &i.into(), &js_plan.into());
         }
@@ -295,9 +295,9 @@ impl Into<js_sys::Object> for DownPaymentResponse {
     }
 }
 
-impl Into<JsValue> for DownPaymentResponse {
-    fn into(self) -> JsValue {
-        let obj: js_sys::Object = self.into();
+impl From<DownPaymentResponse> for JsValue {
+    fn from(val: DownPaymentResponse) -> Self {
+        let obj: js_sys::Object = val.into();
         obj.into()
     }
 }

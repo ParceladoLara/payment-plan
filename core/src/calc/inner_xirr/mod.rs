@@ -13,8 +13,8 @@ pub fn prepare_xirr_params(
     let mut eir_params = Vec::new();
     let mut tec_params = Vec::new();
 
-    let eir_amount = -1.0 * calculation_basis_for_eir;
-    let tec_amount = -1.0 * customer_amount;
+    let eir_amount = -calculation_basis_for_eir;
+    let tec_amount = -customer_amount;
 
     for i in 0..installments {
         let date = due_dates[i as usize];
@@ -29,7 +29,7 @@ pub fn prepare_xirr_params(
         });
     }
 
-    return (eir_params, tec_params);
+    (eir_params, tec_params)
 }
 
 #[cfg(test)]

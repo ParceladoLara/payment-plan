@@ -135,11 +135,11 @@ const P: Iterative = Iterative {};
 pub fn calculate_down_payment_plan(
     params: DownPaymentParams,
 ) -> Result<Vec<DownPaymentResponse>, PaymentPlanError> {
-    return P.calculate_down_payment_plan(params);
+    P.calculate_down_payment_plan(params)
 }
 
 pub fn calculate_payment_plan(params: Params) -> Result<Vec<Response>, PaymentPlanError> {
-    return P.calculate_payment_plan(params);
+    P.calculate_payment_plan(params)
 }
 
 pub fn next_disbursement_date(mut base_date: chrono::NaiveDate) -> chrono::NaiveDate {
@@ -148,7 +148,7 @@ pub fn next_disbursement_date(mut base_date: chrono::NaiveDate) -> chrono::Naive
         base_date = util::add_days(base_date, 1);
     }
 
-    return util::get_next_business_day(base_date);
+    util::get_next_business_day(base_date)
 }
 
 pub fn disbursement_date_range(
@@ -166,18 +166,18 @@ pub fn disbursement_date_range(
         }
     }
 
-    return (start_date, end_date);
+    (start_date, end_date)
 }
 
 pub fn get_non_business_days_between(
     start_date: chrono::NaiveDate,
     end_date: chrono::NaiveDate,
 ) -> Vec<chrono::NaiveDate> {
-    return util::get_non_business_days_between(start_date, end_date);
+    util::get_non_business_days_between(start_date, end_date)
 }
 
 pub fn is_business_day(date: chrono::NaiveDate) -> bool {
-    return util::is_business_day(date);
+    util::is_business_day(date)
 }
 
 #[cfg(test)]

@@ -46,11 +46,11 @@ impl TryInto<Params> for PlanParams {
             mdr: self.mdr,
             tac_percentage: self.tac_percentage,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
             min_installments: self.min_installments,
         };
-        return Ok(params);
+        Ok(params)
     }
 }
 

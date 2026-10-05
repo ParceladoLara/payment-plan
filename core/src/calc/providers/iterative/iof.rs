@@ -27,12 +27,12 @@ pub fn calc(inner_params: &InnerParams, data: &InstallmentData) -> f64 {
 
         let fee = round_decimal_cases(fee, 7);
 
-        let installment_amount_without_fee: f64;
-        if j == installments - 1 {
-            installment_amount_without_fee = main_value - acc_installment_amount_without_fee;
+        
+        let installment_amount_without_fee: f64 = if j == installments - 1 {
+            main_value - acc_installment_amount_without_fee
         } else {
-            installment_amount_without_fee = installment_amount - fee;
-        }
+            installment_amount - fee
+        };
 
         let installment_amount_without_fee = round_decimal_cases(installment_amount_without_fee, 8);
 
@@ -54,8 +54,8 @@ pub fn calc(inner_params: &InnerParams, data: &InstallmentData) -> f64 {
         main_value_l = round_decimal_cases(main_value_l, 8);
         acc_installment_amount_without_fee += installment_amount_without_fee;
     }
-    let total_iof = round_decimal_cases(total_iof, 2);
-    return total_iof;
+    
+    round_decimal_cases(total_iof, 2)
 }
 
 #[cfg(test)]
@@ -75,7 +75,7 @@ mod test {
                 disbursement_only_on_business_days: false,
                 requested_amount: 7431.0,
                 first_payment_date,
-                disbursement_date: disbursement_date,
+                disbursement_date,
                 installments: 18,
                 debit_service_percentage: 0,
                 mdr: 0.05,

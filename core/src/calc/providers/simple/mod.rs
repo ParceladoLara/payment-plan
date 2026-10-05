@@ -32,9 +32,9 @@ pub struct Simple;
 impl PaymentPlan for Simple {
     fn calculate_payment_plan(&self, params: Params) -> Result<Vec<Response>, PaymentPlanError> {
         let prepared_calculations = prepare_calculation(params);
-        let calculated = calculate(params, prepared_calculations);
+        
 
-        return calculated;
+        calculate(params, prepared_calculations)
     }
 }
 
@@ -162,7 +162,7 @@ fn calculate(
         responses.push(response);
     }
 
-    return Ok(responses);
+    Ok(responses)
 }
 
 #[cfg(test)]
@@ -1528,7 +1528,7 @@ mod test {
 
         assert_eq!(result.len(), 1);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.contract_amount, expected_contract_amount);
         assert_eq!(
@@ -1683,7 +1683,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 2770.71,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.029999999329447746,
@@ -1698,7 +1698,7 @@ mod test {
 
         assert_eq!(result.len(), 48);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.contract_amount, expected_contract_amount);
         assert_eq!(
@@ -1779,7 +1779,7 @@ mod down_payment_test {
 
         assert_eq!(result.len(), 1);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.installment_amount, down_payment);
     }
@@ -1802,12 +1802,12 @@ mod down_payment_test {
 
         assert_eq!(result.len(), 2);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.installment_amount, down_payment);
 
         let plans = &response.plans;
-        let first_plan = plans.get(0).unwrap();
+        let first_plan = plans.first().unwrap();
 
         // if the first payment is 20/06/2022, the first plan should be 20/07/2022 because we have 1 down payment to pay
         let plan_due_date = chrono::NaiveDate::from_ymd_opt(2022, 07, 20).unwrap();
@@ -1819,7 +1819,7 @@ mod down_payment_test {
         assert_eq!(response.installment_amount, min_installment_amount);
 
         let plans = &response.plans;
-        let first_plan = plans.get(0).unwrap();
+        let first_plan = plans.first().unwrap();
 
         // if the first payment is 20/06/2022, the first plan should be 20/08/2022 because we have 2 down payments to pay
         let plan_due_date = chrono::NaiveDate::from_ymd_opt(2022, 08, 20).unwrap();
@@ -1845,7 +1845,7 @@ mod down_payment_test {
 
         assert_eq!(result.len(), 3);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.installment_amount, down_payment);
 
@@ -1876,7 +1876,7 @@ mod down_payment_test {
 
         assert_eq!(result.len(), 4);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.installment_amount, down_payment);
 
@@ -1911,7 +1911,7 @@ mod down_payment_test {
 
         assert_eq!(result.len(), 4);
 
-        let response = result.get(0).unwrap();
+        let response = result.first().unwrap();
 
         assert_eq!(response.installment_amount, down_payment);
 

@@ -60,7 +60,7 @@ pub fn calculate_amounts(
 
     let settled_to_merchant = requested_amount - merchant_total_amount;
 
-    return AmountsResponse {
+    AmountsResponse {
         contract_amount,
         contract_amount_without_tac,
         installment_amount_without_tac,
@@ -74,7 +74,7 @@ pub fn calculate_amounts(
         merchant_debit_service_amount,
         merchant_total_amount,
         settled_to_merchant,
-    };
+    }
 }
 
 #[cfg(test)]
