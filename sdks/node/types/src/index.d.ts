@@ -178,4 +178,9 @@ export function disbursementDateRange(base_date: Date, days: number): Date[];
  * @returns {Date[]}
  */
 export function getNonBusinessDaysBetween(start_date: Date, end_date: Date): Date[];
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
+export function isBusinessDay(date: Date): boolean;
 //# sourceMappingURL=index.d.ts.map
