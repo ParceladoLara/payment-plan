@@ -1,4 +1,4 @@
-use js_sys::Array;
+use js_sys::{Array, Boolean};
 use types::{
     date::Date,
     param::{DownPaymentParams, Params},
@@ -131,4 +131,17 @@ pub fn get_non_business_days_between(
     }
 
     return Ok(array);
+}
+
+#[allow(non_snake_case)]
+#[wasm_bindgen(js_name = "isBusinessDay", unchecked_return_type = "boolean")]
+pub fn is_business_day(date: js_sys::Date) -> Result<Boolean, JsError> {
+    let inner_date: types::date::Date = date.into();
+    let core_date: chrono::NaiveDate = match inner_date.try_into() {
+        Ok(date) => date,
+        Err(e) => return Err(e),
+    };
+
+    let result = core_payment_plan::is_business_day(core_date);
+    Ok(Boolean::from(result))
 }
