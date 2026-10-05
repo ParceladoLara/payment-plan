@@ -23,8 +23,6 @@ fn main() -> ExitCode {
     std::io::stdin().read_to_end(&mut buf).unwrap();
     let c_type = args.calc_type;
 
-    
-
     match c_type {
         CalcType::Normal => calc(buf),
         CalcType::DownPayment => down_calc(buf),

@@ -1545,9 +1545,9 @@ mod test {
 
     #[test]
     fn test_system_proposal() {
-        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 08, 21).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 8, 21).unwrap();
 
-        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 09, 18).unwrap();
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 9, 18).unwrap();
 
         let params = Params {
             disbursement_only_on_business_days: true,

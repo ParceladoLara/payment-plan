@@ -185,20 +185,20 @@ mod test {
 
     #[test]
     fn test_next_disbursement_date() {
-        let base_date = chrono::NaiveDate::from_ymd_opt(2078, 02, 12).unwrap();
+        let base_date = chrono::NaiveDate::from_ymd_opt(2078, 2, 12).unwrap();
         let result = super::next_disbursement_date(base_date);
-        let expected = chrono::NaiveDate::from_ymd_opt(2078, 02, 16).unwrap();
+        let expected = chrono::NaiveDate::from_ymd_opt(2078, 2, 16).unwrap();
         assert_eq!(result, expected);
     }
 
     #[test]
     fn test_disbursement_data_range() {
-        let base_date = chrono::NaiveDate::from_ymd_opt(2078, 02, 12).unwrap();
+        let base_date = chrono::NaiveDate::from_ymd_opt(2078, 2, 12).unwrap();
         let days = 5;
         let result = super::disbursement_date_range(base_date, days);
         let expected = (
-            chrono::NaiveDate::from_ymd_opt(2078, 02, 16).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2078, 02, 22).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 2, 16).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2078, 2, 22).unwrap(),
         );
         assert_eq!(result, expected);
     }

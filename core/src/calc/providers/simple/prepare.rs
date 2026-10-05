@@ -81,8 +81,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 8800.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 18).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 18).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 18).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 18).unwrap(),
             installments: 24,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -101,7 +101,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 04, 18).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 4, 18).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 31);
         assert!(prepared_calculations[0].days_index == 0.9762833696137795);
@@ -111,7 +111,7 @@ mod test {
         assert!(prepared_calculations[10].installment == 11);
         assert!(
             prepared_calculations[10].due_date
-                == chrono::NaiveDate::from_ymd_opt(2023, 02, 18).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2023, 2, 18).unwrap()
         );
         assert!(prepared_calculations[10].accumulated_days == 337);
         assert!(prepared_calculations[10].days_index == 0.7703353931843917);
@@ -121,7 +121,7 @@ mod test {
         assert!(prepared_calculations[23].installment == 24);
         assert!(
             prepared_calculations[23].due_date
-                == chrono::NaiveDate::from_ymd_opt(2024, 03, 18).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2024, 3, 18).unwrap()
         );
         assert!(prepared_calculations[23].accumulated_days == 731);
         assert!(prepared_calculations[23].days_index == 0.567796609395405);
@@ -135,8 +135,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 6000.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 18).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 17).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 6, 18).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 5, 17).unwrap(),
             installments: 18,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -155,7 +155,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 06, 18).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 6, 18).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 32);
         assert!(prepared_calculations[0].days_index == 0.9740050536866598);
@@ -165,7 +165,7 @@ mod test {
         assert!(prepared_calculations[10].installment == 11);
         assert!(
             prepared_calculations[10].due_date
-                == chrono::NaiveDate::from_ymd_opt(2023, 04, 18).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2023, 4, 18).unwrap()
         );
         assert!(prepared_calculations[10].accumulated_days == 336);
         assert!(prepared_calculations[10].days_index == 0.7583901916983443);
@@ -189,8 +189,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1300.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 21).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 21).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 21).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 21).unwrap(),
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -209,7 +209,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 04, 21).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 4, 21).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 31);
         assert!(prepared_calculations[0].days_index == 0.9762833696137795);
@@ -229,7 +229,7 @@ mod test {
         assert!(prepared_calculations[11].installment == 12);
         assert!(
             prepared_calculations[11].due_date
-                == chrono::NaiveDate::from_ymd_opt(2023, 03, 21).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2023, 3, 21).unwrap()
         );
         assert!(prepared_calculations[11].accumulated_days == 365);
         assert!(prepared_calculations[11].days_index == 0.753814571370284);
@@ -243,8 +243,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1600.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 29).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 29).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 5, 29).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 29).unwrap(),
             installments: 9,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -263,7 +263,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 05, 29).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 5, 29).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 30);
         assert!(prepared_calculations[0].days_index == 0.9765625);
@@ -273,7 +273,7 @@ mod test {
         assert!(prepared_calculations[3].installment == 4);
         assert!(
             prepared_calculations[3].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 08, 29).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 8, 29).unwrap()
         );
         assert!(prepared_calculations[3].accumulated_days == 122);
         assert!(prepared_calculations[3].days_index == 0.9080578343022551); //908057834302255
@@ -283,7 +283,7 @@ mod test {
         assert!(prepared_calculations[8].installment == 9);
         assert!(
             prepared_calculations[8].due_date
-                == chrono::NaiveDate::from_ymd_opt(2023, 01, 29).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2023, 1, 29).unwrap()
         );
         assert!(prepared_calculations[8].accumulated_days == 275);
         assert!(prepared_calculations[8].days_index == 0.8046068596259314); //8046068596259313
@@ -297,8 +297,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1000.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 08).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 10).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 8).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 10).unwrap(),
             installments: 9,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -317,7 +317,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 04, 08).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 4, 8).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 29);
         assert!(prepared_calculations[0].days_index == 0.9777963563221375);
@@ -327,7 +327,7 @@ mod test {
         assert!(prepared_calculations[3].installment == 4);
         assert!(
             prepared_calculations[3].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 07, 08).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 7, 8).unwrap()
         );
         assert!(prepared_calculations[3].accumulated_days == 120);
         assert!(prepared_calculations[3].days_index == 0.9112732291360666);
@@ -337,7 +337,7 @@ mod test {
         assert!(prepared_calculations[8].installment == 9);
         assert!(
             prepared_calculations[8].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 12, 08).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 12, 8).unwrap()
         );
         assert!(prepared_calculations[8].accumulated_days == 273);
         assert!(prepared_calculations[8].days_index == 0.8094696914138441);
@@ -351,8 +351,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 4580.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 05).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 04).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 5, 5).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 4).unwrap(),
             installments: 24,
             debit_service_percentage: 0,
             mdr: 0.01,
@@ -371,7 +371,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 05, 05).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 5, 5).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 31);
         assert!(prepared_calculations[0].days_index == 0.9651726351175118);
@@ -381,7 +381,7 @@ mod test {
         assert!(prepared_calculations[10].installment == 11);
         assert!(
             prepared_calculations[10].due_date
-                == chrono::NaiveDate::from_ymd_opt(2023, 03, 05).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2023, 3, 5).unwrap()
         );
         assert!(prepared_calculations[10].accumulated_days == 335);
         assert!(prepared_calculations[10].days_index == 0.6817649641421434);
@@ -391,7 +391,7 @@ mod test {
         assert!(prepared_calculations[23].installment == 24);
         assert!(
             prepared_calculations[23].due_date
-                == chrono::NaiveDate::from_ymd_opt(2024, 04, 05).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2024, 4, 5).unwrap()
         );
         assert!(prepared_calculations[23].accumulated_days == 732);
         assert!(prepared_calculations[23].days_index == 0.43299148769124457); // 0.4329914876912446
@@ -405,8 +405,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 09).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 6, 9).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 5, 9).unwrap(),
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -425,7 +425,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 6, 9).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 31);
         assert!(prepared_calculations[0].days_index == 0.9748070746896711);
@@ -435,7 +435,7 @@ mod test {
         assert!(prepared_calculations[6].installment == 7);
         assert!(
             prepared_calculations[6].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 12, 09).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 12, 9).unwrap()
         );
         assert!(prepared_calculations[6].accumulated_days == 214);
         assert!(prepared_calculations[6].days_index == 0.8385000513504884); // 0.8385000513504886
@@ -445,7 +445,7 @@ mod test {
         assert!(prepared_calculations[11].installment == 12);
         assert!(
             prepared_calculations[11].due_date
-                == chrono::NaiveDate::from_ymd_opt(2023, 05, 09).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2023, 5, 9).unwrap()
         );
         assert!(prepared_calculations[11].accumulated_days == 365);
         assert!(prepared_calculations[11].days_index == 0.7405021169133975);
@@ -460,8 +460,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 30).unwrap(),
             installments: 6,
             debit_service_percentage: 0,
             mdr: 0.029900000000000003,
@@ -480,7 +480,7 @@ mod test {
         assert!(prepared_calculations[0].installment == 1);
         assert!(
             prepared_calculations[0].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap()
         );
         assert!(prepared_calculations[0].accumulated_days == 31);
         assert!(prepared_calculations[0].days_index == 0.9650762734315015);
@@ -490,7 +490,7 @@ mod test {
         assert!(prepared_calculations[3].installment == 4);
         assert!(
             prepared_calculations[3].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 07, 30).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 7, 30).unwrap()
         );
         assert!(prepared_calculations[3].accumulated_days == 122);
         assert!(prepared_calculations[3].days_index == 0.8694459273639379);
@@ -500,7 +500,7 @@ mod test {
         assert!(prepared_calculations[5].installment == 6);
         assert!(
             prepared_calculations[5].due_date
-                == chrono::NaiveDate::from_ymd_opt(2022, 09, 30).unwrap()
+                == chrono::NaiveDate::from_ymd_opt(2022, 9, 30).unwrap()
         );
         assert!(prepared_calculations[5].accumulated_days == 184);
         assert!(prepared_calculations[5].days_index == 0.8097777779226664); // 0.8097777779226665 is the expected value,see later

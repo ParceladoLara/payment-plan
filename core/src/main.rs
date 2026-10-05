@@ -11,7 +11,7 @@ fn main() {
     let params = Params {
         requested_amount: 12853.43,
         first_payment_date,
-        disbursement_date: disbursement_date,
+        disbursement_date,
         installments: 48,
         debit_service_percentage: 0,
         mdr: 0.05,
@@ -36,7 +36,6 @@ fn main() {
     let result = calculate_payment_plan(params).unwrap().pop().unwrap();
 
     println!("Payment Plan: {:#?}", result);
-    return;
     let result = calculate_down_payment_plan(down_payment_params).unwrap();
 
     let mut buff = String::new();
@@ -61,7 +60,7 @@ fn main() {
 
         for j in &i.plans {
             let mut invoices = String::new();
-            invoices.push_str("[");
+            invoices.push('[');
             for inv in &j.invoices {
                 invoices.push_str(&format!(
                     r#"
@@ -79,7 +78,7 @@ fn main() {
                     inv.due_date.day(),
                 ));
             }
-            invoices.push_str("]");
+            invoices.push(']');
             buff.push_str(&format!(
                 r#"
                     Response(

@@ -6,7 +6,7 @@ pub mod tec;
 
 pub fn prepare_xirr_params(
     installments: u32,
-    due_dates: &Vec<NaiveDate>,
+    due_dates: &[NaiveDate],
     calculation_basis_for_eir: f64,
     customer_amount: f64,
 ) -> (Vec<Payment<NaiveDate>>, Vec<Payment<NaiveDate>>) {
@@ -68,13 +68,13 @@ mod test {
         assert_eq!(eir_params[0].amount, -3005.610014640465);
         assert_eq!(
             eir_params[0].date,
-            NaiveDate::from_ymd_opt(2022, 04, 30).unwrap()
+            NaiveDate::from_ymd_opt(2022, 4, 30).unwrap()
         );
 
         assert_eq!(tec_params[0].amount, -3024.0190557363553);
         assert_eq!(
             tec_params[0].date,
-            NaiveDate::from_ymd_opt(2022, 04, 30).unwrap()
+            NaiveDate::from_ymd_opt(2022, 4, 30).unwrap()
         );
 
         let installments = 2;
