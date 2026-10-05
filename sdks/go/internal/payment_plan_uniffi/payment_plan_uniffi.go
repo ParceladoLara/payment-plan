@@ -388,6 +388,15 @@ func uniffiCheckChecksums() {
 	}
 	{
 		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
+			return C.uniffi_payment_plan_uniffi_checksum_func_is_business_day()
+		})
+		if checksum != 35839 {
+			// If this happens try cleaning and rebuilding your project
+			panic("payment_plan_uniffi: uniffi_payment_plan_uniffi_checksum_func_is_business_day: UniFFI API checksum mismatch")
+		}
+	}
+	{
+		checksum := rustCall(func(_uniffiStatus *C.RustCallStatus) C.uint16_t {
 			return C.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date()
 		})
 		if checksum != 25001 {
@@ -1394,6 +1403,12 @@ func GetNonBusinessDaysBetween(startDate time.Time, endDate time.Time) []time.Ti
 		return GoRustBuffer{
 			inner: C.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between(FfiConverterTimestampINSTANCE.Lower(startDate), FfiConverterTimestampINSTANCE.Lower(endDate), _uniffiStatus),
 		}
+	}))
+}
+
+func IsBusinessDay(date time.Time) bool {
+	return FfiConverterBoolINSTANCE.Lift(rustCall(func(_uniffiStatus *C.RustCallStatus) C.int8_t {
+		return C.uniffi_payment_plan_uniffi_fn_func_is_business_day(FfiConverterTimestampINSTANCE.Lower(date), _uniffiStatus)
 	}))
 }
 

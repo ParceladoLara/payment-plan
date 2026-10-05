@@ -1817,3 +1817,32 @@ func TestGetNonBusinessDaysBetween(t *testing.T) {
 		}
 	}
 }
+
+func TestIsBusinessDay(t *testing.T) {
+	t.Run("Business day", func(t *testing.T) {
+		date := time.Date(2026, 10, 5, 0, 0, 0, 0, time.UTC)
+		result := payment_plan.IsBusinessDay(date)
+		expected := true
+		if result != expected {
+			t.Errorf("Expected %v for date %v, got %v", expected, date, result)
+		}
+	})
+
+	t.Run("Weekend", func(t *testing.T) {
+		date := time.Date(2025, 4, 5, 0, 0, 0, 0, time.UTC)
+		result := payment_plan.IsBusinessDay(date)
+		expected := false
+		if result != expected {
+			t.Errorf("Expected %v for date %v, got %v", expected, date, result)
+		}
+	})
+
+	t.Run("Holiday", func(t *testing.T) {
+		date := time.Date(2026, 12, 25, 0, 0, 0, 0, time.UTC)
+		result := payment_plan.IsBusinessDay(date)
+		expected := false
+		if result != expected {
+			t.Errorf("Expected %v for date %v, got %v", expected, date, result)
+		}
+	})
+}
