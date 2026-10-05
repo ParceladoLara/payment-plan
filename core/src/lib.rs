@@ -176,6 +176,10 @@ pub fn get_non_business_days_between(
     return util::get_non_business_days_between(start_date, end_date);
 }
 
+pub fn is_business_day(date: chrono::NaiveDate) -> bool {
+    return util::is_business_day(date);
+}
+
 #[cfg(test)]
 mod test {
 
