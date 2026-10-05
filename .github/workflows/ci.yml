@@ -9,6 +9,13 @@ permissions:
   contents: read
 
 jobs:
+  check-rust-fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check formatting
+        run: cargo fmt --all --check
+
   run-cargo-tests:
     runs-on: ubuntu-latest
     steps:
@@ -160,7 +167,7 @@ jobs:
           distribution: "jetbrains"
           java-version: "17"
       - name: Run Kotlin tests
-        run: cd sdks/kotlin && ./gradlew test
+        run: cd sdks/kotlin && ./gradlew test -PrunTests
 
   run-kotlin-tests-win:
     runs-on: windows-latest
@@ -172,4 +179,4 @@ jobs:
           distribution: "jetbrains"
           java-version: "17"
       - name: Run Kotlin tests
-        run: cd sdks/kotlin && ./gradlew test
+        run: cd sdks/kotlin && ./gradlew test -PrunTests
