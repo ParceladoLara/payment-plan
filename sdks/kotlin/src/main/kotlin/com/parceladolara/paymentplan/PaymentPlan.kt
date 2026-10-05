@@ -8,6 +8,7 @@ import com.parceladolara.paymentplan.internal.calculateDownPaymentPlan as intern
 import com.parceladolara.paymentplan.internal.calculatePaymentPlan as internalCalculatePaymentPlan
 import com.parceladolara.paymentplan.internal.disbursementDateRange as internalDisbursementDateRange
 import com.parceladolara.paymentplan.internal.getNonBusinessDaysBetween as internalGetNonBusinessDaysBetween
+import com.parceladolara.paymentplan.internal.isBusinessDay as internalIsBusinessDay
 import com.parceladolara.paymentplan.internal.nextDisbursementDate as internalNextDisbursementDate
 import java.time.Instant
 
@@ -124,5 +125,16 @@ object PaymentPlan {
     @JvmStatic
     fun getNonBusinessDaysBetween(startDate: Instant, endDate: Instant): List<Instant> {
         return internalGetNonBusinessDaysBetween(startDate, endDate)
+    }
+
+    /**
+     * Checks if the given date is a business day.
+     *
+     * @param date The date to check
+     * @return True if the date is a business day, false otherwise
+     */
+    @JvmStatic
+    fun isBusinessDay(date: Instant): Boolean {
+        return internalIsBusinessDay(date)
     }
 }

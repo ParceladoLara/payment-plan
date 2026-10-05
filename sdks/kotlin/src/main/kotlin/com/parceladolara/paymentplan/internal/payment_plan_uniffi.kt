@@ -721,6 +721,8 @@ internal interface UniffiForeignFutureCompleteVoid : com.sun.jna.Callback {
 
 
 
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the internal API.
 
@@ -744,6 +746,8 @@ internal interface UniffiLib : Library {
     ): RustBuffer.ByValue
     fun uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between(`startDate`: RustBuffer.ByValue,`endDate`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    fun uniffi_payment_plan_uniffi_fn_func_is_business_day(`date`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
     fun uniffi_payment_plan_uniffi_fn_func_next_disbursement_date(`baseDate`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun ffi_payment_plan_uniffi_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
@@ -866,6 +870,8 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between(
     ): Short
+    fun uniffi_payment_plan_uniffi_checksum_func_is_business_day(
+    ): Short
     fun uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date(
     ): Short
     fun ffi_payment_plan_uniffi_uniffi_contract_version(
@@ -895,6 +901,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between() != 34693.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_payment_plan_uniffi_checksum_func_is_business_day() != 35839.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date() != 25001.toShort()) {
@@ -1782,6 +1791,15 @@ internal object FfiConverterSequenceTypeInternalResponse: FfiConverterRustBuffer
     uniffiRustCall() { _status ->
     UniffiLib.INSTANCE.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between(
         FfiConverterTimestamp.lower(`startDate`),FfiConverterTimestamp.lower(`endDate`),_status)
+}
+    )
+    }
+    
+ internal fun `isBusinessDay`(`date`: java.time.Instant): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.INSTANCE.uniffi_payment_plan_uniffi_fn_func_is_business_day(
+        FfiConverterTimestamp.lower(`date`),_status)
 }
     )
     }
