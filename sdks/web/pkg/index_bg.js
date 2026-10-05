@@ -152,6 +152,26 @@ export function calculateDownPaymentPlan(p) {
 }
 
 /**
+ * @param {Date} base_date
+ * @returns {Date}
+ */
+export function nextDisbursementDate(base_date) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        wasm.nextDisbursementDate(retptr, addHeapObject(base_date));
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+        if (r2) {
+            throw takeObject(r1);
+        }
+        return takeObject(r0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+}
+
+/**
  * @param {Params} p
  * @returns {Array<PaymentPlanResponse>}
  */
@@ -159,6 +179,27 @@ export function calculatePaymentPlan(p) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         wasm.calculatePaymentPlan(retptr, addHeapObject(p));
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+        if (r2) {
+            throw takeObject(r1);
+        }
+        return takeObject(r0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+}
+
+/**
+ * @param {Date} base_date
+ * @param {number} days
+ * @returns {Array<Date>}
+ */
+export function disbursementDateRange(base_date, days) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        wasm.disbursementDateRange(retptr, addHeapObject(base_date), days);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
         var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
@@ -193,34 +234,13 @@ export function getNonBusinessDaysBetween(start_date, end_date) {
 }
 
 /**
- * @param {Date} base_date
- * @returns {Date}
+ * @param {Date} date
+ * @returns {boolean}
  */
-export function nextDisbursementDate(base_date) {
+export function isBusinessDay(date) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        wasm.nextDisbursementDate(retptr, addHeapObject(base_date));
-        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
-        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
-        var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
-        if (r2) {
-            throw takeObject(r1);
-        }
-        return takeObject(r0);
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-    }
-}
-
-/**
- * @param {Date} base_date
- * @param {number} days
- * @returns {Array<Date>}
- */
-export function disbursementDateRange(base_date, days) {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        wasm.disbursementDateRange(retptr, addHeapObject(base_date), days);
+        wasm.isBusinessDay(retptr, addHeapObject(date));
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
         var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
