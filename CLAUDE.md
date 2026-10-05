@@ -24,7 +24,7 @@ The root `Makefile` is the source of truth. Build an SDK with `make build-<node|
 - Node SDK tests need `sdks/node/native/index.node`, which is gitignored. Run `make build-node-sdk` first.
 - In `generators/wasm`, `npm test` overwrites `generators/wasm/pkg` with nodejs-target builds. Only `make build-wasm-sdk` produces `sdks/web/pkg`.
 - Python tests: `cd sdks/python && python3 -m unittest discover -s tests -p "*.py"`.
-- Rust changes must be clean under `cargo fmt` and `cargo clippy`. CI doesn't enforce either.
+- Rust changes must be clean under `cargo fmt` and `cargo clippy`. CI runs `cargo fmt --all --check` and `cargo clippy --workspace --all-targets -- -D warnings`.
 
 ## Generated code: regenerate, don't hand-edit
 
