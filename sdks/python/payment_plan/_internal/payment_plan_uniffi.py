@@ -468,6 +468,8 @@ def _uniffi_check_api_checksums(lib):
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between() != 34693:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_payment_plan_uniffi_checksum_func_is_business_day() != 35839:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date() != 25001:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
 
@@ -598,6 +600,11 @@ _UniffiLib.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between.argt
     ctypes.POINTER(_UniffiRustCallStatus),
 )
 _UniffiLib.uniffi_payment_plan_uniffi_fn_func_get_non_business_days_between.restype = _UniffiRustBuffer
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_is_business_day.argtypes = (
+    _UniffiRustBuffer,
+    ctypes.POINTER(_UniffiRustCallStatus),
+)
+_UniffiLib.uniffi_payment_plan_uniffi_fn_func_is_business_day.restype = ctypes.c_int8
 _UniffiLib.uniffi_payment_plan_uniffi_fn_func_next_disbursement_date.argtypes = (
     _UniffiRustBuffer,
     ctypes.POINTER(_UniffiRustCallStatus),
@@ -883,6 +890,9 @@ _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_disbursement_date_range.rest
 _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between.argtypes = (
 )
 _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_get_non_business_days_between.restype = ctypes.c_uint16
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_is_business_day.argtypes = (
+)
+_UniffiLib.uniffi_payment_plan_uniffi_checksum_func_is_business_day.restype = ctypes.c_uint16
 _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date.argtypes = (
 )
 _UniffiLib.uniffi_payment_plan_uniffi_checksum_func_next_disbursement_date.restype = ctypes.c_uint16
@@ -1813,6 +1823,13 @@ def get_non_business_days_between(start_date: "Timestamp",end_date: "Timestamp")
         _UniffiConverterTimestamp.lower(end_date)))
 
 
+def is_business_day(date: "Timestamp") -> "bool":
+    _UniffiConverterTimestamp.check_lower(date)
+    
+    return _UniffiConverterBool.lift(_uniffi_rust_call(_UniffiLib.uniffi_payment_plan_uniffi_fn_func_is_business_day,
+        _UniffiConverterTimestamp.lower(date)))
+
+
 def next_disbursement_date(base_date: "Timestamp") -> "Timestamp":
     _UniffiConverterTimestamp.check_lower(base_date)
     
@@ -1832,6 +1849,7 @@ __all__ = [
     "calculate_payment_plan",
     "disbursement_date_range",
     "get_non_business_days_between",
+    "is_business_day",
     "next_disbursement_date",
 ]
 
