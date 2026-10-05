@@ -115,4 +115,20 @@ class PaymentPlan
     // Call the FFI method to get the non-business days
     return FFIPaymentPlan::getNonBusinessDaysBetween($startTimestamp, $endTimestamp);
   }
+
+  /**
+   * Checks if a given date is a business day using FFI.
+   *
+   * @param \DateTimeInterface $date Date to check.
+   * @return bool True if the date is a business day, false otherwise.
+   *
+   * @throws \RuntimeException if the FFI call fails.
+   * @throws \RuntimeException if the shared library or header file is missing.
+   * @throws \RuntimeException if the OS is unsupported.
+   */
+  public static function isBusinessDay(\DateTimeInterface $date): bool
+  {
+    $timestamp = $date->getTimestamp() * 1000; // Convert to milliseconds for FFI
+    return FFIPaymentPlan::isBusinessDay($timestamp);
+  }
 }

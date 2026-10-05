@@ -1238,6 +1238,23 @@ class PaymentPlanTest extends TestCase
     $this->assertEquals($expectedNonBusinessDays, $nonBusinessDays);
   }
 
+  public function testIsBusinessDay()
+  {
+    $date = new DateTimeImmutable('2026-10-05');
+    $result = PaymentPlan::isBusinessDay($date);
+    $this->assertIsBool($result);
+    $this->assertTrue($result);
+    $weekendDate = new DateTimeImmutable('2026-10-04');
+    $weekendResult = PaymentPlan::isBusinessDay($weekendDate);
+    $this->assertIsBool($weekendResult);
+    $this->assertFalse($weekendResult);
+
+    $holidayDate = new DateTimeImmutable('2026-12-25');
+    $holidayResult = PaymentPlan::isBusinessDay($holidayDate);
+    $this->assertIsBool($holidayResult);
+    $this->assertFalse($holidayResult);
+  }
+
   public function helpAssertDownPayment(DownPaymentResponse $r, DownPaymentResponse $e): void
   {
     $this->assertEquals($e->installmentAmount, $r->installmentAmount);

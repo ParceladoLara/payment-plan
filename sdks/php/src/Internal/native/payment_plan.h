@@ -366,6 +366,21 @@ get_non_business_days_between (
     int64_t end_date,
     Vec_int64_t * result);
 
+/** \brief
+ *  Check if a given date is a business day.
+ *  # Arguments
+ *  * `date` - The date to check, represented as a timestamp in milliseconds.
+ *  * `result` - A mutable pointer to a boolean where the result will be stored.
+ *  # Returns
+ *  * `PaymentPlanResult::Success` if the operation was successful.
+ *  * `PaymentPlanResult::InvalidParams` if the provided date is invalid.
+ *  # Safety: The caller must provide a valid pointer for the result.
+ */
+PaymentPlanResult_t
+is_business_day (
+    int64_t date,
+    bool * result);
+
 /** <No documentation available> */
 PaymentPlanResult_t
 next_disbursement_date (
