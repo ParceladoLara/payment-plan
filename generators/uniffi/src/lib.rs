@@ -93,10 +93,7 @@ pub fn disbursement_date_range(base_date: SystemTime, days: u32) -> Vec<SystemTi
     let end_date: DateTime<Utc> = end_date + chrono::Duration::hours(10);
     let end_date: SystemTime = end_date.into();
 
-    let mut result = Vec::with_capacity(2);
-    result.push(start_date);
-    result.push(end_date);
-    result
+    vec![start_date, end_date]
 }
 
 #[uniffi::export]

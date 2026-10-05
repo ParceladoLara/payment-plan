@@ -20,29 +20,29 @@ pub struct InternalParams {
     pub min_installments: Option<u32>,
 }
 
-impl Into<core_payment_plan::Params> for InternalParams {
-    fn into(self) -> core_payment_plan::Params {
-        let disbursement_date: DateTime<Utc> = self.disbursement_date.into();
-        let first_payment_date: DateTime<Utc> = self.first_payment_date.into();
+impl From<InternalParams> for core_payment_plan::Params {
+    fn from(val: InternalParams) -> Self {
+        let disbursement_date: DateTime<Utc> = val.disbursement_date.into();
+        let first_payment_date: DateTime<Utc> = val.first_payment_date.into();
 
         let disbursement_date = disbursement_date.date_naive();
         let first_payment_date = first_payment_date.date_naive();
 
         core_payment_plan::Params {
-            requested_amount: self.requested_amount,
+            requested_amount: val.requested_amount,
             first_payment_date,
-            disbursement_date: disbursement_date,
-            installments: self.installments,
-            debit_service_percentage: self.debit_service_percentage,
-            mdr: self.mdr,
-            tac_percentage: self.tac_percentage,
-            iof_overall: self.iof_overall,
-            iof_percentage: self.iof_percentage,
-            interest_rate: self.interest_rate,
-            min_installment_amount: self.min_installment_amount,
-            max_total_amount: self.max_total_amount,
-            disbursement_only_on_business_days: self.disbursement_only_on_business_days,
-            min_installments: self.min_installments,
+            disbursement_date,
+            installments: val.installments,
+            debit_service_percentage: val.debit_service_percentage,
+            mdr: val.mdr,
+            tac_percentage: val.tac_percentage,
+            iof_overall: val.iof_overall,
+            iof_percentage: val.iof_percentage,
+            interest_rate: val.interest_rate,
+            min_installment_amount: val.min_installment_amount,
+            max_total_amount: val.max_total_amount,
+            disbursement_only_on_business_days: val.disbursement_only_on_business_days,
+            min_installments: val.min_installments,
         }
     }
 }
@@ -56,17 +56,17 @@ pub struct InternalDownPaymentParams {
     pub installments: u32,           // The max number of installments for the down payment (ex: 12)
 }
 
-impl Into<core_payment_plan::DownPaymentParams> for InternalDownPaymentParams {
-    fn into(self) -> core_payment_plan::DownPaymentParams {
-        let first_payment_date: DateTime<Utc> = self.first_payment_date.into();
+impl From<InternalDownPaymentParams> for core_payment_plan::DownPaymentParams {
+    fn from(val: InternalDownPaymentParams) -> Self {
+        let first_payment_date: DateTime<Utc> = val.first_payment_date.into();
         let first_payment_date = first_payment_date.date_naive();
 
         core_payment_plan::DownPaymentParams {
-            params: self.params.into(),
-            requested_amount: self.requested_amount,
-            min_installment_amount: self.min_installment_amount,
+            params: val.params.into(),
+            requested_amount: val.requested_amount,
+            min_installment_amount: val.min_installment_amount,
             first_payment_date,
-            installments: self.installments,
+            installments: val.installments,
         }
     }
 }

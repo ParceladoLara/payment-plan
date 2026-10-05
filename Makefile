@@ -110,7 +110,8 @@ build-kotlin-sdk-linux:
 
 build-kotlin-sdk-windows:
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
-	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll --language kotlin --out-dir sdks/kotlin/src/main/kotlin
+	cargo run --bin uniffi-bindgen generate --library target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll --language kotlin  --config ./uniffi.toml --out-dir sdks/kotlin/src/main/kotlin
+	sed -i 's/\bpublic\b/internal/g; s/\bdata class\b/internal data class/g; s/\bfun `/internal fun `/g' ./sdks/kotlin/src/main/kotlin/com/parceladolara/paymentplan/internal/payment_plan_uniffi.kt
 	mkdir -p sdks/kotlin/src/main/resources/native/windows
 	cp target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll sdks/kotlin/src/main/resources/native/windows/payment_plan_uniffi.dll
 

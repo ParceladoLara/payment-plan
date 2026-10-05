@@ -20,16 +20,16 @@ pub fn calculate_iof(params: Params, accumulated_days: Vec<i64>, installments: f
         .into_iter()
         .map(|days| {
             if days > 364 {
-                return installment_amount_without_interest * iof_percentage;
+                installment_amount_without_interest * iof_percentage
             } else {
-                return days as f64 * installment_amount_without_interest * daily_iof;
+                days as f64 * installment_amount_without_interest * daily_iof
             }
         })
         .collect();
 
     let installment_iof: f64 = iof_calculation.iter().sum();
 
-    return contract_iof + installment_iof;
+    contract_iof + installment_iof
 }
 
 #[cfg(test)]
@@ -43,8 +43,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 1500.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 06, 09).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 05, 09).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 6, 9).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 5, 9).unwrap(),
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -111,8 +111,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 30).unwrap(),
             installments: 6,
             debit_service_percentage: 0,
             mdr: 0.029900000000000003,

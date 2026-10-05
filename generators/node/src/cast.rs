@@ -69,7 +69,7 @@ pub fn cast_js_object_to_param(
         min_installment_amount,
         requested_amount,
         first_payment_date,
-        disbursement_date: disbursement_date,
+        disbursement_date,
         installments,
         debit_service_percentage: debt_service_percentage,
         mdr,
@@ -181,7 +181,7 @@ pub fn cast_vec_response_to_js_array<'a, C: Context<'a>>(
     cx: &mut C,
     responses: Vec<Response>,
 ) -> NeonResult<Handle<'a, JsArray>> {
-    let array = JsArray::new(cx, responses.len() as usize);
+    let array = JsArray::new(cx, responses.len());
     for (i, response) in responses.into_iter().enumerate() {
         let obj = cast_response_to_js_object(cx, response)?;
         array.set(cx, i as u32, obj)?;
@@ -193,7 +193,7 @@ pub fn cast_vec_invoice_to_js_array<'a, C: Context<'a>>(
     cx: &mut C,
     invoices: Vec<Invoice>,
 ) -> NeonResult<Handle<'a, JsArray>> {
-    let array = JsArray::new(cx, invoices.len() as usize);
+    let array = JsArray::new(cx, invoices.len());
     for (i, invoice) in invoices.into_iter().enumerate() {
         let obj = cast_invoice_to_js_object(cx, invoice)?;
         array.set(cx, i as u32, obj)?;
@@ -207,11 +207,11 @@ pub fn cast_invoice_to_js_object<'a, C: Context<'a>>(
 ) -> NeonResult<Handle<'a, JsObject>> {
     let obj = JsObject::new(cx);
     let accumulated_days = JsNumber::new(cx, invoice.accumulated_days as f64);
-    let factor = JsNumber::new(cx, invoice.factor as f64);
+    let factor = JsNumber::new(cx, invoice.factor);
     let due_date = parser::naive_to_js_date(cx, invoice.due_date)?;
-    let accumulated_factor = JsNumber::new(cx, invoice.accumulated_factor as f64);
-    let main_iof_tac = JsNumber::new(cx, invoice.main_iof_tac as f64);
-    let debit_service = JsNumber::new(cx, invoice.debit_service as f64);
+    let accumulated_factor = JsNumber::new(cx, invoice.accumulated_factor);
+    let main_iof_tac = JsNumber::new(cx, invoice.main_iof_tac);
+    let debit_service = JsNumber::new(cx, invoice.debit_service);
     obj.set(cx, "accumulatedDays", accumulated_days)?;
     obj.set(cx, "factor", factor)?;
     obj.set(cx, "dueDate", due_date)?;
@@ -273,7 +273,7 @@ pub fn cast_vec_down_payment_response_to_js_array<'a, C: Context<'a>>(
     cx: &mut C,
     responses: Vec<DownPaymentResponse>,
 ) -> NeonResult<Handle<'a, JsArray>> {
-    let array = JsArray::new(cx, responses.len() as usize);
+    let array = JsArray::new(cx, responses.len());
     for (i, response) in responses.into_iter().enumerate() {
         let obj = cast_down_payment_response_to_js_object(cx, response)?;
         array.set(cx, i as u32, obj)?;

@@ -34,38 +34,38 @@ pub struct Params {
     pub min_installments: u32,
 }
 
-impl Into<core_payment_plan::Params> for Params {
-    fn into(self) -> core_payment_plan::Params {
+impl From<Params> for core_payment_plan::Params {
+    fn from(val: Params) -> Self {
         let disbursement_date: DateTime<Utc> =
-            chrono::DateTime::from_timestamp_millis(self.disbursement_date_ms)
+            chrono::DateTime::from_timestamp_millis(val.disbursement_date_ms)
                 .expect("Invalid disbursement date timestamp");
         let first_payment_date: DateTime<Utc> =
-            chrono::DateTime::from_timestamp_millis(self.first_payment_date_ms)
+            chrono::DateTime::from_timestamp_millis(val.first_payment_date_ms)
                 .expect("Invalid first payment date timestamp");
 
         let disbursement_date = disbursement_date.date_naive();
         let first_payment_date = first_payment_date.date_naive();
 
-        let min_installments = if self.min_installments == 0 {
+        let min_installments = if val.min_installments == 0 {
             None
         } else {
-            Some(self.min_installments)
+            Some(val.min_installments)
         };
 
         core_payment_plan::Params {
-            requested_amount: self.requested_amount,
+            requested_amount: val.requested_amount,
             first_payment_date,
-            disbursement_date: disbursement_date,
-            installments: self.installments,
-            debit_service_percentage: self.debit_service_percentage,
-            mdr: self.mdr,
-            tac_percentage: self.tac_percentage,
-            iof_overall: self.iof_overall,
-            iof_percentage: self.iof_percentage,
-            interest_rate: self.interest_rate,
-            min_installment_amount: self.min_installment_amount,
-            max_total_amount: self.max_total_amount,
-            disbursement_only_on_business_days: self.disbursement_only_on_business_days,
+            disbursement_date,
+            installments: val.installments,
+            debit_service_percentage: val.debit_service_percentage,
+            mdr: val.mdr,
+            tac_percentage: val.tac_percentage,
+            iof_overall: val.iof_overall,
+            iof_percentage: val.iof_percentage,
+            interest_rate: val.interest_rate,
+            min_installment_amount: val.min_installment_amount,
+            max_total_amount: val.max_total_amount,
+            disbursement_only_on_business_days: val.disbursement_only_on_business_days,
             min_installments,
         }
     }
@@ -81,19 +81,19 @@ pub struct DownPaymentParams {
     pub installments: u32,           // The max number of installments for the down payment (ex: 12)
 }
 
-impl Into<core_payment_plan::DownPaymentParams> for DownPaymentParams {
-    fn into(self) -> core_payment_plan::DownPaymentParams {
+impl From<DownPaymentParams> for core_payment_plan::DownPaymentParams {
+    fn from(val: DownPaymentParams) -> Self {
         let first_payment_date: DateTime<Utc> =
-            chrono::DateTime::from_timestamp_millis(self.first_payment_date_ms)
+            chrono::DateTime::from_timestamp_millis(val.first_payment_date_ms)
                 .expect("Invalid first payment date timestamp");
         let first_payment_date = first_payment_date.date_naive();
 
         core_payment_plan::DownPaymentParams {
-            params: self.params.into(),
-            requested_amount: self.requested_amount,
-            min_installment_amount: self.min_installment_amount,
+            params: val.params.into(),
+            requested_amount: val.requested_amount,
+            min_installment_amount: val.min_installment_amount,
             first_payment_date,
-            installments: self.installments,
+            installments: val.installments,
         }
     }
 }

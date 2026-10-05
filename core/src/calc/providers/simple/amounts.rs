@@ -60,7 +60,7 @@ pub fn calculate_amounts(
 
     let settled_to_merchant = requested_amount - merchant_total_amount;
 
-    return AmountsResponse {
+    AmountsResponse {
         contract_amount,
         contract_amount_without_tac,
         installment_amount_without_tac,
@@ -74,7 +74,7 @@ pub fn calculate_amounts(
         merchant_debit_service_amount,
         merchant_total_amount,
         settled_to_merchant,
-    };
+    }
 }
 
 #[cfg(test)]
@@ -88,8 +88,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 30).unwrap(),
             installments: 6,
             debit_service_percentage: 0,
             mdr: 0.029900000000000003,

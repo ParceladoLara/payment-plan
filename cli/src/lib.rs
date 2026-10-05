@@ -46,11 +46,11 @@ impl TryInto<Params> for PlanParams {
             mdr: self.mdr,
             tac_percentage: self.tac_percentage,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             disbursement_only_on_business_days: self.disbursement_only_on_business_days,
             min_installments: self.min_installments,
         };
-        return Ok(params);
+        Ok(params)
     }
 }
 
@@ -145,16 +145,14 @@ pub fn deserialize_params(buf: &[u8]) -> Result<PlanParams, prost::DecodeError> 
 }
 
 pub fn serialize_response(response: PlanResponse) -> Vec<u8> {
-    let mut buf = Vec::new();
-    buf.reserve(response.encoded_len());
+    let mut buf = Vec::with_capacity(response.encoded_len());
     // Unwrap is safe, since we have reserved sufficient capacity in the vector.
     response.encode(&mut buf).unwrap();
     buf
 }
 
 pub fn serialize_responses(responses: PlanResponses) -> Vec<u8> {
-    let mut buf = Vec::new();
-    buf.reserve(responses.encoded_len());
+    let mut buf = Vec::with_capacity(responses.encoded_len());
     // Unwrap is safe, since we have reserved sufficient capacity in the vector.
     responses.encode(&mut buf).unwrap();
     buf
@@ -221,15 +219,14 @@ pub fn deserialize_down_payment_params(
 }
 
 pub fn serialize_down_payment_response(response: DownPaymentResponse) -> Vec<u8> {
-    let mut buf = Vec::new();
-    buf.reserve(response.encoded_len());
+    let mut buf = Vec::with_capacity(response.encoded_len());
     // Unwrap is safe, since we have reserved sufficient capacity in the vector.
     response.encode(&mut buf).unwrap();
     buf
 }
 
 pub fn serialize_down_payment_responses(responses: DownPaymentResponses) -> Vec<u8> {
-    let mut buf = Vec::new();
+    let mut buf = Vec::with_capacity(responses.encoded_len());
     buf.reserve(responses.encoded_len());
     // Unwrap is safe, since we have reserved sufficient capacity in the vector.
     responses.encode(&mut buf).unwrap();

@@ -15,10 +15,7 @@ mod types;
     unchecked_return_type = "Array<DownPaymentResponse>"
 )]
 pub fn calculate_down_payment_plan(p: DownPaymentParams) -> Result<Array, JsError> {
-    let core_params: core_payment_plan::DownPaymentParams = match p.try_into() {
-        Ok(params) => params,
-        Err(e) => return Err(e),
-    };
+    let core_params: core_payment_plan::DownPaymentParams = p.try_into()?;
     let results = match core_payment_plan::calculate_down_payment_plan(core_params) {
         Ok(r) => r,
         Err(e) => return Err(JsError::new(&e.to_string())),
@@ -31,19 +28,16 @@ pub fn calculate_down_payment_plan(p: DownPaymentParams) -> Result<Array, JsErro
         array.set(i as u32, inner_result.into());
     }
 
-    return Ok(array);
+    Ok(array)
 }
 
 #[allow(non_snake_case)]
 #[wasm_bindgen(js_name = "nextDisbursementDate")]
 pub fn next_disbursement_date(base_date: js_sys::Date) -> Result<js_sys::Date, JsError> {
     let inner_date: types::date::Date = base_date.into();
-    let core_date: chrono::NaiveDate = match inner_date.try_into() {
-        Ok(date) => date,
-        Err(e) => return Err(e),
-    };
+    let core_date: chrono::NaiveDate = inner_date.try_into()?;
     let result: Date = core_payment_plan::next_disbursement_date(core_date).into();
-    let js_result: types::date::Date = result.into();
+    let js_result: types::date::Date = result;
 
     Ok(js_result.into())
 }
@@ -54,10 +48,7 @@ pub fn next_disbursement_date(base_date: js_sys::Date) -> Result<js_sys::Date, J
     unchecked_return_type = "Array<PaymentPlanResponse>"
 )]
 pub fn calculate_payment_plan(p: Params) -> Result<Array, JsError> {
-    let core_params: core_payment_plan::Params = match p.try_into() {
-        Ok(params) => params,
-        Err(e) => return Err(e),
-    };
+    let core_params: core_payment_plan::Params = p.try_into()?;
 
     let results = match core_payment_plan::calculate_payment_plan(core_params) {
         Ok(r) => r,
@@ -71,7 +62,7 @@ pub fn calculate_payment_plan(p: Params) -> Result<Array, JsError> {
         array.set(i as u32, inner_result.into());
     }
 
-    return Ok(array);
+    Ok(array)
 }
 
 #[allow(non_snake_case)]
@@ -81,10 +72,7 @@ pub fn calculate_payment_plan(p: Params) -> Result<Array, JsError> {
 )]
 pub fn disbursement_date_range(base_date: js_sys::Date, days: u32) -> Result<Array, JsError> {
     let inner_date: types::date::Date = base_date.into();
-    let core_date: chrono::NaiveDate = match inner_date.try_into() {
-        Ok(date) => date,
-        Err(e) => return Err(e),
-    };
+    let core_date: chrono::NaiveDate = inner_date.try_into()?;
 
     let result = core_payment_plan::disbursement_date_range(core_date, days);
 
@@ -96,7 +84,7 @@ pub fn disbursement_date_range(base_date: js_sys::Date, days: u32) -> Result<Arr
     array.set(0, start_date.into());
     array.set(1, end_date.into());
 
-    return Ok(array);
+    Ok(array)
 }
 
 #[allow(non_snake_case)]
@@ -111,15 +99,9 @@ pub fn get_non_business_days_between(
     let start_date: types::date::Date = start_date.into();
     let end_date: types::date::Date = end_date.into();
 
-    let core_start_date: chrono::NaiveDate = match start_date.try_into() {
-        Ok(date) => date,
-        Err(e) => return Err(e),
-    };
+    let core_start_date: chrono::NaiveDate = start_date.try_into()?;
 
-    let core_end_date: chrono::NaiveDate = match end_date.try_into() {
-        Ok(date) => date,
-        Err(e) => return Err(e),
-    };
+    let core_end_date: chrono::NaiveDate = end_date.try_into()?;
 
     let result = core_payment_plan::get_non_business_days_between(core_start_date, core_end_date);
 
@@ -130,17 +112,14 @@ pub fn get_non_business_days_between(
         array.set(i as u32, js_date.into());
     }
 
-    return Ok(array);
+    Ok(array)
 }
 
 #[allow(non_snake_case)]
 #[wasm_bindgen(js_name = "isBusinessDay", unchecked_return_type = "boolean")]
 pub fn is_business_day(date: js_sys::Date) -> Result<Boolean, JsError> {
     let inner_date: types::date::Date = date.into();
-    let core_date: chrono::NaiveDate = match inner_date.try_into() {
-        Ok(date) => date,
-        Err(e) => return Err(e),
-    };
+    let core_date: chrono::NaiveDate = inner_date.try_into()?;
 
     let result = core_payment_plan::is_business_day(core_date);
     Ok(Boolean::from(result))

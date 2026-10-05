@@ -15,15 +15,15 @@ impl Deref for Date {
     }
 }
 
-impl Into<JsValue> for Date {
-    fn into(self) -> JsValue {
-        self.0.into()
+impl From<Date> for JsValue {
+    fn from(val: Date) -> Self {
+        val.0.into()
     }
 }
 
-impl Into<js_sys::Date> for Date {
-    fn into(self) -> js_sys::Date {
-        self.0
+impl From<Date> for js_sys::Date {
+    fn from(val: Date) -> Self {
+        val.0
     }
 }
 

@@ -27,12 +27,11 @@ pub fn calc(inner_params: &InnerParams, data: &InstallmentData) -> f64 {
 
         let fee = round_decimal_cases(fee, 7);
 
-        let installment_amount_without_fee: f64;
-        if j == installments - 1 {
-            installment_amount_without_fee = main_value - acc_installment_amount_without_fee;
+        let installment_amount_without_fee: f64 = if j == installments - 1 {
+            main_value - acc_installment_amount_without_fee
         } else {
-            installment_amount_without_fee = installment_amount - fee;
-        }
+            installment_amount - fee
+        };
 
         let installment_amount_without_fee = round_decimal_cases(installment_amount_without_fee, 8);
 
@@ -54,8 +53,8 @@ pub fn calc(inner_params: &InnerParams, data: &InstallmentData) -> f64 {
         main_value_l = round_decimal_cases(main_value_l, 8);
         acc_installment_amount_without_fee += installment_amount_without_fee;
     }
-    let total_iof = round_decimal_cases(total_iof, 2);
-    return total_iof;
+
+    round_decimal_cases(total_iof, 2)
 }
 
 #[cfg(test)]
@@ -67,7 +66,7 @@ mod test {
 
     #[test]
     fn test_calc() {
-        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 09, 24).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 9, 24).unwrap();
 
         let first_payment_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap();
         let params = InnerParams {
@@ -75,7 +74,7 @@ mod test {
                 disbursement_only_on_business_days: false,
                 requested_amount: 7431.0,
                 first_payment_date,
-                disbursement_date: disbursement_date,
+                disbursement_date,
                 installments: 18,
                 debit_service_percentage: 0,
                 mdr: 0.05,
@@ -96,24 +95,24 @@ mod test {
             chrono::NaiveDate::from_ymd_opt(2024, 10, 24).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2024, 11, 24).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2024, 12, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 01, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 02, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 03, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 04, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 05, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 06, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 07, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 08, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2025, 09, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 1, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 2, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 3, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 4, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 5, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 6, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 7, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 8, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2025, 9, 24).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2025, 10, 24).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2025, 11, 24).unwrap(),
             chrono::NaiveDate::from_ymd_opt(2025, 12, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2026, 01, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2026, 02, 24).unwrap(),
-            chrono::NaiveDate::from_ymd_opt(2026, 03, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2026, 1, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2026, 2, 24).unwrap(),
+            chrono::NaiveDate::from_ymd_opt(2026, 3, 24).unwrap(),
         ];
 
-        let last_due_date = chrono::NaiveDate::from_ymd_opt(2026, 03, 24).unwrap();
+        let last_due_date = chrono::NaiveDate::from_ymd_opt(2026, 3, 24).unwrap();
 
         let i_cal = InstallmentData {
             accumulated_days: vec![

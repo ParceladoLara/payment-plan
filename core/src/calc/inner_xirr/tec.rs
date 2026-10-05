@@ -37,7 +37,7 @@ pub fn calculate_tec_monthly(
             let converged_tec_params: Vec<Payment<NaiveDate>> = total_effective_cost_xirr
                 .iter()
                 .map(|tec| Payment {
-                    amount: -1.0 * tec.amount,
+                    amount: -tec.amount,
                     date: tec.date,
                 })
                 .collect();
@@ -51,7 +51,7 @@ pub fn calculate_tec_monthly(
     if tec_monthly.is_nan() {
         return Err(PaymentPlanError::XirCalculationError(params));
     }
-    return Ok(tec_monthly);
+    Ok(tec_monthly)
 }
 
 #[cfg(test)]
@@ -67,8 +67,8 @@ mod test {
             max_total_amount: f64::MAX,
             min_installment_amount: 0.0,
             requested_amount: 2900.0,
-            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
-            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 03, 30).unwrap(),
+            first_payment_date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
+            disbursement_date: chrono::NaiveDate::from_ymd_opt(2022, 3, 30).unwrap(),
             installments: 6,
             debit_service_percentage: 0,
             mdr: 0.029900000000000003,
@@ -81,7 +81,7 @@ mod test {
 
         let tec_params = vec![Payment {
             amount: -3024.0190557363553,
-            date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
+            date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
         }];
 
         let tec_monthly = calculate_tec_monthly(params, tec_params, 0.0821917808219178).unwrap();
@@ -91,11 +91,11 @@ mod test {
         let tec_params = vec![
             Payment {
                 amount: -1539.8988271991445,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
             },
             Payment {
                 amount: -1539.8988271991445,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 05, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 5, 30).unwrap(),
             },
         ];
 
@@ -106,15 +106,15 @@ mod test {
         let tec_params = vec![
             Payment {
                 amount: -1045.8446791163315,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
             },
             Payment {
                 amount: -1045.8446791163315,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 05, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 5, 30).unwrap(),
             },
             Payment {
                 amount: -1045.8446791163315,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 06, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 6, 30).unwrap(),
             },
         ];
 
@@ -125,19 +125,19 @@ mod test {
         let tec_params = vec![
             Payment {
                 amount: -798.8498495930802,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
             },
             Payment {
                 amount: -798.8498495930802,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 05, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 5, 30).unwrap(),
             },
             Payment {
                 amount: -798.8498495930802,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 06, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 6, 30).unwrap(),
             },
             Payment {
                 amount: -798.8498495930802,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 07, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 7, 30).unwrap(),
             },
         ];
 
@@ -148,23 +148,23 @@ mod test {
         let tec_params = vec![
             Payment {
                 amount: -650.8993291092211,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
             },
             Payment {
                 amount: -650.8993291092211,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 05, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 5, 30).unwrap(),
             },
             Payment {
                 amount: -650.8993291092211,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 06, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 6, 30).unwrap(),
             },
             Payment {
                 amount: -650.8993291092211,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 07, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 7, 30).unwrap(),
             },
             Payment {
                 amount: -650.8993291092211,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 08, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 8, 30).unwrap(),
             },
         ];
 
@@ -175,27 +175,27 @@ mod test {
         let tec_params = vec![
             Payment {
                 amount: -552.4322553512001,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 04, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 4, 30).unwrap(),
             },
             Payment {
                 amount: -552.4322553512001,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 05, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 5, 30).unwrap(),
             },
             Payment {
                 amount: -552.4322553512001,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 06, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 6, 30).unwrap(),
             },
             Payment {
                 amount: -552.4322553512001,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 07, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 7, 30).unwrap(),
             },
             Payment {
                 amount: -552.4322553512001,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 08, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 8, 30).unwrap(),
             },
             Payment {
                 amount: -552.4322553512001,
-                date: chrono::NaiveDate::from_ymd_opt(2022, 09, 30).unwrap(),
+                date: chrono::NaiveDate::from_ymd_opt(2022, 9, 30).unwrap(),
             },
         ];
 

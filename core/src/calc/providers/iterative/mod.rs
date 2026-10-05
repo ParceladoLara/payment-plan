@@ -222,7 +222,7 @@ fn calc(mut params: InnerParams) -> Result<Response, PaymentPlanError> {
         ..Default::default()
     };
 
-    return Ok(resp);
+    Ok(resp)
 }
 
 fn present_value(
@@ -240,7 +240,7 @@ fn present_value(
         let installment_value = installment_amount / potency;
         present_value += installment_value;
     }
-    return present_value;
+    present_value
 }
 
 #[cfg(test)]
@@ -349,7 +349,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -370,7 +370,7 @@ mod test {
 
         let expected = Response {
             installment: 48,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 1461,
             days_index: 0.19275140186402,
@@ -805,7 +805,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -829,7 +829,7 @@ mod test {
 
         let expected = Response {
             installment: 48,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 1461,
             days_index: 0.19275140186402,
@@ -1264,7 +1264,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 0.0,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1277,7 +1277,7 @@ mod test {
 
         let iterative = Iterative;
         let resp = iterative.calculate_payment_plan(params);
-        assert_eq!(resp.is_err(), true);
+        assert!(resp.is_err());
 
         assert_eq!(resp.unwrap_err(), PaymentPlanError::InvalidRequestedAmount);
     }
@@ -1294,7 +1294,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 0,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1307,7 +1307,7 @@ mod test {
 
         let iterative = Iterative;
         let resp = iterative.calculate_payment_plan(params);
-        assert_eq!(resp.is_err(), true);
+        assert!(resp.is_err());
 
         assert_eq!(
             resp.unwrap_err(),
@@ -1327,7 +1327,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 200.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1350,7 +1350,7 @@ mod test {
 
         let expected = Response {
             installment: 2,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 61,
             days_index: 0.931982709374806,
@@ -1417,7 +1417,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 2000.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1440,7 +1440,7 @@ mod test {
 
         let expected = Response {
             installment: 8,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 243,
             days_index: 0.760656615702412,
@@ -1545,9 +1545,9 @@ mod test {
 
     #[test]
     fn test_system_proposal() {
-        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 08, 21).unwrap();
+        let disbursement_date = chrono::NaiveDate::from_ymd_opt(2025, 8, 21).unwrap();
 
-        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 09, 18).unwrap();
+        let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 9, 18).unwrap();
 
         let params = Params {
             disbursement_only_on_business_days: true,
@@ -1555,7 +1555,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 3883.48,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 24,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1578,7 +1578,7 @@ mod test {
 
         let expected = Response {
             installment: 24,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 727,
             days_index: 0.352166545526241,
@@ -1821,7 +1821,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1834,7 +1834,7 @@ mod test {
 
         let iterative = Iterative;
         let resp = iterative.calculate_payment_plan(params);
-        assert_eq!(resp.is_err(), true);
+        assert!(resp.is_err());
 
         assert_eq!(
             resp.unwrap_err(),
@@ -1854,7 +1854,7 @@ mod test {
             min_installment_amount: 100.0,
             requested_amount: 12853.43,
             first_payment_date,
-            disbursement_date: disbursement_date,
+            disbursement_date,
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
@@ -1867,7 +1867,7 @@ mod test {
 
         let iterative = Iterative;
         let resp = iterative.calculate_payment_plan(params);
-        assert_eq!(resp.is_err(), true);
+        assert!(resp.is_err());
 
         assert_eq!(
             resp.unwrap_err(),

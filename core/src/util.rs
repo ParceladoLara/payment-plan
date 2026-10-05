@@ -707,10 +707,7 @@ const BRAZILIAN_BANK_HOLIDAYS: [chrono::NaiveDate; 701] = [
 
 pub fn is_holiday(date: chrono::NaiveDate) -> bool {
     let result = BRAZILIAN_BANK_HOLIDAYS.binary_search(&date);
-    match result {
-        Ok(_) => true,
-        Err(_) => false,
-    }
+    result.is_ok()
 }
 
 pub fn is_business_day(date: chrono::NaiveDate) -> bool {
@@ -720,7 +717,7 @@ pub fn is_business_day(date: chrono::NaiveDate) -> bool {
     if is_holiday(date) {
         return false;
     }
-    return true;
+    true
 }
 
 pub fn add_months(date: chrono::NaiveDate, months: u32) -> chrono::NaiveDate {
@@ -729,7 +726,7 @@ pub fn add_months(date: chrono::NaiveDate, months: u32) -> chrono::NaiveDate {
     }
     let mut due_date = date;
     due_date = due_date.checked_add_months(Months::new(months)).unwrap();
-    return due_date;
+    due_date
 }
 
 pub fn add_days(date: chrono::NaiveDate, days: i64) -> chrono::NaiveDate {
@@ -737,7 +734,7 @@ pub fn add_days(date: chrono::NaiveDate, days: i64) -> chrono::NaiveDate {
     for _ in 0..days {
         due_date = due_date.checked_add_days(Days::new(1)).unwrap();
     }
-    return due_date;
+    due_date
 }
 
 pub fn round_decimal_cases(value: f64, round: i32) -> f64 {
@@ -755,7 +752,7 @@ pub fn get_next_business_day(date: chrono::NaiveDate) -> chrono::NaiveDate {
         date = date.checked_add_days(Days::new(1)).unwrap();
     }
 
-    return date;
+    date
 }
 
 pub fn diff_in_business_days(start_date: chrono::NaiveDate, end_date: chrono::NaiveDate) -> i64 {
@@ -769,7 +766,7 @@ pub fn diff_in_business_days(start_date: chrono::NaiveDate, end_date: chrono::Na
         }
     }
 
-    return diff;
+    diff
 }
 
 pub fn get_non_business_days_between(
@@ -786,5 +783,5 @@ pub fn get_non_business_days_between(
         date = date.checked_add_days(Days::new(1)).unwrap();
     }
 
-    return holidays;
+    holidays
 }

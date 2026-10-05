@@ -19,9 +19,9 @@ pub fn any_to_number<'a>(cx: &mut FunctionContext<'a>, js_any: Handle<JsValue>) 
                 cx.throw(js_error)
             }
         }
-    } else if let Ok(_) = js_any.downcast::<JsNull, _>(cx) {
-        Ok(0.0)
-    } else if let Ok(_) = js_any.downcast::<JsUndefined, _>(cx) {
+    } else if js_any.downcast::<JsNull, _>(cx).is_ok()
+        || js_any.downcast::<JsUndefined, _>(cx).is_ok()
+    {
         Ok(0.0)
     } else {
         let error = format!("Value cannot be converted to number: {:?}", js_any);
@@ -43,9 +43,9 @@ pub fn any_to_bool<'a>(cx: &mut FunctionContext<'a>, js_any: Handle<JsValue>) ->
                 cx.throw(js_error)
             }
         }
-    } else if let Ok(_) = js_any.downcast::<JsNull, _>(cx) {
-        Ok(false)
-    } else if let Ok(_) = js_any.downcast::<JsUndefined, _>(cx) {
+    } else if js_any.downcast::<JsNull, _>(cx).is_ok()
+        || js_any.downcast::<JsUndefined, _>(cx).is_ok()
+    {
         Ok(false)
     } else {
         let error = format!("Value cannot be converted to boolean: {:?}", js_any);
