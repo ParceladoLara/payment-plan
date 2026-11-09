@@ -9,12 +9,13 @@ fn main() {
     let first_payment_date = chrono::NaiveDate::from_ymd_opt(2025, 11, 23).unwrap();
 
     let params = Params {
-        requested_amount: 12853.43,
+        requested_amount: 20000.0,
         first_payment_date,
         disbursement_date,
-        installments: 48,
+        installments: 10,
         debit_service_percentage: 0,
         mdr: 0.05,
+        origination_fee: 0.02,
         tac_percentage: 0.0,
         iof_overall: 0.0038,
         iof_percentage: 0.000082,
@@ -33,7 +34,7 @@ fn main() {
         requested_amount: 1000.0,
     };
 
-    let result = calculate_payment_plan(params).unwrap().pop().unwrap();
+    let result = calculate_payment_plan(params).unwrap();
 
     println!("Payment Plan: {:#?}", result);
     let result = calculate_down_payment_plan(down_payment_params).unwrap();

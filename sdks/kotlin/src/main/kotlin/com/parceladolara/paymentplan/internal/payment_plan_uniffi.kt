@@ -1323,7 +1323,8 @@ internal data class InternalParams (
     var `minInstallmentAmount`: kotlin.Double, 
     var `maxTotalAmount`: kotlin.Double, 
     var `disbursementOnlyOnBusinessDays`: kotlin.Boolean, 
-    var `minInstallments`: kotlin.UInt?
+    var `minInstallments`: kotlin.UInt?, 
+    var `originationFee`: kotlin.Double? = null
 ) {
     
     companion object
@@ -1349,6 +1350,7 @@ internal object FfiConverterTypeInternalParams: FfiConverterRustBuffer<InternalP
             FfiConverterDouble.read(buf),
             FfiConverterBoolean.read(buf),
             FfiConverterOptionalUInt.read(buf),
+            FfiConverterOptionalDouble.read(buf),
         )
     }
 
@@ -1366,7 +1368,8 @@ internal object FfiConverterTypeInternalParams: FfiConverterRustBuffer<InternalP
             FfiConverterDouble.allocationSize(value.`minInstallmentAmount`) +
             FfiConverterDouble.allocationSize(value.`maxTotalAmount`) +
             FfiConverterBoolean.allocationSize(value.`disbursementOnlyOnBusinessDays`) +
-            FfiConverterOptionalUInt.allocationSize(value.`minInstallments`)
+            FfiConverterOptionalUInt.allocationSize(value.`minInstallments`) +
+            FfiConverterOptionalDouble.allocationSize(value.`originationFee`)
     )
 
     override fun write(value: InternalParams, buf: ByteBuffer) {
@@ -1384,6 +1387,7 @@ internal object FfiConverterTypeInternalParams: FfiConverterRustBuffer<InternalP
             FfiConverterDouble.write(value.`maxTotalAmount`, buf)
             FfiConverterBoolean.write(value.`disbursementOnlyOnBusinessDays`, buf)
             FfiConverterOptionalUInt.write(value.`minInstallments`, buf)
+            FfiConverterOptionalDouble.write(value.`originationFee`, buf)
     }
 }
 
@@ -1418,6 +1422,7 @@ internal data class InternalResponse (
     var `contractAmount`: kotlin.Double, 
     var `contractAmountWithoutTac`: kotlin.Double, 
     var `tacAmount`: kotlin.Double, 
+    var `originationFeeAmount`: kotlin.Double, 
     var `iofPercentage`: kotlin.Double, 
     var `overallIof`: kotlin.Double, 
     var `preDisbursementAmount`: kotlin.Double, 
@@ -1439,6 +1444,7 @@ internal object FfiConverterTypeInternalResponse: FfiConverterRustBuffer<Interna
             FfiConverterTimestamp.read(buf),
             FfiConverterTimestamp.read(buf),
             FfiConverterLong.read(buf),
+            FfiConverterDouble.read(buf),
             FfiConverterDouble.read(buf),
             FfiConverterDouble.read(buf),
             FfiConverterDouble.read(buf),
@@ -1501,6 +1507,7 @@ internal object FfiConverterTypeInternalResponse: FfiConverterRustBuffer<Interna
             FfiConverterDouble.allocationSize(value.`contractAmount`) +
             FfiConverterDouble.allocationSize(value.`contractAmountWithoutTac`) +
             FfiConverterDouble.allocationSize(value.`tacAmount`) +
+            FfiConverterDouble.allocationSize(value.`originationFeeAmount`) +
             FfiConverterDouble.allocationSize(value.`iofPercentage`) +
             FfiConverterDouble.allocationSize(value.`overallIof`) +
             FfiConverterDouble.allocationSize(value.`preDisbursementAmount`) +
@@ -1538,6 +1545,7 @@ internal object FfiConverterTypeInternalResponse: FfiConverterRustBuffer<Interna
             FfiConverterDouble.write(value.`contractAmount`, buf)
             FfiConverterDouble.write(value.`contractAmountWithoutTac`, buf)
             FfiConverterDouble.write(value.`tacAmount`, buf)
+            FfiConverterDouble.write(value.`originationFeeAmount`, buf)
             FfiConverterDouble.write(value.`iofPercentage`, buf)
             FfiConverterDouble.write(value.`overallIof`, buf)
             FfiConverterDouble.write(value.`preDisbursementAmount`, buf)
@@ -1643,6 +1651,38 @@ internal object FfiConverterOptionalUInt: FfiConverterRustBuffer<kotlin.UInt?> {
         } else {
             buf.put(1)
             FfiConverterUInt.write(value, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
+internal object FfiConverterOptionalDouble: FfiConverterRustBuffer<kotlin.Double?> {
+    override fun read(buf: ByteBuffer): kotlin.Double? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterDouble.read(buf)
+    }
+
+    override fun allocationSize(value: kotlin.Double?): ULong {
+        if (value == null) {
+            return 1UL
+        } else {
+            return 1UL + FfiConverterDouble.allocationSize(value)
+        }
+    }
+
+    override fun write(value: kotlin.Double?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterDouble.write(value, buf)
         }
     }
 }

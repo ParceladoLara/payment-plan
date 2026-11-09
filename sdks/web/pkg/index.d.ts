@@ -6,6 +6,32 @@ export function calculatePaymentPlan(p: Params): Array<PaymentPlanResponse>;
 export function disbursementDateRange(base_date: Date, days: number): Array<Date>;
 export function getNonBusinessDaysBetween(start_date: Date, end_date: Date): Array<Date>;
 export function isBusinessDay(date: Date): boolean;
+export interface Params {
+    requestedAmount: number;
+    firstPaymentDate: Date;
+    disbursementDate: Date;
+    installments: number;
+    debitServicePercentage: number;
+    mdr: number;
+    tacPercentage: number;
+    iofOverall: number;
+    iofPercentage: number;
+    interestRate: number;
+    minInstallmentAmount: number;
+    maxTotalAmount: number;
+    disbursementOnlyOnBusinessDays: boolean;
+    minInstallments?: number;
+    originationFee?: number;
+}
+
+export interface DownPaymentParams {
+    params: Params;
+    requestedAmount: number;
+    minInstallmentAmount: number;
+    firstPaymentDate: Date;
+    installments: number;
+}
+
 export interface Invoice {
     accumulatedDays: number;
     factor: number;
@@ -51,6 +77,7 @@ export interface PaymentPlanResponse {
     contractAmount: number;
     contractAmountWithoutTAC: number;
     tacAmount: number;
+    originationFeeAmount: number;
     IOFPercentage: number;
     overallIOF: number;
     disbursementDate: Date;
@@ -58,30 +85,5 @@ export interface PaymentPlanResponse {
     paidContractAmount: number;
     preDisbursementAmount: number;
     invoices: Invoice[];
-}
-
-export interface Params {
-    requestedAmount: number;
-    firstPaymentDate: Date;
-    disbursementDate: Date;
-    installments: number;
-    debitServicePercentage: number;
-    mdr: number;
-    tacPercentage: number;
-    iofOverall: number;
-    iofPercentage: number;
-    interestRate: number;
-    minInstallmentAmount: number;
-    maxTotalAmount: number;
-    disbursementOnlyOnBusinessDays: boolean;
-    minInstallments?: number;
-}
-
-export interface DownPaymentParams {
-    params: Params;
-    requestedAmount: number;
-    minInstallmentAmount: number;
-    firstPaymentDate: Date;
-    installments: number;
 }
 

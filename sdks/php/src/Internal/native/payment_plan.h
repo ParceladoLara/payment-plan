@@ -60,6 +60,9 @@ typedef struct Params {
 
     /** <No documentation available> */
     uint32_t min_installments;
+
+    /** <No documentation available> */
+    double origination_fee;
 } Params_t;
 
 /** <No documentation available> */
@@ -218,6 +221,9 @@ typedef struct Response {
 
     /** <No documentation available> */
     Vec_Invoice_t invoices;
+
+    /** <No documentation available> */
+    double origination_fee_amount;
 } Response_t;
 
 /** \brief

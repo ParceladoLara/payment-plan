@@ -798,6 +798,7 @@ type InternalParams struct {
 	MaxTotalAmount                 float64
 	DisbursementOnlyOnBusinessDays bool
 	MinInstallments                *uint32
+	OriginationFee                 *float64
 }
 
 func (r *InternalParams) Destroy() {
@@ -815,6 +816,7 @@ func (r *InternalParams) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.MaxTotalAmount)
 	FfiDestroyerBool{}.Destroy(r.DisbursementOnlyOnBusinessDays)
 	FfiDestroyerOptionalUint32{}.Destroy(r.MinInstallments)
+	FfiDestroyerOptionalFloat64{}.Destroy(r.OriginationFee)
 }
 
 type FfiConverterInternalParams struct{}
@@ -841,6 +843,7 @@ func (c FfiConverterInternalParams) Read(reader io.Reader) InternalParams {
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterBoolINSTANCE.Read(reader),
 		FfiConverterOptionalUint32INSTANCE.Read(reader),
+		FfiConverterOptionalFloat64INSTANCE.Read(reader),
 	}
 }
 
@@ -863,6 +866,7 @@ func (c FfiConverterInternalParams) Write(writer io.Writer, value InternalParams
 	FfiConverterFloat64INSTANCE.Write(writer, value.MaxTotalAmount)
 	FfiConverterBoolINSTANCE.Write(writer, value.DisbursementOnlyOnBusinessDays)
 	FfiConverterOptionalUint32INSTANCE.Write(writer, value.MinInstallments)
+	FfiConverterOptionalFloat64INSTANCE.Write(writer, value.OriginationFee)
 }
 
 type FfiDestroyerInternalParams struct{}
@@ -900,6 +904,7 @@ type InternalResponse struct {
 	ContractAmount                           float64
 	ContractAmountWithoutTac                 float64
 	TacAmount                                float64
+	OriginationFeeAmount                     float64
 	IofPercentage                            float64
 	OverallIof                               float64
 	PreDisbursementAmount                    float64
@@ -937,6 +942,7 @@ func (r *InternalResponse) Destroy() {
 	FfiDestroyerFloat64{}.Destroy(r.ContractAmount)
 	FfiDestroyerFloat64{}.Destroy(r.ContractAmountWithoutTac)
 	FfiDestroyerFloat64{}.Destroy(r.TacAmount)
+	FfiDestroyerFloat64{}.Destroy(r.OriginationFeeAmount)
 	FfiDestroyerFloat64{}.Destroy(r.IofPercentage)
 	FfiDestroyerFloat64{}.Destroy(r.OverallIof)
 	FfiDestroyerFloat64{}.Destroy(r.PreDisbursementAmount)
@@ -959,6 +965,7 @@ func (c FfiConverterInternalResponse) Read(reader io.Reader) InternalResponse {
 		FfiConverterTimestampINSTANCE.Read(reader),
 		FfiConverterTimestampINSTANCE.Read(reader),
 		FfiConverterInt64INSTANCE.Read(reader),
+		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
 		FfiConverterFloat64INSTANCE.Read(reader),
@@ -1025,6 +1032,7 @@ func (c FfiConverterInternalResponse) Write(writer io.Writer, value InternalResp
 	FfiConverterFloat64INSTANCE.Write(writer, value.ContractAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.ContractAmountWithoutTac)
 	FfiConverterFloat64INSTANCE.Write(writer, value.TacAmount)
+	FfiConverterFloat64INSTANCE.Write(writer, value.OriginationFeeAmount)
 	FfiConverterFloat64INSTANCE.Write(writer, value.IofPercentage)
 	FfiConverterFloat64INSTANCE.Write(writer, value.OverallIof)
 	FfiConverterFloat64INSTANCE.Write(writer, value.PreDisbursementAmount)
@@ -1187,6 +1195,43 @@ type FfiDestroyerOptionalUint32 struct{}
 func (_ FfiDestroyerOptionalUint32) Destroy(value *uint32) {
 	if value != nil {
 		FfiDestroyerUint32{}.Destroy(*value)
+	}
+}
+
+type FfiConverterOptionalFloat64 struct{}
+
+var FfiConverterOptionalFloat64INSTANCE = FfiConverterOptionalFloat64{}
+
+func (c FfiConverterOptionalFloat64) Lift(rb RustBufferI) *float64 {
+	return LiftFromRustBuffer[*float64](c, rb)
+}
+
+func (_ FfiConverterOptionalFloat64) Read(reader io.Reader) *float64 {
+	if readInt8(reader) == 0 {
+		return nil
+	}
+	temp := FfiConverterFloat64INSTANCE.Read(reader)
+	return &temp
+}
+
+func (c FfiConverterOptionalFloat64) Lower(value *float64) C.RustBuffer {
+	return LowerIntoRustBuffer[*float64](c, value)
+}
+
+func (_ FfiConverterOptionalFloat64) Write(writer io.Writer, value *float64) {
+	if value == nil {
+		writeInt8(writer, 0)
+	} else {
+		writeInt8(writer, 1)
+		FfiConverterFloat64INSTANCE.Write(writer, *value)
+	}
+}
+
+type FfiDestroyerOptionalFloat64 struct{}
+
+func (_ FfiDestroyerOptionalFloat64) Destroy(value *float64) {
+	if value != nil {
+		FfiDestroyerFloat64{}.Destroy(*value)
 	}
 }
 

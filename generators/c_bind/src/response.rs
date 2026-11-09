@@ -68,6 +68,7 @@ pub struct Response {
     pub paid_total_iof: f64,
     pub paid_contract_amount: f64,
     pub invoices: repr_c::Vec<Invoice>,
+    pub origination_fee_amount: f64,
 }
 
 impl From<core_payment_plan::Response> for Response {
@@ -119,6 +120,7 @@ impl From<core_payment_plan::Response> for Response {
             contract_amount: value.contract_amount,
             contract_amount_without_tac: value.contract_amount_without_tac,
             tac_amount: value.tac_amount,
+            origination_fee_amount: value.origination_fee_amount,
             iof_percentage: value.iof_percentage,
             overall_iof: value.overall_iof,
             pre_disbursement_amount: value.pre_disbursement_amount,

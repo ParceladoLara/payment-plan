@@ -18,6 +18,8 @@ pub struct InternalParams {
     pub max_total_amount: f64,
     pub disbursement_only_on_business_days: bool,
     pub min_installments: Option<u32>,
+    #[uniffi(default = None)]
+    pub origination_fee: Option<f64>,
 }
 
 impl From<InternalParams> for core_payment_plan::Params {
@@ -35,6 +37,7 @@ impl From<InternalParams> for core_payment_plan::Params {
             installments: val.installments,
             debit_service_percentage: val.debit_service_percentage,
             mdr: val.mdr,
+            origination_fee: val.origination_fee.unwrap_or(0.0),
             tac_percentage: val.tac_percentage,
             iof_overall: val.iof_overall,
             iof_percentage: val.iof_percentage,

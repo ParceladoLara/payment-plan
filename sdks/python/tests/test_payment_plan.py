@@ -49,6 +49,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 tec_yearly=0.383782,
                 eir_monthly=0.0206,
                 tec_monthly=0.0274,
+                origination_fee_amount=0,
                 total_iof=47.84,
                 contract_amount=7847.84,
                 contract_amount_without_tac=0.0,
@@ -97,6 +98,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 eir_yearly=0.298378,
                 tec_yearly=0.382981,
                 eir_monthly=0.022,
+                origination_fee_amount=0,
                 tec_monthly=0.0274,
                 total_iof=57.31,
                 contract_amount=7857.31,
@@ -142,6 +144,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 interest_rate=0.0235,
                 installment_amount=2734.44,
                 installment_amount_without_tac=0.0,
+                origination_fee_amount=0,
                 total_amount=8203.32,
                 debit_service=336.2299999999997,
                 customer_debit_service_amount=336.2299999999997,
@@ -212,6 +215,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 installment_amount=2077.73,
                 installment_amount_without_tac=0.0,
                 total_amount=8310.92,
+                origination_fee_amount=0,
                 debit_service=433.56000000000006,
                 customer_debit_service_amount=433.56000000000006,
                 customer_amount=2077.73,
@@ -573,6 +577,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 contract_amount=7857.31,
                 contract_amount_without_tac=0.0,
                 tac_amount=0.0,
+                origination_fee_amount=0,
                 iof_percentage=8.2e-5,
                 overall_iof=0.0038,
                 pre_disbursement_amount=7800.0,
@@ -613,6 +618,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 interest_rate=0.0235,
                 installment_amount=2734.44,
                 installment_amount_without_tac=0.0,
+                origination_fee_amount=0,
                 total_amount=8203.32,
                 debit_service=336.2299999999997,
                 customer_debit_service_amount=336.2299999999997,
@@ -678,6 +684,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 disbursement_date=disbursement_date,
                 accumulated_days=119,
                 days_index=0.914302133077605,
+                origination_fee_amount=0,
                 accumulated_days_index=3.791337225038424,
                 interest_rate=0.0235,
                 installment_amount=2077.73,
@@ -1007,6 +1014,42 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                     msg=f"Installment {i + 1}, Invoice {j + 1}: MainIofTac mismatch",
                 )
 
+    def test_calculate_payment_plan_origination_fee_amount(self):
+        cases: list[tuple[float, float]] = [
+            (1234.50, 24.69),
+            (20000.0, 400.0),
+            (5000.23, 100.0),  # 100.0046 rounded to 2 decimal places
+            (3500.0, 70.0),
+        ]
+
+        for requested_amount, expected in cases:
+            params = Params(
+                requested_amount=requested_amount,
+                first_payment_date=datetime(
+                    2025, 5, 3, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                disbursement_date=datetime(
+                    2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                installments=4,
+                debit_service_percentage=0,
+                mdr=0.05,
+                tac_percentage=0,
+                origination_fee=0.02,
+                iof_overall=0.0038,
+                iof_percentage=0.000082,
+                interest_rate=0.0235,
+                min_installment_amount=100,
+                max_total_amount=1000000,
+                disbursement_only_on_business_days=True,
+                min_installments=None,
+            )
+
+            resp = calculate_payment_plan(params)
+            self.assertEqual(len(resp), 4)
+            for r in resp:
+                self.assertEqual(r.origination_fee_amount, expected, requested_amount)
+
     def test_disbursement_date_range(self):
         base_date = datetime(2025, 4, 3, tzinfo=timezone.utc)
         days = 5
@@ -1129,6 +1172,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7845.89,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -1186,6 +1230,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7855.69,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7799.99,
@@ -1259,6 +1304,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7866.01,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7799.99,
@@ -1348,6 +1394,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7876.21,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7799.98,
@@ -1463,6 +1510,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7845.25,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -1520,6 +1568,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7855.68,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -1593,6 +1642,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7865.79,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -1682,6 +1732,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7875.89,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7799.98,
@@ -1797,6 +1848,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7846.55,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -1854,6 +1906,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7856.34,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800.01,
@@ -1927,6 +1980,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7866.24,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800.01,
@@ -2016,6 +2070,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7876.42,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -2131,6 +2186,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7844.6,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,
@@ -2188,6 +2244,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7854.39,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800.01,
@@ -2261,6 +2318,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7864.5,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800.01,
@@ -2350,6 +2408,7 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                         contract_amount=7874.61,
                         contract_amount_without_tac=0,
                         tac_amount=0,
+                        origination_fee_amount=0,
                         iof_percentage=0.000082,
                         overall_iof=0.0038,
                         pre_disbursement_amount=7800,

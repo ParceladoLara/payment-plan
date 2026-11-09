@@ -1,4 +1,4 @@
-use crate::Params;
+use crate::{util::round_decimal_cases, Params};
 
 #[derive(Debug, PartialEq)]
 pub struct AmountsResponse {
@@ -7,6 +7,7 @@ pub struct AmountsResponse {
     pub customer_amount: f64,
     pub calculation_basis_for_effective_interest_rate: f64,
     pub mdr_amount: f64,
+    pub origination_fee_amount: f64,
     pub merchant_debit_service_amount: f64,
     pub merchant_total_amount: f64,
     pub settled_to_merchant: f64,
@@ -38,6 +39,10 @@ pub fn calc(
 
     let mdr_amount = requested_amount * params.mdr;
 
+    let origination_fee_amount = requested_amount * params.origination_fee;
+
+    let origination_fee_amount = round_decimal_cases(origination_fee_amount, 2);
+
     let merchant_debit_service_amount =
         (debit_service + tac_amount) * debit_service_percentage as f64;
 
@@ -51,6 +56,7 @@ pub fn calc(
         customer_amount,
         calculation_basis_for_effective_interest_rate,
         mdr_amount,
+        origination_fee_amount,
         merchant_debit_service_amount,
         merchant_total_amount,
         settled_to_merchant,
@@ -69,6 +75,7 @@ mod test {
             customer_amount: 605.4000559686463,
             calculation_basis_for_effective_interest_rate: 594.2218895092018,
             mdr_amount: 371.55,
+            origination_fee_amount: 0.0,
             merchant_debit_service_amount: 0.0,
             merchant_total_amount: 371.55,
             settled_to_merchant: 7059.45,
@@ -86,6 +93,7 @@ mod test {
             installments: 18,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,
             iof_percentage: 0.03,

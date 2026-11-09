@@ -35,6 +35,7 @@ pub struct Params {
     pub installments: u32,
     pub debit_service_percentage: u16, // 0-100
     pub mdr: f64,                      // 0.0-1.0
+    pub origination_fee: f64,          // 0.0-1.0
     pub tac_percentage: f64,           // 0.0-1.0
     pub iof_overall: f64,              // 0.0-1.0
     pub iof_percentage: f64,           // 0.0-1.0
@@ -73,6 +74,7 @@ pub struct Response {
     pub disbursement_date: chrono::NaiveDate,
     pub accumulated_days: i64,
     pub days_index: f64,
+    pub origination_fee_amount: f64,
     pub accumulated_days_index: f64,
     pub interest_rate: f64,
     pub installment_amount: f64,

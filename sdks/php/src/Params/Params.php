@@ -19,6 +19,7 @@ class Params
   public float $maxTotalAmount;
   public bool $disbursementOnlyOnBusinessDays;
   public int $min_installments = 1;
+  public float $originationFee = 0.0;
 
   public function __construct(
     float $requestedAmount,
@@ -34,7 +35,8 @@ class Params
     float $minInstallmentAmount,
     float $maxTotalAmount,
     bool $disbursementOnlyOnBusinessDays,
-    int $min_installments = 1
+    int $min_installments = 1,
+    float $originationFee = 0.0
   ) {
     $this->requestedAmount = $requestedAmount;
     $this->firstPaymentDate = $firstPaymentDate;
@@ -50,5 +52,6 @@ class Params
     $this->maxTotalAmount = $maxTotalAmount;
     $this->disbursementOnlyOnBusinessDays = $disbursementOnlyOnBusinessDays;
     $this->min_installments = $min_installments;
+    $this->originationFee = $originationFee;
   }
 }

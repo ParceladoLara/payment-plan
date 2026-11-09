@@ -44,6 +44,7 @@ impl TryInto<Params> for PlanParams {
             iof_overall: self.iof_overall,
             iof_percentage: self.iof_percentage,
             mdr: self.mdr,
+            origination_fee: 0.0,
             tac_percentage: self.tac_percentage,
             first_payment_date,
             disbursement_date,

@@ -71,6 +71,7 @@ class PaymentPlanTest extends TestCase
     $expected1->contractAmount = 7847.84;
     $expected1->contractAmountWithoutTac = 0.0;
     $expected1->tacAmount = 0.0;
+    $expected1->originationFeeAmount = 0.0;
     $expected1->iofPercentage = 8.2e-5;
     $expected1->overallIof = 0.0038;
     $expected1->preDisbursementAmount = 7800.0;
@@ -107,6 +108,7 @@ class PaymentPlanTest extends TestCase
     $expected2->contractAmount = 7857.31;
     $expected2->contractAmountWithoutTac = 0.0;
     $expected2->tacAmount = 0.0;
+    $expected2->originationFeeAmount = 0.0;
     $expected2->iofPercentage = 8.2e-5;
     $expected2->overallIof = 0.0038;
     $expected2->preDisbursementAmount = 7800.0;
@@ -143,6 +145,7 @@ class PaymentPlanTest extends TestCase
     $expected3->contractAmount = 7867.09;
     $expected3->contractAmountWithoutTac = 0.0;
     $expected3->tacAmount = 0.0;
+    $expected3->originationFeeAmount = 0.0;
     $expected3->iofPercentage = 8.2e-5;
     $expected3->overallIof = 0.0038;
     $expected3->preDisbursementAmount = 7799.99;
@@ -179,6 +182,7 @@ class PaymentPlanTest extends TestCase
     $expected4->contractAmount = 7877.36;
     $expected4->contractAmountWithoutTac = 0.0;
     $expected4->tacAmount = 0.0;
+    $expected4->originationFeeAmount = 0.0;
     $expected4->iofPercentage = 8.2e-5;
     $expected4->overallIof = 0.0038;
     $expected4->preDisbursementAmount = 7800.02;
@@ -271,6 +275,7 @@ class PaymentPlanTest extends TestCase
     $expected2->contractAmount = 7857.31;
     $expected2->contractAmountWithoutTac = 0.0;
     $expected2->tacAmount = 0.0;
+    $expected2->originationFeeAmount = 0.0;
     $expected2->iofPercentage = 8.2e-5;
     $expected2->overallIof = 0.0038;
     $expected2->preDisbursementAmount = 7800.0;
@@ -307,6 +312,7 @@ class PaymentPlanTest extends TestCase
     $expected3->contractAmount = 7867.09;
     $expected3->contractAmountWithoutTac = 0.0;
     $expected3->tacAmount = 0.0;
+    $expected3->originationFeeAmount = 0.0;
     $expected3->iofPercentage = 8.2e-5;
     $expected3->overallIof = 0.0038;
     $expected3->preDisbursementAmount = 7799.99;
@@ -343,6 +349,7 @@ class PaymentPlanTest extends TestCase
     $expected4->contractAmount = 7877.36;
     $expected4->contractAmountWithoutTac = 0.0;
     $expected4->tacAmount = 0.0;
+    $expected4->originationFeeAmount = 0.0;
     $expected4->iofPercentage = 8.2e-5;
     $expected4->overallIof = 0.0038;
     $expected4->preDisbursementAmount = 7800.02;
@@ -517,6 +524,7 @@ class PaymentPlanTest extends TestCase
     $expected1_1->contractAmount = 7845.89;
     $expected1_1->contractAmountWithoutTac = 0.0;
     $expected1_1->tacAmount = 0.0;
+    $expected1_1->originationFeeAmount = 0.0;
     $expected1_1->iofPercentage = 0.000082;
     $expected1_1->overallIof = 0.0038;
     $expected1_1->preDisbursementAmount = 7800.0;
@@ -553,6 +561,7 @@ class PaymentPlanTest extends TestCase
     $expected1_2->contractAmount = 7855.69;
     $expected1_2->contractAmountWithoutTac = 0.0;
     $expected1_2->tacAmount = 0.0;
+    $expected1_2->originationFeeAmount = 0.0;
     $expected1_2->iofPercentage = 0.000082;
     $expected1_2->overallIof = 0.0038;
     $expected1_2->preDisbursementAmount = 7799.99;
@@ -590,6 +599,7 @@ class PaymentPlanTest extends TestCase
     $expected1_3->contractAmount = 7866.01;
     $expected1_3->contractAmountWithoutTac = 0.0;
     $expected1_3->tacAmount = 0.0;
+    $expected1_3->originationFeeAmount = 0.0;
     $expected1_3->iofPercentage = 0.000082;
     $expected1_3->overallIof = 0.0038;
     $expected1_3->preDisbursementAmount = 7799.99;
@@ -627,6 +637,7 @@ class PaymentPlanTest extends TestCase
     $expected1_4->contractAmount = 7876.21;
     $expected1_4->contractAmountWithoutTac = 0.0;
     $expected1_4->tacAmount = 0.0;
+    $expected1_4->originationFeeAmount = 0.0;
     $expected1_4->iofPercentage = 0.000082;
     $expected1_4->overallIof = 0.0038;
     $expected1_4->preDisbursementAmount = 7799.98;
@@ -665,6 +676,7 @@ class PaymentPlanTest extends TestCase
     $expected2_1->contractAmount = 7845.25;
     $expected2_1->contractAmountWithoutTac = 0.0;
     $expected2_1->tacAmount = 0.0;
+    $expected2_1->originationFeeAmount = 0.0;
     $expected2_1->iofPercentage = 0.000082;
     $expected2_1->overallIof = 0.0038;
     $expected2_1->preDisbursementAmount = 7800.0;
@@ -703,6 +715,7 @@ class PaymentPlanTest extends TestCase
     $expected2_2->contractAmount = 7855.68;
     $expected2_2->contractAmountWithoutTac = 0.0;
     $expected2_2->tacAmount = 0.0;
+    $expected2_2->originationFeeAmount = 0.0;
     $expected2_2->iofPercentage = 0.000082;
     $expected2_2->overallIof = 0.0038;
     $expected2_2->preDisbursementAmount = 7800.0;
@@ -741,6 +754,7 @@ class PaymentPlanTest extends TestCase
     $expected2_3->contractAmount = 7865.79;
     $expected2_3->contractAmountWithoutTac = 0.0;
     $expected2_3->tacAmount = 0.0;
+    $expected2_3->originationFeeAmount = 0.0;
     $expected2_3->iofPercentage = 0.000082;
     $expected2_3->overallIof = 0.0038;
     $expected2_3->preDisbursementAmount = 7800.0;
@@ -779,6 +793,7 @@ class PaymentPlanTest extends TestCase
     $expected2_4->contractAmount = 7875.89;
     $expected2_4->contractAmountWithoutTac = 0.0;
     $expected2_4->tacAmount = 0.0;
+    $expected2_4->originationFeeAmount = 0.0;
     $expected2_4->iofPercentage = 0.000082;
     $expected2_4->overallIof = 0.0038;
     $expected2_4->preDisbursementAmount = 7799.98;
@@ -816,6 +831,7 @@ class PaymentPlanTest extends TestCase
     $expected3_1->contractAmount = 7846.55;
     $expected3_1->contractAmountWithoutTac = 0.0;
     $expected3_1->tacAmount = 0.0;
+    $expected3_1->originationFeeAmount = 0.0;
     $expected3_1->iofPercentage = 0.000082;
     $expected3_1->overallIof = 0.0038;
     $expected3_1->preDisbursementAmount = 7800.0;
@@ -854,6 +870,7 @@ class PaymentPlanTest extends TestCase
     $expected3_2->contractAmount = 7856.34;
     $expected3_2->contractAmountWithoutTac = 0.0;
     $expected3_2->tacAmount = 0.0;
+    $expected3_2->originationFeeAmount = 0.0;
     $expected3_2->iofPercentage = 0.000082;
     $expected3_2->overallIof = 0.0038;
     $expected3_2->preDisbursementAmount = 7800.01;
@@ -891,6 +908,7 @@ class PaymentPlanTest extends TestCase
     $expected3_3->contractAmount = 7866.24;
     $expected3_3->contractAmountWithoutTac = 0.0;
     $expected3_3->tacAmount = 0.0;
+    $expected3_3->originationFeeAmount = 0.0;
     $expected3_3->iofPercentage = 0.000082;
     $expected3_3->overallIof = 0.0038;
     $expected3_3->preDisbursementAmount = 7800.01;
@@ -929,6 +947,7 @@ class PaymentPlanTest extends TestCase
     $expected3_4->contractAmount = 7876.42;
     $expected3_4->contractAmountWithoutTac = 0.0;
     $expected3_4->tacAmount = 0.0;
+    $expected3_4->originationFeeAmount = 0.0;
     $expected3_4->iofPercentage = 0.000082;
     $expected3_4->overallIof = 0.0038;
     $expected3_4->preDisbursementAmount = 7800.0;
@@ -967,6 +986,7 @@ class PaymentPlanTest extends TestCase
     $expected4_1->contractAmount = 7844.6;
     $expected4_1->contractAmountWithoutTac = 0.0;
     $expected4_1->tacAmount = 0.0;
+    $expected4_1->originationFeeAmount = 0.0;
     $expected4_1->iofPercentage = 0.000082;
     $expected4_1->overallIof = 0.0038;
     $expected4_1->preDisbursementAmount = 7800.0;
@@ -1004,6 +1024,7 @@ class PaymentPlanTest extends TestCase
     $expected4_2->contractAmount = 7854.39;
     $expected4_2->contractAmountWithoutTac = 0.0;
     $expected4_2->tacAmount = 0.0;
+    $expected4_2->originationFeeAmount = 0.0;
     $expected4_2->iofPercentage = 0.000082;
     $expected4_2->overallIof = 0.0038;
     $expected4_2->preDisbursementAmount = 7800.01;
@@ -1042,6 +1063,7 @@ class PaymentPlanTest extends TestCase
     $expected4_3->contractAmount = 7864.5;
     $expected4_3->contractAmountWithoutTac = 0.0;
     $expected4_3->tacAmount = 0.0;
+    $expected4_3->originationFeeAmount = 0.0;
     $expected4_3->iofPercentage = 0.000082;
     $expected4_3->overallIof = 0.0038;
     $expected4_3->preDisbursementAmount = 7800.01;
@@ -1079,6 +1101,7 @@ class PaymentPlanTest extends TestCase
     $expected4_4->contractAmount = 7874.61;
     $expected4_4->contractAmountWithoutTac = 0;
     $expected4_4->tacAmount = 0.0;
+    $expected4_4->originationFeeAmount = 0.0;
     $expected4_4->iofPercentage = 0.000082;
     $expected4_4->overallIof = 0.0038;
     $expected4_4->preDisbursementAmount = 7800.0;
@@ -1268,6 +1291,42 @@ class PaymentPlanTest extends TestCase
     }
   }
 
+  public function testCalculateOriginationFeeAmount(): void
+  {
+    $cases = [
+      [1234.50, 24.69],
+      [20000.0, 400.0],
+      [5000.23, 100.0], // 100.0046 rounded to 2 decimal places
+      [3500.0, 70.0],
+    ];
+
+    foreach ($cases as [$requestedAmount, $expected]) {
+      $params = new Params(
+        $requestedAmount,
+        new DateTimeImmutable('2025-05-03'),
+        new DateTimeImmutable('2025-04-05'),
+        4,
+        0,
+        0.05,
+        0.0,
+        0.0038,
+        0.000082,
+        0.0235,
+        100.0,
+        1000000.0,
+        true,
+        1,
+        0.02
+      );
+
+      $result = PaymentPlan::calculate($params);
+      $this->assertCount(4, $result);
+      foreach ($result as $r) {
+        $this->assertEquals($expected, $r->originationFeeAmount, "requestedAmount $requestedAmount");
+      }
+    }
+  }
+
   public function helpAssert(Response $r, Response $e): void
   {
     $this->assertEquals($e->installment, $r->installment);
@@ -1298,6 +1357,7 @@ class PaymentPlanTest extends TestCase
     $this->assertEquals($e->contractAmount, $r->contractAmount);
     $this->assertEquals($e->contractAmountWithoutTac, $r->contractAmountWithoutTac);
     $this->assertEquals($e->tacAmount, $r->tacAmount);
+    $this->assertEquals($e->originationFeeAmount, $r->originationFeeAmount);
     $this->assertEquals($e->iofPercentage, $r->iofPercentage);
     $this->assertEquals($e->overallIof, $r->overallIof);
     $this->assertEquals($e->preDisbursementAmount, $r->preDisbursementAmount);

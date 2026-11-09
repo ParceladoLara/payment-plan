@@ -33,6 +33,7 @@ test("calculate payment plan test 0", () => {
     accumulatedDaysIndex: 18.014166849381613,
     interestRate: 0.0235,
     installmentAmount: 502.69,
+    originationFeeAmount: 0,
     installmentAmountWithoutTAC: 0,
     totalAmount: 12064.56,
     debitService: 3009.0499999999993,
@@ -345,4 +346,38 @@ test("Error: invalid installments", () => {
   };
 
   assert.throws(() => calculatePaymentPlan(params));
+});
+
+test("calculate payment plan origination fee amount", () => {
+  const cases: [number, number][] = [
+    [1234.5, 24.69],
+    [20000, 400],
+    [5000.23, 100], // 100.0046 rounded to 2 decimal places
+    [3500, 70],
+  ];
+
+  for (const [requestedAmount, expected] of cases) {
+    const params: Params = {
+      maxTotalAmount: 1000000,
+      minInstallmentAmount: 100,
+      requestedAmount,
+      firstPaymentDate: new Date("2025-05-03"),
+      disbursementDate: new Date("2025-04-05"),
+      installments: 4,
+      debitServicePercentage: 0,
+      mdr: 0.05,
+      tacPercentage: 0.0,
+      originationFee: 0.02,
+      iofOverall: 0.0038,
+      iofPercentage: 0.000082,
+      interestRate: 0.0235,
+      disbursementOnlyOnBusinessDays: true,
+    };
+
+    const result = calculatePaymentPlan(params);
+    assert.strictEqual(result.length, 4);
+    for (const r of result) {
+      assert.strictEqual(r.originationFeeAmount, expected, `requestedAmount ${requestedAmount}`);
+    }
+  }
 });

@@ -43,4 +43,5 @@ class FFIResponse
   public float $paid_total_iof;
   public float $paid_contract_amount;
   public FFIInvoiceVec $invoices;
+  public float $origination_fee_amount;
 }

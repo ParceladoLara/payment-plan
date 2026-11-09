@@ -84,6 +84,7 @@ pub struct PaymentPlanResponse {
     #[serde(rename = "contractAmountWithoutTAC")]
     pub contract_amount_without_tac: f64,
     pub tac_amount: f64,
+    pub origination_fee_amount: f64,
     #[serde(rename = "IOFPercentage")]
     pub iof_percentage: f64,
     #[serde(rename = "overallIOF")]
@@ -129,6 +130,7 @@ impl From<core_payment_plan::Response> for PaymentPlanResponse {
             contract_amount: value.contract_amount,
             contract_amount_without_tac: value.contract_amount_without_tac,
             tac_amount: value.tac_amount,
+            origination_fee_amount: value.origination_fee_amount,
             iof_percentage: value.iof_percentage,
             overall_iof: value.overall_iof,
             disbursement_date: value.disbursement_date.into(),
@@ -218,6 +220,11 @@ impl From<PaymentPlanResponse> for js_sys::Object {
             &val.contract_amount_without_tac.into(),
         );
         let _ = js_sys::Reflect::set(&obj, &"tacAmount".into(), &val.tac_amount.into());
+        let _ = js_sys::Reflect::set(
+            &obj,
+            &"originationFeeAmount".into(),
+            &val.origination_fee_amount.into(),
+        );
         let _ = js_sys::Reflect::set(&obj, &"IOFPercentage".into(), &val.iof_percentage.into());
         let _ = js_sys::Reflect::set(&obj, &"overallIOF".into(), &val.overall_iof.into());
         let _ = js_sys::Reflect::set(
