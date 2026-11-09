@@ -73,6 +73,7 @@ pub fn cast_js_object_to_param(
         installments,
         debit_service_percentage: debt_service_percentage,
         mdr,
+        origination_fee: 0.0, // TODO: Replace with actual origination fee when available
         tac_percentage,
         iof_overall,
         iof_percentage,

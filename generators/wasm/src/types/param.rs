@@ -37,6 +37,7 @@ impl TryInto<core_payment_plan::Params> for Params {
             installments: self.installments,
             debit_service_percentage: self.debit_service_percentage,
             mdr: self.mdr,
+            origination_fee: 0.0, // TODO: Replace with actual origination fee when available
             tac_percentage: self.tac_percentage,
             iof_overall: self.iof_overall,
             iof_percentage: self.iof_percentage,

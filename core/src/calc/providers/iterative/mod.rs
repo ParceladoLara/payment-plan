@@ -199,6 +199,7 @@ fn calc(mut params: InnerParams) -> Result<Response, PaymentPlanError> {
         total_iof: iof,
         days_index: data.factor,
         accumulated_days_index,
+        origination_fee_amount: amounts.origination_fee_amount,
         calculation_basis_for_effective_interest_rate: amounts
             .calculation_basis_for_effective_interest_rate,
         customer_amount,
@@ -353,6 +354,7 @@ mod test {
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -372,6 +374,7 @@ mod test {
             installment: 48,
             disbursement_date,
             due_date: expected_due_date,
+            origination_fee_amount: 0.0,
             accumulated_days: 1461,
             days_index: 0.19275140186402,
             accumulated_days_index: 23.079195526791356,
@@ -809,6 +812,7 @@ mod test {
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -832,6 +836,7 @@ mod test {
             disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 1461,
+            origination_fee_amount: 0.0,
             days_index: 0.19275140186402,
             accumulated_days_index: 23.079195526791356,
             interest_rate: 0.035,
@@ -1268,6 +1273,7 @@ mod test {
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -1298,6 +1304,7 @@ mod test {
             installments: 0,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -1331,6 +1338,7 @@ mod test {
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -1355,6 +1363,7 @@ mod test {
             accumulated_days: 61,
             days_index: 0.931982709374806,
             accumulated_days_index: 1.895005931529866,
+            origination_fee_amount: 0.0,
             interest_rate: 0.035,
             installment_amount: 106.59,
             installment_amount_without_tac: 0.0,
@@ -1421,6 +1430,7 @@ mod test {
             installments: 48,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -1442,6 +1452,7 @@ mod test {
             installment: 8,
             disbursement_date,
             due_date: expected_due_date,
+            origination_fee_amount: 0.0,
             accumulated_days: 243,
             days_index: 0.760656615702412,
             accumulated_days_index: 6.859020787584616,
@@ -1559,6 +1570,7 @@ mod test {
             installments: 24,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -1581,6 +1593,7 @@ mod test {
             disbursement_date,
             due_date: expected_due_date,
             accumulated_days: 727,
+            origination_fee_amount: 0.0,
             days_index: 0.352166545526241,
             accumulated_days_index: 14.596086465727566,
             interest_rate: 0.0449,
@@ -1825,6 +1838,7 @@ mod test {
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%
@@ -1858,6 +1872,7 @@ mod test {
             installments: 12,
             debit_service_percentage: 0,
             mdr: 0.05,
+            origination_fee: 0.0,
             tac_percentage: 0.0,
             iof_overall: 0.0038,      // %0.38
             iof_percentage: 0.000082, // 0.0082%

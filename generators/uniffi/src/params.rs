@@ -35,6 +35,7 @@ impl From<InternalParams> for core_payment_plan::Params {
             installments: val.installments,
             debit_service_percentage: val.debit_service_percentage,
             mdr: val.mdr,
+            origination_fee: 0.0, // TODO: Replace with actual origination fee when available
             tac_percentage: val.tac_percentage,
             iof_overall: val.iof_overall,
             iof_percentage: val.iof_percentage,

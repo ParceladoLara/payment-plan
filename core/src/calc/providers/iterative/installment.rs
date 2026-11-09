@@ -407,6 +407,7 @@ mod test {
                 installments: 18,
                 debit_service_percentage: 0,
                 mdr: 0.05,
+                origination_fee: 0.0,
                 tac_percentage: 0.0,
                 iof_overall: 0.0038,
                 iof_percentage: 0.03,
