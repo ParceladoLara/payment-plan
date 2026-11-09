@@ -496,4 +496,45 @@ class PaymentPlanTest {
                         "Expected $holiday to be a non-business day"
                 )
         }
+
+        @Test
+        fun `test calculatePaymentPlan - origination fee amount`() {
+                val cases =
+                        listOf(
+                                1234.50 to 24.69,
+                                20000.0 to 400.0,
+                                5000.23 to 100.0, // 100.0046 rounded to 2 decimal places
+                                3500.0 to 70.0,
+                        )
+
+                for ((requestedAmount, expected) in cases) {
+                        val params =
+                                Params(
+                                        requestedAmount = requestedAmount,
+                                        firstPaymentDate =
+                                                ZonedDateTime.of(2025, 5, 3, 0, 0, 0, 0, ZoneId.of("-03:00"))
+                                                        .toInstant(),
+                                        disbursementDate =
+                                                ZonedDateTime.of(2025, 4, 5, 0, 0, 0, 0, ZoneId.of("-03:00"))
+                                                        .toInstant(),
+                                        installments = 4u,
+                                        debitServicePercentage = 0u,
+                                        mdr = 0.05,
+                                        tacPercentage = 0.0,
+                                        iofOverall = 0.0038,
+                                        iofPercentage = 0.000082,
+                                        interestRate = 0.0235,
+                                        minInstallmentAmount = 100.0,
+                                        maxTotalAmount = 1000000.0,
+                                        disbursementOnlyOnBusinessDays = true,
+                                        originationFee = 0.02,
+                                )
+
+                        val result = PaymentPlan.calculatePaymentPlan(params)
+                        assertEquals(4, result.size)
+                        for (r in result) {
+                                assertEquals(expected, r.originationFeeAmount, "requestedAmount $requestedAmount")
+                        }
+                }
+        }
 }

@@ -1016,6 +1016,42 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                     msg=f"Installment {i + 1}, Invoice {j + 1}: MainIofTac mismatch",
                 )
 
+    def test_calculate_payment_plan_origination_fee_amount(self):
+        cases: list[tuple[float, float]] = [
+            (1234.50, 24.69),
+            (20000.0, 400.0),
+            (5000.23, 100.0),  # 100.0046 rounded to 2 decimal places
+            (3500.0, 70.0),
+        ]
+
+        for requested_amount, expected in cases:
+            params = Params(
+                requested_amount=requested_amount,
+                first_payment_date=datetime(
+                    2025, 5, 3, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                disbursement_date=datetime(
+                    2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))
+                ),
+                installments=4,
+                debit_service_percentage=0,
+                mdr=0.05,
+                tac_percentage=0,
+                origination_fee=0.02,
+                iof_overall=0.0038,
+                iof_percentage=0.000082,
+                interest_rate=0.0235,
+                min_installment_amount=100,
+                max_total_amount=1000000,
+                disbursement_only_on_business_days=True,
+                min_installments=None,
+            )
+
+            resp = calculate_payment_plan(params)
+            self.assertEqual(len(resp), 4)
+            for r in resp:
+                self.assertEqual(r.origination_fee_amount, expected, requested_amount)
+
     def test_disbursement_date_range(self):
         base_date = datetime(2025, 4, 3, tzinfo=timezone.utc)
         days = 5

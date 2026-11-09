@@ -1291,6 +1291,42 @@ class PaymentPlanTest extends TestCase
     }
   }
 
+  public function testCalculateOriginationFeeAmount(): void
+  {
+    $cases = [
+      [1234.50, 24.69],
+      [20000.0, 400.0],
+      [5000.23, 100.0], // 100.0046 rounded to 2 decimal places
+      [3500.0, 70.0],
+    ];
+
+    foreach ($cases as [$requestedAmount, $expected]) {
+      $params = new Params(
+        $requestedAmount,
+        new DateTimeImmutable('2025-05-03'),
+        new DateTimeImmutable('2025-04-05'),
+        4,
+        0,
+        0.05,
+        0.0,
+        0.0038,
+        0.000082,
+        0.0235,
+        100.0,
+        1000000.0,
+        true,
+        1,
+        0.02
+      );
+
+      $result = PaymentPlan::calculate($params);
+      $this->assertCount(4, $result);
+      foreach ($result as $r) {
+        $this->assertEquals($expected, $r->originationFeeAmount, "requestedAmount $requestedAmount");
+      }
+    }
+  }
+
   public function helpAssert(Response $r, Response $e): void
   {
     $this->assertEquals($e->installment, $r->installment);

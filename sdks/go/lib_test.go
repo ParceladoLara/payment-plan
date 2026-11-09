@@ -1846,3 +1846,47 @@ func TestIsBusinessDay(t *testing.T) {
 		}
 	})
 }
+
+func TestCalculatePaymentPlanOriginationFeeAmount(t *testing.T) {
+	cases := []struct {
+		requestedAmount float64
+		expected        float64
+	}{
+		{1234.50, 24.69},
+		{20000, 400},
+		{5000.23, 100}, // 100.0046 rounded to 2 decimal places
+		{3500, 70},
+	}
+
+	for _, c := range cases {
+		params := payment_plan.Params{
+			RequestedAmount:                c.requestedAmount,
+			FirstPaymentDate:               time.Date(2025, 05, 3, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+			DisbursementDate:               time.Date(2025, 04, 5, 0, 0, 0, 0, time.FixedZone("-03", -3*60*60)),
+			Installments:                   4,
+			DebitServicePercentage:         0,
+			Mdr:                            0.05,
+			TacPercentage:                  0,
+			OriginationFee:                 &[]float64{0.02}[0],
+			IofOverall:                     0.0038,
+			IofPercentage:                  0.000082,
+			InterestRate:                   0.0235,
+			MinInstallmentAmount:           100,
+			MaxTotalAmount:                 1000000,
+			DisbursementOnlyOnBusinessDays: true,
+		}
+
+		resp, err := payment_plan.CalculatePaymentPlan(params)
+		if err != nil {
+			t.Fatalf("requested amount %v: unexpected error: %v", c.requestedAmount, err)
+		}
+		if len(resp) != 4 {
+			t.Fatalf("requested amount %v: expected 4 responses, got %d", c.requestedAmount, len(resp))
+		}
+		for _, r := range resp {
+			if r.OriginationFeeAmount != c.expected {
+				t.Errorf("requested amount %v: expected origination fee amount %v, got %v", c.requestedAmount, c.expected, r.OriginationFeeAmount)
+			}
+		}
+	}
+}
