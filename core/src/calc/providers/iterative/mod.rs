@@ -339,6 +339,42 @@ mod test {
     }
 
     #[test]
+    fn test_iterative_origination_fee_amount() {
+        let cases = [
+            (1234.50, 24.69),
+            (20000.0, 400.0),
+            (5000.23, 100.0), // 100.0046 rounded to 2 decimal places
+            (3500.0, 70.0),
+        ];
+
+        for (requested_amount, expected) in cases {
+            let params = Params {
+                disbursement_only_on_business_days: true,
+                max_total_amount: f64::MAX,
+                min_installment_amount: 0.0,
+                requested_amount,
+                first_payment_date: chrono::NaiveDate::from_ymd_opt(2024, 11, 23).unwrap(),
+                disbursement_date: chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap(),
+                installments: 4,
+                debit_service_percentage: 0,
+                mdr: 0.05,
+                origination_fee: 0.02,
+                tac_percentage: 0.0,
+                iof_overall: 0.0038,
+                iof_percentage: 0.000082,
+                interest_rate: 0.035,
+                min_installments: None,
+            };
+
+            let resp = Iterative.calculate_payment_plan(params).unwrap();
+            assert_eq!(resp.len(), 4);
+            for r in resp {
+                assert_eq!(r.origination_fee_amount, expected, "{requested_amount}");
+            }
+        }
+    }
+
+    #[test]
     fn test_iterative() {
         let disbursement_date = chrono::NaiveDate::from_ymd_opt(2024, 10, 23).unwrap();
 

@@ -1,4 +1,4 @@
-use crate::Params;
+use crate::{util::round_decimal_cases, Params};
 
 #[derive(Debug, PartialEq)]
 pub struct AmountsResponse {
@@ -40,6 +40,8 @@ pub fn calc(
     let mdr_amount = requested_amount * params.mdr;
 
     let origination_fee_amount = requested_amount * params.origination_fee;
+
+    let origination_fee_amount = round_decimal_cases(origination_fee_amount, 2);
 
     let merchant_debit_service_amount =
         (debit_service + tac_amount) * debit_service_percentage as f64;
