@@ -1324,7 +1324,7 @@ internal data class InternalParams (
     var `maxTotalAmount`: kotlin.Double, 
     var `disbursementOnlyOnBusinessDays`: kotlin.Boolean, 
     var `minInstallments`: kotlin.UInt?, 
-    var `originationFee`: kotlin.Double?
+    var `originationFee`: kotlin.Double? = null
 ) {
     
     companion object

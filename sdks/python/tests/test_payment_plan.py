@@ -296,7 +296,6 @@ class TestPaymentPlanUtilities(unittest.TestCase):
             debit_service_percentage=0,
             mdr=0.05,
             tac_percentage=0,
-            origination_fee=0,
             iof_overall=0.0038,
             iof_percentage=0.000082,
             interest_rate=0.0235,
@@ -768,7 +767,6 @@ class TestPaymentPlanUtilities(unittest.TestCase):
                 2025, 4, 5, tzinfo=timezone(timedelta(hours=-3))
             ),
             installments=4,
-            origination_fee=0,
             debit_service_percentage=0,
             mdr=0.05,
             tac_percentage=0,
@@ -2498,7 +2496,6 @@ class TestPaymentPlanUtilities(unittest.TestCase):
             installments=4,
             debit_service_percentage=0,
             mdr=0.05,
-            origination_fee=0,
             tac_percentage=0,
             iof_overall=0.0038,
             iof_percentage=0.000082,

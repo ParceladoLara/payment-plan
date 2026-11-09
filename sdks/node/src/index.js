@@ -23,6 +23,7 @@ const __isBusinessDay = funcs.isBusinessDay;
  * @property {number} [maxTotalAmount]
  * @property {boolean} [disbursementOnlyOnBusinessDays]
  * @property {number} [minInstallments]
+ * @property {number} [originationFee]
  */
 
 /**
@@ -65,6 +66,7 @@ const __isBusinessDay = funcs.isBusinessDay;
  * @property {number} contractAmount
  * @property {number} contractAmountWithoutTAC
  * @property {number} tacAmount
+ * @property {number} originationFeeAmount
  * @property {number} IOFPercentage
  * @property {number} overallIOF
  * @property {number} preDisbursementAmount

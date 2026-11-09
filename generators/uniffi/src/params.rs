@@ -18,6 +18,7 @@ pub struct InternalParams {
     pub max_total_amount: f64,
     pub disbursement_only_on_business_days: bool,
     pub min_installments: Option<u32>,
+    #[uniffi(default = None)]
     pub origination_fee: Option<f64>,
 }
 

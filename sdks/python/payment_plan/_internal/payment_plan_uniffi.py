@@ -1239,7 +1239,7 @@ class InternalParams:
     disbursement_only_on_business_days: "bool"
     min_installments: "typing.Optional[int]"
     origination_fee: "typing.Optional[float]"
-    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool", min_installments: "typing.Optional[int]", origination_fee: "typing.Optional[float]"):
+    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool", min_installments: "typing.Optional[int]", origination_fee: "typing.Optional[float]" = _DEFAULT):
         self.requested_amount = requested_amount
         self.first_payment_date = first_payment_date
         self.disbursement_date = disbursement_date
@@ -1254,7 +1254,10 @@ class InternalParams:
         self.max_total_amount = max_total_amount
         self.disbursement_only_on_business_days = disbursement_only_on_business_days
         self.min_installments = min_installments
-        self.origination_fee = origination_fee
+        if origination_fee is _DEFAULT:
+            self.origination_fee = None
+        else:
+            self.origination_fee = origination_fee
 
     def __str__(self):
         return "InternalParams(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={}, min_installments={}, origination_fee={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days, self.min_installments, self.origination_fee)
