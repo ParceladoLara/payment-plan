@@ -32,6 +32,7 @@ pub struct Params {
     And of course anyone using the ABI can make the parameter optional on their side
      */
     pub min_installments: u32,
+    pub origination_fee: f64, // 0.0-1.0, 0 means no fee
 }
 
 impl From<Params> for core_payment_plan::Params {
@@ -59,7 +60,7 @@ impl From<Params> for core_payment_plan::Params {
             installments: val.installments,
             debit_service_percentage: val.debit_service_percentage,
             mdr: val.mdr,
-            origination_fee: 0.0, // TODO: Replace with actual origination fee when available
+            origination_fee: val.origination_fee,
             tac_percentage: val.tac_percentage,
             iof_overall: val.iof_overall,
             iof_percentage: val.iof_percentage,

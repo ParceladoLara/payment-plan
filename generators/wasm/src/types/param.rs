@@ -24,6 +24,8 @@ pub struct Params {
     pub disbursement_only_on_business_days: bool,
     #[tsify(optional)]
     pub min_installments: Option<u32>,
+    #[tsify(optional)]
+    pub origination_fee: Option<f64>,
 }
 
 impl TryInto<core_payment_plan::Params> for Params {
@@ -37,7 +39,7 @@ impl TryInto<core_payment_plan::Params> for Params {
             installments: self.installments,
             debit_service_percentage: self.debit_service_percentage,
             mdr: self.mdr,
-            origination_fee: 0.0, // TODO: Replace with actual origination fee when available
+            origination_fee: self.origination_fee.unwrap_or(0.0),
             tac_percentage: self.tac_percentage,
             iof_overall: self.iof_overall,
             iof_percentage: self.iof_percentage,

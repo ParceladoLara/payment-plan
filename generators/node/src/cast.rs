@@ -64,6 +64,11 @@ pub fn cast_js_object_to_param(
         None => None,
     };
 
+    let origination_fee = match obj.get_opt(cx, "originationFee")? {
+        Some(value) => any_to_number(cx, value)?,
+        None => 0.0,
+    };
+
     Ok(Params {
         max_total_amount,
         min_installment_amount,
@@ -73,7 +78,7 @@ pub fn cast_js_object_to_param(
         installments,
         debit_service_percentage: debt_service_percentage,
         mdr,
-        origination_fee: 0.0, // TODO: Replace with actual origination fee when available
+        origination_fee,
         tac_percentage,
         iof_overall,
         iof_percentage,
@@ -116,6 +121,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     let contract_amount = JsNumber::new(cx, response.contract_amount);
     let contract_amount_without_tac = JsNumber::new(cx, response.contract_amount_without_tac);
     let tac_amount = JsNumber::new(cx, response.tac_amount);
+    let origination_fee_amount = JsNumber::new(cx, response.origination_fee_amount);
     let iof_percentage = JsNumber::new(cx, response.iof_percentage);
     let overall_iof = JsNumber::new(cx, response.overall_iof);
     let pre_disbursement_amount = JsNumber::new(cx, response.pre_disbursement_amount);
@@ -168,6 +174,7 @@ fn cast_response_to_js_object<'a, C: Context<'a>>(
     obj.set(cx, "contractAmount", contract_amount)?;
     obj.set(cx, "contractAmountWithoutTAC", contract_amount_without_tac)?;
     obj.set(cx, "tacAmount", tac_amount)?;
+    obj.set(cx, "originationFeeAmount", origination_fee_amount)?;
     obj.set(cx, "IOFPercentage", iof_percentage)?;
     obj.set(cx, "overallIOF", overall_iof)?;
     obj.set(cx, "preDisbursementAmount", pre_disbursement_amount)?;
