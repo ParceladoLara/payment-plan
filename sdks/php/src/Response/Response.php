@@ -34,6 +34,7 @@ class Response
   public float $contractAmount;
   public float $contractAmountWithoutTac;
   public float $tacAmount;
+  public float $originationFeeAmount;
   public float $iofPercentage;
   public float $overallIof;
   public float $preDisbursementAmount;

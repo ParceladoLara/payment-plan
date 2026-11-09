@@ -32,6 +32,7 @@ test.describe("CalculatePaymentPlan page", () => {
   "contractAmount": 9055.51,
   "contractAmountWithoutTAC": 0,
   "tacAmount": 0,
+  "originationFeeAmount": 0,
   "IOFPercentage": 0.000082,
   "overallIOF": 0.0038,
   "disbursementDate": "2022-03-18T03:00:00.000Z",

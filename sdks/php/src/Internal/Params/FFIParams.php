@@ -23,6 +23,7 @@ class FFIParams
   public float $max_total_amount;
   public bool $disbursement_only_on_business_days;
   public int $min_installments;
+  public float $origination_fee;
 
   public function __construct(
     float $requested_amount,
@@ -38,7 +39,8 @@ class FFIParams
     float $min_installment_amount,
     float $max_total_amount,
     bool $disbursement_only_on_business_days,
-    int $min_installments = 1
+    int $min_installments = 1,
+    float $origination_fee = 0.0
   ) {
     $this->requested_amount = $requested_amount;
     $this->first_payment_date_ms = $first_payment_date_ms;
@@ -54,6 +56,7 @@ class FFIParams
     $this->max_total_amount = $max_total_amount;
     $this->disbursement_only_on_business_days = $disbursement_only_on_business_days;
     $this->min_installments = $min_installments;
+    $this->origination_fee = $origination_fee;
   }
 
   /**
@@ -75,7 +78,8 @@ class FFIParams
       $params->minInstallmentAmount,
       $params->maxTotalAmount,
       $params->disbursementOnlyOnBusinessDays,
-      $params->min_installments
+      $params->min_installments,
+      $params->originationFee
     );
   }
 
@@ -95,6 +99,7 @@ class FFIParams
     $data->max_total_amount = $this->max_total_amount;
     $data->disbursement_only_on_business_days = $this->disbursement_only_on_business_days;
     $data->min_installments = $this->min_installments;
+    $data->origination_fee = $this->origination_fee;
 
     return $data;
   }

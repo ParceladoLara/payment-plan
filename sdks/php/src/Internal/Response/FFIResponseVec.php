@@ -63,6 +63,7 @@ class FFIResponseVec
       $response->contractAmount = $cResponse->contract_amount;
       $response->contractAmountWithoutTac = $cResponse->contract_amount_without_tac;
       $response->tacAmount = $cResponse->tac_amount;
+      $response->originationFeeAmount = $cResponse->origination_fee_amount;
       $response->iofPercentage = $cResponse->iof_percentage;
       $response->overallIof = $cResponse->overall_iof;
       $response->preDisbursementAmount = $cResponse->pre_disbursement_amount;

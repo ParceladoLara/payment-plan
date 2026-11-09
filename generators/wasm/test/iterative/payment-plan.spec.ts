@@ -33,6 +33,7 @@ test("calculate payment plan test 0", () => {
     accumulatedDaysIndex: 18.014166849381613,
     interestRate: 0.0235,
     installmentAmount: 502.69,
+    originationFeeAmount: 0,
     installmentAmountWithoutTAC: 0,
     totalAmount: 12064.56,
     debitService: 3009.0499999999993,

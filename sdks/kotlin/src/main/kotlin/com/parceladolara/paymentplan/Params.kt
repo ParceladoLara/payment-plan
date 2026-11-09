@@ -17,7 +17,8 @@ data class Params(
         val minInstallmentAmount: Double,
         val maxTotalAmount: Double,
         val disbursementOnlyOnBusinessDays: Boolean,
-        val minInstallments: UInt? = null
+        val minInstallments: UInt? = null,
+        val originationFee: Double? = null
 ) {
   /**
    * Builder class for Java interoperability. Provides a fluent API for constructing Params objects.
@@ -37,6 +38,7 @@ data class Params(
     private var maxTotalAmount: Double = 0.0
     private var disbursementOnlyOnBusinessDays: Boolean = true
     private var minInstallments: UInt? = null
+    private var originationFee: Double? = null
 
     fun requestedAmount(requestedAmount: Double) = apply { this.requestedAmount = requestedAmount }
     fun firstPaymentDate(firstPaymentDate: Instant) = apply {
@@ -66,6 +68,7 @@ data class Params(
       this.disbursementOnlyOnBusinessDays = disbursementOnlyOnBusinessDays
     }
     fun minInstallments(minInstallments: UInt?) = apply { this.minInstallments = minInstallments }
+    fun originationFee(originationFee: Double?) = apply { this.originationFee = originationFee }
 
     fun build(): Params {
       return Params(
@@ -82,7 +85,8 @@ data class Params(
               minInstallmentAmount = minInstallmentAmount,
               maxTotalAmount = maxTotalAmount,
               disbursementOnlyOnBusinessDays = disbursementOnlyOnBusinessDays,
-              minInstallments = minInstallments
+              minInstallments = minInstallments,
+              originationFee = originationFee
       )
     }
   }
@@ -113,7 +117,8 @@ data class Params(
               minInstallmentAmount = internal.minInstallmentAmount,
               maxTotalAmount = internal.maxTotalAmount,
               disbursementOnlyOnBusinessDays = internal.disbursementOnlyOnBusinessDays,
-              minInstallments = internal.minInstallments
+              minInstallments = internal.minInstallments,
+              originationFee = internal.originationFee
       )
     }
   }
@@ -133,7 +138,8 @@ data class Params(
             minInstallmentAmount = this.minInstallmentAmount,
             maxTotalAmount = this.maxTotalAmount,
             disbursementOnlyOnBusinessDays = this.disbursementOnlyOnBusinessDays,
-            minInstallments = this.minInstallments
+            minInstallments = this.minInstallments,
+            originationFee = this.originationFee
     )
   }
 }

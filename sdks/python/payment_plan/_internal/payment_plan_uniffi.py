@@ -1238,7 +1238,8 @@ class InternalParams:
     max_total_amount: "float"
     disbursement_only_on_business_days: "bool"
     min_installments: "typing.Optional[int]"
-    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool", min_installments: "typing.Optional[int]"):
+    origination_fee: "typing.Optional[float]"
+    def __init__(self, *, requested_amount: "float", first_payment_date: "Timestamp", disbursement_date: "Timestamp", installments: "int", debit_service_percentage: "int", mdr: "float", tac_percentage: "float", iof_overall: "float", iof_percentage: "float", interest_rate: "float", min_installment_amount: "float", max_total_amount: "float", disbursement_only_on_business_days: "bool", min_installments: "typing.Optional[int]", origination_fee: "typing.Optional[float]"):
         self.requested_amount = requested_amount
         self.first_payment_date = first_payment_date
         self.disbursement_date = disbursement_date
@@ -1253,9 +1254,10 @@ class InternalParams:
         self.max_total_amount = max_total_amount
         self.disbursement_only_on_business_days = disbursement_only_on_business_days
         self.min_installments = min_installments
+        self.origination_fee = origination_fee
 
     def __str__(self):
-        return "InternalParams(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={}, min_installments={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days, self.min_installments)
+        return "InternalParams(requested_amount={}, first_payment_date={}, disbursement_date={}, installments={}, debit_service_percentage={}, mdr={}, tac_percentage={}, iof_overall={}, iof_percentage={}, interest_rate={}, min_installment_amount={}, max_total_amount={}, disbursement_only_on_business_days={}, min_installments={}, origination_fee={})".format(self.requested_amount, self.first_payment_date, self.disbursement_date, self.installments, self.debit_service_percentage, self.mdr, self.tac_percentage, self.iof_overall, self.iof_percentage, self.interest_rate, self.min_installment_amount, self.max_total_amount, self.disbursement_only_on_business_days, self.min_installments, self.origination_fee)
 
     def __eq__(self, other):
         if self.requested_amount != other.requested_amount:
@@ -1286,6 +1288,8 @@ class InternalParams:
             return False
         if self.min_installments != other.min_installments:
             return False
+        if self.origination_fee != other.origination_fee:
+            return False
         return True
 
 class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
@@ -1306,6 +1310,7 @@ class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
             max_total_amount=_UniffiConverterDouble.read(buf),
             disbursement_only_on_business_days=_UniffiConverterBool.read(buf),
             min_installments=_UniffiConverterOptionalUInt32.read(buf),
+            origination_fee=_UniffiConverterOptionalDouble.read(buf),
         )
 
     @staticmethod
@@ -1324,6 +1329,7 @@ class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.check_lower(value.max_total_amount)
         _UniffiConverterBool.check_lower(value.disbursement_only_on_business_days)
         _UniffiConverterOptionalUInt32.check_lower(value.min_installments)
+        _UniffiConverterOptionalDouble.check_lower(value.origination_fee)
 
     @staticmethod
     def write(value, buf):
@@ -1341,6 +1347,7 @@ class _UniffiConverterTypeInternalParams(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.write(value.max_total_amount, buf)
         _UniffiConverterBool.write(value.disbursement_only_on_business_days, buf)
         _UniffiConverterOptionalUInt32.write(value.min_installments, buf)
+        _UniffiConverterOptionalDouble.write(value.origination_fee, buf)
 
 
 class InternalResponse:
@@ -1372,13 +1379,14 @@ class InternalResponse:
     contract_amount: "float"
     contract_amount_without_tac: "float"
     tac_amount: "float"
+    origination_fee_amount: "float"
     iof_percentage: "float"
     overall_iof: "float"
     pre_disbursement_amount: "float"
     paid_total_iof: "float"
     paid_contract_amount: "float"
     invoices: "typing.List[InternalInvoice]"
-    def __init__(self, *, installment: "int", due_date: "Timestamp", disbursement_date: "Timestamp", accumulated_days: "int", days_index: "float", accumulated_days_index: "float", interest_rate: "float", installment_amount: "float", installment_amount_without_tac: "float", total_amount: "float", debit_service: "float", customer_debit_service_amount: "float", customer_amount: "float", calculation_basis_for_effective_interest_rate: "float", merchant_debit_service_amount: "float", merchant_total_amount: "float", settled_to_merchant: "float", mdr_amount: "float", effective_interest_rate: "float", total_effective_cost: "float", eir_yearly: "float", tec_yearly: "float", eir_monthly: "float", tec_monthly: "float", total_iof: "float", contract_amount: "float", contract_amount_without_tac: "float", tac_amount: "float", iof_percentage: "float", overall_iof: "float", pre_disbursement_amount: "float", paid_total_iof: "float", paid_contract_amount: "float", invoices: "typing.List[InternalInvoice]"):
+    def __init__(self, *, installment: "int", due_date: "Timestamp", disbursement_date: "Timestamp", accumulated_days: "int", days_index: "float", accumulated_days_index: "float", interest_rate: "float", installment_amount: "float", installment_amount_without_tac: "float", total_amount: "float", debit_service: "float", customer_debit_service_amount: "float", customer_amount: "float", calculation_basis_for_effective_interest_rate: "float", merchant_debit_service_amount: "float", merchant_total_amount: "float", settled_to_merchant: "float", mdr_amount: "float", effective_interest_rate: "float", total_effective_cost: "float", eir_yearly: "float", tec_yearly: "float", eir_monthly: "float", tec_monthly: "float", total_iof: "float", contract_amount: "float", contract_amount_without_tac: "float", tac_amount: "float", origination_fee_amount: "float", iof_percentage: "float", overall_iof: "float", pre_disbursement_amount: "float", paid_total_iof: "float", paid_contract_amount: "float", invoices: "typing.List[InternalInvoice]"):
         self.installment = installment
         self.due_date = due_date
         self.disbursement_date = disbursement_date
@@ -1407,6 +1415,7 @@ class InternalResponse:
         self.contract_amount = contract_amount
         self.contract_amount_without_tac = contract_amount_without_tac
         self.tac_amount = tac_amount
+        self.origination_fee_amount = origination_fee_amount
         self.iof_percentage = iof_percentage
         self.overall_iof = overall_iof
         self.pre_disbursement_amount = pre_disbursement_amount
@@ -1415,7 +1424,7 @@ class InternalResponse:
         self.invoices = invoices
 
     def __str__(self):
-        return "InternalResponse(installment={}, due_date={}, disbursement_date={}, accumulated_days={}, days_index={}, accumulated_days_index={}, interest_rate={}, installment_amount={}, installment_amount_without_tac={}, total_amount={}, debit_service={}, customer_debit_service_amount={}, customer_amount={}, calculation_basis_for_effective_interest_rate={}, merchant_debit_service_amount={}, merchant_total_amount={}, settled_to_merchant={}, mdr_amount={}, effective_interest_rate={}, total_effective_cost={}, eir_yearly={}, tec_yearly={}, eir_monthly={}, tec_monthly={}, total_iof={}, contract_amount={}, contract_amount_without_tac={}, tac_amount={}, iof_percentage={}, overall_iof={}, pre_disbursement_amount={}, paid_total_iof={}, paid_contract_amount={}, invoices={})".format(self.installment, self.due_date, self.disbursement_date, self.accumulated_days, self.days_index, self.accumulated_days_index, self.interest_rate, self.installment_amount, self.installment_amount_without_tac, self.total_amount, self.debit_service, self.customer_debit_service_amount, self.customer_amount, self.calculation_basis_for_effective_interest_rate, self.merchant_debit_service_amount, self.merchant_total_amount, self.settled_to_merchant, self.mdr_amount, self.effective_interest_rate, self.total_effective_cost, self.eir_yearly, self.tec_yearly, self.eir_monthly, self.tec_monthly, self.total_iof, self.contract_amount, self.contract_amount_without_tac, self.tac_amount, self.iof_percentage, self.overall_iof, self.pre_disbursement_amount, self.paid_total_iof, self.paid_contract_amount, self.invoices)
+        return "InternalResponse(installment={}, due_date={}, disbursement_date={}, accumulated_days={}, days_index={}, accumulated_days_index={}, interest_rate={}, installment_amount={}, installment_amount_without_tac={}, total_amount={}, debit_service={}, customer_debit_service_amount={}, customer_amount={}, calculation_basis_for_effective_interest_rate={}, merchant_debit_service_amount={}, merchant_total_amount={}, settled_to_merchant={}, mdr_amount={}, effective_interest_rate={}, total_effective_cost={}, eir_yearly={}, tec_yearly={}, eir_monthly={}, tec_monthly={}, total_iof={}, contract_amount={}, contract_amount_without_tac={}, tac_amount={}, origination_fee_amount={}, iof_percentage={}, overall_iof={}, pre_disbursement_amount={}, paid_total_iof={}, paid_contract_amount={}, invoices={})".format(self.installment, self.due_date, self.disbursement_date, self.accumulated_days, self.days_index, self.accumulated_days_index, self.interest_rate, self.installment_amount, self.installment_amount_without_tac, self.total_amount, self.debit_service, self.customer_debit_service_amount, self.customer_amount, self.calculation_basis_for_effective_interest_rate, self.merchant_debit_service_amount, self.merchant_total_amount, self.settled_to_merchant, self.mdr_amount, self.effective_interest_rate, self.total_effective_cost, self.eir_yearly, self.tec_yearly, self.eir_monthly, self.tec_monthly, self.total_iof, self.contract_amount, self.contract_amount_without_tac, self.tac_amount, self.origination_fee_amount, self.iof_percentage, self.overall_iof, self.pre_disbursement_amount, self.paid_total_iof, self.paid_contract_amount, self.invoices)
 
     def __eq__(self, other):
         if self.installment != other.installment:
@@ -1474,6 +1483,8 @@ class InternalResponse:
             return False
         if self.tac_amount != other.tac_amount:
             return False
+        if self.origination_fee_amount != other.origination_fee_amount:
+            return False
         if self.iof_percentage != other.iof_percentage:
             return False
         if self.overall_iof != other.overall_iof:
@@ -1520,6 +1531,7 @@ class _UniffiConverterTypeInternalResponse(_UniffiConverterRustBuffer):
             contract_amount=_UniffiConverterDouble.read(buf),
             contract_amount_without_tac=_UniffiConverterDouble.read(buf),
             tac_amount=_UniffiConverterDouble.read(buf),
+            origination_fee_amount=_UniffiConverterDouble.read(buf),
             iof_percentage=_UniffiConverterDouble.read(buf),
             overall_iof=_UniffiConverterDouble.read(buf),
             pre_disbursement_amount=_UniffiConverterDouble.read(buf),
@@ -1558,6 +1570,7 @@ class _UniffiConverterTypeInternalResponse(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.check_lower(value.contract_amount)
         _UniffiConverterDouble.check_lower(value.contract_amount_without_tac)
         _UniffiConverterDouble.check_lower(value.tac_amount)
+        _UniffiConverterDouble.check_lower(value.origination_fee_amount)
         _UniffiConverterDouble.check_lower(value.iof_percentage)
         _UniffiConverterDouble.check_lower(value.overall_iof)
         _UniffiConverterDouble.check_lower(value.pre_disbursement_amount)
@@ -1595,6 +1608,7 @@ class _UniffiConverterTypeInternalResponse(_UniffiConverterRustBuffer):
         _UniffiConverterDouble.write(value.contract_amount, buf)
         _UniffiConverterDouble.write(value.contract_amount_without_tac, buf)
         _UniffiConverterDouble.write(value.tac_amount, buf)
+        _UniffiConverterDouble.write(value.origination_fee_amount, buf)
         _UniffiConverterDouble.write(value.iof_percentage, buf)
         _UniffiConverterDouble.write(value.overall_iof, buf)
         _UniffiConverterDouble.write(value.pre_disbursement_amount, buf)
@@ -1684,6 +1698,33 @@ class _UniffiConverterOptionalUInt32(_UniffiConverterRustBuffer):
             return None
         elif flag == 1:
             return _UniffiConverterUInt32.read(buf)
+        else:
+            raise InternalError("Unexpected flag byte for optional type")
+
+
+
+class _UniffiConverterOptionalDouble(_UniffiConverterRustBuffer):
+    @classmethod
+    def check_lower(cls, value):
+        if value is not None:
+            _UniffiConverterDouble.check_lower(value)
+
+    @classmethod
+    def write(cls, value, buf):
+        if value is None:
+            buf.write_u8(0)
+            return
+
+        buf.write_u8(1)
+        _UniffiConverterDouble.write(value, buf)
+
+    @classmethod
+    def read(cls, buf):
+        flag = buf.read_u8()
+        if flag == 0:
+            return None
+        elif flag == 1:
+            return _UniffiConverterDouble.read(buf)
         else:
             raise InternalError("Unexpected flag byte for optional type")
 
