@@ -58,19 +58,23 @@ build-go-sdk:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
 	cp target/release-unstripped/libpayment_plan_uniffi.a sdks/go/internal/libs/linux/libpayment_plan_uniffi.a
+	objcopy --remove-section=.llvmbc --remove-section=.llvmcmd sdks/go/internal/libs/linux/libpayment_plan_uniffi.a
 	cp target/x86_64-pc-windows-gnu/release-unstripped/libpayment_plan_uniffi.a sdks/go/internal/libs/windows/libpayment_plan_uniffi.a
+	x86_64-w64-mingw32-objcopy --remove-section=.llvmbc --remove-section=.llvmcmd sdks/go/internal/libs/windows/libpayment_plan_uniffi.a
 	uniffi-bindgen-go --library ./target/release-unstripped/libpayment_plan_uniffi.so --out-dir ./sdks/go/internal
 	sed -i 's|// #include <payment_plan_uniffi.h>|/*\n#cgo windows LDFLAGS: -L./../libs/windows -lpayment_plan_uniffi -lws2_32 -luserenv -lkernel32 -lntdll\n#cgo linux LDFLAGS: -L./../libs/linux -lpayment_plan_uniffi  -lm -ldl\n#cgo darwin LDFLAGS: -L./../libs/darwin -lpayment_plan_uniffi  -lm -ldl\n#include <payment_plan_uniffi.h>\n*/|' sdks/go/internal/payment_plan_uniffi/payment_plan_uniffi.go
 
 build-go-sdk-windows:
 	cargo build --package payment_plan_uniffi --profile release-unstripped --target x86_64-pc-windows-gnu
 	cp target/x86_64-pc-windows-gnu/release-unstripped/libpayment_plan_uniffi.a sdks/go/internal/libs/windows/libpayment_plan_uniffi.a
+	x86_64-w64-mingw32-objcopy --remove-section=.llvmbc --remove-section=.llvmcmd sdks/go/internal/libs/windows/libpayment_plan_uniffi.a
 	uniffi-bindgen-go --library ./target/x86_64-pc-windows-gnu/release-unstripped/payment_plan_uniffi.dll --out-dir ./sdks/go/internal
 	sed -i 's|// #include <payment_plan_uniffi.h>|/*\n#cgo windows LDFLAGS: -L./../libs/windows -lpayment_plan_uniffi -lws2_32 -luserenv -lkernel32 -lntdll\n#include <payment_plan_uniffi.h>\n*/|' sdks/go/internal/payment_plan_uniffi/payment_plan_uniffi.go
 
 build-go-sdk-linux:
 	cargo build --package payment_plan_uniffi --profile release-unstripped
 	cp target/release-unstripped/libpayment_plan_uniffi.a sdks/go/internal/libs/linux/libpayment_plan_uniffi.a
+	objcopy --remove-section=.llvmbc --remove-section=.llvmcmd sdks/go/internal/libs/linux/libpayment_plan_uniffi.a
 	uniffi-bindgen-go --library ./target/release-unstripped/libpayment_plan_uniffi.so --out-dir ./sdks/go/internal
 	sed -i 's|// #include <payment_plan_uniffi.h>|/*\n#cgo linux LDFLAGS: -L./../libs/linux -lpayment_plan_uniffi  -lm -ldl\n#include <payment_plan_uniffi.h>\n*/|' sdks/go/internal/payment_plan_uniffi/payment_plan_uniffi.go
 
